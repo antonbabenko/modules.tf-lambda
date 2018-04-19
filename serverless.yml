@@ -1,0 +1,69 @@
+service: generate
+
+frameworkVersion: ">=1.26.0 <2.0.0"
+
+provider:
+  name: aws
+  runtime: python3.6
+  stage: dev
+  region: eu-west-1
+  profile: private-anton
+  tracing: true
+  iamRoleStatements:
+    -  Effect: "Allow"
+       Action:
+         - "s3:*" # "s3:PutObject" plus something more plus stage name
+       Resource:
+         - "arn:aws:s3:::dl.modules.tf/*"
+         - "arn:aws:s3:::dl.modules.tf"
+    - Effect: "Allow" # xray permissions (required)
+      Action:
+        - "xray:PutTraceSegments"
+        - "xray:PutTelemetryRecords"
+      Resource:
+        - "*"
+
+functions:
+  generate:
+    handler: handler.generate_from_cloudcraft
+    description: Generate all from Cloudcraft URL
+    memorySize: 512
+    events:
+      - http:
+          method: get
+          path: /
+          cors: true
+
+plugins:
+  - serverless-domain-manager
+  - serverless-python-requirements
+  - serverless-apigw-binary
+  - serverless-plugin-tracing
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  domains:
+    prod: lambda.modules.tf
+    dev: dev-lambda.modules.tf
+
+  customDomain:
+    domainName: "${self:custom.domains.${self:custom.stage}}"
+    basePath: ""
+    stage: "${self:custom.stage}"
+    certificateName: "*.modules.tf"
+    createRoute53Record: true
+
+  pythonRequirements:
+    dockerizePip: true
+    pipCmdExtraArgs:
+      - --cache-dir
+      - .requirements-cache
+
+  apigwBinary:
+    types:
+      - "application/zip"
+
+package:
+  exclude:
+    - "node_modules/**"
+    - ".requirements-cache/**"
