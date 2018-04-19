@@ -357,7 +357,6 @@ def generate_from_cloudcraft(event, context):
     with open('output.json', 'w') as f:
         f.write(json.dumps(resources))
 
-
     # render single layers in a loop
     for resource in resources:
         render_single_layer(resource)
@@ -422,13 +421,20 @@ def generate_from_cloudcraft(event, context):
 
 
 if __name__ == "__main__":
+    test_event = {}
+
+    # test_event = {
+    #     "queryStringParameters":
+    #         {
+    #             "cloudcraft": "https://cloudcraft.co/api/blueprint/cd5294fb-0aab-4475-bbcc-196f12738eac?key=5c3EuqRadKOJm3Xkkx-yeQ",
+    #         }
+    # }
+
     test_event = {
         "queryStringParameters":
             {
-                "cloudcraft": "https://cloudcraft.co/api/blueprint/cd5294fb-0aab-4475-bbcc-196f12738eac?key=5c3EuqRadKOJm3Xkkx-yeQ",
-                "localfile": "input/blueprint.json"
+                "localfile": "input/blueprint.json",
             }
     }
 
     generate_from_cloudcraft(test_event, None)
-    # generate_from_cloudcraft(None, None)

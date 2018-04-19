@@ -1,4 +1,4 @@
-service: generate
+service: modules-tf
 
 frameworkVersion: ">=1.26.0 <2.0.0"
 
@@ -24,9 +24,10 @@ provider:
         - "*"
 
 functions:
-  generate:
+  generate-cloudcraft:
+    name: ${self:service}-${self:custom.stage}-generate-cloudcraft
     handler: handler.generate_from_cloudcraft
-    description: Generate all from Cloudcraft URL
+    description: Generate all from Cloudcraft URL (stage=${self:custom.stage})
     memorySize: 512
     events:
       - http:
