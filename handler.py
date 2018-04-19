@@ -196,7 +196,7 @@ def render_root_dir():
                  extra_context=root_dir)
 
 
-def generate_from_cloudcraft(event, context):
+def load_data(event):
     qs = event.get("queryStringParameters")
 
     blueprint_url = qs.get("cloudcraft")
@@ -213,6 +213,11 @@ def generate_from_cloudcraft(event, context):
 
     print("event = ")
     print(json.dumps(event))
+
+    return data
+
+
+def generate_modulestf_config(data):
 
     scan_data(data)
 
@@ -331,6 +336,40 @@ def generate_from_cloudcraft(event, context):
     pprint(resources)
     pprint("-END------------------------------------")
 
+    return json.dumps(resources)
+
+    #
+    # output_dir = os.path.join(tmp_dir, "output")
+    # try:
+    #     os.mkdir(output_dir)
+    # except OSError:
+    #     pass
+    #
+    # os.chdir(output_dir)
+    #
+    # # create output directory
+    # working_dir = blueprint_file.replace("/", "_")
+    #
+    # try:
+    #     shutil.rmtree(working_dir)
+    # except FileNotFoundError:
+    #     pass
+    #
+    # try:
+    #     os.mkdir(working_dir)
+    # except OSError:
+    #     pass
+    #
+    # os.chdir(working_dir)
+    #
+    # with open('output.json', 'w') as f:
+    #     f.write(json.dumps(resources))
+
+
+def render_from_modulestf_config(config):
+
+    resources = json.loads(config)
+
     output_dir = os.path.join(tmp_dir, "output")
     try:
         os.mkdir(output_dir)
@@ -353,9 +392,6 @@ def generate_from_cloudcraft(event, context):
         pass
 
     os.chdir(working_dir)
-
-    with open('output.json', 'w') as f:
-        f.write(json.dumps(resources))
 
     # render single layers in a loop
     for resource in resources:
@@ -384,40 +420,37 @@ def generate_from_cloudcraft(event, context):
     # Make zip archive
     shutil.make_archive("archive", "zip", "final")
 
-    # Upload it to S3
+
+def upload_result():
+
     s3 = boto3.client('s3')
     s3_key = "staging/" + md5(bytes(uuid.uuid4().hex, "ascii")).hexdigest() + ".zip"
     s3.upload_file("archive.zip", "dl.modules.tf", s3_key, ExtraArgs={'ACL': 'public-read'})
 
-    # return link to user
     link = "https://dl.modules.tf/" + s3_key
 
     print("LINK=" + link)
 
-    if True:
-        myfile = open("archive.zip", "rb")
-        body = base64.b64encode(myfile.read()).decode("ascii")
+    return link
 
-        return {
-            "body": body,
-            "headers": {
-                "Content-Type": "application/zip",
-                "Content-Disposition": "attachment; filename=\"infra.zip\""
-            },
-            "statusCode": 200,
-            "isBase64Encoded": True,
-        }
-    else:
-        return {
-            "body": json.dumps(link),
-            "headers": {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
-                "Access-Control-Allow-Methods": "DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT",
-                "Access-Control-Allow-Origin": "*",
-            },
-            "statusCode": 200
-        }
+
+def handler(event, context):
+
+    data = load_data(event)
+
+    config = generate_modulestf_config(data)
+
+    render_from_modulestf_config(config)
+
+    link = upload_result()
+
+    return {
+        "body": "",
+        "headers": {
+            "Location": link
+        },
+        "statusCode": 302,
+    }
 
 
 if __name__ == "__main__":
@@ -433,8 +466,8 @@ if __name__ == "__main__":
     test_event = {
         "queryStringParameters":
             {
-                "localfile": "input/blueprint.json",
+                "localfile": "input/blueprint_default.json",
             }
     }
 
-    generate_from_cloudcraft(test_event, None)
+    handler(test_event, None)

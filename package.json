@@ -1,5 +1,5 @@
 {
-  "name": "generate",
+  "name": "modules-tf-generate",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "serverless-apigw-binary": "^0.4.4",
     "serverless-domain-manager": "^2.3.6",
     "serverless-plugin-tracing": "^2.0.0"
   },

@@ -1,5 +1,3 @@
 #!/usr/bin/env bash
 
-export AWS_PROFILE=private-anton
-
-/usr/local/bin/python-lambda-local -f $1 $2 $3
+/usr/local/bin/python-lambda-local -t 10 -f $1 $2 $3
