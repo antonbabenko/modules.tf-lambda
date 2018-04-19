@@ -78,7 +78,7 @@ COOKIECUTTER_DIR_ROOT = os.getcwd() + "/cookiecutter/tf-root"
 # or: blueprint json to complete zip
 
 try:
-    if os.environ['IS_LOCAL']:
+    # if os.environ['IS_LOCAL']:
         cookiecutter_root = os.getcwd()
 except KeyError:
     cookiecutter_root = sys.path[0]
