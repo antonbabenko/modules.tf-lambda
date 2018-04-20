@@ -15,12 +15,13 @@ terragrunt = {
 }
 
 # MODULE PARAMETERS
+# todo: print only required variables and whose which were set by cloudcraft
+
 {% for key, value in cookiecutter.module_variables|dictsort -%}
-{# convert from params to what module accepts#}
+# {{ value.description }}
 {% if value.cloudcraft_param|default() == "" %}
 {{ key }} = "..."
 {% else %}
-# {{ value.description }}
 {% set tmp_value = cookiecutter.params[value.cloudcraft_param] %}
 {% set value_type = value.type|default("string") %}
 

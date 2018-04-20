@@ -127,8 +127,8 @@ def prepare_data(data):
     data_nodes = data["data"]["nodes"]
     data_edges = data["data"]["edges"]
     data_groups = data["data"]["groups"]
-    data_text = data["data"]["text"] # @todo: process text labels with "relTo" set
-    data_surfaces = data["data"]["surfaces"] # @todo: get region name from surfaces
+    data_text = data["data"]["text"]
+    data_surfaces = data["data"]["surfaces"]
 
     for node in data_nodes:
         nodes[node["id"]] = node
@@ -299,8 +299,12 @@ def load_data(event):
         r = requests.get(blueprint_url)
         data = r.json()
 
+        logging.info("Blueprint url: %s, response code: %s" % (blueprint_url, r.status_code))
+
         if 403 == r.status_code:
             raise ValueError("Sharing has been disabled for this blueprint. You have to enable it by clicking 'Export' -> 'Get shareable link' on https://cloudcraft.co/app/", 403)
+        elif r.status_code >= 500:
+            raise ValueError("Something went wrong on cloudcraft side. Can't fetch specified blueprint. Check URL and try again later.", 404)
     elif localfile:
         file = open(localfile, 'r')
         data = json.load(file)
@@ -538,7 +542,7 @@ def upload_result():
     s3_bucket = os.environ.get("S3_BUCKET", "dl.modules.tf")
     s3_dir = os.environ.get("S3_DIR", "local")
 
-    s3 = boto3.client("s3")
+    s3 = boto3.client("s3", region_name="eu-west-1")
     s3_key = s3_dir + "/" + md5(bytes(uuid.uuid4().hex, "ascii")).hexdigest() + ".zip"
     s3.upload_file("archive.zip", s3_bucket, s3_key, ExtraArgs={'ACL': 'public-read'})
 
