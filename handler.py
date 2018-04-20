@@ -21,7 +21,7 @@ from cookiecutter.main import cookiecutter
 
 MODULES = {
     "elb": {
-        "source": "terraform-aws-modules/elb/aws",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-elb.git",
         "variables": {
             "name": {
                 "description": "The name of the ELB",
@@ -41,17 +41,28 @@ MODULES = {
         "outputs": {},
     },
     "rds": {
-        "source": "terraform-aws-modules/rds/aws",
-        "variables": {},
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-rds.git",
+        "variables": {
+            "multi_az": {
+                "description": "Do you need Multi-AZ?",
+                "type": "bool",
+                "cloudcraft_param": "isMultiAZ"
+            }
+        },
         "outputs": {},
     },
     "autoscaling": {
-        "source": "terraform-aws-modules/autoscaling/aws",
-        "variables": {},
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-autoscaling.git",
+        "variables": {
+            "instance_type": {
+                "description": "Instance type to use?",
+                "cloudcraft_param": "instanceType"
+            }
+        },
         "outputs": {},
     },
     "ec2-instance": {
-        "source": "terraform-aws-modules/ec2-instance/aws",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-ec2-instance.git",
         "variables": {},
         "outputs": {},
     },
@@ -95,6 +106,7 @@ def setup_logging():
 
 
 def prepare_data(data):
+    global source
     global nodes
     global asg_groups
     global edges      # edges are uni-directional (from => to)
@@ -156,6 +168,11 @@ def prepare_data(data):
 
                 regions[region].append(surface)
 
+    source = {
+        "name": data["data"]["name"],
+        "id": data["id"],
+    }
+
     # pprint(regions)
     # pprint(regions.keys())
     # pprint(nodes)
@@ -197,6 +214,16 @@ def get_edge_rev_nodes_by_id(id):
 
     return tmp_nodes
 
+#
+# def convert_params_into_module_values(type, params):
+#     values = dict()
+#     for key, value in params.items():
+#         if "rds" == type:
+#             if key == "isMultiAZ":
+#                 values["multi_az"] = value
+#
+#     return values
+
 
 def render_single_layer(resource, append_id=False):
 
@@ -223,6 +250,7 @@ def render_single_layer(resource, append_id=False):
     single_layer = {
         "dir_name": dir_name.lower(),
         "module_source": MODULES[resource["type"]]["source"],
+        "module_variables": MODULES[resource["type"]]["variables"],
     }
 
     extra_context = resource.update(single_layer) or resource
@@ -249,6 +277,7 @@ def render_root_dir():
 
     root_dir = {
         "dir_name": "root_dir",
+        "source": source,
     }
 
     cookiecutter(os.path.join(COOKIECUTTER_TEMPLATES_DIR, "tf-root"),
@@ -260,17 +289,23 @@ def render_root_dir():
 def load_data(event):
     qs = event.get("queryStringParameters")
 
+    if qs is None:
+        raise ValueError("Some query string parameters should be defined", 400)
+
     blueprint_url = qs.get("cloudcraft")
     localfile = qs.get("localfile")
 
     if blueprint_url:
         r = requests.get(blueprint_url)
         data = r.json()
+
+        if 403 == r.status_code:
+            raise ValueError("Sharing has been disabled for this blueprint. You have to enable it by clicking 'Export' -> 'Get shareable link' on https://cloudcraft.co/app/", 403)
     elif localfile:
         file = open(localfile, 'r')
         data = json.load(file)
     else:
-        raise ValueError("'cloudcraft' or 'localfile' query string parameter should be defined")
+        raise ValueError("'cloudcraft' or 'localfile' query string parameter should be defined", 400)
 
     print("event = %s" % json.dumps(event))
 
@@ -518,7 +553,15 @@ def handler(event, context):
     link = ""
     logger = setup_logging()
 
-    data = load_data(event)
+    try:
+        data = load_data(event)
+    except ValueError as error:
+        logger.error(error)
+
+        return {
+            "body": error.args[0],
+            "statusCode": error.args[1],
+        }
 
     config = generate_modulestf_config(data)
 
