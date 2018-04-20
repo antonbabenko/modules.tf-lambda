@@ -2,7 +2,6 @@
 
 from __future__ import print_function
 
-import base64
 import glob
 import json
 import boto3
@@ -12,8 +11,9 @@ import uuid
 from hashlib import md5
 from pprint import pprint
 import requests
-
 import sys
+import logging
+
 from cookiecutter.main import cookiecutter
 
 
@@ -69,47 +69,65 @@ MODULES = {
     },
 }
 
-COOKIECUTTER_DIR_SINGLE_LAYER = os.getcwd() + "/cookiecutter/tf-single-layer"
-COOKIECUTTER_DIR_COMMON_LAYER = os.getcwd() + "/cookiecutter/tf-common-layer"
-COOKIECUTTER_DIR_ROOT = os.getcwd() + "/cookiecutter/tf-root"
-
-# >>>>>> This ---> 1. blueprint json TO modules.tf array    + cookiecutter
-# 2. modules.tf json TO complete zip
-# or: blueprint json to complete zip
-
-try:
-    # if os.environ['IS_LOCAL']:
-        cookiecutter_root = os.getcwd()
-except KeyError:
-    cookiecutter_root = sys.path[0]
+COOKIECUTTER_TEMPLATES_DIR = os.getcwd() + "/templates"
+COOKIECUTTER_DIR_SINGLE_LAYER = os.path.join(COOKIECUTTER_TEMPLATES_DIR, "tf-single-layer")
+COOKIECUTTER_DIR_COMMON_LAYER = os.path.join(COOKIECUTTER_TEMPLATES_DIR, "tf-common-layer")
+COOKIECUTTER_DIR_ROOT = os.path.join(COOKIECUTTER_TEMPLATES_DIR, "tf-root")
 
 tmp_dir = "/tmp"
 
 blueprint_file = "input/blueprint.json"
 # blueprint_file = "real-examples/example1.json"
 
-def scan_data(data):
-    # We don't care about these keys in json: connectors, surfaces, images, icons, text
+
+# Logging snippet was from https://gist.github.com/niranjv/fb95e716151642e8ca553b0e38dd152e
+def setup_logging():
+    logger = logging.getLogger()
+    for h in logger.handlers:
+        logger.removeHandler(h)
+
+    h = logging.StreamHandler(sys.stdout)
+
+    # use whatever format you want here
+    FORMAT = "[%(levelname)s]\t%(asctime)s.%(msecs)dZ\t%(name)s\t%(message)s\n"
+    h.setFormatter(logging.Formatter(FORMAT))
+    logger.addHandler(h)
+    logger.setLevel(logging.INFO)
+
+    return logger
+
+
+def prepare_data(data):
+    global nodes
+    global asg_groups
+    global edges      # edges are uni-directional (from => to)
+    global edges_rev  # edges_rev are reversed (to => from). Used by RDS nodes (master/slave).
+    global texts
+    global surfaces
+    global regions
+
+    nodes = dict()
+    asg_groups = dict()
+    edges = dict()      # edges are uni-directional (from => to)
+    edges_rev = dict()  # edges_rev are reversed (to => from). Used by RDS nodes (master/slave).
+    texts = dict()
+    surfaces = dict()
+    regions = dict()
+
+    # We don't care about these keys in json: connectors, images, icons
     data_nodes = data["data"]["nodes"]
     data_edges = data["data"]["edges"]
     data_groups = data["data"]["groups"]
+    data_text = data["data"]["text"] # @todo: process text labels with "relTo" set
+    data_surfaces = data["data"]["surfaces"] # @todo: get region name from surfaces
 
-    global nodes
-    nodes = dict()
     for node in data_nodes:
         nodes[node["id"]] = node
 
-    global asg_groups
-    asg_groups = dict()
     for group in data_groups:
         if group["type"] == "asg":
             asg_groups[group["id"]] = group["nodes"]
 
-    global edges      # edges are uni-directional (from => to)
-    edges = dict()      # edges are uni-directional (from => to)
-
-    global edges_rev  # edges_rev are reversed (to => from). Used by RDS nodes (master/slave).
-    edges_rev = dict()  # edges_rev are reversed (to => from). Used by RDS nodes (master/slave).
     for edge in data_edges:
         if edge["from"] not in edges:
             edges[edge["from"]] = set()
@@ -119,6 +137,32 @@ def scan_data(data):
             edges_rev[edge["to"]] = set()
         edges_rev[edge["to"]].add(edge["from"])
 
+    for text in data_text:
+        texts[text["id"]] = text
+
+        mapPos = text.get("mapPos", {})
+        if isinstance(mapPos, dict):
+            relTo = mapPos.get("relTo", "")
+
+            if relTo:
+                if relTo in nodes.keys():
+                    nodes[relTo].update({"text": text["text"]})
+
+    for surface in data_surfaces:
+        surfaces[surface["id"]] = surface
+
+        if surface["type"] == "zone":
+            region = surface.get("region")
+            if region:
+                if region not in regions.keys():
+                    regions[region] = list()
+
+                regions[region].append(surface)
+
+    pprint(regions)
+    pprint(regions.keys())
+    # pprint(nodes)
+    # pprint(texts)
     # pprint(edges)
     # pprint(edges_rev)
 
@@ -157,17 +201,37 @@ def get_edge_rev_nodes_by_id(id):
     return tmp_nodes
 
 
-def render_single_layer(resource):
+def render_single_layer(resource, append_id=False):
+
+    try:
+        region = list(regions.keys())[0]
+    except Exception:
+        region = "eu-west-1"
+
+    path_parts = list()
+
+    text = resource.get("text")
+
+    if text is not None and len(text):
+        path_parts.append(text)
+        if append_id:
+            path_parts.append(resource["ref_id"])
+    else:
+        path_parts.append(resource["type"])
+        if append_id:
+            path_parts.append(resource["ref_id"])
+
+    dir_name = "single_layer/%s/%s" % (region, "_".join(path_parts))
 
     single_layer = {
-        "dir_name": "single_layer/eu-west-1/" + resource["type"] + "_" + resource["ref_id"],
+        "dir_name": dir_name.lower(),
         "module_source": MODULES[resource["type"]]["source"],
     }
 
     extra_context = resource.update(single_layer) or resource
 
     cookiecutter(COOKIECUTTER_DIR_SINGLE_LAYER,
-                 config_file=os.path.join(cookiecutter_root,"cookiecutter/config_aws_lambda.yaml"),
+                 config_file=os.path.join(COOKIECUTTER_TEMPLATES_DIR, "config_aws_lambda.yaml"),
                  no_input=True,
                  extra_context=extra_context)
 
@@ -179,7 +243,7 @@ def render_common_layer():
     }
 
     cookiecutter(COOKIECUTTER_DIR_COMMON_LAYER,
-                 config_file=os.path.join(cookiecutter_root,"cookiecutter/config_aws_lambda.yaml"),
+                 config_file=os.path.join(COOKIECUTTER_TEMPLATES_DIR, "config_aws_lambda.yaml"),
                  no_input=True,
                  extra_context=common_layer)
 
@@ -191,7 +255,7 @@ def render_root_dir():
     }
 
     cookiecutter(COOKIECUTTER_DIR_ROOT,
-                 config_file=os.path.join(cookiecutter_root,"cookiecutter/config_aws_lambda.yaml"),
+                 config_file=os.path.join(COOKIECUTTER_TEMPLATES_DIR, "config_aws_lambda.yaml"),
                  no_input=True,
                  extra_context=root_dir)
 
@@ -211,32 +275,38 @@ def load_data(event):
     else:
         raise ValueError("'cloudcraft' or 'localfile' query string parameter should be defined")
 
-    print("event = ")
-    print(json.dumps(event))
+    print("event = %s" % json.dumps(event))
 
     return data
 
 
 def generate_modulestf_config(data):
 
-    scan_data(data)
+    pprint(data)
+
+    prepare_data(data)
 
     resources = list()
     parsed_asg_id = set()
     parsed_rds_id = set()
+    warnings = set()
+
     for id, node in nodes.items():
 
         # if node["type"] not in ["elb"]:
         #     continue
 
+        print("------------------")
         # print(id)
-        pprint("-------")
-        print(node["type"])
+        pprint(node, indent=2)
 
         edge_nodes = get_edge_nodes_by_id(id)
         edge_rev_nodes = get_edge_rev_nodes_by_id(id)
-        pprint(edge_nodes)
-        pprint(edge_rev_nodes)
+        # pprint(edge_nodes)
+        # pprint(edge_rev_nodes)
+
+        if node["type"] not in ["rds", "ec2", "elb", "s3", "cloudfront"]:
+            warnings.add("node type %s is not implemented yet" % node["type"])
 
         if node["type"] == "rds":
             is_multi_az = False
@@ -250,12 +320,13 @@ def generate_modulestf_config(data):
 
             rds_id = master_rds_id if is_multi_az else id
 
-            pprint(rds_id)
+            # pprint(rds_id)
 
             if rds_id not in parsed_rds_id:
                 resources.append({
                     "type": "rds",
                     "ref_id": rds_id,
+                    "text": node.get("text"),
                     "params": {
                         "engine": node["engine"],
                         "instanceType": node["instanceType"]+"."+node["instanceSize"],
@@ -276,6 +347,7 @@ def generate_modulestf_config(data):
                     resources.append({
                         "type": "autoscaling",
                         "ref_id": asg_id,
+                        "text": node.get("text"),
                         "params": {
                             "instanceType": node["instanceType"]+"."+node["instanceSize"],
                         }
@@ -286,6 +358,7 @@ def generate_modulestf_config(data):
                 resources.append({
                     "type": "ec2-instance",
                     "ref_id": id,
+                    "text": node.get("text"),
                     "params": {
                         "instanceType": node["instanceType"]+"."+node["instanceSize"],
                     }
@@ -303,6 +376,7 @@ def generate_modulestf_config(data):
             resources.append({
                 "type": "elb",
                 "ref_id": id,
+                "text": node.get("text"),
                 "params": {
                     "alb": is_alb,
                     "asg_id": asg_id if is_asg else None,
@@ -315,6 +389,7 @@ def generate_modulestf_config(data):
             resources.append({
                 "type": "s3",
                 "ref_id": id,
+                "text": node.get("text"),
                 "params": {
                 }
             })
@@ -328,13 +403,17 @@ def generate_modulestf_config(data):
             resources.append({
                 "type": "s3",
                 "ref_id": id,
+                "text": node.get("text"),
                 "params": {
                 }
             })
 
-    pprint("-START------------------------------------")
+    print("-START------------------------------------")
     pprint(resources)
-    pprint("-END------------------------------------")
+    print("-END------------------------------------")
+
+    if len(warnings):
+        logging.warning("; ".join(warnings))
 
     return json.dumps(resources)
 
@@ -393,9 +472,30 @@ def render_from_modulestf_config(config):
 
     os.chdir(working_dir)
 
+    pprint(resources)
+    text_types = dict()
+    for r in resources:
+        try:
+            t = r.get("text") + r.get("type")
+        except TypeError:
+            t = r.get("type")
+        if t not in text_types.keys():
+            text_types[t] = 0
+
+        text_types[t] = text_types[t] + 1
+
+    pprint(text_types)
+
+
     # render single layers in a loop
     for resource in resources:
-        render_single_layer(resource)
+
+        try:
+            t = resource.get("text") + resource.get("type")
+        except TypeError:
+            t = resource.get("type")
+
+        render_single_layer(resource, append_id=(text_types[t] > 1))
 
     render_common_layer()
     render_root_dir()
@@ -435,6 +535,7 @@ def upload_result():
 
 
 def handler(event, context):
+    logger = setup_logging()
 
     data = load_data(event)
 
@@ -442,7 +543,8 @@ def handler(event, context):
 
     render_from_modulestf_config(config)
 
-    link = upload_result()
+    # link = upload_result()
+    link = ""
 
     return {
         "body": "",

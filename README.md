@@ -23,8 +23,10 @@ All gets into modules.tf's generator (MTG) which creates "infrastructure as code
  - [x] Convert blueprint.json (cloudcraft) into generic json config for cookiecutter (output.json)
  - [x] Cookiecutter should render one directory with all content as specified in json config
  - [x] Create zip archive, upload it to S3
- - [x] Return content of zip file back to the user to initiate download 
- 
+ - [x] Return content of zip file back to the user to initiate download
+ - [ ] Make content of archive real and usable
+ - [ ] Improve config generator to follow links/edges/etc
+
 Extract data from "nodes" and convert it into single "terraform-aws-module" + available arguments (instanceType, instanceSize, elbType)
 
 ## Notes

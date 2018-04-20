@@ -61,5 +61,9 @@ custom:
 
 package:
   exclude:
+    - "input/**"
+    - "output/**"
+    - "real-examples/**"
+    - "test_fixtures/**"
     - "node_modules/**"
     - ".requirements-cache/**"
