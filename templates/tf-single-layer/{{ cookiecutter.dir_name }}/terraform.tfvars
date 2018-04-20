@@ -17,4 +17,4 @@ terragrunt = {
 # MODULE PARAMETERS
 {% for key, value in cookiecutter.params|dictsort -%}
 {{ key }} = "{{ value }}"
-{%- endfor %}
+{% endfor %}

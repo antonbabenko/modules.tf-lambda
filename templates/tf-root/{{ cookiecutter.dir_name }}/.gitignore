@@ -7,9 +7,6 @@ crash.log
 *.key
 *.pem
 
-# Secrets are encrypted using git-crypt
-!files/secrets/*/*
-
 # OS X
 .history
 .DS_Store
@@ -22,4 +19,3 @@ crash.log
 .idea/
 build/
 */build/
-out/

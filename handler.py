@@ -70,14 +70,11 @@ MODULES = {
 }
 
 COOKIECUTTER_TEMPLATES_DIR = os.getcwd() + "/templates"
-COOKIECUTTER_DIR_SINGLE_LAYER = os.path.join(COOKIECUTTER_TEMPLATES_DIR, "tf-single-layer")
-COOKIECUTTER_DIR_COMMON_LAYER = os.path.join(COOKIECUTTER_TEMPLATES_DIR, "tf-common-layer")
-COOKIECUTTER_DIR_ROOT = os.path.join(COOKIECUTTER_TEMPLATES_DIR, "tf-root")
 
-tmp_dir = "/tmp"
-
-blueprint_file = "input/blueprint.json"
-# blueprint_file = "real-examples/example1.json"
+if os.environ.get("IS_LOCAL"):
+    tmp_dir = os.getcwd()
+else:
+    tmp_dir = "/tmp"
 
 
 # Logging snippet was from https://gist.github.com/niranjv/fb95e716151642e8ca553b0e38dd152e
@@ -159,8 +156,8 @@ def prepare_data(data):
 
                 regions[region].append(surface)
 
-    pprint(regions)
-    pprint(regions.keys())
+    # pprint(regions)
+    # pprint(regions.keys())
     # pprint(nodes)
     # pprint(texts)
     # pprint(edges)
@@ -230,7 +227,7 @@ def render_single_layer(resource, append_id=False):
 
     extra_context = resource.update(single_layer) or resource
 
-    cookiecutter(COOKIECUTTER_DIR_SINGLE_LAYER,
+    cookiecutter(os.path.join(COOKIECUTTER_TEMPLATES_DIR, "tf-single-layer"),
                  config_file=os.path.join(COOKIECUTTER_TEMPLATES_DIR, "config_aws_lambda.yaml"),
                  no_input=True,
                  extra_context=extra_context)
@@ -242,7 +239,7 @@ def render_common_layer():
         "dir_name": "common_layer",
     }
 
-    cookiecutter(COOKIECUTTER_DIR_COMMON_LAYER,
+    cookiecutter(os.path.join(COOKIECUTTER_TEMPLATES_DIR, "tf-common-layer"),
                  config_file=os.path.join(COOKIECUTTER_TEMPLATES_DIR, "config_aws_lambda.yaml"),
                  no_input=True,
                  extra_context=common_layer)
@@ -254,7 +251,7 @@ def render_root_dir():
         "dir_name": "root_dir",
     }
 
-    cookiecutter(COOKIECUTTER_DIR_ROOT,
+    cookiecutter(os.path.join(COOKIECUTTER_TEMPLATES_DIR, "tf-root"),
                  config_file=os.path.join(COOKIECUTTER_TEMPLATES_DIR, "config_aws_lambda.yaml"),
                  no_input=True,
                  extra_context=root_dir)
@@ -417,32 +414,21 @@ def generate_modulestf_config(data):
 
     return json.dumps(resources)
 
-    #
-    # output_dir = os.path.join(tmp_dir, "output")
-    # try:
-    #     os.mkdir(output_dir)
-    # except OSError:
-    #     pass
-    #
-    # os.chdir(output_dir)
-    #
-    # # create output directory
-    # working_dir = blueprint_file.replace("/", "_")
-    #
-    # try:
-    #     shutil.rmtree(working_dir)
-    # except FileNotFoundError:
-    #     pass
-    #
-    # try:
-    #     os.mkdir(working_dir)
-    # except OSError:
-    #     pass
-    #
-    # os.chdir(working_dir)
-    #
-    # with open('output.json', 'w') as f:
-    #     f.write(json.dumps(resources))
+# Count unique combination of type and text to decide if to append unique resource id
+def get_types_text(resources):
+    types_text = dict()
+    for r in resources:
+        try:
+            t = r.get("type") + r.get("text")
+        except TypeError:
+            t = r.get("type")
+
+        if t not in types_text.keys():
+            types_text[t] = 1
+        else:
+            types_text[t] = types_text[t] + 1
+
+    return types_text
 
 
 def render_from_modulestf_config(config):
@@ -458,7 +444,7 @@ def render_from_modulestf_config(config):
     os.chdir(output_dir)
 
     # create output directory
-    working_dir = blueprint_file.replace("/", "_")
+    working_dir = "work"
 
     try:
         shutil.rmtree(working_dir)
@@ -472,30 +458,19 @@ def render_from_modulestf_config(config):
 
     os.chdir(working_dir)
 
-    pprint(resources)
-    text_types = dict()
-    for r in resources:
-        try:
-            t = r.get("text") + r.get("type")
-        except TypeError:
-            t = r.get("type")
-        if t not in text_types.keys():
-            text_types[t] = 0
+    # pprint(resources)
 
-        text_types[t] = text_types[t] + 1
-
-    pprint(text_types)
-
+    types_text = get_types_text(resources)
 
     # render single layers in a loop
     for resource in resources:
 
         try:
-            t = resource.get("text") + resource.get("type")
+            t = resource.get("type") + resource.get("text")
         except TypeError:
             t = resource.get("type")
 
-        render_single_layer(resource, append_id=(text_types[t] > 1))
+        render_single_layer(resource, append_id=(types_text[t] > 1))
 
     render_common_layer()
     render_root_dir()
@@ -517,17 +492,22 @@ def render_from_modulestf_config(config):
     for file in glob.glob("root_dir/*"):
         shutil.move(file, "final")
 
+    print(os.getcwd())
+
     # Make zip archive
     shutil.make_archive("archive", "zip", "final")
 
 
 def upload_result():
 
-    s3 = boto3.client('s3')
-    s3_key = "staging/" + md5(bytes(uuid.uuid4().hex, "ascii")).hexdigest() + ".zip"
-    s3.upload_file("archive.zip", "dl.modules.tf", s3_key, ExtraArgs={'ACL': 'public-read'})
+    s3_bucket = os.environ.get("S3_BUCKET", "dl.modules.tf")
+    s3_dir = os.environ.get("S3_DIR", "local")
 
-    link = "https://dl.modules.tf/" + s3_key
+    s3 = boto3.client("s3")
+    s3_key = s3_dir + "/" + md5(bytes(uuid.uuid4().hex, "ascii")).hexdigest() + ".zip"
+    s3.upload_file("archive.zip", s3_bucket, s3_key, ExtraArgs={'ACL': 'public-read'})
+
+    link = "https://" + s3_bucket + "/" + s3_key
 
     print("LINK=" + link)
 
@@ -535,6 +515,7 @@ def upload_result():
 
 
 def handler(event, context):
+    link = ""
     logger = setup_logging()
 
     data = load_data(event)
@@ -543,8 +524,7 @@ def handler(event, context):
 
     render_from_modulestf_config(config)
 
-    # link = upload_result()
-    link = ""
+    link = upload_result()
 
     return {
         "body": "",
