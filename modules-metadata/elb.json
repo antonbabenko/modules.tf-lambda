@@ -1,0 +1,67 @@
+{
+  "access_logs": {
+    "default": [],
+    "description": "An access logs block",
+    "type": "list"
+  },
+  "connection_draining": {
+    "default": false,
+    "description": "Boolean to enable connection draining"
+  },
+  "connection_draining_timeout": {
+    "default": 300,
+    "description": "The time in seconds to allow for connections to drain"
+  },
+  "cross_zone_load_balancing": {
+    "default": true,
+    "description": "Enable cross-zone load balancing"
+  },
+  "health_check": {
+    "description": "A health check block",
+    "type": "list"
+  },
+  "idle_timeout": {
+    "default": 60,
+    "description": "The time in seconds that the connection is allowed to be idle"
+  },
+  "instances": {
+    "default": [],
+    "description": "List of instances ID to place in the ELB pool",
+    "type": "list"
+  },
+  "internal": {
+    "description": "If true, ELB will be an internal ELB"
+  },
+  "listener": {
+    "description": "A list of listener blocks",
+    "type": "list"
+  },
+  "name": {
+    "description": "The name of the ELB"
+  },
+  "number_of_instances": {
+    "default": 0,
+    "description": "Number of instances to attach to ELB"
+  },
+  "security_groups": {
+    "description": "A list of security group IDs to assign to the ELB",
+    "type": "list"
+  },
+  "subnets": {
+    "description": "A list of subnet IDs to attach to the ELB",
+    "type": "list"
+  },
+  "tags": {
+    "default": {},
+    "description": "A mapping of tags to assign to the resource"
+  },
+  "engine": {
+    "cloudcraft_name": "engine"
+  },
+  "instance_class": {
+    "cloudcraft_name": "instanceType"
+  },
+  "multi_az": {
+    "cloudcraft_name": "isMultiAZ"
+  }
+}

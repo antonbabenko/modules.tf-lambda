@@ -6,7 +6,7 @@ Input:
  * URL: https://cloudcraft.co/api/blueprint/bf0ad2c6-168f-4452-9add-cc4c869f910b
  * local file: blueprint.json
 
-# High level picture
+## High level picture
 
 Sources:
 
@@ -18,6 +18,13 @@ Sources:
 
 All gets into modules.tf's generator (MTG) which creates "infrastructure as code (terragrunt + docs)"
 
+# Mapping
+
+Cloudcraft and modules.tf mapping of variables is defined in `modules-metadata/{module}.json` and updated by shell script `update_modules_metadata.sh`
+
+isMultiAZ (cloudcraft) ==> multi_az (modules.tf) ==> multi_az (terraform-aws-modules)
+
+
 ## To-do
 
  - [x] Convert blueprint.json (cloudcraft) into generic json config for cookiecutter (output.json)
@@ -25,9 +32,10 @@ All gets into modules.tf's generator (MTG) which creates "infrastructure as code
  - [x] Create zip archive, upload it to S3
  - [x] Return content of zip file back to the user to initiate download
  - [x] Make content of archive real and usable
- - [ ] Print only required key/values into terraform.tfvars
+ - [x] Print only required key/values into terraform.tfvars
  - [ ] Improve config generator to follow links/edges/etc
- - [ ] Generate real meta data from modules (or hardcode some)
+ - [x] Generate real meta data from modules (or hardcode some)
+ - [ ] Add basic S3 and Cloudfront modules
 
 Extract data from "nodes" and convert it into single "terraform-aws-module" + available arguments (instanceType, instanceSize, elbType)
 

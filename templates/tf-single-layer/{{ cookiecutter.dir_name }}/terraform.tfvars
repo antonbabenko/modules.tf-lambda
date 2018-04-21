@@ -8,22 +8,33 @@ terragrunt = {
   }
 }
 
-# MODULE PARAMETERS
-{# printing only required variables and those which were set by cloudcraft #}
+{%- for key, value in cookiecutter.module_variables|dictsort -%}
 
-{% for key, value in cookiecutter.module_variables|dictsort -%}
+{%- if value.cloudcraft_name is defined -%}
+  {%- if value.cloudcraft_name in cookiecutter.params -%}
+    {%- set tmp_value = cookiecutter.params[value.cloudcraft_name] -%}
+  {%- else -%}
+    {%- set tmp_value = None -%}
+  {%- endif-%}
+{%- elif key in cookiecutter.params -%}
+  {%- set tmp_value = cookiecutter.params[key] -%}
+{%- else -%}
+  {%- set tmp_value = None -%}
+{%- endif -%}
 
-{% if value.cloudcraft_name|default() != "" %}
-  {% set tmp_value = cookiecutter.params[value.cloudcraft_name] %}
-{% elif key in cookiecutter.params %}
-  {% set tmp_value = cookiecutter.params[key] %}
-{% else %}
-  {% set tmp_value = None %}
-{% endif %}
-
-
-{% set value_type = value.type|default("string") %}
-
+{%- if value.default is defined -%}
+  {%- if value.default|lower() in ["true", "false"] -%}
+    {%- set value_type = value.type|default("bool") -%}
+  {%- elif value.default is mapping -%}
+    {%- set value_type = value.type|default("map") -%}
+  {%- elif value.default is string -%}
+    {%- set value_type = value.type|default("string") -%}
+  {%- else -%}
+    {%- set value_type = value.type|default("list") -%}
+  {%- endif %}
+{%- else -%}
+  {%- set value_type = value.type|default("string") -%}
+{%- endif -%}
 
 {%- if value_type == 'string' -%}
   {%- set variable_default = '""' -%}
@@ -42,14 +53,15 @@ terragrunt = {
   {%- set tf_value = '"%s"'|format(tmp_value) -%}
 {%- endif -%}
 
-
-{% if value.required|default(False) or tmp_value != None %}
-# {{ value.description }}
-  {% if tmp_value == None %}
-    {{ key }} = {{ variable_default }}
-  {% else %}
-    {{ key }} = {{ tf_value }}
-  {% endif %}
+{# printing only required variables (required = no default value) and those which were set explicitely #}
+{%- if value.default is not defined or tmp_value != None %}
+# {{ value.description|default() }}
+{%- if tmp_value == None %}
+{{ key }} = {{ variable_default }}
+{% else %}
+{{ key }} = {{ tf_value }}
 {% endif %}
 
-{% endfor %}
+{%- endif -%}
+
+{% endfor -%}

@@ -1,0 +1,11 @@
+{
+  "engine": {
+    "cloudcraft_name": "engine"
+  },
+  "instance_class": {
+    "cloudcraft_name": "instanceType"
+  },
+  "multi_az": {
+    "cloudcraft_name": "isMultiAZ"
+  }
+}

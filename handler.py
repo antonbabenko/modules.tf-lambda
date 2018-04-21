@@ -16,79 +16,32 @@ import logging
 
 from cookiecutter.main import cookiecutter
 
-
-# @todo: generate variables and outputs arrays from real modules
-
-#isMultiAZ (cloudcraft) ==> multi_az (modules.tf) ==> multi_az (terraform-aws-modules)
-
 MODULES = {
     "elb": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-elb.git",
-        "variables": {
-            "name": {
-                "description": "The name of the ELB",
-            },
-            "security_groups": {
-                "description": "A list of security group IDs to assign to the ELB",
-                "type": "list",
-            },
-            "subnets": {
-                "description": "A list of subnet IDs to attach to the ELB",
-                "type": "list",
-            },
-            "internal": {
-                "description": "If true, ELB will be an internal ELB"
-            }
-        },
-        "outputs": {},
+        "variables": json.load(open("modules-metadata/elb.json")),
     },
     "rds": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-rds.git",
-        "variables": {
-            "engine": {
-                "description": "Type of RDS engine",
-                "required": True,
-                "cloudcraft_name": "engine"
-            },
-            "instance_class": {
-                "description": "Type of instance",
-                "required": True,
-                "cloudcraft_name": "instanceType"
-            },
-            "multi_az": {
-                "description": "Do you need Multi-AZ?",
-                "type": "bool",
-                "cloudcraft_name": "isMultiAZ"
-            }
-        },
-        "outputs": {},
+        "variables": json.load(open("modules-metadata/rds.json")),
     },
     "autoscaling": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-autoscaling.git",
-        "variables": {
-            "instance_type": {
-                "description": "Instance type to use?",
-                "cloudcraft_name": "instanceType"
-            }
-        },
-        "outputs": {},
+        "variables": json.load(open("modules-metadata/autoscaling.json")),
     },
     "ec2-instance": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-ec2-instance.git",
-        "variables": {},
-        "outputs": {},
+        "variables": json.load(open("modules-metadata/ec2-instance.json")),
     },
     "s3": {
         # "source": "terraform-aws-modules/s3/aws",
         "source": "terraform-aws-modules/security-group/aws",
         "variables": {},
-        "outputs": {},
     },
     "cloudfront": {
         # "source": "terraform-aws-modules/cloudfront/aws",
         "source": "terraform-aws-modules/security-group/aws",
         "variables": {},
-        "outputs": {},
     },
 }
 

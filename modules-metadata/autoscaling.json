@@ -1,0 +1,177 @@
+{
+  "asg_name": {
+    "default": "",
+    "description": "Creates a unique name for autoscaling group beginning with the specified prefix"
+  },
+  "associate_public_ip_address": {
+    "default": false,
+    "description": "Associate a public ip address with an instance in a VPC"
+  },
+  "create_asg": {
+    "default": true,
+    "description": "Whether to create autoscaling group"
+  },
+  "create_lc": {
+    "default": true,
+    "description": "Whether to create launch configuration"
+  },
+  "default_cooldown": {
+    "default": 300,
+    "description": "The amount of time, in seconds, after a scaling activity completes before another scaling activity can start"
+  },
+  "desired_capacity": {
+    "description": "The number of Amazon EC2 instances that should be running in the group"
+  },
+  "ebs_block_device": {
+    "default": [],
+    "description": "Additional EBS block devices to attach to the instance",
+    "type": "list"
+  },
+  "ebs_optimized": {
+    "default": false,
+    "description": "If true, the launched EC2 instance will be EBS-optimized"
+  },
+  "enable_monitoring": {
+    "default": true,
+    "description": "Enables/disables detailed monitoring. This is enabled by default."
+  },
+  "enabled_metrics": {
+    "default": [
+      "GroupMinSize",
+      "GroupMaxSize",
+      "GroupDesiredCapacity",
+      "GroupInServiceInstances",
+      "GroupPendingInstances",
+      "GroupStandbyInstances",
+      "GroupTerminatingInstances",
+      "GroupTotalInstances"
+    ],
+    "description": "A list of metrics to collect. The allowed values are GroupMinSize, GroupMaxSize, GroupDesiredCapacity, GroupInServiceInstances, GroupPendingInstances, GroupStandbyInstances, GroupTerminatingInstances, GroupTotalInstances",
+    "type": "list"
+  },
+  "ephemeral_block_device": {
+    "default": [],
+    "description": "Customize Ephemeral (also known as 'Instance Store') volumes on the instance",
+    "type": "list"
+  },
+  "force_delete": {
+    "default": false,
+    "description": "Allows deleting the autoscaling group without waiting for all instances in the pool to terminate. You can force an autoscaling group to delete even if it's in the process of scaling a resource. Normally, Terraform drains all the instances before deleting the group. This bypasses that behavior and potentially leaves resources dangling"
+  },
+  "health_check_grace_period": {
+    "default": 300,
+    "description": "Time (in seconds) after instance comes into service before checking health"
+  },
+  "health_check_type": {
+    "description": "Controls how health checking is done. Values are - EC2 and ELB"
+  },
+  "iam_instance_profile": {
+    "default": "",
+    "description": "The IAM instance profile to associate with launched instances"
+  },
+  "image_id": {
+    "description": "The EC2 image ID to launch"
+  },
+  "instance_type": {
+    "description": "The size of instance to launch",
+    "cloudcraft_name": "instanceType"
+  },
+  "key_name": {
+    "default": "",
+    "description": "The key name that should be used for the instance"
+  },
+  "launch_configuration": {
+    "default": "",
+    "description": "The name of the launch configuration to use (if it is created outside of this module)"
+  },
+  "lc_name": {
+    "default": "",
+    "description": "Creates a unique name for launch configuration beginning with the specified prefix"
+  },
+  "load_balancers": {
+    "default": [],
+    "description": "A list of elastic load balancer names to add to the autoscaling group names"
+  },
+  "max_size": {
+    "description": "The maximum size of the auto scale group"
+  },
+  "metrics_granularity": {
+    "default": "1Minute",
+    "description": "The granularity to associate with the metrics to collect. The only valid value is 1Minute"
+  },
+  "min_elb_capacity": {
+    "default": 0,
+    "description": "Setting this causes Terraform to wait for this number of instances to show up healthy in the ELB only on creation. Updates will not wait on ELB instance number changes"
+  },
+  "min_size": {
+    "description": "The minimum size of the auto scale group"
+  },
+  "name": {
+    "description": "Creates a unique name beginning with the specified prefix"
+  },
+  "placement_group": {
+    "default": "",
+    "description": "The name of the placement group into which you'll launch your instances, if any"
+  },
+  "placement_tenancy": {
+    "default": "default",
+    "description": "The tenancy of the instance. Valid values are 'default' or 'dedicated'"
+  },
+  "protect_from_scale_in": {
+    "default": false,
+    "description": "Allows setting instance protection. The autoscaling group will not select instances with this setting for terminination during scale in events."
+  },
+  "root_block_device": {
+    "default": [],
+    "description": "Customize details about the root block device of the instance",
+    "type": "list"
+  },
+  "security_groups": {
+    "description": "A list of security group IDs to assign to the launch configuration",
+    "type": "list"
+  },
+  "spot_price": {
+    "default": 0,
+    "description": "The price to use for reserving spot instances"
+  },
+  "suspended_processes": {
+    "default": [],
+    "description": "A list of processes to suspend for the AutoScaling Group. The allowed values are Launch, Terminate, HealthCheck, ReplaceUnhealthy, AZRebalance, AlarmNotification, ScheduledActions, AddToLoadBalancer. Note that if you suspend either the Launch or Terminate process types, it can prevent your autoscaling group from functioning properly."
+  },
+  "tags": {
+    "default": [],
+    "description": "A list of tag blocks. Each element should have keys named key, value, and propagate_at_launch."
+  },
+  "tags_as_map": {
+    "default": {},
+    "description": "A map of tags and values in the same format as other resources accept.  This will be zipmapped into the non-standard format that the aws_autoscaling_group requires.",
+    "type": "map"
+  },
+  "target_group_arns": {
+    "default": [],
+    "description": "A list of aws_alb_target_group ARNs, for use with Application Load Balancing"
+  },
+  "termination_policies": {
+    "default": [
+      "Default"
+    ],
+    "description": "A list of policies to decide how the instances in the auto scale group should be terminated. The allowed values are OldestInstance, NewestInstance, OldestLaunchConfiguration, ClosestToNextInstanceHour, Default",
+    "type": "list"
+  },
+  "user_data": {
+    "default": " ",
+    "description": "The user data to provide when launching the instance"
+  },
+  "vpc_zone_identifier": {
+    "description": "A list of subnet IDs to launch resources in",
+    "type": "list"
+  },
+  "wait_for_capacity_timeout": {
+    "default": "10m",
+    "description": "A maximum duration that Terraform should wait for ASG instances to be healthy before timing out. (See also Waiting for Capacity below.) Setting this to '0' causes Terraform to skip all Capacity Waiting behavior."
+  },
+  "wait_for_elb_capacity": {
+    "default": false,
+    "description": "Setting this will cause Terraform to wait for exactly this number of healthy instances in all attached load balancers on both create and update operations. Takes precedence over min_elb_capacity behavior."
+  }
+}
