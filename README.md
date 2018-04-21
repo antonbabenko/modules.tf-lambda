@@ -51,6 +51,13 @@ project/
   ...
 ```
 
+### Run pre-commit after code was rendered:
+
+cd final
+
+// iterate through all files:
+pre-commit run -c $(pwd)/.pre-commit-config.yaml --files $(pwd)/eu-west-1/rds/terraform.tfvars
+pre-commit run -c $(pwd)/.pre-commit-config.yaml --files $(pwd)/....
 
 # Run locally:
 

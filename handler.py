@@ -453,6 +453,7 @@ def generate_modulestf_config(data):
 
     return json.dumps(resources)
 
+
 # Count unique combination of type and text to decide if to append unique resource id
 def get_types_text(resources):
     types_text = dict()
@@ -522,16 +523,25 @@ def render_from_modulestf_config(config):
     except OSError:
         pass
 
-    for file in glob.glob("single_layer/*"):
+    for file in glob.iglob("single_layer/*"):
         shutil.move(file, "final")
 
-    for file in glob.glob("common_layer/*"):
+    for file in glob.iglob("single_layer/.*"):
         shutil.move(file, "final")
 
-    for file in glob.glob("root_dir/*"):
+    for file in glob.iglob("common_layer/*"):
         shutil.move(file, "final")
 
-    print(os.getcwd())
+    for file in glob.iglob("common_layer/.*"):
+        shutil.move(file, "final")
+
+    for file in glob.iglob("root_dir/*"):
+        shutil.move(file, "final")
+
+    for file in glob.iglob("root_dir/.*"):
+        shutil.move(file, "final")
+
+    print("Working directory: %s" % os.getcwd())
 
     # Make zip archive
     shutil.make_archive("archive", "zip", "final")

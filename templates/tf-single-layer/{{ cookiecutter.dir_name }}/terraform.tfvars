@@ -19,6 +19,7 @@ terragrunt = {
 
 {% for key, value in cookiecutter.module_variables|dictsort -%}
 # {{ value.description }}
+
 {% if value.cloudcraft_param|default() == "" %}
 {{ key }} = "..."
 {% else %}
