@@ -263,8 +263,14 @@ def render_single_layer(resource, append_id=False):
 
 def render_common_layer():
 
+    try:
+        region = list(regions.keys())[0]
+    except Exception:
+        region = "eu-west-1"
+
     common_layer = {
         "dir_name": "common_layer",
+        "region": region,
     }
 
     cookiecutter(os.path.join(COOKIECUTTER_TEMPLATES_DIR, "tf-common-layer"),
