@@ -6,44 +6,50 @@ terragrunt = {
   include = {
     path = "${find_in_parent_folders()}"
   }
-
-{#  {% if cookiecutter.dependencies|length -%}
-  dependencies = [
-    "for loop goes here"
-  ]
-  {%- endif %} #}
 }
 
 # MODULE PARAMETERS
-# todo: print only required variables and whose which were set by cloudcraft
+{# printing only required variables and those which were set by cloudcraft #}
 
 {% for key, value in cookiecutter.module_variables|dictsort -%}
-# {{ value.description }}
 
-{% if value.cloudcraft_param|default() == "" %}
-{{ key }} = "..."
+{% if value.cloudcraft_name|default() != "" %}
+  {% set tmp_value = cookiecutter.params[value.cloudcraft_name] %}
+{% elif key in cookiecutter.params %}
+  {% set tmp_value = cookiecutter.params[key] %}
 {% else %}
-{% set tmp_value = cookiecutter.params[value.cloudcraft_param] %}
+  {% set tmp_value = None %}
+{% endif %}
+
+
 {% set value_type = value.type|default("string") %}
+
 
 {%- if value_type == 'string' -%}
   {%- set variable_default = '""' -%}
-  {%- set tmp_value = '"%s"'|format(tmp_value) -%}
+  {%- set tf_value = '"%s"'|format(tmp_value) -%}
 {%- elif value_type == 'int' -%}
   {%- set variable_default = '""' -%}
-  {%- set tmp_value = '%s'|format(tmp_value) -%}
+  {%- set tf_value = '%s'|format(tmp_value) -%}
 {%- elif value_type == 'bool' -%}
   {%- set variable_default = '' -%}
-  {%- set tmp_value = '%s'|format(tmp_value)|lower -%}
+  {%- set tf_value = '%s'|format(tmp_value)|lower -%}
 {%- elif value_type in ['list', 'set'] -%}
   {%- set variable_default = '[]' -%}
-  {%- set tmp_value = '["%s"]'|format(tmp_value) -%}
+  {%- set tf_value = '["%s"]'|format(tmp_value) -%}
 {%- elif value_type == 'map' -%}
   {%- set variable_default = '{}' -%}
-  {%- set tmp_value = '"%s"'|format(tmp_value) -%}
+  {%- set tf_value = '"%s"'|format(tmp_value) -%}
 {%- endif -%}
 
-{{ key }} = {{ tmp_value }}
 
+{% if value.required|default(False) or tmp_value != None %}
+# {{ value.description }}
+  {% if tmp_value == None %}
+    {{ key }} = {{ variable_default }}
+  {% else %}
+    {{ key }} = {{ tf_value }}
+  {% endif %}
 {% endif %}
+
 {% endfor %}

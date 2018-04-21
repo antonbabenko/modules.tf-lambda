@@ -24,8 +24,10 @@ All gets into modules.tf's generator (MTG) which creates "infrastructure as code
  - [x] Cookiecutter should render one directory with all content as specified in json config
  - [x] Create zip archive, upload it to S3
  - [x] Return content of zip file back to the user to initiate download
- - [ ] Make content of archive real and usable
+ - [x] Make content of archive real and usable
+ - [ ] Print only required key/values into terraform.tfvars
  - [ ] Improve config generator to follow links/edges/etc
+ - [ ] Generate real meta data from modules (or hardcode some)
 
 Extract data from "nodes" and convert it into single "terraform-aws-module" + available arguments (instanceType, instanceSize, elbType)
 

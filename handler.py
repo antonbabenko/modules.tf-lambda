@@ -19,6 +19,8 @@ from cookiecutter.main import cookiecutter
 
 # @todo: generate variables and outputs arrays from real modules
 
+#isMultiAZ (cloudcraft) ==> multi_az (modules.tf) ==> multi_az (terraform-aws-modules)
+
 MODULES = {
     "elb": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-elb.git",
@@ -43,10 +45,20 @@ MODULES = {
     "rds": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-rds.git",
         "variables": {
+            "engine": {
+                "description": "Type of RDS engine",
+                "required": True,
+                "cloudcraft_name": "engine"
+            },
+            "instance_class": {
+                "description": "Type of instance",
+                "required": True,
+                "cloudcraft_name": "instanceType"
+            },
             "multi_az": {
                 "description": "Do you need Multi-AZ?",
                 "type": "bool",
-                "cloudcraft_param": "isMultiAZ"
+                "cloudcraft_name": "isMultiAZ"
             }
         },
         "outputs": {},
@@ -56,7 +68,7 @@ MODULES = {
         "variables": {
             "instance_type": {
                 "description": "Instance type to use?",
-                "cloudcraft_param": "instanceType"
+                "cloudcraft_name": "instanceType"
             }
         },
         "outputs": {},
@@ -522,7 +534,12 @@ def render_from_modulestf_config(config):
     render_root_dir()
 
     # combine_rendered_output
-    final_dir = "final"
+    final_dir = "../final"
+
+    try:
+        shutil.rmtree(final_dir)
+    except FileNotFoundError:
+        pass
 
     try:
         os.mkdir(final_dir)
@@ -530,27 +547,27 @@ def render_from_modulestf_config(config):
         pass
 
     for file in glob.iglob("single_layer/*"):
-        shutil.move(file, "final")
+        shutil.move(file, final_dir)
 
     for file in glob.iglob("single_layer/.*"):
-        shutil.move(file, "final")
+        shutil.move(file, final_dir)
 
     for file in glob.iglob("common_layer/*"):
-        shutil.move(file, "final")
+        shutil.move(file, final_dir)
 
     for file in glob.iglob("common_layer/.*"):
-        shutil.move(file, "final")
+        shutil.move(file, final_dir)
 
     for file in glob.iglob("root_dir/*"):
-        shutil.move(file, "final")
+        shutil.move(file, final_dir)
 
     for file in glob.iglob("root_dir/.*"):
-        shutil.move(file, "final")
+        shutil.move(file, final_dir)
 
     print("Working directory: %s" % os.getcwd())
 
     # Make zip archive
-    shutil.make_archive("archive", "zip", "final")
+    shutil.make_archive("archive", "zip", final_dir)
 
 
 def upload_result():
