@@ -34,6 +34,10 @@ isMultiAZ (cloudcraft) ==> multi_az (modules.tf) ==> multi_az (terraform-aws-mod
  - [x] Make content of archive real and usable
  - [x] Print only required key/values into terraform.tfvars
  - [ ] Improve config generator to follow links/edges/etc
+ - [ ] Get connections between (using data-sources):
+    - [ ] ELB & ASG (target_group_arns)
+    - [ ] S3 & Cloudfront
+    - [ ] ELB or ALB
  - [x] Generate real meta data from modules (or hardcode some)
  - [ ] Add basic S3 and Cloudfront modules
 

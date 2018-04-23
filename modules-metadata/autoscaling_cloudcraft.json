@@ -1,5 +1,8 @@
 {
   "instance_type": {
     "cloudcraft_name": "instanceType"
+  },
+  "target_group_arns": {
+    "cloudcraft_name": "related.type=alb.id"
   }
 }

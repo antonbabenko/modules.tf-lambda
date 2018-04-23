@@ -5,14 +5,5 @@
   },
   "sns_topic_name": {
     "description": "The name of the SNS topic to create"
-  },
-  "engine": {
-    "cloudcraft_name": "engine"
-  },
-  "instance_class": {
-    "cloudcraft_name": "instanceType"
-  },
-  "multi_az": {
-    "cloudcraft_name": "isMultiAZ"
   }
 }

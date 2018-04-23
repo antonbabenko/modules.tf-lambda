@@ -131,7 +131,7 @@
     "type": "list"
   },
   "spot_price": {
-    "default": 0,
+    "default": "",
     "description": "The price to use for reserving spot instances"
   },
   "suspended_processes": {
@@ -149,7 +149,8 @@
   },
   "target_group_arns": {
     "default": [],
-    "description": "A list of aws_alb_target_group ARNs, for use with Application Load Balancing"
+    "description": "A list of aws_alb_target_group ARNs, for use with Application Load Balancing",
+    "cloudcraft_name": "related.type=alb.id"
   },
   "termination_policies": {
     "default": [

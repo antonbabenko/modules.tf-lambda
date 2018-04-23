@@ -98,14 +98,5 @@
   "vpc_security_group_ids": {
     "description": "A list of security group IDs to associate with",
     "type": "list"
-  },
-  "engine": {
-    "cloudcraft_name": "engine"
-  },
-  "instance_class": {
-    "cloudcraft_name": "instanceType"
-  },
-  "multi_az": {
-    "cloudcraft_name": "isMultiAZ"
   }
 }

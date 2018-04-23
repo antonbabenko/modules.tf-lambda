@@ -130,7 +130,7 @@
     "type": "list"
   },
   "spot_price": {
-    "default": 0,
+    "default": "",
     "description": "The price to use for reserving spot instances"
   },
   "suspended_processes": {

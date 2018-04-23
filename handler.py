@@ -4,6 +4,8 @@ from __future__ import print_function
 
 import glob
 import json
+import re
+
 import boto3
 import os
 import shutil
@@ -17,6 +19,10 @@ import logging
 from cookiecutter.main import cookiecutter
 
 MODULES = {
+    "alb": {
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-alb.git",
+        "variables": json.load(open("modules-metadata/alb.json")),
+    },
     "elb": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-elb.git",
         "variables": json.load(open("modules-metadata/elb.json")),
@@ -32,6 +38,14 @@ MODULES = {
     "ec2-instance": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-ec2-instance.git",
         "variables": json.load(open("modules-metadata/ec2-instance.json")),
+    },
+    "sns": {
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-sns.git",
+        "variables": json.load(open("modules-metadata/sns.json")),
+    },
+    "sqs": {
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-sqs.git",
+        "variables": json.load(open("modules-metadata/sqs.json")),
     },
     "s3": {
         # "source": "terraform-aws-modules/s3/aws",
@@ -210,10 +224,15 @@ def render_single_layer(resource, append_id=False):
         if append_id:
             path_parts.append(resource["ref_id"])
 
-    dir_name = "single_layer/%s/%s" % (region, "_".join(path_parts))
+    dir_name = "_".join(path_parts)
+    dir_name = re.sub(' ', '_', dir_name.strip())
+    dir_name = re.sub('[^a-zA-Z0-9_]', '', dir_name)
+    dir_name = re.sub('_+', '_', dir_name)
+
+    full_dir_name = "single_layer/%s/%s" % (region, dir_name)
 
     single_layer = {
-        "dir_name": dir_name.lower(),
+        "dir_name": full_dir_name.lower(),
         "module_source": MODULES[resource["type"]]["source"],
         "module_variables": MODULES[resource["type"]]["variables"],
     }
@@ -300,9 +319,6 @@ def generate_modulestf_config(data):
 
     for id, node in nodes.items():
 
-        # if node["type"] not in ["elb"]:
-        #     continue
-
         print("------------------")
         # print(id)
         pprint(node, indent=2)
@@ -372,7 +388,6 @@ def generate_modulestf_config(data):
                 })
 
         if node["type"] == "elb":
-            is_alb = node["elbType"] == "application"
             is_asg = False
 
             for asg_id in edge_nodes.keys():
@@ -380,15 +395,24 @@ def generate_modulestf_config(data):
                     is_asg = True
                     break
 
-            resources.append({
-                "type": "elb",
-                "ref_id": id,
-                "text": node.get("text"),
-                "params": {
-                    "alb": is_alb,
-                    "asg_id": asg_id if is_asg else None,
-                }
-            })
+            if node["elbType"] == "application":
+                resources.append({
+                    "type": "alb",
+                    "ref_id": id,
+                    "text": node.get("text"),
+                    "params": {
+                        "asg_id": asg_id if is_asg else None,
+                    }
+                })
+            else:
+                resources.append({
+                    "type": "elb",
+                    "ref_id": id,
+                    "text": node.get("text"),
+                    "params": {
+                        "asg_id": asg_id if is_asg else None,
+                    }
+                })
 
         if node["type"] == "s3":
             # pprint(node)
@@ -408,10 +432,29 @@ def generate_modulestf_config(data):
             # pprint(edge_rev_nodes)
 
             resources.append({
-                "type": "s3",
+                "type": "cloudfront",
                 "ref_id": id,
                 "text": node.get("text"),
                 "params": {
+                }
+            })
+
+        if node["type"] == "sns":
+            resources.append({
+                "type": "sns",
+                "ref_id": id,
+                "text": node.get("text"),
+                "params": {
+                }
+            })
+
+        if node["type"] == "sqs":
+            resources.append({
+                "type": "sqs",
+                "ref_id": id,
+                "text": node.get("text"),
+                "params": {
+                    "fifoQueue": node["queueType"] == "fifo",
                 }
             })
 

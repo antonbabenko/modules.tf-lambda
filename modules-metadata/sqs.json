@@ -13,7 +13,8 @@
   },
   "fifo_queue": {
     "default": false,
-    "description": "Boolean designating a FIFO queue"
+    "description": "Boolean designating a FIFO queue",
+    "cloudcraft_name": "fifoQueue"
   },
   "kms_data_key_reuse_period_seconds": {
     "default": 300,
@@ -54,14 +55,5 @@
   "visibility_timeout_seconds": {
     "default": 30,
     "description": "The visibility timeout for the queue. An integer from 0 to 43200 (12 hours)"
-  },
-  "engine": {
-    "cloudcraft_name": "engine"
-  },
-  "instance_class": {
-    "cloudcraft_name": "instanceType"
-  },
-  "multi_az": {
-    "cloudcraft_name": "isMultiAZ"
   }
 }
