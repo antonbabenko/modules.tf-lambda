@@ -9,6 +9,7 @@ provider:
   region: eu-west-1
   profile: private-anton
   tracing: true
+  timeout: 10
   environment:
     S3_BUCKET: "dl.modules.tf"
     S3_DIR: ${self:custom.stage}

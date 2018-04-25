@@ -35,9 +35,9 @@ isMultiAZ (cloudcraft) ==> multi_az (modules.tf) ==> multi_az (terraform-aws-mod
  - [x] Print only required key/values into terraform.tfvars
  - [ ] Improve config generator to follow links/edges/etc
  - [ ] Get connections between (using data-sources):
-    - [ ] ELB & ASG (target_group_arns)
+    - [ ] ELB & ASG target_group_arns (Figure out how to pass dynamic value of target_group_arns (eg, ${data.terraform_remote_state.elb.arn}) to autoscaling group terraform module. Maybe using "locals", "overrides", etc)
     - [ ] S3 & Cloudfront
-    - [ ] ELB or ALB
+    - [x] ELB or ALB
  - [x] Generate real meta data from modules (or hardcode some)
  - [ ] Add basic S3 and Cloudfront modules
 
@@ -84,3 +84,8 @@ python3 handler.py
 # Deploy to prod
 
 serverless deploy --stage prod
+
+# License
+The MIT License
+
+Copyright (c) 2018 Anton Babenko

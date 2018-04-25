@@ -47,7 +47,14 @@ terragrunt = {
   {%- set tf_value = '%s'|format(tmp_value)|lower -%}
 {%- elif value_type in ['list', 'set'] -%}
   {%- set variable_default = '[]' -%}
-  {%- set tf_value = '["%s"]'|format(tmp_value) -%}
+
+  {%- if tmp_value is string -%}
+    {%- set tf_value = '["%s"]'|format(tmp_value) -%}
+  {%- else -%}
+    {# Terraform list values should be double quoted, but Python use single quote, so using tojson for this #}
+    {%- set tf_value = tmp_value|tojson -%}
+  {%- endif -%}
+
 {%- elif value_type == 'map' -%}
   {%- set variable_default = '{}' -%}
   {%- set tf_value = '"%s"'|format(tmp_value) -%}
@@ -56,6 +63,7 @@ terragrunt = {
 {# printing only required variables (required = no default value) and those which were set explicitely #}
 {%- if value.default is not defined or tmp_value != None %}
 # {{ value.description|default() }}
+# type: {{ value_type }}
 {%- if tmp_value == None %}
 {{ key }} = {{ variable_default }}
 {% else %}

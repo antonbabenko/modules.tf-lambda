@@ -1,1 +1,5 @@
-{}
+{
+  "instance_type": {
+    "cloudcraft_name": "instanceType"
+  }
+}

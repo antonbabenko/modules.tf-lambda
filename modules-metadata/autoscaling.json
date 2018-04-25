@@ -150,7 +150,7 @@
   "target_group_arns": {
     "default": [],
     "description": "A list of aws_alb_target_group ARNs, for use with Application Load Balancing",
-    "cloudcraft_name": "related.type=alb.id"
+    "cloudcraft_name": "target_group_arns"
   },
   "termination_policies": {
     "default": [

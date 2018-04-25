@@ -3,6 +3,6 @@
     "cloudcraft_name": "instanceType"
   },
   "target_group_arns": {
-    "cloudcraft_name": "related.type=alb.id"
+    "cloudcraft_name": "target_group_arns"
   }
 }

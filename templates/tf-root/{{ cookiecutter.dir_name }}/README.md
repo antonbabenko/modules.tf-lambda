@@ -2,6 +2,8 @@
 
 This directory contains automatically generated Terraform infrastructure as code for the blueprint which was created using [cloudcraft.co](https://cloudcraft.co/app).
 
+**modules.tf is a very new service and most probably it has bugs! Please report them [here](https://github.com/antonbabenko/modules.tf-support).**
+
 ## Table of Contents
 
 - Getting started
@@ -32,7 +34,7 @@ Run this command to create or update infrastructure in all layers:
 
 Alternatively you can work on a single layer at the time:
 
-    $ cd eu-west-1/rds   # for example
+    $ cd eu-west-1/elb   # for example
     $ terragrunt apply
 
 See [Terragrunt documentation](https://github.com/gruntwork-io/terragrunt/blob/master/README.md) for more details about commands and workflow.

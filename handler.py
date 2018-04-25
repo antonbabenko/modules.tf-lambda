@@ -5,6 +5,7 @@ from __future__ import print_function
 import glob
 import json
 import re
+import networkx as nx
 
 import boto3
 import os
@@ -48,13 +49,11 @@ MODULES = {
         "variables": json.load(open("modules-metadata/sqs.json")),
     },
     "s3": {
-        # "source": "terraform-aws-modules/s3/aws",
-        "source": "terraform-aws-modules/security-group/aws",
+        "source": "terraform-aws-modules/s3/aws",
         "variables": {},
     },
     "cloudfront": {
-        # "source": "terraform-aws-modules/cloudfront/aws",
-        "source": "terraform-aws-modules/security-group/aws",
+        "source": "terraform-aws-modules/cloudfront/aws",
         "variables": {},
     },
 }
@@ -101,6 +100,7 @@ def prepare_data(data):
     texts = dict()
     surfaces = dict()
     regions = dict()
+    connectors = list()
 
     # We don't care about these keys in json: connectors, images, icons
     data_nodes = data["data"]["nodes"]
@@ -108,15 +108,34 @@ def prepare_data(data):
     data_groups = data["data"]["groups"]
     data_text = data["data"]["text"]
     data_surfaces = data["data"]["surfaces"]
+    data_connectors = data["data"]["connectors"]
+
+    global G
+    G = nx.Graph()
 
     for node in data_nodes:
+        G.add_node(node["id"], data=node)
+        # G.
+
         nodes[node["id"]] = node
 
     for group in data_groups:
         if group["type"] == "asg":
             asg_groups[group["id"]] = group["nodes"]
 
+    for connector in data_connectors:
+        # G.add_edge()
+        connectors.append(connector["id"])
+
+    # pprint(connectors)
+
+    # pprint(G.nodes.to_dict_of_dicts)
+
+    # @todo: follow autoedges and edges from start to end (ELB and ASG relation).
+    # eg id: de208ffc-304e-450f-a337-fec5e86a3f47
     for edge in data_edges:
+        G.add_edge(edge["from"], edge["to"])
+
         if edge["from"] not in edges:
             edges[edge["from"]] = set()
         edges[edge["from"]].add(edge["to"])
@@ -152,11 +171,20 @@ def prepare_data(data):
         "id": data["id"],
     }
 
+    # pprint(edges)
+    # pprint("===nodes=")
+    # print(G.nodes)
+    # pprint("===edges=")
+    # print(G.edges)
+    # print(nx.shortest_path(G, "b6f06c62-01e7-4bb3-bcdc-a7d1dec0fe62", "43ceb4bb-b317-4ba0-a071-a3e67e61e13c"))
+    # print(nx.shortest_path(G, "f84564ab-d71e-4375-8df0-ad0fec124519", "836df725-03cb-452c-af0b-8d84985ac1e4"))
+    # print(G.node["b6f06c62-01e7-4bb3-bcdc-a7d1dec0fe62"])
+
     # pprint(regions)
     # pprint(regions.keys())
     # pprint(nodes)
     # pprint(texts)
-    # pprint(edges)
+    # pprint(edges, indent=2)
     # pprint(edges_rev)
 
 
@@ -193,16 +221,6 @@ def get_edge_rev_nodes_by_id(id):
 
     return tmp_nodes
 
-#
-# def convert_params_into_module_values(type, params):
-#     values = dict()
-#     for key, value in params.items():
-#         if "rds" == type:
-#             if key == "isMultiAZ":
-#                 values["multi_az"] = value
-#
-#     return values
-
 
 def render_single_layer(resource, append_id=False):
 
@@ -226,7 +244,7 @@ def render_single_layer(resource, append_id=False):
 
     dir_name = "_".join(path_parts)
     dir_name = re.sub(' ', '_', dir_name.strip())
-    dir_name = re.sub('[^a-zA-Z0-9_]', '', dir_name)
+    dir_name = re.sub('[^a-zA-Z0-9-_]', '', dir_name)
     dir_name = re.sub('_+', '_', dir_name)
 
     full_dir_name = "single_layer/%s/%s" % (region, dir_name)
@@ -308,7 +326,7 @@ def load_data(event):
 
 def generate_modulestf_config(data):
 
-    pprint(data)
+    # pprint(data, indent=2)
 
     prepare_data(data)
 
@@ -319,16 +337,10 @@ def generate_modulestf_config(data):
 
     for id, node in nodes.items():
 
-        print("------------------")
-        # print(id)
-        pprint(node, indent=2)
-
         edge_nodes = get_edge_nodes_by_id(id)
         edge_rev_nodes = get_edge_rev_nodes_by_id(id)
-        # pprint(edge_nodes)
-        # pprint(edge_rev_nodes)
 
-        if node["type"] not in ["rds", "ec2", "elb", "s3", "cloudfront"]:
+        if node["type"] not in ["rds", "ec2", "elb", "s3", "cloudfront", "sns", "sqs"]:
             warnings.add("node type %s is not implemented yet" % node["type"])
 
         if node["type"] == "rds":
@@ -365,7 +377,16 @@ def generate_modulestf_config(data):
                     is_asg = True
                     break
 
+            elb_id = None
+
             if is_asg:
+                # Find ELB/ALB in edges
+                for edge_id in G.adj[asg_id].items():
+                    tmp_node = G.node[edge_id[0]].get("data")
+                    if tmp_node is not None and tmp_node.get("type") == "elb":
+                        elb_id = tmp_node.get("id")
+                        break
+
                 if asg_id not in parsed_asg_id:
                     resources.append({
                         "type": "autoscaling",
@@ -373,11 +394,12 @@ def generate_modulestf_config(data):
                         "text": node.get("text"),
                         "params": {
                             "instanceType": node["instanceType"]+"."+node["instanceSize"],
+                            "elb_id": elb_id if elb_id else None,
+                            "target_group_arns": ["arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-targets/123"]
                         }
                     })
                 parsed_asg_id.add(asg_id)
             else:
-                # @todo: verify when instances without ASG are used
                 resources.append({
                     "type": "ec2-instance",
                     "ref_id": id,
@@ -415,8 +437,6 @@ def generate_modulestf_config(data):
                 })
 
         if node["type"] == "s3":
-            # pprint(node)
-
             resources.append({
                 "type": "s3",
                 "ref_id": id,
@@ -426,11 +446,6 @@ def generate_modulestf_config(data):
             })
 
         if node["type"] == "cloudfront":
-            # @todo: go through graph of connections towards S3
-            # pprint(id)
-            # pprint(edge_nodes)
-            # pprint(edge_rev_nodes)
-
             resources.append({
                 "type": "cloudfront",
                 "ref_id": id,

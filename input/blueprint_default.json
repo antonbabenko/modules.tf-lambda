@@ -44,19 +44,6 @@
         "isometric": "true"
       },
       {
-        "id": "284e5283-c400-4025-ab50-049f66efb11e",
-        "text": "Auto\nScaling",
-        "type": "isotext",
-        "color": "#004b91",
-        "mapPos": [
-          11,
-          9.2
-        ],
-        "textSize": 25,
-        "direction": "right",
-        "isometric": "true"
-      },
-      {
         "id": "7eca4e00-a9b2-4604-b6bf-30e73c1081d1",
         "text": "Auto\nScaling",
         "type": "isotext",
@@ -284,35 +271,19 @@
         "isometric": true
       },
       {
-        "id": "6e194480-426c-4a32-9942-f4424da648de",
-        "text": "SQS1\n  ",
+        "id": "3ffc3e63-abbd-4626-a62f-3297831154ee",
+        "text": "Auto\nScaling",
         "type": "isotext",
-        "color": "#ffc107",
+        "color": "#4286c5",
         "mapPos": {
-          "relTo": "4430c35a-3888-4dad-8b37-ad4733ea7e09",
+          "relTo": "b5bad988-e989-4bbc-9bbf-9e8b0e06440d",
           "offset": [
-            0,
-            1.3899999999999997
+            8,
+            1.25
           ]
         },
         "textSize": 25,
-        "direction": "down",
-        "isometric": true
-      },
-      {
-        "id": "2b5d7228-c8c9-405a-a9c3-d5388227a85f",
-        "text": "SNS2",
-        "type": "isotext",
-        "color": "#ffc107",
-        "mapPos": {
-          "relTo": "ee048920-4d9a-46ef-b450-6193caa64069",
-          "offset": [
-            0,
-            1
-          ]
-        },
-        "textSize": 25,
-        "direction": "down",
+        "direction": "right",
         "isometric": true
       }
     ],
@@ -469,31 +440,6 @@
     ],
     "nodes": [
       {
-        "id": "4430c35a-3888-4dad-8b37-ad4733ea7e09",
-        "type": "sqs",
-        "mapPos": [
-          -7,
-          6
-        ],
-        "region": "us-west-2",
-        "requests": 1,
-        "direction": "down",
-        "queueType": "fifo"
-      },
-      {
-        "id": "ee048920-4d9a-46ef-b450-6193caa64069",
-        "type": "sns",
-        "mapPos": [
-          -4.25,
-          7.25
-        ],
-        "region": "us-west-2",
-        "requests": "100000",
-        "direction": "down",
-        "notifications": 500,
-        "notificationType": "lambda"
-      },
-      {
         "id": "b6f06c62-01e7-4bb3-bcdc-a7d1dec0fe62",
         "role": "master",
         "type": "rds",
@@ -576,7 +522,7 @@
           5.5
         ],
         "region": "us-east-1",
-        "elbType": "application"
+        "elbType": "network"
       },
       {
         "id": "c90d5e2c-c692-4f73-8e30-d80e5c6fa403",
@@ -866,7 +812,7 @@
   "readAccess": null,
   "writeAccess": null,
   "createdAt": "2017-10-11T12:57:43.085Z",
-  "updatedAt": "2018-04-23T14:14:09.191Z",
+  "updatedAt": "2018-04-23T18:38:38.594Z",
   "CreatorId": "354474ae-8248-45a8-a1ef-34de7c2a4d47",
   "LastUserId": "354474ae-8248-45a8-a1ef-34de7c2a4d47"
 }

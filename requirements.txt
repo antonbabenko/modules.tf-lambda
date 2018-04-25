@@ -3,3 +3,4 @@ botocore==1.10.3
 cookiecutter==1.6.0
 aws-xray-sdk==0.97
 python-lambda-local==0.1.5
+networkx==2.1
