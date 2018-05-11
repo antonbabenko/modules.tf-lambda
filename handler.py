@@ -85,80 +85,130 @@ def setup_logging():
 
 def prepare_data(data):
     global source
-    global nodes
-    global asg_groups
-    global edges      # edges are uni-directional (from => to)
-    global edges_rev  # edges_rev are reversed (to => from). Used by RDS nodes (master/slave).
-    global texts
     global surfaces
     global regions
 
-    nodes = dict()
-    asg_groups = dict()
-    edges = dict()      # edges are uni-directional (from => to)
-    edges_rev = dict()  # edges_rev are reversed (to => from). Used by RDS nodes (master/slave).
-    texts = dict()
+    global G, MG
+    G = nx.DiGraph()   # input. Directional graph to have edges and connectors properly resolved (probably).
+    # MG = nx.Graph()  # converted graph to modules.tf schema
+
+    # @todo: convert from graph (G) to modules.tf graph (MG), which can be dumped to json and passed to generator function
+
     surfaces = dict()
     regions = dict()
     connectors = list()
 
-    # We don't care about these keys in json: connectors, images, icons
-    data_nodes = data["data"]["nodes"]
-    data_edges = data["data"]["edges"]
-    data_groups = data["data"]["groups"]
-    data_text = data["data"]["text"]
-    data_surfaces = data["data"]["surfaces"]
-    data_connectors = data["data"]["connectors"]
+    # We don't care about these keys in json: images, icons
+    data_nodes = list()
+    data_edges = list()
+    data_groups = list()
+    data_connectors = list()
+    data_text = list()
+    data_surfaces = list()
+    data_name = ""
 
-    global G
-    G = nx.Graph()
+    try:
+        data_nodes = data["data"]["nodes"]
+    except KeyError:
+        pass
 
+    try:
+        data_edges = data["data"]["edges"]
+    except KeyError:
+        pass
+
+    try:
+        data_groups = data["data"]["groups"]
+    except KeyError:
+        pass
+
+    try:
+        data_connectors = data["data"]["connectors"]
+    except KeyError:
+        pass
+
+    try:
+        data_text = data["data"]["text"]
+    except KeyError:
+        pass
+
+    try:
+        data_surfaces = data["data"]["surfaces"]
+    except KeyError:
+        pass
+
+    try:
+        data_name = data["data"]["name"]
+    except KeyError:
+        pass
+
+    ########
+    # NODES
+    ########
     for node in data_nodes:
         G.add_node(node["id"], data=node)
-        # G.
 
-        nodes[node["id"]] = node
-
-    for group in data_groups:
-        if group["type"] == "asg":
-            asg_groups[group["id"]] = group["nodes"]
-
-    for connector in data_connectors:
-        # G.add_edge()
-        connectors.append(connector["id"])
-
-    # pprint(connectors)
-
-    # pprint(G.nodes.to_dict_of_dicts)
-
-    # @todo: follow autoedges and edges from start to end (ELB and ASG relation).
-    # eg id: de208ffc-304e-450f-a337-fec5e86a3f47
+    ########
+    # EDGES
+    ########
     for edge in data_edges:
         G.add_edge(edge["from"], edge["to"])
 
-        if edge["from"] not in edges:
-            edges[edge["from"]] = set()
-        edges[edge["from"]].add(edge["to"])
+    #####################
+    # AUTOSCALING GROUPS
+    #####################
+    for group in data_groups:
+        if group.get("type") == "asg":
+            group_id = group.get("id")
+            group_nodes = group.get("nodes")
 
-        if edge["to"] not in edges_rev:
-            edges_rev[edge["to"]] = set()
-        edges_rev[edge["to"]].add(edge["from"])
+            G.add_node(group_id, data={"group_nodes": group_nodes})
 
+            for group_node in group_nodes:
+                G.node[group_node]["data"]["asg_id"] = group_id
+
+    #############
+    # CONNECTORS
+    #############
+    for connector in data_connectors:
+        G.add_node(connector["id"], type="connector")
+        connectors.append(connector["id"])
+
+    # Merge connectors by contracting edges
+    while True:
+        # Find first edge which contains connector
+        for edge in G.edges.data():
+            edge = list(edge)
+
+            if edge[0] in connectors or edge[1] in connectors:
+                break
+            else:
+                edge = list()
+
+        # No edges with connectors remaining - all done
+        if len(edge) == 0:
+            break
+
+        G = nx.contracted_edge(G, (edge[0], edge[1]), self_loops=False)
+
+    ########
+    # TEXTS
+    ########
     for text in data_text:
-        texts[text["id"]] = text
-
         mapPos = text.get("mapPos", {})
         if isinstance(mapPos, dict):
-            relTo = mapPos.get("relTo", "")
+            relTo = mapPos.get("relTo")
 
-            if relTo:
-                if relTo in nodes.keys():
-                    nodes[relTo].update({"text": text["text"]})
+            if relTo in G.nodes:
+                G.nodes[relTo]["text"] = text["text"]
 
+    ###########
+    # SURFACES
+    ###########
     for surface in data_surfaces:
-        surfaces[surface["id"]] = surface
+        surfaces[surface.get("id")] = surface
 
-        if surface["type"] == "zone":
+        if surface.get("type") == "zone":
             region = surface.get("region")
             if region:
                 if region not in regions.keys():
@@ -166,19 +216,25 @@ def prepare_data(data):
 
                 regions[region].append(surface)
 
+    ########
+    # SOURCE
+    ########
     source = {
-        "name": data["data"]["name"],
-        "id": data["id"],
+        "name": data_name,
+        "id": data.get("id"),
     }
 
-    # pprint(edges)
-    # pprint("===nodes=")
-    # print(G.nodes)
-    # pprint("===edges=")
-    # print(G.edges)
-    # print(nx.shortest_path(G, "b6f06c62-01e7-4bb3-bcdc-a7d1dec0fe62", "43ceb4bb-b317-4ba0-a071-a3e67e61e13c"))
-    # print(nx.shortest_path(G, "f84564ab-d71e-4375-8df0-ad0fec124519", "836df725-03cb-452c-af0b-8d84985ac1e4"))
-    # print(G.node["b6f06c62-01e7-4bb3-bcdc-a7d1dec0fe62"])
+    # Debug - draw into file
+    # import matplotlib.pyplot as plt
+    # plt.rcParams["figure.figsize"] = (10, 10)
+    # nx.draw(G, pos=nx.spring_layout(G), with_labels=True)
+    # plt.savefig("graph.png")
+
+    # pprint(G.edges["0820fb86-ee74-49ce-9fe5-03f610ca5e75"])
+    print("NODES===")
+    print(G.nodes.data())
+    print("EDGES===")
+    print(G.edges.data())
 
     # pprint(regions)
     # pprint(regions.keys())
@@ -186,40 +242,6 @@ def prepare_data(data):
     # pprint(texts)
     # pprint(edges, indent=2)
     # pprint(edges_rev)
-
-
-# Get nodes or ASG id which has edges TO other nodes
-def get_edge_nodes_by_id(id):
-    tmp_nodes = dict()
-
-    if id not in edges:
-        # pprint("NOT in SET %s" % (id))
-        return tmp_nodes
-
-    for edge_id in edges[id]:
-        if edge_id in nodes:
-            tmp_nodes[edge_id] = nodes[edge_id]
-
-        if edge_id in asg_groups:
-            tmp_nodes[edge_id] = asg_groups[edge_id]
-
-    return tmp_nodes
-
-
-# Get nodes which has edges FROM other nodes
-def get_edge_rev_nodes_by_id(id):
-
-    tmp_nodes = dict()
-
-    if id not in edges_rev:
-        # pprint("EDGES_REV NOT in SET %s" % (id))
-        return tmp_nodes
-
-    for edge_id in edges_rev[id]:
-        if edge_id in nodes:
-            tmp_nodes[edge_id] = nodes[edge_id]
-
-    return tmp_nodes
 
 
 def render_single_layer(resource, append_id=False):
@@ -324,6 +346,27 @@ def load_data(event):
     return data
 
 
+def get_node(node_id):
+    try:
+        return G.nodes.get(node_id)
+    except (AttributeError, KeyError):
+        return None
+
+
+def get_node_attr(node_id, attribute):
+    try:
+        return G.nodes.get(node_id).get(attribute)
+    except (AttributeError, KeyError):
+        return None
+
+
+def get_node_data(node_id, attribute):
+    try:
+        return get_node_attr(node_id, "data").get(attribute)
+    except (AttributeError, KeyError):
+        return None
+
+
 def generate_modulestf_config(data):
 
     # pprint(data, indent=2)
@@ -335,95 +378,117 @@ def generate_modulestf_config(data):
     parsed_rds_id = set()
     warnings = set()
 
-    for id, node in nodes.items():
+    for id, node in G.nodes.items():
 
-        edge_nodes = get_edge_nodes_by_id(id)
-        edge_rev_nodes = get_edge_rev_nodes_by_id(id)
+        logging.info("\n========================================\nID = {}".format(id))
 
-        if node["type"] not in ["rds", "ec2", "elb", "s3", "cloudfront", "sns", "sqs"]:
-            warnings.add("node type %s is not implemented yet" % node["type"])
+        node = node.get("data")
 
-        if node["type"] == "rds":
+        if node is None:
+            logging.error("No node data for this node - {}".format(node))
+            continue
+
+        logging.info("Node: {}".format(node))
+
+        edges = G.adj[id]
+        logging.info("Edges: {}".format(edges))
+
+        if node.get("type") not in ["rds", "ec2", "elb", "sns", "sqs"]:
+            warnings.add("node type %s is not implemented yet" % node.get("type"))
+
+        if node.get("type") == "rds":
             is_multi_az = False
-            z = edge_nodes.update(edge_rev_nodes) or edge_nodes
-            for connected_id, connected_node in z.items():
-                if connected_node["type"] == "rds" and \
-                        connected_node["engine"] == node["engine"] and \
-                        connected_node["role"] == ("master" if node["role"] == "slave" else "slave"):
-                    master_rds_id = (id if node["role"] == "master" else connected_id)
+
+            for edge_id in edges:
+                if get_node_data(edge_id, "type") == "rds" and \
+                        get_node_data(edge_id, "engine") == node.get("engine") and \
+                        get_node_data(edge_id, "role") == ("master" if node.get("role") == "slave" else "slave"):
+                    master_rds_id = (id if node.get("role") == "master" else edge_id)
                     is_multi_az = True
 
             rds_id = master_rds_id if is_multi_az else id
 
-            # pprint(rds_id)
-
             if rds_id not in parsed_rds_id:
-                resources.append({
+                tmp_resource = {
                     "type": "rds",
                     "ref_id": rds_id,
                     "text": node.get("text"),
                     "params": {
-                        "engine": node["engine"],
-                        "instanceType": node["instanceType"]+"."+node["instanceSize"],
                         "isMultiAZ": is_multi_az
                     }
-                })
+                }
+
+                if node.get("engine") is not None:
+                    tmp_resource["params"].update({"engine": node.get("engine")})
+
+                if node.get("instanceType") is not None and node.get("instanceSize") is not None:
+                    tmp_resource["params"].update(
+                        {"instanceType": node.get("instanceType", "") + "." + node.get("instanceSize", "")})
+
+                resources.append(tmp_resource)
+
             parsed_rds_id.add(rds_id)
 
-        if node["type"] == "ec2":
-            is_asg = False
-            for asg_id, asg_nodes in asg_groups.items():
-                if id in asg_nodes:
-                    is_asg = True
-                    break
+        if node.get("type") == "ec2":
+            asg_id = node.get("asg_id")
 
             elb_id = None
 
-            if is_asg:
+            if bool(asg_id):
                 # Find ELB/ALB in edges
-                for edge_id in G.adj[asg_id].items():
+                for edge_id in edges:
                     tmp_node = G.node[edge_id[0]].get("data")
                     if tmp_node is not None and tmp_node.get("type") == "elb":
                         elb_id = tmp_node.get("id")
                         break
 
                 if asg_id not in parsed_asg_id:
-                    resources.append({
+                    tmp_resource = {
                         "type": "autoscaling",
                         "ref_id": asg_id,
                         "text": node.get("text"),
                         "params": {
-                            "instanceType": node["instanceType"]+"."+node["instanceSize"],
                             "elb_id": elb_id if elb_id else None,
                             "target_group_arns": ["arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-targets/123"]
                         }
-                    })
+                    }
+
+                    if node.get("instanceType") is not None and node.get("instanceSize") is not None:
+                        tmp_resource["params"].update(
+                            {"instanceType": node.get("instanceType", "") + "." + node.get("instanceSize", "")})
+
+                    resources.append(tmp_resource)
+
                 parsed_asg_id.add(asg_id)
             else:
-                resources.append({
+                tmp_resource = {
                     "type": "ec2-instance",
                     "ref_id": id,
                     "text": node.get("text"),
-                    "params": {
-                        "instanceType": node["instanceType"]+"."+node["instanceSize"],
-                    }
-                })
+                    "params": {}
+                }
 
-        if node["type"] == "elb":
+                if node.get("instanceType") is not None and node.get("instanceSize") is not None:
+                    tmp_resource["params"].update(
+                        {"instanceType": node.get("instanceType", "") + "." + node.get("instanceSize", "")})
+
+                resources.append(tmp_resource)
+
+        if node.get("type") == "elb":
             is_asg = False
 
-            for asg_id in edge_nodes.keys():
-                if asg_id in asg_groups.keys():
+            for edge_id in edges:
+                if get_node_data(edge_id, "group_nodes") is not None:
                     is_asg = True
                     break
 
-            if node["elbType"] == "application":
+            if node.get("elbType") == "application":
                 resources.append({
                     "type": "alb",
                     "ref_id": id,
                     "text": node.get("text"),
                     "params": {
-                        "asg_id": asg_id if is_asg else None,
+                        "asg_id": edge_id if is_asg else None,
                     }
                 })
             else:
@@ -432,11 +497,11 @@ def generate_modulestf_config(data):
                     "ref_id": id,
                     "text": node.get("text"),
                     "params": {
-                        "asg_id": asg_id if is_asg else None,
+                        "asg_id": edge_id if is_asg else None,
                     }
                 })
 
-        if node["type"] == "s3":
+        if node.get("type") == "s3":
             resources.append({
                 "type": "s3",
                 "ref_id": id,
@@ -445,7 +510,7 @@ def generate_modulestf_config(data):
                 }
             })
 
-        if node["type"] == "cloudfront":
+        if node.get("type") == "cloudfront":
             resources.append({
                 "type": "cloudfront",
                 "ref_id": id,
@@ -454,7 +519,7 @@ def generate_modulestf_config(data):
                 }
             })
 
-        if node["type"] == "sns":
+        if node.get("type") == "sns":
             resources.append({
                 "type": "sns",
                 "ref_id": id,
@@ -463,13 +528,13 @@ def generate_modulestf_config(data):
                 }
             })
 
-        if node["type"] == "sqs":
+        if node.get("type") == "sqs":
             resources.append({
                 "type": "sqs",
                 "ref_id": id,
                 "text": node.get("text"),
                 "params": {
-                    "fifoQueue": node["queueType"] == "fifo",
+                    "fifoQueue": node.get("queueType") == "fifo",
                 }
             })
 
@@ -613,9 +678,9 @@ def handler(event, context):
 
     config = generate_modulestf_config(data)
 
-    render_from_modulestf_config(config)
-
-    link = upload_result()
+    # render_from_modulestf_config(config)
+    #
+    # link = upload_result()
 
     return {
         "body": "",

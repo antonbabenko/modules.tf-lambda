@@ -15,6 +15,7 @@ Sources:
  - C. AWS API (Describe AWS-API or python script similar to the one by Lucidchart can generate json)
  - D. Custom json/hcl files
  - E. modules.tf UI produces json, which is sent to MTG endpoint
+ - F. Cloudformation json/yaml
 
 All gets into modules.tf's generator (MTG) which creates "infrastructure as code (terragrunt + docs)"
 

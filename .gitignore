@@ -23,3 +23,6 @@ var/
 .requirements-cache
 node_modules
 output/*
+
+# Graph image
+graph.png
