@@ -678,9 +678,9 @@ def handler(event, context):
 
     config = generate_modulestf_config(data)
 
-    # render_from_modulestf_config(config)
-    #
-    # link = upload_result()
+    render_from_modulestf_config(config)
+
+    link = upload_result()
 
     return {
         "body": "",
