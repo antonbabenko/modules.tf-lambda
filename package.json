@@ -14,6 +14,6 @@
     "serverless-plugin-tracing": "^2.0.0"
   },
   "dependencies": {
-    "serverless-python-requirements": "^4.0.2"
+    "serverless-python-requirements": "^4.0.3"
   }
 }
