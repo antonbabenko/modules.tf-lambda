@@ -58,6 +58,7 @@ custom:
     createRoute53Record: true
 
   pythonRequirements:
+    fileName: requirements-lambda.txt # requirements-lambda.txt does not have heavy libraries like matplotlib, python-lambda-local which are required for debug locally
     dockerizePip: true
     pipCmdExtraArgs:
       - --cache-dir
