@@ -1,0 +1,165 @@
+{
+  "id": "58154341-c094-47ca-b065-30ed8a156b9e",
+  "data": {
+    "grid": "standard",
+    "name": "Web App Reference Architecture",
+    "text": [],
+    "edges": [
+      {
+        "id": "E2-G1",
+        "to": "G1",
+        "from": "E2",
+        "type": "autoedge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false
+      },
+      {
+        "id": "E1-G2",
+        "to": "G2",
+        "from": "E1",
+        "type": "autoedge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false
+      },
+      {
+        "id": "E1-G1",
+        "to": "G1",
+        "from": "E1",
+        "type": "autoedge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false
+      }
+    ],
+    "icons": [],
+    "nodes": [
+      {
+        "id": "I3",
+        "type": "ec2",
+        "mapPos": [
+          4.25,
+          1.75
+        ],
+        "region": "us-east-2",
+        "platform": "linux",
+        "transparent": false,
+        "instanceSize": "large",
+        "instanceType": "m4"
+      },
+      {
+        "id": "I4",
+        "type": "ec2",
+        "mapPos": [
+          7.34,
+          1.75
+        ],
+        "region": "us-east-2",
+        "platform": "linux",
+        "transparent": false,
+        "instanceSize": "large",
+        "instanceType": "m4"
+      },
+      {
+        "id": "E1",
+        "lcu": 1,
+        "type": "elb",
+        "dataGb": 10,
+        "mapPos": [
+          6,
+          5
+        ],
+        "region": "us-east-2",
+        "elbType": "classic"
+      },
+      {
+        "id": "I1",
+        "type": "ec2",
+        "mapPos": [
+          4,
+          7.5
+        ],
+        "region": "us-east-2",
+        "platform": "linux",
+        "transparent": false,
+        "instanceSize": "large",
+        "instanceType": "c5"
+      },
+      {
+        "id": "I2",
+        "type": "ec2",
+        "mapPos": [
+          7.49,
+          7.5
+        ],
+        "region": "us-east-2",
+        "platform": "linux",
+        "transparent": false,
+        "instanceSize": "large",
+        "instanceType": "c5"
+      },
+      {
+        "id": "E2",
+        "lcu": 1,
+        "type": "elb",
+        "dataGb": 10,
+        "mapPos": [
+          5.75,
+          11.25
+        ],
+        "region": "us-east-2",
+        "elbType": "classic"
+      }
+    ],
+    "groups": [
+      {
+        "id": "G1",
+        "type": "asg",
+        "nodes": [
+          "I1",
+          "I2"
+        ],
+        "layout": "even",
+        "mapPos": [
+          4,
+          7.5
+        ],
+        "region": "us-east-2",
+        "mapSize": [
+          4.49,
+          1
+        ]
+      },
+      {
+        "id": "G2",
+        "type": "asg",
+        "nodes": [
+          "I3",
+          "I4"
+        ],
+        "layout": "even",
+        "mapPos": [
+          4.25,
+          1.75
+        ],
+        "region": "us-east-2",
+        "mapSize": [
+          4.090000000000001,
+          1
+        ]
+      }
+    ],
+    "images": [],
+    "linkKey": "m1Z9nRCfFr0sylLbFVLyhg",
+    "surfaces": [],
+    "connectors": [],
+    "disabledLayers": []
+  },
+  "readAccess": null,
+  "writeAccess": null,
+  "createdAt": "2017-06-10T18:18:18.070Z",
+  "updatedAt": "2018-05-11T15:12:06.996Z",
+  "CreatorId": "354474ae-8248-45a8-a1ef-34de7c2a4d47",
+  "LastUserId": "354474ae-8248-45a8-a1ef-34de7c2a4d47"
+}

@@ -1,0 +1,6 @@
+{
+  "queryStringParameters":
+  {
+    "localfile": "input/blueprint_default.json"
+  }
+}

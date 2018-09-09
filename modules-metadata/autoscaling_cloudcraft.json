@@ -1,0 +1,8 @@
+{
+  "instance_type": {
+    "cloudcraft_name": "instanceType"
+  },
+  "target_group_arns": {
+    "cloudcraft_name": "target_group_arns"
+  }
+}

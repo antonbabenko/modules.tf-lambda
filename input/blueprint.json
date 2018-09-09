@@ -1,0 +1,192 @@
+{
+  "id": "58154341-c094-47ca-b065-30ed8a156b9e",
+  "data": {
+    "grid": "standard",
+    "name": "Web App Reference Architecture",
+    "text": [
+      {
+        "id": "5b3792b6-7700-4704-b66d-416423c0e608",
+        "text": "ELB",
+        "type": "isotext",
+        "color": "#4286c5",
+        "mapPos": {
+          "relTo": "9c60a0fd-1314-494d-89eb-e779c736df0e",
+          "offset": [
+            0,
+            1
+          ]
+        },
+        "textSize": 25,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "0d354d2a-dab1-4e58-b42a-3529beafb3ed",
+        "text": "ELB\ninternal",
+        "type": "isotext",
+        "color": "#4286c5",
+        "mapPos": {
+          "relTo": "73d334b8-12f5-4eb0-b70c-e26c905ce624",
+          "offset": [
+            1.5,
+            0
+          ]
+        },
+        "textSize": 25,
+        "direction": "down",
+        "isometric": true
+      }
+    ],
+    "edges": [
+      {
+        "id": "9c60a0fd-1314-494d-89eb-e779c736df0e-053561e2-771d-4e3c-b3e8-be6ff591041e",
+        "to": "053561e2-771d-4e3c-b3e8-be6ff591041e",
+        "from": "9c60a0fd-1314-494d-89eb-e779c736df0e",
+        "type": "autoedge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false
+      },
+      {
+        "id": "053561e2-771d-4e3c-b3e8-be6ff591041e-73d334b8-12f5-4eb0-b70c-e26c905ce624",
+        "to": "73d334b8-12f5-4eb0-b70c-e26c905ce624",
+        "from": "053561e2-771d-4e3c-b3e8-be6ff591041e",
+        "type": "autoedge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false
+      },
+      {
+        "id": "6af5d22e-3749-467d-855f-f966f8b489af-63abe39c-39bf-4077-838f-4b06d665fa3a",
+        "to": "63abe39c-39bf-4077-838f-4b06d665fa3a",
+        "from": "6af5d22e-3749-467d-855f-f966f8b489af",
+        "type": "autoedge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false
+      },
+      {
+        "id": "6af5d22e-3749-467d-855f-f966f8b489af-73d334b8-12f5-4eb0-b70c-e26c905ce624",
+        "to": "73d334b8-12f5-4eb0-b70c-e26c905ce624",
+        "from": "6af5d22e-3749-467d-855f-f966f8b489af",
+        "type": "autoedge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false
+      }
+    ],
+    "icons": [],
+    "nodes": [
+      {
+        "id": "159098b6-e11d-4583-a5cf-28fa436dba7e",
+        "type": "ec2",
+        "mapPos": [
+          4.5,
+          4.5
+        ],
+        "region": "us-west-2",
+        "platform": "linux",
+        "transparent": false,
+        "instanceSize": "large",
+        "instanceType": "m4"
+      },
+      {
+        "id": "73d334b8-12f5-4eb0-b70c-e26c905ce624",
+        "lcu": 1,
+        "type": "elb",
+        "dataGb": 10,
+        "mapPos": [
+          4.5,
+          6.75
+        ],
+        "region": "us-west-2",
+        "elbType": "classic"
+      },
+      {
+        "id": "63abe39c-39bf-4077-838f-4b06d665fa3a",
+        "role": "master",
+        "type": "rds",
+        "engine": "mysql",
+        "mapPos": [
+          10,
+          1.25
+        ],
+        "region": "us-west-2",
+        "instanceSize": "large",
+        "instanceType": "m4"
+      },
+      {
+        "id": "2d81e181-b1f8-4278-9759-4f1ea5ffe877",
+        "type": "ec2",
+        "mapPos": [
+          5.005,
+          9.75
+        ],
+        "region": "us-west-2",
+        "platform": "linux",
+        "transparent": false,
+        "instanceSize": "micro",
+        "instanceType": "t2"
+      },
+      {
+        "id": "9c60a0fd-1314-494d-89eb-e779c736df0e",
+        "lcu": 1,
+        "type": "elb",
+        "dataGb": 10,
+        "mapPos": [
+          4.25,
+          11.75
+        ],
+        "region": "us-west-2",
+        "elbType": "classic"
+      }
+    ],
+    "groups": [
+      {
+        "id": "053561e2-771d-4e3c-b3e8-be6ff591041e",
+        "type": "asg",
+        "nodes": [
+          "2d81e181-b1f8-4278-9759-4f1ea5ffe877"
+        ],
+        "layout": "even",
+        "mapPos": [
+          4.25,
+          9.75
+        ],
+        "region": "us-west-2",
+        "mapSize": [
+          2.51,
+          1
+        ]
+      },
+      {
+        "id": "6af5d22e-3749-467d-855f-f966f8b489af",
+        "type": "asg",
+        "nodes": [
+          "159098b6-e11d-4583-a5cf-28fa436dba7e"
+        ],
+        "layout": "even",
+        "mapPos": [
+          4,
+          4.5
+        ],
+        "region": "us-west-2",
+        "mapSize": [
+          2,
+          1
+        ]
+      }
+    ],
+    "images": [],
+    "linkKey": "m1Z9nRCfFr0sylLbFVLyhg",
+    "surfaces": [],
+    "connectors": [],
+    "disabledLayers": []
+  },
+  "readAccess": null,
+  "writeAccess": null,
+  "createdAt": "2017-06-10T18:18:18.070Z",
+  "updatedAt": "2018-04-23T19:19:53.920Z",
+  "CreatorId": "354474ae-8248-45a8-a1ef-34de7c2a4d47",
+  "LastUserId": "354474ae-8248-45a8-a1ef-34de7c2a4d47"
+}

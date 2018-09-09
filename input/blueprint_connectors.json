@@ -1,0 +1,93 @@
+{
+  "id": "58154341-c094-47ca-b065-30ed8a156b9e",
+  "data": {
+    "grid": "standard",
+    "name": "Web App Reference Architecture",
+    "text": [],
+    "edges": [
+      {
+        "to": "N2",
+        "from": "C1",
+        "type": "edge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false,
+        "endCap": "arrow"
+      },
+      {
+        "to": "C2",
+        "from": "N1",
+        "type": "edge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false
+      },
+      {
+        "to": "C1",
+        "from": "C2",
+        "type": "edge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false
+      }
+    ],
+    "icons": [],
+    "nodes": [
+      {
+        "id": "N1",
+        "role": "slave",
+        "type": "rds",
+        "engine": "mysql",
+        "mapPos": [
+          0.75,
+          5
+        ],
+        "region": "us-east-2",
+        "instanceSize": "large",
+        "instanceType": "m4"
+      },
+      {
+        "id": "N2",
+        "role": "master",
+        "type": "rds",
+        "engine": "mysql",
+        "mapPos": [
+          8,
+          5
+        ],
+        "region": "us-east-2",
+        "instanceSize": "large",
+        "instanceType": "m4"
+      }
+    ],
+    "groups": [],
+    "images": [],
+    "linkKey": "m1Z9nRCfFr0sylLbFVLyhg",
+    "surfaces": [],
+    "connectors": [
+      {
+        "id": "C1",
+        "type": "connector",
+        "mapPos": [
+          4.5,
+          7
+        ]
+      },
+      {
+        "id": "C2",
+        "type": "connector",
+        "mapPos": [
+          3,
+          4.75
+        ]
+      }
+    ],
+    "disabledLayers": []
+  },
+  "readAccess": null,
+  "writeAccess": null,
+  "createdAt": "2017-06-10T18:18:18.070Z",
+  "updatedAt": "2018-05-11T09:32:10.797Z",
+  "CreatorId": "354474ae-8248-45a8-a1ef-34de7c2a4d47",
+  "LastUserId": "354474ae-8248-45a8-a1ef-34de7c2a4d47"
+}

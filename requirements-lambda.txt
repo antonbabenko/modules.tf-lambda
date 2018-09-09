@@ -1,0 +1,2 @@
+cookiecutter==1.6.0
+networkx==2.1

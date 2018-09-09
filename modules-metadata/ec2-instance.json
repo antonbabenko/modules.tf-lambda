@@ -1,0 +1,103 @@
+{
+  "ami": {
+    "description": "ID of AMI to use for the instance"
+  },
+  "associate_public_ip_address": {
+    "default": false,
+    "description": "If true, the EC2 instance will have associated public IP address"
+  },
+  "disable_api_termination": {
+    "default": false,
+    "description": "If true, enables EC2 Instance Termination Protection"
+  },
+  "ebs_block_device": {
+    "default": [],
+    "description": "Additional EBS block devices to attach to the instance"
+  },
+  "ebs_optimized": {
+    "default": false,
+    "description": "If true, the launched EC2 instance will be EBS-optimized"
+  },
+  "ephemeral_block_device": {
+    "default": [],
+    "description": "Customize Ephemeral (also known as Instance Store) volumes on the instance"
+  },
+  "iam_instance_profile": {
+    "default": "",
+    "description": "The IAM Instance Profile to launch the instance with. Specified as the name of the Instance Profile."
+  },
+  "instance_count": {
+    "default": 1,
+    "description": "Number of instances to launch"
+  },
+  "instance_initiated_shutdown_behavior": {
+    "default": "",
+    "description": "Shutdown behavior for the instance"
+  },
+  "instance_type": {
+    "description": "The type of instance to start",
+    "cloudcraft_name": "instanceType"
+  },
+  "ipv6_address_count": {
+    "default": 0,
+    "description": "A number of IPv6 addresses to associate with the primary network interface. Amazon EC2 chooses the IPv6 addresses from the range of your subnet."
+  },
+  "ipv6_addresses": {
+    "default": [],
+    "description": "Specify one or more IPv6 addresses from the range of the subnet to associate with the primary network interface"
+  },
+  "key_name": {
+    "default": "",
+    "description": "The key name to use for the instance"
+  },
+  "monitoring": {
+    "default": false,
+    "description": "If true, the launched EC2 instance will have detailed monitoring enabled"
+  },
+  "name": {
+    "description": "Name to be used on all resources as prefix"
+  },
+  "network_interface": {
+    "default": [],
+    "description": "Customize network interfaces to be attached at instance boot time"
+  },
+  "placement_group": {
+    "default": "",
+    "description": "The Placement Group to start the instance in"
+  },
+  "private_ip": {
+    "default": "",
+    "description": "Private IP address to associate with the instance in a VPC"
+  },
+  "root_block_device": {
+    "default": [],
+    "description": "Customize details about the root block device of the instance. See Block Devices below for details"
+  },
+  "source_dest_check": {
+    "default": true,
+    "description": "Controls if traffic is routed to the instance when the destination address does not match the instance. Used for NAT or VPNs."
+  },
+  "subnet_id": {
+    "description": "The VPC Subnet ID to launch in"
+  },
+  "tags": {
+    "default": {},
+    "description": "A mapping of tags to assign to the resource"
+  },
+  "tenancy": {
+    "default": "default",
+    "description": "The tenancy of the instance (if the instance is running in a VPC). Available values: default, dedicated, host."
+  },
+  "user_data": {
+    "default": "",
+    "description": "The user data to provide when launching the instance"
+  },
+  "volume_tags": {
+    "default": {},
+    "description": "A mapping of tags to assign to the devices created by the instance at launch time"
+  },
+  "vpc_security_group_ids": {
+    "description": "A list of security group IDs to associate with",
+    "type": "list"
+  }
+}
