@@ -16,6 +16,7 @@ from pprint import pprint, pformat
 import requests
 import sys
 import logging
+from cookiecutter.exceptions import NonTemplatedInputDirException
 
 from cookiecutter.main import cookiecutter
 
@@ -59,6 +60,7 @@ MODULES = {
 }
 
 COOKIECUTTER_TEMPLATES_DIR = os.getcwd() + "/templates"
+COOKIECUTTER_TEMPLATES_PREFIX = "terragrunt" #"terraform" # or "terragrunt"
 
 OUTPUT_DIR = "output"
 WORK_DIR = "work"
@@ -67,7 +69,7 @@ FINAL_DIR = "../final"
 if os.environ.get("IS_LOCAL"):
     tmp_dir = os.getcwd()
 else:
-    tmp_dir = "/tmp"
+    tmp_dir = os.tmpnam() # was /tmp
 
 
 # Logging snippet was from https://gist.github.com/niranjv/fb95e716151642e8ca553b0e38dd152e
@@ -278,13 +280,15 @@ def render_single_layer(resource, append_id=False):
 
     single_layer = {
         "dir_name": full_dir_name.lower(),
+        "layer_name": dir_name.lower(),
+        "region": region,
         "module_source": MODULES[resource["type"]]["source"],
         "module_variables": MODULES[resource["type"]]["variables"],
     }
 
     extra_context = resource.update(single_layer) or resource
 
-    cookiecutter(os.path.join(COOKIECUTTER_TEMPLATES_DIR, "tf-single-layer"),
+    cookiecutter(os.path.join(COOKIECUTTER_TEMPLATES_DIR, COOKIECUTTER_TEMPLATES_PREFIX + "-single-layer"),
                  config_file=os.path.join(COOKIECUTTER_TEMPLATES_DIR, "config_aws_lambda.yaml"),
                  no_input=True,
                  extra_context=extra_context)
@@ -302,11 +306,13 @@ def render_common_layer():
         "region": region,
     }
 
-    cookiecutter(os.path.join(COOKIECUTTER_TEMPLATES_DIR, "tf-common-layer"),
+    try:
+        cookiecutter(os.path.join(COOKIECUTTER_TEMPLATES_DIR, COOKIECUTTER_TEMPLATES_PREFIX + "-common-layer"),
                  config_file=os.path.join(COOKIECUTTER_TEMPLATES_DIR, "config_aws_lambda.yaml"),
                  no_input=True,
                  extra_context=common_layer)
-
+    except NonTemplatedInputDirException:
+        pass
 
 def render_root_dir():
 
@@ -315,7 +321,7 @@ def render_root_dir():
         "source": source,
     }
 
-    cookiecutter(os.path.join(COOKIECUTTER_TEMPLATES_DIR, "tf-root"),
+    cookiecutter(os.path.join(COOKIECUTTER_TEMPLATES_DIR, "root"),
                  config_file=os.path.join(COOKIECUTTER_TEMPLATES_DIR, "config_aws_lambda.yaml"),
                  no_input=True,
                  extra_context=root_dir)
@@ -609,7 +615,7 @@ def prepare_render_dirs():
         pass
 
 
-def render_terragrunt_from_modulestf_config(config):
+def render_from_modulestf_config(config):
 
     resources = json.loads(config)
 
@@ -630,32 +636,27 @@ def render_terragrunt_from_modulestf_config(config):
     render_common_layer()
     render_root_dir()
 
-    for file in glob.iglob("single_layer/*"):
+    files = glob.glob("single_layer/*") + \
+            glob.glob("single_layer/.*") + \
+            glob.glob("common_layer/*") + \
+            glob.glob("common_layer/.*") + \
+            glob.glob("root_dir/*") + \
+            glob.glob("root_dir/.*")
+
+    for file in files:
         shutil.move(file, FINAL_DIR)
 
-    for file in glob.iglob("single_layer/.*"):
-        shutil.move(file, FINAL_DIR)
-
-    for file in glob.iglob("common_layer/*"):
-        shutil.move(file, FINAL_DIR)
-
-    for file in glob.iglob("common_layer/.*"):
-        shutil.move(file, FINAL_DIR)
-
-    for file in glob.iglob("root_dir/*"):
-        shutil.move(file, FINAL_DIR)
-
-    for file in glob.iglob("root_dir/.*"):
-        shutil.move(file, FINAL_DIR)
+    # terraform: merge all single_layers in single region into one directory
+    # files = glob.glob(FINAL_DIR + "/us-east-1/*/*")
+    #
+    # for file in files:
+    #     pprint(file)
+    #     shutil.move(file, FINAL_DIR + "/us-east-1")
 
     print("Working directory: %s" % os.getcwd())
 
     # Make zip archive
     shutil.make_archive("archive", "zip", FINAL_DIR)
-
-
-def render_terraform_from_modulestf_config(config):
-    pass
 
 
 def upload_result():
@@ -692,10 +693,7 @@ def handler(event, context):
 
     prepare_render_dirs()
 
-    if True == False:
-        render_terraform_from_modulestf_config(config)
-    else:
-        render_terragrunt_from_modulestf_config(config)
+    render_from_modulestf_config(config)
 
     # Do not upload to S3 when working locally
     if not os.environ.get("IS_LOCAL"):
