@@ -5,6 +5,8 @@ from __future__ import print_function
 import glob
 import json
 import re
+import tempfile
+
 import networkx as nx
 
 import boto3
@@ -69,7 +71,7 @@ FINAL_DIR = "../final"
 if os.environ.get("IS_LOCAL"):
     tmp_dir = os.getcwd()
 else:
-    tmp_dir = os.tmpnam() # was /tmp
+    tmp_dir = tempfile.gettempdir() # was /tmp
 
 
 # Logging snippet was from https://gist.github.com/niranjv/fb95e716151642e8ca553b0e38dd152e
