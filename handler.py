@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-from __future__ import print_function, absolute_import
-
 import glob
 import json
 import re
@@ -24,36 +22,43 @@ from cookiecutter.main import cookiecutter
 
 from .modulestf.terraform import *
 
+BASE_PATH = os.path.dirname(os.path.abspath(__file__))
+
 pprint(x)
+
+def load_local_json(relative_path):
+    path = os.path.join(BASE_PATH, relative_path)
+    with open(path) as file:
+        return json.load(file)
 
 MODULES = {
     "alb": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-alb.git",
-        "variables": json.load(open("modules-metadata/alb.json")),
+        "variables": load_local_json("modules-metadata/alb.json"),
     },
     "elb": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-elb.git",
-        "variables": json.load(open("modules-metadata/elb.json")),
+        "variables": load_local_json("modules-metadata/elb.json"),
     },
     "rds": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-rds.git",
-        "variables": json.load(open("modules-metadata/rds.json")),
+        "variables": load_local_json("modules-metadata/rds.json"),
     },
     "autoscaling": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-autoscaling.git",
-        "variables": json.load(open("modules-metadata/autoscaling.json")),
+        "variables": load_local_json("modules-metadata/autoscaling.json"),
     },
     "ec2-instance": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-ec2-instance.git",
-        "variables": json.load(open("modules-metadata/ec2-instance.json")),
+        "variables": load_local_json("modules-metadata/ec2-instance.json"),
     },
     "sns": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-sns.git",
-        "variables": json.load(open("modules-metadata/sns.json")),
+        "variables": load_local_json("modules-metadata/sns.json"),
     },
     "sqs": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-sqs.git",
-        "variables": json.load(open("modules-metadata/sqs.json")),
+        "variables": load_local_json("modules-metadata/sqs.json"),
     },
     "s3": {
         "source": "terraform-aws-modules/s3/aws",
@@ -65,7 +70,7 @@ MODULES = {
     },
 }
 
-COOKIECUTTER_TEMPLATES_DIR = os.getcwd() + "/templates"
+COOKIECUTTER_TEMPLATES_DIR = os.path.join(BASE_PATH, "templates")
 COOKIECUTTER_TEMPLATES_PREFIX = "terragrunt" #"terraform" # or "terragrunt"
 
 OUTPUT_DIR = "output"
@@ -106,53 +111,21 @@ def prepare_data(data):
 
     # @todo: convert from graph (G) to modules.tf graph (MG), which can be dumped to json and passed to generator function
 
-    surfaces = dict()
-    regions = dict()
-    connectors = list()
+    surfaces = {}
+    regions = {}
+    connectors = []
 
     # We don't care about these keys in json: images, icons
-    data_nodes = list()
-    data_edges = list()
-    data_groups = list()
-    data_connectors = list()
-    data_text = list()
-    data_surfaces = list()
-    data_name = ""
+    data_id = data["id"]
+    data = data.get("data", {})
 
-    try:
-        data_nodes = data["data"]["nodes"]
-    except KeyError:
-        pass
-
-    try:
-        data_edges = data["data"]["edges"]
-    except KeyError:
-        pass
-
-    try:
-        data_groups = data["data"]["groups"]
-    except KeyError:
-        pass
-
-    try:
-        data_connectors = data["data"]["connectors"]
-    except KeyError:
-        pass
-
-    try:
-        data_text = data["data"]["text"]
-    except KeyError:
-        pass
-
-    try:
-        data_surfaces = data["data"]["surfaces"]
-    except KeyError:
-        pass
-
-    try:
-        data_name = data["data"]["name"]
-    except KeyError:
-        pass
+    data_nodes = data.get("nodes", [])
+    data_edges = data.get("edges", [])
+    data_groups = data.get("groups", [])
+    data_connectors = data.get("connectors", [])
+    data_text = data.get("text", [])
+    data_surfaces = data.get("surfaces", [])
+    data_name = data.get("name", "")
 
     ########
     # NODES
@@ -187,7 +160,7 @@ def prepare_data(data):
         connectors.append(connector["id"])
 
     # Merge connectors by contracting edges
-    edge = list()
+    edge = []
     while True:
         # Find first edge which contains connector
         for edge in G.edges.data():
@@ -196,7 +169,7 @@ def prepare_data(data):
             if edge[0] in connectors or edge[1] in connectors:
                 break
             else:
-                edge = list()
+                edge = []
 
         # No edges with connectors remaining - all done
         if len(edge) == 0:
@@ -225,7 +198,7 @@ def prepare_data(data):
             region = surface.get("region")
             if region:
                 if region not in regions.keys():
-                    regions[region] = list()
+                    regions[region] = []
 
                 regions[region].append(surface)
 
@@ -234,7 +207,7 @@ def prepare_data(data):
     ########
     source = {
         "name": data_name,
-        "id": data.get("id"),
+        "id": data_id,
     }
 
     # Debug - draw into file
@@ -264,7 +237,7 @@ def render_single_layer(resource, append_id=False):
     except Exception:
         region = "eu-west-1"
 
-    path_parts = list()
+    path_parts = []
 
     text = resource.get("text")
 
@@ -390,7 +363,7 @@ def generate_modulestf_config(data):
 
     prepare_data(data)
 
-    resources = list()
+    resources = []
     parsed_asg_id = set()
     parsed_rds_id = set()
     warnings = set()
@@ -573,7 +546,7 @@ def generate_modulestf_config(data):
 
 # Count unique combination of type and text to decide if to append unique resource id
 def get_types_text(resources):
-    types_text = dict()
+    types_text = {}
     for r in resources:
         try:
             t = r.get("type") + r.get("text")
