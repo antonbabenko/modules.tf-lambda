@@ -20,7 +20,7 @@ from cookiecutter.exceptions import NonTemplatedInputDirException
 
 from cookiecutter.main import cookiecutter
 
-from .modulestf.terraform import *
+from modulestf.terraform import *
 
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 
