@@ -39,7 +39,9 @@ def convert_graph_to_modulestf_config(graph):
     parsed_rds_id = set()
     warnings = set()
 
-    for id, node in G.nodes.items():
+    # @todo: use "key" instead of "id"
+
+    for key, node in G.nodes.items():
 
         node = node.get("data")
 
@@ -47,7 +49,7 @@ def convert_graph_to_modulestf_config(graph):
         #     print("Skipping something... {}".format(node.get("type")))
         #     continue
 
-        logging.info("\n========================================\nID = {}".format(id))
+        logging.info("\n========================================\nID = {}".format(key))
 
         if node is None:
             logging.error("No node data for this node - {}".format(node))
@@ -55,7 +57,7 @@ def convert_graph_to_modulestf_config(graph):
 
         logging.info("Node: {}".format(node))
 
-        edges = G.adj[id]
+        edges = G.adj[key]
         logging.info("Edges: {}".format(edges))
 
         if node.get("type") not in ["rds", "ec2", "elb", "sns", "sqs"]:
@@ -68,10 +70,10 @@ def convert_graph_to_modulestf_config(graph):
                 if get_node_data(G, edge_id, "type") == "rds" and \
                         get_node_data(G, edge_id, "engine") == node.get("engine") and \
                         get_node_data(G, edge_id, "role") == ("master" if node.get("role") == "slave" else "slave"):
-                    master_rds_id = (id if node.get("role") == "master" else edge_id)
+                    master_rds_id = (key if node.get("role") == "master" else edge_id)
                     is_multi_az = True
 
-            rds_id = master_rds_id if is_multi_az else id
+            rds_id = master_rds_id if is_multi_az else key
 
             if rds_id not in parsed_rds_id:
                 tmp_resource = {
@@ -130,7 +132,7 @@ def convert_graph_to_modulestf_config(graph):
             else:
                 tmp_resource = {
                     "type": "ec2-instance",
-                    "ref_id": id,
+                    "ref_id": key,
                     "text": node.get("text"),
                     "params": {}
                 }
@@ -152,7 +154,7 @@ def convert_graph_to_modulestf_config(graph):
             if node.get("elbType") == "application":
                 resources.append({
                     "type": "alb",
-                    "ref_id": id,
+                    "ref_id": key,
                     "text": node.get("text"),
                     "params": {
                         "asg_id": edge_id if is_asg else None,
@@ -161,7 +163,7 @@ def convert_graph_to_modulestf_config(graph):
             else:
                 resources.append({
                     "type": "elb",
-                    "ref_id": id,
+                    "ref_id": key,
                     "text": node.get("text"),
                     "params": {
                         "asg_id": edge_id if is_asg else None,
@@ -171,7 +173,7 @@ def convert_graph_to_modulestf_config(graph):
         if node.get("type") == "s3":
             resources.append({
                 "type": "s3",
-                "ref_id": id,
+                "ref_id": key,
                 "text": node.get("text"),
                 "params": {
                 }
@@ -180,7 +182,7 @@ def convert_graph_to_modulestf_config(graph):
         if node.get("type") == "cloudfront":
             resources.append({
                 "type": "cloudfront",
-                "ref_id": id,
+                "ref_id": key,
                 "text": node.get("text"),
                 "params": {
                 }
@@ -189,7 +191,7 @@ def convert_graph_to_modulestf_config(graph):
         if node.get("type") == "sns":
             resources.append({
                 "type": "sns",
-                "ref_id": id,
+                "ref_id": key,
                 "text": node.get("text"),
                 "params": {
                 }
@@ -198,7 +200,7 @@ def convert_graph_to_modulestf_config(graph):
         if node.get("type") == "sqs":
             resources.append({
                 "type": "sqs",
-                "ref_id": id,
+                "ref_id": key,
                 "text": node.get("text"),
                 "params": {
                     "fifoQueue": node.get("queueType") == "fifo",

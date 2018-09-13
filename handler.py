@@ -3,9 +3,6 @@
 import glob
 import json
 import re
-import tempfile
-
-import networkx as nx
 
 import boto3
 import os
@@ -14,55 +11,24 @@ import uuid
 from hashlib import md5
 from pprint import pprint, pformat
 import requests
-import sys
-import logging
+
 from cookiecutter.exceptions import NonTemplatedInputDirException
 
 from cookiecutter.main import cookiecutter
 
 from modulestf.terraform import *
 from modulestf.converter import *
-from modulestf.modules import MODULES
+from modulestf.const import *
+from modulestf.logger import setup_logging
+
+from modulestf.modules import *
 from modulestf.cloudcraft.graph import *
-
-BASE_PATH = os.path.dirname(os.path.abspath(__file__))
-
-pprint(MODULES)
-
-COOKIECUTTER_TEMPLATES_DIR = os.path.join(BASE_PATH, "templates")
-COOKIECUTTER_TEMPLATES_PREFIX = "terragrunt" #"terraform" # or "terragrunt"
-
-OUTPUT_DIR = "output"
-WORK_DIR = "work"
-FINAL_DIR = "../final"
-
-if os.environ.get("IS_LOCAL"):
-    tmp_dir = os.getcwd()
-else:
-    tmp_dir = tempfile.gettempdir() # was /tmp
-
-
-# Logging snippet was from https://gist.github.com/niranjv/fb95e716151642e8ca553b0e38dd152e
-def setup_logging():
-    logger = logging.getLogger()
-    for h in logger.handlers:
-        logger.removeHandler(h)
-
-    h = logging.StreamHandler(sys.stdout)
-
-    # use whatever format you want here
-    FORMAT = "[%(levelname)s]\t%(asctime)s.%(msecs)dZ\t%(name)s\t%(message)s\n"
-    h.setFormatter(logging.Formatter(FORMAT))
-    logger.addHandler(h)
-    logger.setLevel(logging.INFO)
-
-    return logger
-
 
 logger = setup_logging()
 
-
 def render_single_layer(resource, regions, append_id=False):
+
+    # logger.info("...")
 
     try:
         region = list(regions.keys())[0]
@@ -152,7 +118,7 @@ def load_data(event):
         r = requests.get(blueprint_url)
         data = r.json()
 
-        logging.info("Blueprint url: %s, response code: %s" % (blueprint_url, r.status_code))
+        logger.info("Blueprint url: %s, response code: %s" % (blueprint_url, r.status_code))
 
         if 403 == r.status_code:
             raise ValueError("Sharing has been disabled for this blueprint. You have to enable it by clicking 'Export' -> 'Get shareable link' on https://cloudcraft.co/app/", 403)
@@ -184,6 +150,13 @@ def get_types_text(resources):
             types_text[t] = types_text[t] + 1
 
     return types_text
+
+# filesystem.py
+# def mkdir(dir):
+#     try:
+#         os.mkdir(dir)
+#     except OSError:
+#         pass
 
 
 def prepare_render_dirs():
@@ -292,7 +265,7 @@ def handler(event, context):
             "statusCode": error.args[1],
         }
 
-    logging.info(pformat(data, indent=2))
+    logger.info(pformat(data, indent=2))
 
     graph = populate_graph(data)
 
@@ -314,22 +287,22 @@ def handler(event, context):
         "statusCode": 302,
     }
 
-
-if __name__ == "__main__":
-    test_event = {}
-
-    # test_event = {
-    #     "queryStringParameters":
-    #         {
-    #             "cloudcraft": "https://cloudcraft.co/api/blueprint/cd5294fb-0aab-4475-bbcc-196f12738eac?key=5c3EuqRadKOJm3Xkkx-yeQ",
-    #         }
-    # }
-
-    test_event = {
-        "queryStringParameters":
-            {
-                "localfile": "input/blueprint_default.json",
-            }
-    }
-
-    handler(test_event, None)
+# @todo: move to "tests" or remove completely
+# if __name__ == "__main__":
+#     test_event = {}
+#
+#     # test_event = {
+#     #     "queryStringParameters":
+#     #         {
+#     #             "cloudcraft": "https://cloudcraft.co/api/blueprint/cd5294fb-0aab-4475-bbcc-196f12738eac?key=5c3EuqRadKOJm3Xkkx-yeQ",
+#     #         }
+#     # }
+#
+#     test_event = {
+#         "queryStringParameters":
+#             {
+#                 "localfile": "input/blueprint_default.json",
+#             }
+#     }
+#
+#     handler(test_event, None)

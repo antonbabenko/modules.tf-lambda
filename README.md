@@ -1,8 +1,19 @@
-# modules.tf-lambda
+# modules.tf - Infrastructure as code generator - from visual diagrams to Terraform
 
-This repository contains AWS Lambda function which accepts URL to blueprint json file from Cloudcraft and returns zip-archive with infrastructure as code.
+This repository contains code for AWS Lambda function which accepts URL to blueprint json file from Cloudcraft and returns zip-archive with Terraform infrastructure as code.
 
-Input:
+This code is deployed and available for everyone:
+* [Sign up for free](https://cloudcraft.co/signup) or [login](https://cloudcraft.co/app) to [Cloudcraft](https://cloudcraft.co/app)
+* Visualize your cloud architecture (like a pro)
+* Click "Export" and "Export as code (modules.tf)"
+* Unzip archive which you have just downloaded and read `README.md` file in it
+
+
+to:
+ * [lambda.modules.tf - production environment](https://lambda.modules.tf/)
+ * [dev-lambda.modules.tf - dev environment](https://dev-lambda.modules.tf/)
+
+Example input:
  * URL: https://cloudcraft.co/api/blueprint/bf0ad2c6-168f-4452-9add-cc4c869f910b
  * local file: blueprint.json
 
@@ -79,27 +90,62 @@ cd final
 pre-commit run -c $(pwd)/.pre-commit-config.yaml --files $(pwd)/eu-west-1/rds/terraform.tfvars
 pre-commit run -c $(pwd)/.pre-commit-config.yaml --files $(pwd)/....
 
-# Run locally:
+## I am developer - show me the code & let's ship it!
 
-serverless invoke local --function generate --path input.json
+Ok, if you are a developer and want to contribute, this is really great because [I](https://github.com/antonbabenko) need your help:
 
-Or:
+- Report, triage and fix bugs
+- Refactor code
+- Improve documentation
+- Implement new sources and workflows (now only [Cloudcraft](https://cloudcraft.co/app) is partially supported)
+- Consider contributing to [Terraform AWS modules](https://github.com/terraform-aws-modules) if you familiar with Terraform already
 
-python3 handler.py
+### Getting started
 
-# Deploy to prod
+[AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html) supports Python 3.6, so you should use it also. Run this to install all required packages:
 
-serverless deploy --stage prod
+```
+$ pip install -r requirements.txt
+```
 
-# Deploy single function to dev
+[Serverless framework](https://serverless.com) is used to do heavy-lifting by packaging dependencies required for AWS Lambda function (`requirements-lambda.txt`) and updating the code there. Read through [Quick Start guide](https://serverless.com/framework/docs/providers/aws/guide/quick-start/), as well as [installation](https://serverless.com/framework/docs/providers/aws/guide/installation/), [various AWS functions](https://serverless.com/framework/docs/providers/aws/guide/functions/), [serverless.yml reference](https://serverless.com/framework/docs/providers/aws/guide/serverless.yml/) to familiarise yourself with the usage of the framework.
 
-serverless deploy function --function generate-cloudcraft --stage dev
+As a short cheatsheet, you will need to use these commands:
 
-or to prod:
+* Invoke function locally providing `input.json`:
 
-serverless deploy function --function generate-cloudcraft --stage prod
+```
+$ serverless invoke local --function generate-cloudcraft --path test_fixtures/input_localfile.json
+```
 
-# License
-The MIT License
+* Deploy all functions to `prod` environment:
+
+```
+$ serverless deploy --stage prod
+```
+
+* Deploy single function to `dev` environment:
+
+```
+$ serverless deploy function --function generate-cloudcraft --stage dev
+```
+
+* Deploy single function to `prod` environment:
+
+```
+$ serverless deploy function --function generate-cloudcraft --stage prod
+```
+
+## Authors
+
+This project is created and maintained by [Anton Babenko](https://github.com/antonbabenko) with the help from different contributors.
+
+Remember to sign up for [Cloudcraft](https://cloudcraft.co/app) account and visualize your cloud architecture like a pro! This project would probably not exist without it.
+
+The authors and contributors to this content cannot guarantee the validity of the information found here. Please make sure that you understand that the information provided here is being provided freely, and that no kind of agreement or contract is created between you and any persons associated with this content or project. The authors and contributors do not assume and hereby disclaim any liability to any party for any loss, damage, or disruption caused by errors or omissions in the information contained in, associated with, or linked from this content, whether such errors or omissions result from negligence, accident, or any other cause.
+
+## License
+
+This work is licensed under MIT License. See LICENSE for full details.
 
 Copyright (c) 2018 Anton Babenko

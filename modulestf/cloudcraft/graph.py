@@ -2,14 +2,10 @@ import networkx as nx
 
 from collections import namedtuple
 
-Graph = namedtuple('Graph', 'G source regions surfaces')
-
 
 def populate_graph(data):
-    # global source
-    # global surfaces
-    # global regions
-    # global G
+
+    Graph = namedtuple('Graph', 'G source regions surfaces')
 
     G = nx.Graph() # We can't trust directions of edges, so graph should be not-directional
     # MG = nx.Graph()  # converted graph to modules.tf schema
