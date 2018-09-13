@@ -20,8 +20,11 @@ from cookiecutter.exceptions import NonTemplatedInputDirException
 
 from cookiecutter.main import cookiecutter
 
+from .modulestf.terraform import *
+
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 
+pprint(x)
 
 def load_local_json(relative_path):
     path = os.path.join(BASE_PATH, relative_path)
