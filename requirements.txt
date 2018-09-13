@@ -1,7 +1,8 @@
+aws-xray-sdk==0.97
 boto3==1.7.3
 botocore==1.10.3
 cookiecutter==1.6.0
-aws-xray-sdk==0.97
-python-lambda-local==0.1.5
-networkx==2.1
 matplotlib==2.2.2
+networkx==2.1
+python-lambda-local==0.1.5
+requests>=2.19.1
