@@ -1,6 +1,7 @@
 # modules.tf - Infrastructure as code generator - from visual diagrams to Terraform
 
-[![MIT license](https://img.shields.io/github/license/antonbabenko/modules.tf-lambda.svg)]()
+[![MIT license](https://img.shields.io/github/license/antonbabenko/modules.tf-lambda.svg)]() [![@modulestf](https://img.shields.io/twitter/follow/modulestf.svg?style=social&label=Follow%20project%20on%20Twitter)](https://twitter.com/modulestf)
+
 
 <a href="https://github.com/antonbabenko/modules.tf-lambda"><img src="https://raw.githubusercontent.com/antonbabenko/modules.tf-lambda/master/misc/modulestf-logo.png" alt="modules.tf - Infrastructure as code generator - from visual diagrams to Terraform" width="210" height="70" align="right" /></a>
 
@@ -71,7 +72,7 @@ $ serverless deploy function --function generate-cloudcraft --stage prod
 
 This project is created and maintained by [Anton Babenko](https://github.com/antonbabenko) with the help from [different contributors](https://github.com/antonbabenko/modules.tf-lambda/graphs/contributors).
 
-[![@antonbabenko](https://img.shields.io/twitter/follow/antonbabenko.svg?style=social&label=Follow%20me%20on%20Twitter)](https://twitter.com/antonbabenko)
+[![@antonbabenko](https://img.shields.io/twitter/follow/antonbabenko.svg?style=social&label=Follow%20@antonbabenko%20on%20Twitter)](https://twitter.com/antonbabenko)
 
 
 ## License
