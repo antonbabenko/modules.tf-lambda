@@ -2,7 +2,7 @@
 
 [![MIT license](https://img.shields.io/github/license/antonbabenko/modules.tf-lambda.svg)]()
 
-<img src="https://raw.githubusercontent.com/antonbabenko/modules.tf-lambda/master/misc/modulestf-logo.png" alt="modules.tf - Infrastructure as code generator - from visual diagrams to Terraform" width="210" height="70" align="right" />
+<a href="https://github.com/antonbabenko/modules.tf-lambda"><img src="https://raw.githubusercontent.com/antonbabenko/modules.tf-lambda/master/misc/modulestf-logo.png" alt="modules.tf - Infrastructure as code generator - from visual diagrams to Terraform" width="210" height="70" align="right" /></a>
 
 This repository contains code for generating infrastructure as code from visual diagrams created in [Cloudcraft](https://cloudcraft.co).
 
