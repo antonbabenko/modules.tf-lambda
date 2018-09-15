@@ -10,11 +10,11 @@
   "author": "Anton Babenko <anton@antonbabenko.com>",
   "license": "ISC",
   "devDependencies": {
-    "serverless-domain-manager": "^2.3.6",
+    "serverless-domain-manager": "^2.6.5",
     "serverless-plugin-tracing": "^2.0.0"
   },
   "dependencies": {
-    "serverless": "^1.27.3",
-    "serverless-python-requirements": "^4.0.3"
+    "serverless": "^1.31.0",
+    "serverless-python-requirements": "^4.2.2"
   }
 }

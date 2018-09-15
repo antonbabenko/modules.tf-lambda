@@ -20,6 +20,9 @@ This project was partially sponsored by [Cloudcraft - the best way to draw AWS d
 
 Please contact me if you want to become a sponsor or need custom features to be implemented.
 
+![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)
+
+
 ## I am developer - show me the code & let's ship it!
 
 Ok, if you are a developer and want to contribute, this is really great because [I](https://github.com/antonbabenko) need your help:
@@ -68,7 +71,10 @@ $ serverless deploy function --function generate-cloudcraft --stage prod
 
 ## Authors
 
-This project is created and maintained by [Anton Babenko](https://github.com/antonbabenko) with the help from different contributors.
+This project is created and maintained by [Anton Babenko](https://github.com/antonbabenko) with the help from [different contributors](https://github.com/antonbabenko/modules.tf-lambda/graphs/contributors).
+
+[![@antonbabenko](https://img.shields.io/twitter/follow/antonbabenko.svg?style=social&label=Follow)](https://twitter.com/antonbabenko)
+
 
 ## License
 

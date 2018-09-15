@@ -35,7 +35,9 @@ isMultiAZ (cloudcraft) ==> multi_az (modules.tf) ==> multi_az (terraform-aws-mod
     - [x] ELB or ALB
  - [x] Generate real meta data from modules (or hardcode some)
  - [ ] Add basic S3 and Cloudfront modules
-
+ - [ ] Circleci - https://serverless.com/blog/automating-ci-for-python-serverless-app-with-circleci/
+ 
+ 
 Before IPEXPO (19.8.2018):
 
  - [ ] Generate Terraform code instead of Terragrunt
@@ -71,3 +73,9 @@ cd final
 // iterate through all files:
 pre-commit run -c $(pwd)/.pre-commit-config.yaml --files $(pwd)/eu-west-1/rds/terraform.tfvars
 pre-commit run -c $(pwd)/.pre-commit-config.yaml --files $(pwd)/....
+
+
+### Comments from Dmytro:
+8. if it python 3 - mb better to use pathlib
+https://www.scivision.co/python-idiomatic-pathlib-use/
+16. https://docs.python.org/3/library/typing.html
