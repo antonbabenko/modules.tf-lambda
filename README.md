@@ -14,7 +14,7 @@ Code in this repository has been already deployed to [AWS Lambda](https://aws.am
 
 ## Sponsors
 
-<a href="https://cloudcraft.co/" target="_blank"><img src="https://raw.githubusercontent.com/antonbabenko/modules.tf-lambda/master/misc/cloudcraft-logo.svg" alt="Cloudcraft - the best way to draw AWS diagrams" width="200" align="right" /></a>
+<a href="https://cloudcraft.co/" target="_blank"><img src="https://raw.githubusercontent.com/antonbabenko/modules.tf-lambda/master/misc/cloudcraft-logo.png" alt="Cloudcraft - the best way to draw AWS diagrams" width="211" height="56" align="right" /></a>
 
 This project was partially sponsored by [Cloudcraft - the best way to draw AWS diagrams](https://cloudcraft.co).
 
