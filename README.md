@@ -20,8 +20,6 @@ This project was partially sponsored by [Cloudcraft - the best way to draw AWS d
 
 Please contact me if you want to become a sponsor or need custom features to be implemented.
 
-![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)
-
 
 ## I am developer - show me the code & let's ship it!
 
