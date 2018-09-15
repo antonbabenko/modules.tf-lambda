@@ -2,11 +2,11 @@
 
 [![MIT license](https://img.shields.io/github/license/antonbabenko/modules.tf-lambda.svg)]()
 
-<img src="https://raw.githubusercontent.com/antonbabenko/modules.tf-lambda/master/misc/modulestf-logo.png" alt="modules.tf - Infrastructure as code generator - from visual diagrams to Terraform" width="200" align="right" />
+<img src="https://raw.githubusercontent.com/antonbabenko/modules.tf-lambda/master/misc/modulestf-logo.png" alt="modules.tf - Infrastructure as code generator - from visual diagrams to Terraform" width="200" style="background-color: #5c4ee5; padding: 5px" align="right" />
 
 This repository contains code for generating infrastructure as code from visual diagrams created in [Cloudcraft](https://cloudcraft.co).
 
-Code in this repository has been already deployed to [AWS Lambda](https://aws.amazon.com/lambda/) and available for all [Cloudcraft](https://cloudcraft.co/app) users to try for free (forever):
+Code in this repository has been already deployed to [AWS Lambda](https://aws.amazon.com/lambda/) and available for all [Cloudcraft](https://cloudcraft.co/app) users for free (forever):
 * Draw your AWS architecture on [Cloudcraft](https://cloudcraft.co/app)
 * Click "Export" and "Export as code (modules.tf)" at the top right side
 * Download archive and unzip it
@@ -18,7 +18,7 @@ Code in this repository has been already deployed to [AWS Lambda](https://aws.am
 
 This project was partially sponsored by [Cloudcraft - the best way to draw AWS diagrams](https://cloudcraft.co).
 
-Please contact me if you want to become a sponsor or need custom features to be implemented.
+Don't hesitate to [contact me](mailto:anton@antonbabenko.com) if you want to become a sponsor or need custom features to be implemented.
 
 
 ## I am developer - show me the code & let's ship it!
@@ -71,7 +71,7 @@ $ serverless deploy function --function generate-cloudcraft --stage prod
 
 This project is created and maintained by [Anton Babenko](https://github.com/antonbabenko) with the help from [different contributors](https://github.com/antonbabenko/modules.tf-lambda/graphs/contributors).
 
-[![@antonbabenko](https://img.shields.io/twitter/follow/antonbabenko.svg?style=social&label=Follow)](https://twitter.com/antonbabenko)
+[![@antonbabenko](https://img.shields.io/twitter/follow/antonbabenko.svg?style=social&label=Follow%20me%20on%20Twitter)](https://twitter.com/antonbabenko)
 
 
 ## License
