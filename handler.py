@@ -291,7 +291,7 @@ def handler(event, context):
 #     # test_event = {
 #     #     "queryStringParameters":
 #     #         {
-#     #             "cloudcraft": "https://cloudcraft.co/api/blueprint/cd5294fb-0aab-4475-bbcc-196f12738eac?key=5c3EuqRadKOJm3Xkkx-yeQ",
+#     #             "cloudcraft": "https://cloudcraft.co/api/blueprint/58154341-c094-47ca-b065-30ed8a156b9e?key=m1Z9nRCfFr0sylLbFVLyhg",
 #     #         }
 #     # }
 #
