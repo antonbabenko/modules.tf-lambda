@@ -1,13 +1,13 @@
-import networkx as nx
-
 from collections import namedtuple
+
+import networkx as nx
 
 
 def populate_graph(data):
 
     Graph = namedtuple('Graph', 'G source regions surfaces')
 
-    G = nx.Graph() # We can't trust directions of edges, so graph should be not-directional
+    G = nx.Graph()  # We can't trust directions of edges, so graph should be not-directional
     # MG = nx.Graph()  # converted graph to modules.tf schema
 
     # @todo: convert from graph (G) to modules.tf graph (MG), which can be dumped to json and passed to generator function

@@ -2,29 +2,26 @@
 
 import glob
 import json
-import re
-
-import boto3
 import os
+import re
 import shutil
 import uuid
 from hashlib import md5
-from pprint import pprint, pformat
+from pprint import pformat, pprint
+
+import boto3
 import requests
-
 from cookiecutter.exceptions import NonTemplatedInputDirException
-
 from cookiecutter.main import cookiecutter
-
-from modulestf.terraform import *
-from modulestf.converter import *
-from modulestf.const import *
-from modulestf.logger import setup_logging
-
-from modulestf.modules import *
 from modulestf.cloudcraft.graph import *
+from modulestf.const import *
+from modulestf.converter import *
+from modulestf.logger import setup_logging
+from modulestf.modules import *
+from modulestf.terraform import *
 
 logger = setup_logging()
+
 
 def render_single_layer(resource, regions, append_id=False):
 
@@ -85,9 +82,9 @@ def render_common_layer(regions):
 
     try:
         cookiecutter(os.path.join(COOKIECUTTER_TEMPLATES_DIR, COOKIECUTTER_TEMPLATES_PREFIX + "-common-layer"),
-                 config_file=os.path.join(COOKIECUTTER_TEMPLATES_DIR, "config_aws_lambda.yaml"),
-                 no_input=True,
-                 extra_context=common_layer)
+                     config_file=os.path.join(COOKIECUTTER_TEMPLATES_DIR, "config_aws_lambda.yaml"),
+                     no_input=True,
+                     extra_context=common_layer)
     except NonTemplatedInputDirException:
         pass
 
@@ -214,11 +211,11 @@ def render_from_modulestf_config(config, source, regions):
     render_root_dir(source)
 
     files = glob.glob("single_layer/*") + \
-            glob.glob("single_layer/.*") + \
-            glob.glob("common_layer/*") + \
-            glob.glob("common_layer/.*") + \
-            glob.glob("root_dir/*") + \
-            glob.glob("root_dir/.*")
+        glob.glob("single_layer/.*") + \
+        glob.glob("common_layer/*") + \
+        glob.glob("common_layer/.*") + \
+        glob.glob("root_dir/*") + \
+        glob.glob("root_dir/.*")
 
     for file in files:
         shutil.move(file, FINAL_DIR)

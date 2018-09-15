@@ -1,12 +1,14 @@
-import os
 import json
+import os
 
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
+
 
 def load_local_json(relative_path):
     path = os.path.join(BASE_PATH, relative_path)
     with open(path) as file:
         return json.load(file)
+
 
 MODULES = {
     "alb": {

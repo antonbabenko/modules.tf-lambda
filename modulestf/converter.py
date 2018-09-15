@@ -1,8 +1,6 @@
 import json
-
-from pprint import pprint
-
 import logging
+from pprint import pprint
 
 
 def get_node(G, node_id):
@@ -26,7 +24,7 @@ def get_node_data(G, node_id, attribute):
         return None
 
 
-def convert_graph_to_modulestf_config(graph):
+def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
     # logging.info(pformat(data, indent=2))
 

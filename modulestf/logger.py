@@ -1,4 +1,6 @@
-import logging, sys
+import logging
+import sys
+
 
 # Logging snippet was from https://gist.github.com/niranjv/fb95e716151642e8ca553b0e38dd152e
 def setup_logging():
