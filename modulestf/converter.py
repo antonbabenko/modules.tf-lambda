@@ -30,14 +30,10 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
     G = graph.G
 
-    # Load Cloudcraft json => convert to MTC
-
     resources = []
     parsed_asg_id = set()
     parsed_rds_id = set()
     warnings = set()
-
-    # @todo: use "key" instead of "id"
 
     for key, node in G.nodes.items():
 
@@ -47,16 +43,16 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
         #     print("Skipping something... {}".format(node.get("type")))
         #     continue
 
-        logging.info("\n========================================\nID = {}".format(key))
+        # logging.info("\n========================================\nID = {}".format(key))
 
         if node is None:
             logging.error("No node data for this node - {}".format(node))
             continue
 
-        logging.info("Node: {}".format(node))
+        # logging.info("Node: {}".format(node))
 
         edges = G.adj[key]
-        logging.info("Edges: {}".format(edges))
+        # logging.info("Edges: {}".format(edges))
 
         if node.get("type") not in ["rds", "ec2", "elb", "sns", "sqs"]:
             warnings.add("node type %s is not implemented yet" % node.get("type"))
@@ -205,9 +201,9 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                 }
             })
 
-    print("-START------------------------------------")
-    pprint(resources)
-    print("-END------------------------------------")
+    # print("-START------------------------------------")
+    # pprint(resources)
+    # print("-END------------------------------------")
 
     if len(warnings):
         logging.warning("; ".join(warnings))

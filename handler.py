@@ -22,6 +22,8 @@ from modulestf.terraform import *
 
 logger = setup_logging()
 
+COOKIECUTTER_TEMPLATES_PREFIX = "terragrunt"  # or "terraform"
+
 
 def render_single_layer(resource, regions, append_id=False):
 
@@ -262,7 +264,7 @@ def handler(event, context):
             "statusCode": error.args[1],
         }
 
-    logger.info(pformat(data, indent=2))
+    # logger.info(pformat(data, indent=2))
 
     graph = populate_graph(data)
 

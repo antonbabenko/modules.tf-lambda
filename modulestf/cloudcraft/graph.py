@@ -118,10 +118,10 @@ def populate_graph(data):
     # plt.savefig("graph.png")
 
     # pprint(G.edges["0820fb86-ee74-49ce-9fe5-03f610ca5e75"])
-    print("NODES===")
-    print(G.nodes.data())
-    print("EDGES===")
-    print(G.edges.data())
+    # print("NODES===")
+    # print(G.nodes.data())
+    # print("EDGES===")
+    # print(G.edges.data())
 
     # pprint(regions)
     # pprint(regions.keys())
