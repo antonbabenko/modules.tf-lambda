@@ -1,6 +1,6 @@
 # modules.tf - Infrastructure as code generator - from visual diagrams to Terraform
 
-[![MIT license](https://img.shields.io/github/license/antonbabenko/modules.tf-lambda.svg)]() [![@modulestf](https://img.shields.io/twitter/follow/modulestf.svg?style=social&label=Follow%20project%20on%20Twitter)](https://twitter.com/modulestf)
+[![MIT license](https://img.shields.io/github/license/antonbabenko/modules.tf-lambda.svg)]() [![Gitter](https://img.shields.io/gitter/room/modulestf/Lobby.svg)](https://gitter.im/modulestf/)
 
 
 <a href="https://github.com/antonbabenko/modules.tf-lambda"><img src="https://raw.githubusercontent.com/antonbabenko/modules.tf-lambda/master/misc/modulestf-logo.png" alt="modules.tf - Infrastructure as code generator - from visual diagrams to Terraform" width="210" height="70" align="right" /></a>
