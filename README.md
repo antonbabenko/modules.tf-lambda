@@ -44,6 +44,16 @@ $ pip install -r requirements.txt
 
 As a short cheatsheet, you will need to use these commands:
 
+* Invoke real endpoint in `dev` and `prod` environments using [httpie](https://github.com/jakubroztocil/httpie/):
+
+```
+# dev
+$ http --print Hhb https://dev-lambda.modules.tf/ @input/blueprint_my.json
+
+# prod
+$ http --print Hhb https://lambda.modules.tf/ @input/blueprint_my.json
+```
+
 * Invoke function locally providing `input.json`:
 
 ```
