@@ -48,10 +48,10 @@ As a short cheatsheet, you will need to use these commands:
 
 ```
 # dev
-$ http --print Hhb https://dev-lambda.modules.tf/ @input/blueprint_my.json
+$ http --print Hhb --all --follow https://dev-lambda.modules.tf/ @input/blueprint_my.json
 
 # prod
-$ http --print Hhb https://lambda.modules.tf/ @input/blueprint_my.json
+$ http --print Hhb --all --follow https://lambda.modules.tf/ @input/blueprint_my.json
 ```
 
 * Invoke function locally providing `input.json`:
