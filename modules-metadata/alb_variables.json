@@ -1,104 +1,121 @@
 {
-  "alb_is_internal": {
+  "enable_deletion_protection": {
     "default": false,
-    "description": "Boolean determining if the ALB is internal or externally facing."
+    "description": "If true, deletion of the load balancer will be disabled via the AWS API. This will prevent Terraform from deleting the load balancer. Defaults to false."
   },
-  "alb_name": {
-    "description": "The name of the ALB as will show in the AWS EC2 ELB console."
+  "enable_http2": {
+    "default": true,
+    "description": "Indicates whether HTTP/2 is enabled in application load balancers."
   },
-  "alb_protocols": {
-    "default": [
-      "HTTP"
-    ],
-    "description": "The protocols the ALB accepts. e.g.: [\"HTTP\"]",
+  "extra_ssl_certs": {
+    "default": [],
+    "description": "A list of maps describing any extra SSL certificates to apply to the HTTPS listeners. Required key/values: certificate_arn, https_listener_index (the index of the listener within https_listeners which the cert applies toward).",
     "type": "list"
   },
-  "alb_security_groups": {
-    "description": "The security groups with which we associate the ALB. e.g. [\"sg-edcd9784\",\"sg-edcd9785\"]",
+  "extra_ssl_certs_count": {
+    "default": 0,
+    "description": "A manually provided count/length of the extra_ssl_certs list of maps since the list cannot be computed."
+  },
+  "http_tcp_listeners": {
+    "default": [],
+    "description": "A list of maps describing the HTTPS listeners for this ALB. Required key/values: port, protocol. Optional key/values: target_group_index (defaults to 0)",
     "type": "list"
   },
-  "backend_port": {
-    "default": 80,
-    "description": "The port the service on the EC2 instances listen on."
+  "http_tcp_listeners_count": {
+    "default": 0,
+    "description": "A manually provided count/length of the http_tcp_listeners list of maps since the list cannot be computed."
   },
-  "backend_protocol": {
-    "default": "HTTP",
-    "description": "The protocol the backend service speaks. Options: HTTP, HTTPS, TCP, SSL (secure tcp)."
+  "https_listeners": {
+    "default": [],
+    "description": "A list of maps describing the HTTPS listeners for this ALB. Required key/values: port, certificate_arn. Optional key/values: ssl_policy (defaults to ELBSecurityPolicy-2016-08), target_group_index (defaults to 0)",
+    "type": "list"
   },
-  "bucket_policy": {
-    "default": "",
-    "description": "An S3 bucket policy to apply to the log bucket. If not provided, a minimal policy will be generated from other variables."
+  "https_listeners_count": {
+    "default": 0,
+    "description": "A manually provided count/length of the https_listeners list of maps since the list cannot be computed."
   },
-  "certificate_arn": {
-    "description": "The ARN of the SSL Certificate. e.g. \"arn:aws:iam::123456789012:server-certificate/ProdServerCert\""
+  "idle_timeout": {
+    "default": 60,
+    "description": "The time in seconds that the connection is allowed to be idle."
   },
-  "cookie_duration": {
-    "default": 1,
-    "description": "If load balancer connection stickiness is desired, set this to the duration in seconds that cookie should be valid (e.g. 300). Otherwise, if no stickiness is desired, leave the default."
+  "ip_address_type": {
+    "default": "ipv4",
+    "description": "The type of IP addresses used by the subnets for your load balancer. The possible values are ipv4 and dualstack."
   },
-  "create_log_bucket": {
+  "listener_ssl_policy_default": {
+    "default": "ELBSecurityPolicy-2016-08",
+    "description": "The security policy if using HTTPS externally on the load balancer. [See](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-policy-table.html)."
+  },
+  "load_balancer_create_timeout": {
+    "default": "10m",
+    "description": "Timeout value when creating the ALB."
+  },
+  "load_balancer_delete_timeout": {
+    "default": "10m",
+    "description": "Timeout value when deleting the ALB."
+  },
+  "load_balancer_is_internal": {
     "default": false,
-    "description": "Create the S3 bucket (named with the log_bucket_name var) and attach a policy to allow ALB logging."
+    "description": "Boolean determining if the load balancer is internal or externally facing."
   },
-  "enable_logging": {
-    "default": false,
-    "description": "Enable the ALB to write log entries to S3."
+  "load_balancer_name": {
+    "description": "The resource name and Name tag of the load balancer."
   },
-  "force_destroy_log_bucket": {
-    "default": false,
-    "description": "If set to true and if the log bucket already exists, it will be destroyed and recreated."
-  },
-  "health_check_healthy_threshold": {
-    "default": 3,
-    "description": "Number of consecutive positive health checks before a backend instance is considered healthy."
-  },
-  "health_check_interval": {
-    "default": 10,
-    "description": "Interval in seconds on which the health check against backend hosts is tried."
-  },
-  "health_check_matcher": {
-    "default": "200-299",
-    "description": "The HTTP codes that are a success when checking TG health."
-  },
-  "health_check_path": {
-    "description": "The URL the ELB should use for health checks. e.g. /health"
-  },
-  "health_check_port": {
-    "default": "traffic-port",
-    "description": "The port used by the health check if different from the traffic-port."
-  },
-  "health_check_timeout": {
-    "default": 5,
-    "description": "Seconds to leave a health check waiting before terminating it and calling the check unhealthy."
-  },
-  "health_check_unhealthy_threshold": {
-    "default": 3,
-    "description": "Number of consecutive positive health checks before a backend instance is considered unhealthy."
+  "load_balancer_update_timeout": {
+    "default": "10m",
+    "description": "Timeout value when updating the ALB."
   },
   "log_bucket_name": {
     "default": "",
-    "description": "S3 bucket for storing ALB access logs. To create the bucket \"create_log_bucket\" should be set to true."
+    "description": "S3 bucket (externally created) for storing load balancer access logs. Required if logging_enabled is true."
   },
   "log_location_prefix": {
     "default": "",
     "description": "S3 prefix within the log_bucket_name under which logs are stored."
   },
-  "region": {
-    "description": "AWS region to use."
+  "logging_enabled": {
+    "default": true,
+    "description": "Controls if the ALB will log requests to S3."
   },
-  "security_policy": {
-    "default": "ELBSecurityPolicy-2016-08",
-    "description": "The security policy if using HTTPS externally on the ALB. See: https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-policy-table.html"
+  "security_groups": {
+    "description": "The security groups to attach to the load balancer. e.g. [\"sg-edcd9784\",\"sg-edcd9785\"]",
+    "type": "list"
   },
   "subnets": {
-    "description": "A list of subnets to associate with the ALB. e.g. ['subnet-1a2b3c4d','subnet-1a2b3c4e','subnet-1a2b3c4f']",
+    "description": "A list of subnets to associate with the load balancer. e.g. ['subnet-1a2b3c4d','subnet-1a2b3c4e','subnet-1a2b3c4f']",
     "type": "list"
   },
   "tags": {
     "default": {},
     "description": "A map of tags to add to all resources"
   },
+  "target_groups": {
+    "default": [],
+    "description": "A list of maps containing key/value pairs that define the target groups to be created. Order of these maps is important and the index of these are to be referenced in listener definitions. Required key/values: name, backend_protocol, backend_port. Optional key/values are in the target_groups_defaults variable.",
+    "type": "list"
+  },
+  "target_groups_count": {
+    "default": 0,
+    "description": "A manually provided count/length of the target_groups list of maps since the list cannot be computed."
+  },
+  "target_groups_defaults": {
+    "default": {
+      "cookie_duration": 86400,
+      "deregistration_delay": 300,
+      "health_check_healthy_threshold": 3,
+      "health_check_interval": 10,
+      "health_check_matcher": "200-299",
+      "health_check_path": "/",
+      "health_check_port": "traffic-port",
+      "health_check_timeout": 5,
+      "health_check_unhealthy_threshold": 3,
+      "stickiness_enabled": true,
+      "target_type": "instance"
+    },
+    "description": "Default values for target groups as defined by the list of maps.",
+    "type": "map"
+  },
   "vpc_id": {
-    "description": "VPC id where the ALB and other resources will be deployed."
+    "description": "VPC id where the load balancer and other resources will be deployed."
   }
 }

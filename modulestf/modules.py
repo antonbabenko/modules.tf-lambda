@@ -88,6 +88,14 @@ MODULES = {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-sqs.git",
         "variables": update_template_variables(load_local_json("../modules-metadata/sqs.json")),
     },
+    "security-group": {
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-security-group.git",
+        "variables": update_template_variables(load_local_json("../modules-metadata/security-group.json")),
+    },
+    "vpc": {
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-vpc.git",
+        "variables": update_template_variables(load_local_json("../modules-metadata/vpc.json")),
+    },
     "s3": {
         "source": "terraform-aws-modules/s3/aws",
         "variables": {},

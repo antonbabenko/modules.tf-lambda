@@ -1,19 +1,51 @@
 {
+  "amazon_side_asn": {
+    "default": "64512",
+    "description": "The Autonomous System Number (ASN) for the Amazon side of the gateway. By default the virtual private gateway is created with the current default Amazon ASN."
+  },
+  "assign_generated_ipv6_cidr_block": {
+    "default": false,
+    "description": "Requests an Amazon-provided IPv6 CIDR block with a /56 prefix length for the VPC. You cannot specify the range of IP addresses, or the size of the CIDR block"
+  },
   "azs": {
     "default": [],
     "description": "A list of availability zones in the region"
   },
   "cidr": {
     "default": "0.0.0.0/0",
-    "description": "The CIDR block for the VPC. Default value is a valid CIDR, but not acceptable by AWS and should be overriden"
+    "description": "The CIDR block for the VPC. Default value is a valid CIDR, but not acceptable by AWS and should be overridden"
   },
   "create_database_subnet_group": {
     "default": true,
     "description": "Controls if database subnet group should be created"
   },
+  "create_database_subnet_route_table": {
+    "default": false,
+    "description": "Controls if separate route table for database should be created"
+  },
+  "create_elasticache_subnet_route_table": {
+    "default": false,
+    "description": "Controls if separate route table for elasticache should be created"
+  },
+  "create_redshift_subnet_route_table": {
+    "default": false,
+    "description": "Controls if separate route table for redshift should be created"
+  },
   "create_vpc": {
     "default": true,
     "description": "Controls if VPC should be created (it affects almost all resources)"
+  },
+  "database_route_table_tags": {
+    "default": {},
+    "description": "Additional tags for the database route tables"
+  },
+  "database_subnet_group_tags": {
+    "default": {},
+    "description": "Additional tags for the database subnet group"
+  },
+  "database_subnet_suffix": {
+    "default": "db",
+    "description": "Suffix to append to database subnets name"
   },
   "database_subnet_tags": {
     "default": {},
@@ -23,10 +55,6 @@
     "default": [],
     "description": "A list of database subnets",
     "type": "list"
-  },
-  "default_route_table_tags": {
-    "default": {},
-    "description": "Additional tags for the default route table"
   },
   "default_vpc_enable_classiclink": {
     "default": false,
@@ -77,6 +105,14 @@
     "default": {},
     "description": "Additional tags for the DHCP option set"
   },
+  "elasticache_route_table_tags": {
+    "default": {},
+    "description": "Additional tags for the elasticache route tables"
+  },
+  "elasticache_subnet_suffix": {
+    "default": "elasticache",
+    "description": "Suffix to append to elasticache subnets name"
+  },
   "elasticache_subnet_tags": {
     "default": {},
     "description": "Additional tags for the elasticache subnets"
@@ -119,9 +155,26 @@
     "description": "List of EIP IDs to be assigned to the NAT Gateways (used in combination with reuse_nat_ips)",
     "type": "list"
   },
+  "igw_tags": {
+    "default": {},
+    "description": "Additional tags for the internet gateway"
+  },
   "instance_tenancy": {
     "default": "default",
     "description": "A tenancy option for instances launched into the VPC"
+  },
+  "intra_route_table_tags": {
+    "default": {},
+    "description": "Additional tags for the intra route tables"
+  },
+  "intra_subnet_tags": {
+    "default": {},
+    "description": "Additional tags for the intra subnets"
+  },
+  "intra_subnets": {
+    "default": [],
+    "description": "A list of intra subnets",
+    "type": "list"
   },
   "manage_default_vpc": {
     "default": false,
@@ -135,9 +188,25 @@
     "default": "",
     "description": "Name to be used on all the resources as identifier"
   },
+  "nat_eip_tags": {
+    "default": {},
+    "description": "Additional tags for the NAT EIP"
+  },
+  "nat_gateway_tags": {
+    "default": {},
+    "description": "Additional tags for the NAT gateways"
+  },
+  "one_nat_gateway_per_az": {
+    "default": false,
+    "description": "Should be true if you want only one NAT Gateway per availability zone. Requires `var.azs` to be set, and the number of `public_subnets` created to be greater than or equal to the number of availability zones specified in `var.azs`."
+  },
   "private_route_table_tags": {
     "default": {},
     "description": "Additional tags for the private route tables"
+  },
+  "private_subnet_suffix": {
+    "default": "private",
+    "description": "Suffix to append to private subnets name"
   },
   "private_subnet_tags": {
     "default": {},
@@ -159,6 +228,10 @@
     "default": {},
     "description": "Additional tags for the public route tables"
   },
+  "public_subnet_suffix": {
+    "default": "public",
+    "description": "Suffix to append to public subnets name"
+  },
   "public_subnet_tags": {
     "default": {},
     "description": "Additional tags for the public subnets"
@@ -166,6 +239,18 @@
   "public_subnets": {
     "default": [],
     "description": "A list of public subnets inside the VPC"
+  },
+  "redshift_route_table_tags": {
+    "default": {},
+    "description": "Additional tags for the redshift route tables"
+  },
+  "redshift_subnet_group_tags": {
+    "default": {},
+    "description": "Additional tags for the redshift subnet group"
+  },
+  "redshift_subnet_suffix": {
+    "default": "redshift",
+    "description": "Suffix to append to redshift subnets name"
   },
   "redshift_subnet_tags": {
     "default": {},
@@ -179,6 +264,10 @@
   "reuse_nat_ips": {
     "default": false,
     "description": "Should be true if you don't want EIPs to be created for your NAT Gateways and will instead pass them in via the 'external_nat_ip_ids' variable"
+  },
+  "secondary_cidr_blocks": {
+    "default": [],
+    "description": "List of secondary CIDR blocks to associate with the VPC to extend the IP Address pool"
   },
   "single_nat_gateway": {
     "default": false,
@@ -196,13 +285,8 @@
     "default": "",
     "description": "ID of VPN Gateway to attach to the VPC"
   },
-  "engine": {
-    "cloudcraft_name": "engine"
-  },
-  "instance_class": {
-    "cloudcraft_name": "instanceType"
-  },
-  "multi_az": {
-    "cloudcraft_name": "isMultiAZ"
+  "vpn_gateway_tags": {
+    "default": {},
+    "description": "Additional tags for the VPN gateway"
   }
 }

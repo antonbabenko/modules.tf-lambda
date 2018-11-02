@@ -70,9 +70,11 @@
     "description": "The IAM instance profile to associate with launched instances"
   },
   "image_id": {
+    "default": "",
     "description": "The EC2 image ID to launch"
   },
   "instance_type": {
+    "default": "",
     "description": "The size of instance to launch"
   },
   "key_name": {
@@ -120,12 +122,17 @@
     "default": false,
     "description": "Allows setting instance protection. The autoscaling group will not select instances with this setting for terminination during scale in events."
   },
+  "recreate_asg_when_lc_changes": {
+    "default": false,
+    "description": "Whether to recreate an autoscaling group when launch configuration changes"
+  },
   "root_block_device": {
     "default": [],
     "description": "Customize details about the root block device of the instance",
     "type": "list"
   },
   "security_groups": {
+    "default": [],
     "description": "A list of security group IDs to assign to the launch configuration",
     "type": "list"
   },
@@ -143,7 +150,7 @@
   },
   "tags_as_map": {
     "default": {},
-    "description": "A map of tags and values in the same format as other resources accept.  This will be zipmapped into the non-standard format that the aws_autoscaling_group requires.",
+    "description": "A map of tags and values in the same format as other resources accept. This will be converted into the non-standard format that the aws_autoscaling_group requires.",
     "type": "map"
   },
   "target_group_arns": {

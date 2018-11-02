@@ -3,7 +3,7 @@ from collections import namedtuple
 import networkx as nx
 
 
-def populate_graph(data):
+def populate_graph(data):  # noqa: C901
 
     Graph = namedtuple('Graph', 'G source regions surfaces')
 
@@ -41,17 +41,27 @@ def populate_graph(data):
         G.add_edge(edge["from"], edge["to"])
 
     #####################
-    # AUTOSCALING GROUPS
+    # AUTOSCALING GROUPS, SECURITY GROUPS AND VPCS
     #####################
     for group in data_groups:
-        if group.get("type") == "asg":
+        group_type = group.get("type")
+
+        if group_type in ["asg", "sg", "vpc"]:
             group_id = group.get("id")
             group_nodes = group.get("nodes")
 
-            G.add_node(group_id, data={"group_nodes": group_nodes})
+            G.add_node(group_id, data={
+                "type": group_type,
+                "group_nodes": group_nodes
+            })
 
             for group_node in group_nodes:
-                G.node[group_node]["data"]["asg_id"] = group_id
+                if group_type == "asg":
+                    G.node[group_node]["data"]["asg_id"] = group_id
+                elif group_type == "sg":
+                    G.node[group_node]["data"]["sg_id"] = group_id
+                elif group_type == "vpc":
+                    G.node[group_node]["data"]["vpc_id"] = group_id
 
     #############
     # CONNECTORS

@@ -105,15 +105,23 @@ def render_root_dir(source):
 
 
 def load_data(event):
+    body = event.get("body")
+    logger.info("body = %s" % body)
+
     qs = event.get("queryStringParameters")
 
+    if body is None and qs is None:
+        raise ValueError("Some query string parameters should be defined or use HTTP POST method", 400)
+
     if qs is None:
-        raise ValueError("Some query string parameters should be defined", 400)
+        blueprint_url = localfile = None
+    else:
+        blueprint_url = qs.get("cloudcraft")
+        localfile = qs.get("localfile")
 
-    blueprint_url = qs.get("cloudcraft")
-    localfile = qs.get("localfile")
-
-    if blueprint_url:
+    if body:
+        data = json.loads(body)
+    elif blueprint_url:
         r = requests.get(blueprint_url)
         data = r.json()
 

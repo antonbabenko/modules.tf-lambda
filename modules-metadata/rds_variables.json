@@ -27,7 +27,7 @@
   },
   "character_set_name": {
     "default": "",
-    "description": "(Optional) The character set name to use for DB encoding in Oracle instances. This can't be changed. See Oracle Character Sets Supported in Amazon RDS for more information."
+    "description": "(Optional) The character set name to use for DB encoding in Oracle instances. This can't be changed. See Oracle Character Sets Supported in Amazon RDS for more information"
   },
   "copy_tags_to_snapshot": {
     "default": false,
@@ -36,6 +36,10 @@
   "create_db_instance": {
     "default": true,
     "description": "Whether to create a database instance"
+  },
+  "create_db_option_group": {
+    "default": true,
+    "description": "Whether to create a database option group"
   },
   "create_db_parameter_group": {
     "default": true,
@@ -52,6 +56,14 @@
   "db_subnet_group_name": {
     "default": "",
     "description": "Name of DB subnet group. DB instance will be created in the VPC associated with the DB subnet group. If unspecified, will be created in the default VPC"
+  },
+  "deletion_protection": {
+    "default": false,
+    "description": "The database can't be deleted when this value is set to true."
+  },
+  "enabled_cloudwatch_logs_exports": {
+    "default": [],
+    "description": "List of log types to enable for exporting to CloudWatch logs. If omitted, no logs will be exported. Valid values (depending on engine): alert, audit, error, general, listener, slowquery, trace."
   },
   "engine": {
     "description": "The database engine to use"
@@ -92,6 +104,10 @@
   "maintenance_window": {
     "description": "The window to perform maintenance in. Syntax: 'ddd:hh24:mi-ddd:hh24:mi'. Eg: 'Mon:00:00-Mon:03:00'"
   },
+  "major_engine_version": {
+    "default": "",
+    "description": "Specifies the major version of the engine that this option group should be associated with"
+  },
   "monitoring_interval": {
     "default": 0,
     "description": "The interval, in seconds, between points when Enhanced Monitoring metrics are collected for the DB instance. To disable collecting Enhanced Monitoring metrics, specify 0. The default is 0. Valid Values: 0, 1, 5, 10, 15, 30, 60."
@@ -111,6 +127,19 @@
   "name": {
     "default": "",
     "description": "The DB name to create. If omitted, no database is created initially"
+  },
+  "option_group_description": {
+    "default": "",
+    "description": "The description of the option group"
+  },
+  "option_group_name": {
+    "default": "",
+    "description": "Name of the DB option group to associate. Setting this automatically disables option_group creation"
+  },
+  "options": {
+    "default": [],
+    "description": "A list of Options to apply.",
+    "type": "list"
   },
   "parameter_group_name": {
     "default": "",
@@ -158,6 +187,15 @@
   "tags": {
     "default": {},
     "description": "A mapping of tags to assign to all resources"
+  },
+  "timeouts": {
+    "default": {
+      "create": "40m",
+      "delete": "40m",
+      "update": "80m"
+    },
+    "description": "(Optional) Updated Terraform resource management timeouts. Applies to `aws_db_instance` in particular to permit resource management times",
+    "type": "map"
   },
   "timezone": {
     "default": "",

@@ -26,9 +26,9 @@ def get_node_data(G, node_id, attribute):
 
 def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
-    # logging.info(pformat(data, indent=2))
-
     G = graph.G
+
+    # logging.info(pprint(G.nodes.items(), indent=2))
 
     resources = []
     parsed_asg_id = set()
@@ -38,10 +38,6 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
     for key, node in G.nodes.items():
 
         node = node.get("data")
-
-        # if node.get("type") not in ["ec2", "elb"]:
-        #     print("Skipping something... {}".format(node.get("type")))
-        #     continue
 
         # logging.info("\n========================================\nID = {}".format(key))
 
@@ -54,7 +50,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
         edges = G.adj[key]
         # logging.info("Edges: {}".format(edges))
 
-        if node.get("type") not in ["rds", "ec2", "elb", "sns", "sqs"]:
+        if node.get("type") not in ["rds", "ec2", "elb", "sns", "sqs", "sg", "vpc", "asg"]:
             warnings.add("node type %s is not implemented yet" % node.get("type"))
 
         if node.get("type") == "rds":
@@ -201,8 +197,28 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                 }
             })
 
+        # There are no nodes with type sg and vpc - fix this
+        if node.get("type") == "sg":
+            resources.append({
+                "type": "security-group",
+                "ref_id": key,
+                "text": node.get("text"),
+                "params": {
+                }
+            })
+
+        if node.get("type") == "vpc":
+            resources.append({
+                "type": "vpc",
+                "ref_id": key,
+                "text": node.get("text"),
+                "params": {
+                }
+            })
+
     # print("-START------------------------------------")
     # pprint(resources)
+    # pprint(G.groups.items())
     # print("-END------------------------------------")
 
     if len(warnings):
