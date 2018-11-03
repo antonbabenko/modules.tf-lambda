@@ -6,6 +6,18 @@ terragrunt = {
   include = {
     path = "${find_in_parent_folders()}"
   }
+
+  {% if cookiecutter.dependencies|default("") -%}
+  # dependencies = {{ cookiecutter.dependencies|pprint }}
+
+  dependencies {
+    paths = [
+      {%- for value in cookiecutter.dependencies -%}
+      "../{{ value }}"{%- if not loop.last -%}, {% endif -%}
+      {%- endfor -%}
+    ]
+  }
+  {%- endif %}
 }
 
 {% for key, value in cookiecutter.module_variables|dictsort -%}

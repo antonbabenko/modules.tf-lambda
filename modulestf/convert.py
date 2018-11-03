@@ -1,6 +1,6 @@
 import json
 import logging
-from pprint import pprint
+from pprint import pformat, pprint
 
 
 def get_node(G, node_id):
@@ -50,8 +50,17 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
         edges = G.adj[key]
         # logging.info("Edges: {}".format(edges))
 
-        if node.get("type") not in ["rds", "ec2", "elb", "sns", "sqs", "sg", "vpc", "asg"]:
+        ################
+        if node.get("type") not in ["sg", "vpc"]:
             warnings.add("node type %s is not implemented yet" % node.get("type"))
+            continue
+        ################
+
+        # if node.get("type") not in ["rds", "ec2", "elb", "sns", "sqs", "s3", "cloudfront", "sg", "vpc"]:
+        #     warnings.add("node type %s is not implemented yet" % node.get("type"))
+        #     continue
+
+        logging.info(pformat(node, indent=2))
 
         if node.get("type") == "rds":
             is_multi_az = False
@@ -197,14 +206,14 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                 }
             })
 
-        # There are no nodes with type sg and vpc - fix this
         if node.get("type") == "sg":
             resources.append({
                 "type": "security-group",
                 "ref_id": key,
                 "text": node.get("text"),
                 "params": {
-                }
+                },
+                "dependencies": {"vpc": node.get("vpc_id")} if node.get("vpc_id") else {}
             })
 
         if node.get("type") == "vpc":
