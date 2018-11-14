@@ -64,6 +64,10 @@ def handler(event, context):
 
         return {
             "body": error.args[0],
+            "headers": {
+                "Access-Control-Allow-Origin" : "*",
+                "Access-Control-Allow-Credentials": True
+            },
             "statusCode": error.args[1],
         }
 
@@ -86,7 +90,9 @@ def handler(event, context):
     return {
         "body": "",
         "headers": {
-            "Location": link
+            "Location": link,
+            "Access-Control-Allow-Origin" : "*",
+            "Access-Control-Allow-Credentials": True
         },
         "statusCode": 302,
     }
