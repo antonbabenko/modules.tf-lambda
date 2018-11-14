@@ -3,6 +3,36 @@ import logging
 from pprint import pformat, pprint
 
 
+# Class which represents modules.tf definition of resource
+class Resource:
+    def __init__(self, ref_id, type, text):
+        self.ref_id = ref_id
+        self.type = type
+        self.text = text
+        self.params = {}
+        self.dependencies = []
+        self.dynamic_params = {}
+
+    def append_dependency(self, key):
+        self.dependencies.append(key)
+
+    def update_dynamic_params(self, name, value):
+        self.dynamic_params.update({name: value})
+
+    def update_params(self, value):
+        self.params.update(value)
+
+    def content(self):
+        return {
+            "ref_id": self.ref_id,
+            "type": self.type,
+            "text": self.text,
+            "params": self.params,
+            "dependencies": self.dependencies,
+            "dynamic_params": self.dynamic_params
+        }
+
+
 def get_node(G, node_id):
     try:
         return G.nodes.get(node_id)
@@ -38,14 +68,14 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
     supported_node_types = ["rds", "ec2", "elb", "sns", "sqs", "sg", "vpc"]  # "s3", "cloudfront",
     # supported_node_types = ["sg", "vpc"]
 
-    for key, node in G.nodes.items():
+    for key, node_complete in G.nodes.items():
 
-        node = node.get("data")
+        node = node_complete.get("data")
 
-        # logging.info("\n========================================\nID = {}".format(key))
+        logging.info("\n========================================\nNode key = %s" % key)
 
         if node is None:
-            logging.error("No node data for this node - {}".format(node))
+            logging.error("No node 'data' in node - %s" % pformat(node_complete))
             continue
 
         # logging.info("Node: {}".format(node))
@@ -76,39 +106,37 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
             rds_id = master_rds_id if is_multi_az else key
 
             if rds_id not in parsed_rds_id:
-                tmp_resource = {
-                    "type": "rds",
-                    "ref_id": rds_id,
-                    "text": node.get("text"),
-                    "params": {
-                        "isMultiAZ": is_multi_az,
-                        "db_subnet_group_name": "",
-                    },
-                    "dependencies": [],
-                    "dynamic_params": {},
-                }
+
+                r = Resource(rds_id, "rds", node.get("text"))
+
+                r.update_params({
+                    "isMultiAZ": is_multi_az,
+                    "db_subnet_group_name": "",
+                })
 
                 if vpc_id:
-                    tmp_resource["dependencies"].append(vpc_id)
-                    tmp_resource["dynamic_params"].update(
-                        dict(db_subnet_group_name="terraform_output." + vpc_id + ".database_subnet_group"))
+                    r.append_dependency(vpc_id)
+                    r.update_dynamic_params("db_subnet_group_name",
+                                            "terraform_output." + vpc_id + ".database_subnet_group")
 
                 if node.get("engine"):
-                    tmp_resource["params"].update(
-                        dict(engine=node.get("engine")))
+                    r.update_params({
+                        "engine": node.get("engine"),
+                    })
 
                 if node.get("instanceType") and node.get("instanceSize"):
-                    tmp_resource["params"].update(
-                        dict(instanceType=node.get("instanceType", "") + "." + node.get("instanceSize", "")))
+                    r.update_params({
+                        "instanceType": node.get("instanceType", "") + "." + node.get("instanceSize", ""),
+                    })
 
-                resources.append(tmp_resource)
+                resources.append(r.content())
 
             parsed_rds_id.add(rds_id)
 
         if node.get("type") == "ec2":
             asg_id = node.get("asg_id")
 
-            if bool(asg_id):
+            if asg_id:
 
                 if asg_id not in parsed_asg_id:
                     # Find ELB/ALB in edges from or to ASG
@@ -119,48 +147,39 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                             elb_id = get_node_data(G, edge_id, "id")
                             break
 
-                    tmp_resource = {
-                        "type": "autoscaling",
-                        "ref_id": asg_id,
-                        "text": node.get("text"),
-                        "params": {
-                            "target_group_arns": [],
-                            "vpc_zone_identifier": []
-                        },
-                        "dependencies": [],
-                        "dynamic_params": {}
-                    }
+                    r = Resource(asg_id, "autoscaling", node.get("text"))
+
+                    r.update_params({
+                        "target_group_arns": [],
+                        "vpc_zone_identifier": []
+                    })
 
                     if elb_id:
-                        tmp_resource["dependencies"].append(elb_id)
-                        tmp_resource["dynamic_params"].update(
-                            dict(target_group_arns="terraform_output." + elb_id + ".target_group_arns"))
+                        r.append_dependency(elb_id)
+                        r.update_dynamic_params("target_group_arns",
+                                                "terraform_output." + elb_id + ".target_group_arns")
 
                     if vpc_id:
-                        tmp_resource["dependencies"].append(vpc_id)
-                        tmp_resource["dynamic_params"].update(
-                            dict(vpc_zone_identifier="terraform_output." + vpc_id + ".public_subnets"))
+                        r.append_dependency(vpc_id)
+                        r.update_dynamic_params("vpc_zone_identifier", "terraform_output." + vpc_id + ".public_subnets")
 
                     if node.get("instanceType") and node.get("instanceSize"):
-                        tmp_resource["params"].update(
-                            dict(instanceType=node.get("instanceType", "") + "." + node.get("instanceSize", "")))
+                        r.update_params({
+                            "instanceType": node.get("instanceType", "") + "." + node.get("instanceSize", ""),
+                        })
 
-                    resources.append(tmp_resource)
+                    resources.append(r.content())
 
                 parsed_asg_id.add(asg_id)
             else:
-                tmp_resource = {
-                    "type": "ec2-instance",
-                    "ref_id": key,
-                    "text": node.get("text"),
-                    "params": {}
-                }
+                r = Resource(key, "ec2-instance", node.get("text"))
 
                 if node.get("instanceType") and node.get("instanceSize"):
-                    tmp_resource["params"].update(
-                        {"instanceType": node.get("instanceType", "") + "." + node.get("instanceSize", "")})
+                    r.update_params({
+                        "instanceType": node.get("instanceType", "") + "." + node.get("instanceSize", ""),
+                    })
 
-                resources.append(tmp_resource)
+                resources.append(r.content())
 
         if node.get("type") == "elb":
             # for edge_id in edges:
@@ -169,101 +188,61 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
             #         break
 
             if node.get("elbType") == "application":
-                tmp_resource = {
-                    "type": "alb",
-                    "ref_id": key,
-                    "text": node.get("text"),
-                    "params": {},
-                    "dependencies": [],
-                    "dynamic_params": {}
-                }
-
+                r = Resource(key, "alb", node.get("text"))
             else:
-                tmp_resource = {
-                    "type": "elb",
-                    "ref_id": key,
-                    "text": node.get("text"),
-                    "params": {},
-                    "dependencies": [],
-                    "dynamic_params": {}
-                }
+                r = Resource(key, "elb", node.get("text"))
 
                 if vpc_id:
-                    tmp_resource["dependencies"].append(vpc_id)
-                    tmp_resource["dynamic_params"].update(
-                        dict(subnets="terraform_output." + vpc_id + ".public_subnets"))
+                    r.append_dependency(vpc_id)
+                    r.update_dynamic_params("subnets", "terraform_output." + vpc_id + ".public_subnets")
 
-            resources.append(tmp_resource)
+            resources.append(r.content())
 
         if node.get("type") == "s3":
-            resources.append({
-                "type": "s3",
-                "ref_id": key,
-                "text": node.get("text"),
-                "params": {
-                }
-            })
+            r = Resource(key, "s3", node.get("text"))
+
+            resources.append(r.content())
 
         if node.get("type") == "cloudfront":
-            resources.append({
-                "type": "cloudfront",
-                "ref_id": key,
-                "text": node.get("text"),
-                "params": {
-                }
-            })
+            r = Resource(key, "cloudfront", node.get("text"))
+
+            resources.append(r.content())
 
         if node.get("type") == "sns":
-            resources.append({
-                "type": "sns",
-                "ref_id": key,
-                "text": node.get("text"),
-                "params": {
-                }
-            })
+            r = Resource(key, "sns", node.get("text"))
+
+            resources.append(r.content())
 
         if node.get("type") == "sqs":
-            resources.append({
-                "type": "sqs",
-                "ref_id": key,
-                "text": node.get("text"),
-                "params": {
-                    "fifoQueue": node.get("queueType") == "fifo",
-                }
+            r = Resource(key, "sqs", node.get("text"))
+
+            r.update_params({
+                "fifoQueue": node.get("queueType") == "fifo",
             })
+
+            resources.append(r.content())
 
         if node.get("type") == "sg":
-            tmp_resource = {
-                "type": "security-group",
-                "ref_id": key,
-                "text": node.get("text"),
-                "params": {},
-                "dependencies": [],
-                "dynamic_params": {}
-            }
+            r = Resource(key, "security-group", node.get("text"))
 
             if vpc_id:
-                tmp_resource["dependencies"].append(vpc_id)
-                tmp_resource["dynamic_params"].update(
-                    dict(vpc_id="terraform_output." + vpc_id + ".vpc_id"))
+                r.append_dependency(vpc_id)
+                r.update_dynamic_params("vpc_id", "terraform_output." + vpc_id + ".vpc_id")
 
-            resources.append(tmp_resource)
+            resources.append(r.content())
 
         if node.get("type") == "vpc":
-            resources.append({
-                "type": "vpc",
-                "ref_id": key,
-                "text": node.get("text"),
-                "params": {
-                    "name": "",
-                    "cidr": "",
-                    "azs": [],
-                    "public_subnets": [],
-                    "private_subnets": [],
-                },
-                "dependencies": [],
-                "dynamic_params": {}
+            r = Resource(key, "vpc", node.get("text"))
+
+            r.update_params({
+                "name": "",
+                "cidr": "",
+                "azs": [],
+                "public_subnets": [],
+                "private_subnets": [],
             })
+
+            resources.append(r.content())
 
     logging.info(pformat(resources))
 
