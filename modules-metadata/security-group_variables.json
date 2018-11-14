@@ -1,0 +1,172 @@
+{
+  "computed_egress_rules": {
+    "default": [],
+    "description": "List of computed egress rules to create by name"
+  },
+  "computed_egress_with_cidr_blocks": {
+    "default": [],
+    "description": "List of computed egress rules to create where 'cidr_blocks' is used"
+  },
+  "computed_egress_with_ipv6_cidr_blocks": {
+    "default": [],
+    "description": "List of computed egress rules to create where 'ipv6_cidr_blocks' is used"
+  },
+  "computed_egress_with_self": {
+    "default": [],
+    "description": "List of computed egress rules to create where 'self' is defined"
+  },
+  "computed_egress_with_source_security_group_id": {
+    "default": [],
+    "description": "List of computed egress rules to create where 'source_security_group_id' is used"
+  },
+  "computed_ingress_rules": {
+    "default": [],
+    "description": "List of computed ingress rules to create by name"
+  },
+  "computed_ingress_with_cidr_blocks": {
+    "default": [],
+    "description": "List of computed ingress rules to create where 'cidr_blocks' is used"
+  },
+  "computed_ingress_with_ipv6_cidr_blocks": {
+    "default": [],
+    "description": "List of computed ingress rules to create where 'ipv6_cidr_blocks' is used"
+  },
+  "computed_ingress_with_self": {
+    "default": [],
+    "description": "List of computed ingress rules to create where 'self' is defined"
+  },
+  "computed_ingress_with_source_security_group_id": {
+    "default": [],
+    "description": "List of computed ingress rules to create where 'source_security_group_id' is used"
+  },
+  "create": {
+    "default": true,
+    "description": "Whether to create security group and all rules"
+  },
+  "description": {
+    "default": "Security Group managed by Terraform",
+    "description": "Description of security group"
+  },
+  "egress_cidr_blocks": {
+    "default": [
+      "0.0.0.0/0"
+    ],
+    "description": "List of IPv4 CIDR ranges to use on all egress rules"
+  },
+  "egress_ipv6_cidr_blocks": {
+    "default": [
+      "::/0"
+    ],
+    "description": "List of IPv6 CIDR ranges to use on all egress rules"
+  },
+  "egress_prefix_list_ids": {
+    "default": [],
+    "description": "List of prefix list IDs (for allowing access to VPC endpoints) to use on all egress rules"
+  },
+  "egress_rules": {
+    "default": [],
+    "description": "List of egress rules to create by name"
+  },
+  "egress_with_cidr_blocks": {
+    "default": [],
+    "description": "List of egress rules to create where 'cidr_blocks' is used"
+  },
+  "egress_with_ipv6_cidr_blocks": {
+    "default": [],
+    "description": "List of egress rules to create where 'ipv6_cidr_blocks' is used"
+  },
+  "egress_with_self": {
+    "default": [],
+    "description": "List of egress rules to create where 'self' is defined"
+  },
+  "egress_with_source_security_group_id": {
+    "default": [],
+    "description": "List of egress rules to create where 'source_security_group_id' is used"
+  },
+  "ingress_cidr_blocks": {
+    "default": [],
+    "description": "List of IPv4 CIDR ranges to use on all ingress rules"
+  },
+  "ingress_ipv6_cidr_blocks": {
+    "default": [],
+    "description": "List of IPv6 CIDR ranges to use on all ingress rules"
+  },
+  "ingress_prefix_list_ids": {
+    "default": [],
+    "description": "List of prefix list IDs (for allowing access to VPC endpoints) to use on all ingress rules"
+  },
+  "ingress_rules": {
+    "default": [],
+    "description": "List of ingress rules to create by name"
+  },
+  "ingress_with_cidr_blocks": {
+    "default": [],
+    "description": "List of ingress rules to create where 'cidr_blocks' is used"
+  },
+  "ingress_with_ipv6_cidr_blocks": {
+    "default": [],
+    "description": "List of ingress rules to create where 'ipv6_cidr_blocks' is used"
+  },
+  "ingress_with_self": {
+    "default": [],
+    "description": "List of ingress rules to create where 'self' is defined"
+  },
+  "ingress_with_source_security_group_id": {
+    "default": [],
+    "description": "List of ingress rules to create where 'source_security_group_id' is used"
+  },
+  "name": {
+    "description": "Name of security group"
+  },
+  "number_of_computed_egress_rules": {
+    "default": 0,
+    "description": "Number of computed egress rules to create by name"
+  },
+  "number_of_computed_egress_with_cidr_blocks": {
+    "default": 0,
+    "description": "Number of computed egress rules to create where 'cidr_blocks' is used"
+  },
+  "number_of_computed_egress_with_ipv6_cidr_blocks": {
+    "default": 0,
+    "description": "Number of computed egress rules to create where 'ipv6_cidr_blocks' is used"
+  },
+  "number_of_computed_egress_with_self": {
+    "default": 0,
+    "description": "Number of computed egress rules to create where 'self' is defined"
+  },
+  "number_of_computed_egress_with_source_security_group_id": {
+    "default": 0,
+    "description": "Number of computed egress rules to create where 'source_security_group_id' is used"
+  },
+  "number_of_computed_ingress_rules": {
+    "default": 0,
+    "description": "Number of computed ingress rules to create by name"
+  },
+  "number_of_computed_ingress_with_cidr_blocks": {
+    "default": 0,
+    "description": "Number of computed ingress rules to create where 'cidr_blocks' is used"
+  },
+  "number_of_computed_ingress_with_ipv6_cidr_blocks": {
+    "default": 0,
+    "description": "Number of computed ingress rules to create where 'ipv6_cidr_blocks' is used"
+  },
+  "number_of_computed_ingress_with_self": {
+    "default": 0,
+    "description": "Number of computed ingress rules to create where 'self' is defined"
+  },
+  "number_of_computed_ingress_with_source_security_group_id": {
+    "default": 0,
+    "description": "Number of computed ingress rules to create where 'source_security_group_id' is used"
+  },
+  "tags": {
+    "default": {},
+    "description": "A mapping of tags to assign to security group"
+  },
+  "use_name_prefix": {
+    "default": true,
+    "description": "Whether to use name_prefix or fixed name. Should be true to able to update security group name after initial creation"
+  },
+  "vpc_id": {
+    "description": "ID of the VPC where to create security group"
+  }
+}

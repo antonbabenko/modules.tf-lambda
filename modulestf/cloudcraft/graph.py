@@ -1,19 +1,19 @@
 from collections import namedtuple
+from pprint import pprint
 
 import networkx as nx
 
 
-def populate_graph(data):
+def populate_graph(data):  # noqa: C901
 
-    Graph = namedtuple('Graph', 'G source regions surfaces')
+    Graph = namedtuple('Graph', 'G source regions')
 
     G = nx.Graph()  # We can't trust directions of edges, so graph should be not-directional
     # MG = nx.Graph()  # converted graph to modules.tf schema
 
     # @todo: convert from graph (G) to modules.tf graph (MG), which can be dumped to json and passed to generator function
 
-    surfaces = {}
-    regions = {}
+    regions = []
     connectors = []
 
     # We don't care about these keys in json: images, icons
@@ -25,7 +25,6 @@ def populate_graph(data):
     data_groups = data.get("groups", [])
     data_connectors = data.get("connectors", [])
     data_text = data.get("text", [])
-    data_surfaces = data.get("surfaces", [])
     data_name = data.get("name", "")
 
     ########
@@ -41,17 +40,31 @@ def populate_graph(data):
         G.add_edge(edge["from"], edge["to"])
 
     #####################
-    # AUTOSCALING GROUPS
+    # AUTOSCALING GROUPS, SECURITY GROUPS AND VPCS
     #####################
     for group in data_groups:
-        if group.get("type") == "asg":
+        group_type = group.get("type")
+
+        if group_type in ["asg", "sg", "vpc"]:
             group_id = group.get("id")
             group_nodes = group.get("nodes")
+            group_region = group.get("region")
 
-            G.add_node(group_id, data={"group_nodes": group_nodes})
+            regions.append(group_region)
+
+            G.add_node(group_id, data={
+                "type": group_type,
+                "group_nodes": group_nodes,
+                "group_region": group_region
+            })
 
             for group_node in group_nodes:
-                G.node[group_node]["data"]["asg_id"] = group_id
+                if group_type == "asg":
+                    G.node[group_node]["data"]["asg_id"] = group_id
+                elif group_type == "sg":
+                    G.node[group_node]["data"]["sg_id"] = group_id
+                elif group_type == "vpc":
+                    G.node[group_node]["data"]["vpc_id"] = group_id
 
     #############
     # CONNECTORS
@@ -90,18 +103,9 @@ def populate_graph(data):
                 G.nodes[relTo]["text"] = text["text"]
 
     ###########
-    # SURFACES
+    # REGION
     ###########
-    for surface in data_surfaces:
-        surfaces[surface.get("id")] = surface
-
-        if surface.get("type") == "zone":
-            region = surface.get("region")
-            if region:
-                if region not in regions.keys():
-                    regions[region] = []
-
-                regions[region].append(surface)
+    regions = list(set(regions))
 
     ########
     # SOURCE
@@ -124,10 +128,11 @@ def populate_graph(data):
     # print(G.edges.data())
 
     # pprint(regions)
+
     # pprint(regions.keys())
     # pprint(nodes)
     # pprint(texts)
     # pprint(edges, indent=2)
     # pprint(edges_rev)
 
-    return Graph(G, source, regions, surfaces)
+    return Graph(G, source, regions)

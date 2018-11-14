@@ -6,6 +6,10 @@
     "default": false,
     "description": "If true, the EC2 instance will have associated public IP address"
   },
+  "cpu_credits": {
+    "default": "standard",
+    "description": "The credit option for CPU usage (unlimited or standard)"
+  },
   "disable_api_termination": {
     "default": false,
     "description": "If true, enables EC2 Instance Termination Protection"

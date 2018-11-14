@@ -47,6 +47,10 @@
     "default": "",
     "description": "The JSON policy to set up the Dead Letter Queue, see AWS docs. Note: when specifying maxReceiveCount, you must specify it as an integer (5), and not a string (\"5\")"
   },
+  "sqs_queue_with_kms": {
+    "default": false,
+    "description": "Whether to create SQS queue with KMS encryption"
+  },
   "tags": {
     "default": {},
     "description": "A mapping of tags to assign to all resources"

@@ -5,6 +5,7 @@ ec2-instance
 elb
 alb
 autoscaling
+security-group
 sns
 sqs
 vpc)

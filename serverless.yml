@@ -38,6 +38,10 @@ functions:
           method: get
           path: /
           cors: true
+      - http:
+          method: post
+          path: /
+          cors: true
 
 plugins:
   - serverless-domain-manager

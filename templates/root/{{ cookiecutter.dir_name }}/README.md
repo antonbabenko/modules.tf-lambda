@@ -22,6 +22,14 @@ Optional dependencies:
 
 - [pre-commit hooks](http://pre-commit.com) - keeps formatting and documentation up-to-date
 
+@todo: describe how to use this and provide helper script:
+1. Install all deps based on OS (Mac)
+1. Verify that all deps are installed (incl. AWS credentials)
+1. Verify that all values were set in all layers?
+1. Ask which command user wants to run: single layer or all layers (apply-all)?
+1. Run it
+1. Exit (ask to tweet)
+
 ## How it works?
 
 Infrastructure consists of multiple layers (eg, autoscaling, rds, s3) where each layer is configured using exactly one [Terraform AWS modules](https://github.com/terraform-aws-modules/) with the values specified in `terraform.tfvars` located in layer's directory.

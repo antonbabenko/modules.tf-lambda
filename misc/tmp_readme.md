@@ -30,14 +30,18 @@ isMultiAZ (cloudcraft) ==> multi_az (modules.tf) ==> multi_az (terraform-aws-mod
  - [x] Print only required key/values into terraform.tfvars
  - [x] Improve config generator to follow links/edges/etc
  - [ ] Get connections between (using data-sources):
-    - [ ] ELB & ASG target_group_arns (Figure out how to pass dynamic value of target_group_arns (eg, ${data.terraform_remote_state.elb.arn}) to autoscaling group terraform module. Maybe using "locals", "overrides", etc)
+    - [ ] ELB & ASG target_group_arns (Figure out how to pass dynamic value of target_group_arns (eg, ${data.terraform_remote_state.elb.arn}) to autoscaling group terraform module. Maybe using "locals", "overrides", data-sources, tfstate, etc)
     - [ ] S3 & Cloudfront
     - [x] ELB or ALB
+    - [ ] VPC
+    - [ ] Security group
  - [x] Generate real meta data from modules (or hardcode some)
  - [ ] Add basic S3 and Cloudfront modules
  - [ ] Circleci - https://serverless.com/blog/automating-ci-for-python-serverless-app-with-circleci/
  
- 
+@todo: # terragrunt hook which scans terraform.tfvars and replaces "data.terraform_remote_state.vpc.vpc_id" with the the real value fetched from datasource before calling the main module; using null_resource; http; external as a "glue"
+
+
 Before IPEXPO (19.8.2018):
 
  - [ ] Generate Terraform code instead of Terragrunt
