@@ -1,19 +1,19 @@
 from collections import namedtuple
+from pprint import pprint
 
 import networkx as nx
 
 
 def populate_graph(data):  # noqa: C901
 
-    Graph = namedtuple('Graph', 'G source regions surfaces')
+    Graph = namedtuple('Graph', 'G source regions')
 
     G = nx.Graph()  # We can't trust directions of edges, so graph should be not-directional
     # MG = nx.Graph()  # converted graph to modules.tf schema
 
     # @todo: convert from graph (G) to modules.tf graph (MG), which can be dumped to json and passed to generator function
 
-    surfaces = {}
-    regions = {}
+    regions = []
     connectors = []
 
     # We don't care about these keys in json: images, icons
@@ -25,7 +25,6 @@ def populate_graph(data):  # noqa: C901
     data_groups = data.get("groups", [])
     data_connectors = data.get("connectors", [])
     data_text = data.get("text", [])
-    data_surfaces = data.get("surfaces", [])
     data_name = data.get("name", "")
 
     ########
@@ -49,10 +48,14 @@ def populate_graph(data):  # noqa: C901
         if group_type in ["asg", "sg", "vpc"]:
             group_id = group.get("id")
             group_nodes = group.get("nodes")
+            group_region = group.get("region")
+
+            regions.append(group_region)
 
             G.add_node(group_id, data={
                 "type": group_type,
-                "group_nodes": group_nodes
+                "group_nodes": group_nodes,
+                "group_region": group_region
             })
 
             for group_node in group_nodes:
@@ -100,18 +103,9 @@ def populate_graph(data):  # noqa: C901
                 G.nodes[relTo]["text"] = text["text"]
 
     ###########
-    # SURFACES
+    # REGION
     ###########
-    for surface in data_surfaces:
-        surfaces[surface.get("id")] = surface
-
-        if surface.get("type") == "zone":
-            region = surface.get("region")
-            if region:
-                if region not in regions.keys():
-                    regions[region] = []
-
-                regions[region].append(surface)
+    regions = list(set(regions))
 
     ########
     # SOURCE
@@ -134,10 +128,11 @@ def populate_graph(data):  # noqa: C901
     # print(G.edges.data())
 
     # pprint(regions)
+
     # pprint(regions.keys())
     # pprint(nodes)
     # pprint(texts)
     # pprint(edges, indent=2)
     # pprint(edges_rev)
 
-    return Graph(G, source, regions, surfaces)
+    return Graph(G, source, regions)

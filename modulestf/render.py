@@ -38,42 +38,17 @@ def prepare_render_dirs():
     mkdir_safely(FINAL_DIR)
 
 
-def render_single_layer(resource, regions, append_id=False):
+def render_single_layer(resource, region):
 
-    # logger.info("...")
+    dir_name = resource.get("dir_name")
 
-    try:
-        region = list(regions.keys())[0]
-    except Exception:
-        region = "eu-west-1"
-
-    path_parts = []
-
-    text = resource.get("text")
-
-    if text is not None and len(text):
-        path_parts.append(text)
-        if append_id:
-            path_parts.append(resource["ref_id"])
-    else:
-        path_parts.append(resource["type"])
-        if append_id:
-            path_parts.append(resource["ref_id"])
-
-    dir_name = "_".join(path_parts)
-    dir_name = re.sub(' ', '_', dir_name.strip())
-    dir_name = re.sub('[^a-zA-Z0-9-_]', '', dir_name)
-    dir_name = re.sub('_+', '_', dir_name)
-
-    full_dir_name = "single_layer/%s/%s" % (region, dir_name)
+    full_dir_name = ("single_layer/%s/%s" % (region, dir_name)).lower()
 
     single_layer = {
-        "dir_name": full_dir_name.lower(),
-        "layer_name": dir_name.lower(),
+        "dir_name": full_dir_name,
         "region": region,
         "module_source": MODULES[resource["type"]]["source"],
         "module_variables": MODULES[resource["type"]]["variables"],
-        # "dependencies": ["..."] # @todo: get correct dir_name when there are several items (eg, multiple vpcs)
     }
 
     extra_context = resource.update(single_layer) or resource
@@ -84,12 +59,7 @@ def render_single_layer(resource, regions, append_id=False):
                  extra_context=extra_context)
 
 
-def render_common_layer(regions):
-
-    try:
-        region = list(regions.keys())[0]
-    except Exception:
-        region = "eu-west-1"
+def render_common_layer(region):
 
     common_layer = {
         "dir_name": "common_layer",
@@ -135,6 +105,27 @@ def get_types_text(resources):
     return types_text
 
 
+def make_dir_name(type, text, appendix=""):
+
+    path_parts = []
+
+    if text is not None and len(text):
+        path_parts.append(text)
+        if appendix:
+            path_parts.append(appendix)
+    else:
+        path_parts.append(type)
+        if appendix:
+            path_parts.append(appendix)
+
+    dir_name = "_".join(path_parts)
+    dir_name = re.sub(' ', '_', dir_name.strip())
+    dir_name = re.sub('[^a-zA-Z0-9-_]', '', dir_name)
+    dir_name = re.sub('_+', '_', dir_name)
+
+    return dir_name
+
+
 def render_from_modulestf_config(config, source, regions):
 
     resources = json.loads(config)
@@ -143,7 +134,17 @@ def render_from_modulestf_config(config, source, regions):
 
     types_text = get_types_text(resources)
 
-    # render single layers in a loop
+    try:
+        region = regions[0]
+    except Exception:
+        region = "eu-west-1"
+
+    dirs = {}
+
+    also_append = []
+
+    # 1. Get list of all resources and define correct dir names for all resources
+    # 3. Update dynamic params and dependencies for each resource
     for resource in resources:
 
         try:
@@ -151,9 +152,55 @@ def render_from_modulestf_config(config, source, regions):
         except TypeError:
             t = resource.get("type")
 
-        render_single_layer(resource, regions, append_id=(types_text[t] > 1))
+        if types_text[t] > 1 or (types_text[t] == 1 and t in also_append):
+            appendix = str(types_text[t])
+            new_appendix = types_text[t] - 1
+            also_append.append(t)
+        else:
+            appendix = ""
+            new_appendix = 0
 
-    render_common_layer(regions)
+        ref_id = resource.get("ref_id")
+
+        if ref_id:
+            dirs.update({ref_id: make_dir_name(type=resource.get("type"), text=resource.get("text"), appendix=appendix)})
+
+        types_text[t] = new_appendix
+
+    # render single layers in a loop
+    for resource in resources:
+
+        # Update dependencies with correct dir name
+        deps = []
+        if resource.get("dependencies"):
+            for d in resource.get("dependencies"):
+                this_dir = dirs.get(d)
+                if this_dir:
+                    deps.append(this_dir)
+
+        # cookiecutter does not support list values, so we join it to string here and split in template
+        resource.update({"dependencies": ",".join(deps)})
+
+        # Update dynamic parameters with correct dir name
+        dynamic_params = resource.get("dynamic_params")
+        if dynamic_params:
+            for k in dynamic_params:
+
+                try:
+                    v = dynamic_params[k].split(".")
+
+                    # replace second element with real directory name
+                    dynamic_params.update({k: v[0] + "." + dirs[v[1]] + "." + "".join(v[2:])})
+                except KeyError:
+                    pass
+
+        # Set correct dir name
+        resource.update({"dir_name": dirs.get(resource.get("ref_id"))})
+
+        # Render the layer
+        render_single_layer(resource, region)
+
+    render_common_layer(region)
     render_root_dir(source)
 
     files = glob.glob("single_layer/*") + \
@@ -166,11 +213,4 @@ def render_from_modulestf_config(config, source, regions):
     for file in files:
         shutil.move(file, FINAL_DIR)
 
-    # terraform: merge all single_layers in single region into one directory
-    # files = glob.glob(FINAL_DIR + "/us-east-1/*/*")
-    #
-    # for file in files:
-    #     pprint(file)
-    #     shutil.move(file, FINAL_DIR + "/us-east-1")
-
-    print("Working directory: %s" % os.getcwd())
+    logger.info("Working directory: %s" % os.getcwd())

@@ -35,6 +35,9 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
     parsed_rds_id = set()
     warnings = set()
 
+    supported_node_types = ["rds", "ec2", "elb", "sns", "sqs", "sg", "vpc"]  # "s3", "cloudfront",
+    # supported_node_types = ["sg", "vpc"]
+
     for key, node in G.nodes.items():
 
         node = node.get("data")
@@ -50,17 +53,15 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
         edges = G.adj[key]
         # logging.info("Edges: {}".format(edges))
 
-        ################
-        if node.get("type") not in ["sg", "vpc"]:
+        if node.get("type") not in supported_node_types:
             warnings.add("node type %s is not implemented yet" % node.get("type"))
             continue
-        ################
-
-        # if node.get("type") not in ["rds", "ec2", "elb", "sns", "sqs", "s3", "cloudfront", "sg", "vpc"]:
-        #     warnings.add("node type %s is not implemented yet" % node.get("type"))
-        #     continue
 
         logging.info(pformat(node, indent=2))
+
+        vpc_id = node.get("vpc_id")
+        asg_id = ""
+        elb_id = ""
 
         if node.get("type") == "rds":
             is_multi_az = False
@@ -80,16 +81,25 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                     "ref_id": rds_id,
                     "text": node.get("text"),
                     "params": {
-                        "isMultiAZ": is_multi_az
-                    }
+                        "isMultiAZ": is_multi_az,
+                        "db_subnet_group_name": "",
+                    },
+                    "dependencies": [],
+                    "dynamic_params": {},
                 }
 
-                if node.get("engine") is not None:
-                    tmp_resource["params"].update({"engine": node.get("engine")})
+                if vpc_id:
+                    tmp_resource["dependencies"].append(vpc_id)
+                    tmp_resource["dynamic_params"].update(
+                        dict(db_subnet_group_name="terraform_output." + vpc_id + ".database_subnet_group"))
 
-                if node.get("instanceType") is not None and node.get("instanceSize") is not None:
+                if node.get("engine"):
                     tmp_resource["params"].update(
-                        {"instanceType": node.get("instanceType", "") + "." + node.get("instanceSize", "")})
+                        dict(engine=node.get("engine")))
+
+                if node.get("instanceType") and node.get("instanceSize"):
+                    tmp_resource["params"].update(
+                        dict(instanceType=node.get("instanceType", "") + "." + node.get("instanceSize", "")))
 
                 resources.append(tmp_resource)
 
@@ -97,8 +107,6 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
         if node.get("type") == "ec2":
             asg_id = node.get("asg_id")
-
-            elb_id = None
 
             if bool(asg_id):
 
@@ -116,14 +124,26 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                         "ref_id": asg_id,
                         "text": node.get("text"),
                         "params": {
-                            "elb_id": elb_id if elb_id else None,
-                            "target_group_arns": ["arn:aws:elasticloadbalancing:us-west-2:123456789012:targetgroup/my-targets/123"]
-                        }
+                            "target_group_arns": [],
+                            "vpc_zone_identifier": []
+                        },
+                        "dependencies": [],
+                        "dynamic_params": {}
                     }
 
-                    if node.get("instanceType") is not None and node.get("instanceSize") is not None:
+                    if elb_id:
+                        tmp_resource["dependencies"].append(elb_id)
+                        tmp_resource["dynamic_params"].update(
+                            dict(target_group_arns="terraform_output." + elb_id + ".target_group_arns"))
+
+                    if vpc_id:
+                        tmp_resource["dependencies"].append(vpc_id)
+                        tmp_resource["dynamic_params"].update(
+                            dict(vpc_zone_identifier="terraform_output." + vpc_id + ".public_subnets"))
+
+                    if node.get("instanceType") and node.get("instanceSize"):
                         tmp_resource["params"].update(
-                            {"instanceType": node.get("instanceType", "") + "." + node.get("instanceSize", "")})
+                            dict(instanceType=node.get("instanceType", "") + "." + node.get("instanceSize", "")))
 
                     resources.append(tmp_resource)
 
@@ -136,38 +156,44 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                     "params": {}
                 }
 
-                if node.get("instanceType") is not None and node.get("instanceSize") is not None:
+                if node.get("instanceType") and node.get("instanceSize"):
                     tmp_resource["params"].update(
                         {"instanceType": node.get("instanceType", "") + "." + node.get("instanceSize", "")})
 
                 resources.append(tmp_resource)
 
         if node.get("type") == "elb":
-            is_asg = False
-
-            for edge_id in edges:
-                if get_node_data(G, edge_id, "group_nodes") is not None:
-                    is_asg = True
-                    break
+            # for edge_id in edges:
+            #     if get_node_data(G, edge_id, "group_nodes"):
+            #         asg_id = edge_id
+            #         break
 
             if node.get("elbType") == "application":
-                resources.append({
+                tmp_resource = {
                     "type": "alb",
                     "ref_id": key,
                     "text": node.get("text"),
-                    "params": {
-                        "asg_id": edge_id if is_asg else None,
-                    }
-                })
+                    "params": {},
+                    "dependencies": [],
+                    "dynamic_params": {}
+                }
+
             else:
-                resources.append({
+                tmp_resource = {
                     "type": "elb",
                     "ref_id": key,
                     "text": node.get("text"),
-                    "params": {
-                        "asg_id": edge_id if is_asg else None,
-                    }
-                })
+                    "params": {},
+                    "dependencies": [],
+                    "dynamic_params": {}
+                }
+
+                if vpc_id:
+                    tmp_resource["dependencies"].append(vpc_id)
+                    tmp_resource["dynamic_params"].update(
+                        dict(subnets="terraform_output." + vpc_id + ".public_subnets"))
+
+            resources.append(tmp_resource)
 
         if node.get("type") == "s3":
             resources.append({
@@ -207,14 +233,21 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
             })
 
         if node.get("type") == "sg":
-            resources.append({
+            tmp_resource = {
                 "type": "security-group",
                 "ref_id": key,
                 "text": node.get("text"),
-                "params": {
-                },
-                "dependencies": {"vpc": node.get("vpc_id")} if node.get("vpc_id") else {}
-            })
+                "params": {},
+                "dependencies": [],
+                "dynamic_params": {}
+            }
+
+            if vpc_id:
+                tmp_resource["dependencies"].append(vpc_id)
+                tmp_resource["dynamic_params"].update(
+                    dict(vpc_id="terraform_output." + vpc_id + ".vpc_id"))
+
+            resources.append(tmp_resource)
 
         if node.get("type") == "vpc":
             resources.append({
@@ -222,13 +255,17 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                 "ref_id": key,
                 "text": node.get("text"),
                 "params": {
-                }
+                    "name": "",
+                    "cidr": "",
+                    "azs": [],
+                    "public_subnets": [],
+                    "private_subnets": [],
+                },
+                "dependencies": [],
+                "dynamic_params": {}
             })
 
-    # print("-START------------------------------------")
-    # pprint(resources)
-    # pprint(G.groups.items())
-    # print("-END------------------------------------")
+    logging.info(pformat(resources))
 
     if len(warnings):
         logging.warning("; ".join(warnings))

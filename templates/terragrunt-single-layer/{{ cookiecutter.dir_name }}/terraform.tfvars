@@ -8,11 +8,9 @@ terragrunt = {
   }
 
   {% if cookiecutter.dependencies|default("") -%}
-  # dependencies = {{ cookiecutter.dependencies|pprint }}
-
   dependencies {
     paths = [
-      {%- for value in cookiecutter.dependencies -%}
+      {%- for value in cookiecutter.dependencies.split(",") -%}
       "../{{ value }}"{%- if not loop.last -%}, {% endif -%}
       {%- endfor -%}
     ]
@@ -56,9 +54,15 @@ terragrunt = {
 {%- set value_formatted = value.variable_value_format|format(this_value) -%}
 {%- endif -%}
 
-{%- endif %}
-{{ key }} = {{ value_formatted }}
+{%- endif -%}
 
+{#- Inline comment for dynamic params -#}
+{%- if key in cookiecutter.dynamic_params -%}
+{%- set comment_dynamic_param = " # @modulestf:" ~ cookiecutter.dynamic_params[key] -%}
+{%- else -%}
+{%- set comment_dynamic_param = "" -%}
+{%- endif %}
+{{ key }} = {{ value_formatted }}{{ comment_dynamic_param }}
 
 {% endif -%}
 
