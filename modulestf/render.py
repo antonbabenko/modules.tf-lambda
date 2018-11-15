@@ -75,11 +75,13 @@ def render_common_layer(region):
         pass
 
 
-def render_root_dir(source):
+def render_root_dir(source, region, dirs):
 
     root_dir = {
         "dir_name": "root_dir",
-        "source": source,
+        "source_name": source["name"],
+        "region": region,
+        "dirs": dirs,
     }
 
     cookiecutter(os.path.join(COOKIECUTTER_TEMPLATES_DIR, "root"),
@@ -205,7 +207,7 @@ def render_from_modulestf_config(config, source, regions):
     render_common_layer(region)
 
     logger.info("Rendering root dir")
-    render_root_dir(source)
+    render_root_dir(source, region, dirs)
 
     files = glob.glob("single_layer/*") + \
         glob.glob("single_layer/.*") + \
