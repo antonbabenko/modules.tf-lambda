@@ -462,7 +462,7 @@
           6,
           0
         ],
-        "region": "us-east-1",
+        "region": "eu-west-1",
         "instanceSize": "large",
         "instanceType": "m4"
       },
@@ -475,7 +475,7 @@
           9,
           0
         ],
-        "region": "us-east-1",
+        "region": "eu-west-1",
         "instanceSize": "large",
         "instanceType": "m4"
       },
@@ -487,7 +487,7 @@
           3,
           3
         ],
-        "region": "us-east-1",
+        "region": "eu-west-1",
         "platform": "linux",
         "transparent": false,
         "instanceSize": "large",
@@ -501,7 +501,7 @@
           4.988155410173759,
           3
         ],
-        "region": "us-east-1",
+        "region": "eu-west-1",
         "platform": "linux",
         "transparent": false,
         "instanceSize": "large",
@@ -515,7 +515,7 @@
           6.976310820347517,
           3
         ],
-        "region": "us-east-1",
+        "region": "eu-west-1",
         "platform": "linux",
         "transparent": false,
         "instanceSize": "large",
@@ -529,7 +529,7 @@
           8.964466230521275,
           3
         ],
-        "region": "us-east-1",
+        "region": "eu-west-1",
         "platform": "linux",
         "transparent": false,
         "instanceSize": "large",
@@ -544,7 +544,7 @@
           6,
           5.5
         ],
-        "region": "us-east-1",
+        "region": "eu-west-1",
         "elbType": "application"
       },
       {
@@ -555,7 +555,7 @@
           0.5,
           8
         ],
-        "region": "us-east-1",
+        "region": "eu-west-1",
         "volumeType": "Standard",
         "getAndOtherRequests": 0,
         "putCopyPostRequests": 0,
@@ -569,7 +569,7 @@
           4,
           8
         ],
-        "region": "us-east-1",
+        "region": "eu-west-1",
         "platform": "linux",
         "transparent": false,
         "instanceSize": "large",
@@ -583,7 +583,7 @@
           5,
           8
         ],
-        "region": "us-east-1",
+        "region": "eu-west-1",
         "platform": "linux",
         "transparent": false,
         "instanceSize": "large",
@@ -597,7 +597,7 @@
           7,
           8
         ],
-        "region": "us-east-1",
+        "region": "eu-west-1",
         "platform": "linux",
         "transparent": false,
         "instanceSize": "large",
@@ -611,7 +611,7 @@
           8,
           8
         ],
-        "region": "us-east-1",
+        "region": "eu-west-1",
         "platform": "linux",
         "transparent": false,
         "instanceSize": "large",
@@ -626,7 +626,7 @@
           6,
           11
         ],
-        "region": "us-east-1",
+        "region": "eu-west-1",
         "elbType": "classic"
       },
       {
@@ -670,7 +670,7 @@
           3,
           8
         ],
-        "region": "us-east-1",
+        "region": "eu-west-1",
         "mapSize": [
           7.006952259245839,
           1
@@ -690,7 +690,7 @@
           3,
           3
         ],
-        "region": "us-east-1",
+        "region": "eu-west-1",
         "mapSize": [
           6.964466230521275,
           1
@@ -705,7 +705,7 @@
           "c3d9c781-c8ac-4866-83ce-993b57c2fdad",
           "b6f06c62-01e7-4bb3-bcdc-a7d1dec0fe62"
         ],
-        "region": "us-east-1",
+        "region": "eu-west-1",
         "padding": 1.5,
         "inboundRules": [],
         "outboundRules": []
@@ -726,7 +726,7 @@
           "0215442f-00fe-44f1-820f-2e2346c4bc39",
           "81643b36-ec72-4f72-9e1f-9c22a30a059a"
         ],
-        "region": "us-east-1",
+        "region": "eu-west-1",
         "padding": 1.5,
         "inboundRules": [],
         "outboundRules": []
@@ -747,7 +747,7 @@
           "62b6a890-1c4b-4a11-bf7f-25d37e6ee72c",
           "9c786a2d-cf5c-4b63-b958-a97f28fe6494"
         ],
-        "region": "us-east-1",
+        "region": "eu-west-1",
         "padding": 1.5,
         "inboundRules": [],
         "outboundRules": []
@@ -760,7 +760,7 @@
         "nodes": [
           "de208ffc-304e-450f-a337-fec5e86a3f47"
         ],
-        "region": "us-east-1",
+        "region": "eu-west-1",
         "padding": 1.5,
         "inboundRules": [],
         "outboundRules": []
@@ -773,7 +773,7 @@
         "nodes": [
           "4fa727c9-36b9-4773-bf99-258500555073"
         ],
-        "region": "us-east-1",
+        "region": "eu-west-1",
         "padding": 1.5,
         "inboundRules": [],
         "outboundRules": []
@@ -812,7 +812,7 @@
           "fd98feaa-a46d-4fe5-b1dc-3f9b9660bca0",
           "df5528b6-06f9-4390-a6ad-c88f5e753b14"
         ],
-        "region": "us-east-1",
+        "region": "eu-west-1",
         "padding": 1.5,
         "peeringConnections": []
       }
@@ -828,7 +828,7 @@
           3,
           3
         ],
-        "region": "us-east-1",
+        "region": "eu-west-1",
         "mapSize": [
           3,
           6
@@ -842,7 +842,7 @@
           7,
           3
         ],
-        "region": "us-east-1",
+        "region": "eu-west-1",
         "mapSize": [
           3,
           6
@@ -963,7 +963,7 @@
   "readAccess": null,
   "writeAccess": null,
   "createdAt": "2018-11-13T19:05:21.910Z",
-  "updatedAt": "2018-11-15T12:44:20.204Z",
+  "updatedAt": "2018-11-15T13:13:53.469Z",
   "CreatorId": "e188a76e-d460-43b2-b57f-a3ed871ffaa0",
   "LastUserId": "e188a76e-d460-43b2-b57f-a3ed871ffaa0"
 }
