@@ -1,50 +1,45 @@
-# Infrastructure as code for "{{ cookiecutter.source["name"] }}"
+# Infrastructure code for "{{ cookiecutter.source["name"] }}"
 
-This directory contains automatically generated Terraform infrastructure as code for the blueprint which was created using [cloudcraft.co](https://cloudcraft.co/app).
+This directory contains automatically generated Terraform infrastructure code from blueprint created using [cloudcraft.co](https://cloudcraft.co/app).
 
-## Table of content
+Infrastructure consists of multiple layers (eg, autoscaling, rds, s3) where each layer is configured using one of [Terraform AWS modules](https://github.com/terraform-aws-modules/) with arguments specified in `terraform.tfvars` in layer's directory.
 
-- Getting started
-- How it works?
-- Found a bug? Or just want to help?
-- Copyrights and License
+[Terragrunt](https://github.com/gruntwork-io/terragrunt) is used to work with Terraform configurations which allows to [orchestrate dependent layers](#1), [update arguments dynamically](#2) and keep configurations very [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
 
-## Getting started
+## Pre-requirements
 
-These configurations are **potentially** working out of the box but it is very likely that you will want to customize parameters.
+- [Terraform 0.11 or newer](https://www.terraform.io/)
+- [Terragrunt 0.17 or newer](https://github.com/gruntwork-io/terragrunt)
+- Optional: [pre-commit hooks](http://pre-commit.com) to keep Terraform formatting and documentation up-to-date
 
-Make sure that you install these tools:
+If you are using Mac you can install all dependencies using Homebrew:
 
-- [Terraform 0.11.7 or newer](https://www.terraform.io/)
-- [Terragrunt 0.14.7 or newer](https://github.com/gruntwork-io/terragrunt)
+    $ brew install terraform terragrunt pre-commit
 
-Optional dependencies:
+By default, access credentials to AWS account should be set using environment variables:
 
-- [pre-commit hooks](http://pre-commit.com) - keeps formatting and documentation up-to-date
+    $ export AWS_DEFAULT_REGION=eu-west-1
+    $ export AWS_ACCESS_KEY_ID=AKIAJOBWORATEXAMPLE
+    $ export AWS_SECRET_ACCESS_KEY=B/fCZQicvUWqRxHv5kmY5lXiFeEqEXAMPLE
 
-@todo: describe how to use this and provide helper script:
-1. Install all deps based on OS (Mac)
-1. Verify that all deps are installed (incl. AWS credentials)
-1. Verify that all values were set in all layers?
-1. Ask which command user wants to run: single layer or all layers (apply-all)?
-1. Run it
-1. Exit (ask to tweet)
+Alternatively, you can edit `common/scripts/main_providers.tf` and use another authentication mechanism as described in [AWS provider documentation](https://www.terraform.io/docs/providers/aws/index.html#authentication).
 
-## How it works?
 
-Infrastructure consists of multiple layers (eg, autoscaling, rds, s3) where each layer is configured using exactly one [Terraform AWS modules](https://github.com/terraform-aws-modules/) with the values specified in `terraform.tfvars` located in layer's directory.
+## How to use it?
 
-Run this command to create or update infrastructure in all layers in single region (`eu-west-1`, for eg):
+First, you should carefully review and specify all required arguments for each layer. Run `terragrunt validate-all` and fix errors.
+
+Once all arguments are set, run this command to create infrastructure in all layers in a single region (`eu-west-1`, for eg):
 
     $ cd eu-west-1
     $ terragrunt apply-all
 
-Alternatively you can work on a single layer at the time:
+Alternatively, you can create infrastructure in a single layer (eg, `elb`):
 
-    $ cd eu-west-1/elb   # for example
+    $ cd eu-west-1/elb
     $ terragrunt apply
 
-See [Terragrunt documentation](https://github.com/gruntwork-io/terragrunt/blob/master/README.md) for more details about commands and workflow.
+See [official Terragrunt documentation](https://github.com/gruntwork-io/terragrunt/blob/master/README.md) for all available commands and features.
 
 
 ## Found a bug? Or just want to help?
@@ -52,6 +47,8 @@ See [Terragrunt documentation](https://github.com/gruntwork-io/terragrunt/blob/m
 [modules.tf](https://github.com/antonbabenko/modules.tf-lambda) is a new and open source project which benefits from users like you!
 
 If you find a bug - [open an issue](https://github.com/antonbabenko/modules.tf-lambda).
+
+If you like this project - remember to share, star, tweet!
 
 
 ## Copyrights and License

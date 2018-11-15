@@ -154,6 +154,10 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                     r = Resource(asg_id, "autoscaling", node.get("text"))
 
                     r.update_params({
+                        "min_size": 0,
+                        "max_size": 0,
+                        "desired_capacity": 0,
+                        "image_id": "",
                         "target_group_arns": [],
                         "vpc_zone_identifier": [],
                         "security_groups": [],
@@ -209,6 +213,23 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
             else:
                 r = Resource(key, "elb", node.get("text"))
+
+                # @todo: Use https://github.com/virtuald/pyhcl to convert to valid HCL in tfvars
+                # r.update_params({
+                #     "listener": [{
+                #         "instance_port": "80",
+                #         "instance_protocol": "HTTP",
+                #         "lb_port": "80",
+                #         "lb_protocol": "HTTP"
+                #     }],
+                #     "health_check": [{
+                #         "target": "HTTP:80/",
+                #         "interval": 30,
+                #         "healthy_threshold": 2,
+                #         "unhealthy_threshold": 2,
+                #         "timeout": 5
+                #     }],
+                # })
 
                 if vpc_id:
                     r.append_dependency(vpc_id)
