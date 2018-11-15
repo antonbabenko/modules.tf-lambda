@@ -35,6 +35,10 @@ functions:
     memorySize: 1024
     events:
       - http:
+          method: get
+          path: /
+          cors: true
+      - http:
           method: post
           path: /
           cors: true

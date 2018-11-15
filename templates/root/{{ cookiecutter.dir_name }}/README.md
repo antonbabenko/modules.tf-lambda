@@ -10,7 +10,7 @@ Infrastructure consists of multiple layers (
 {%- endfor -%}
 ) where each layer is configured using one of [Terraform AWS modules](https://github.com/terraform-aws-modules/) with arguments specified in `terraform.tfvars` in layer's directory.
 
-[Terragrunt](https://github.com/gruntwork-io/terragrunt) is used to work with Terraform configurations which allows to orchestrate dependent layers, update arguments dynamically and keep configurations very [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
+[Terragrunt](https://github.com/gruntwork-io/terragrunt) is used to work with Terraform configurations which allows to orchestrate dependent layers, update arguments dynamically and keep configurations [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
 
 
 ## Pre-requirements
@@ -36,7 +36,7 @@ Alternatively, you can edit `common/scripts/main_providers.tf` and use another a
 
 First, you should carefully review and specify all required arguments for each layer. Run this to see all errors:
 
-    $ terragrunt validate-all |& grep -C 3 "Error: "
+    $ terragrunt validate-all --terragrunt-ignore-dependency-errors |& grep -C 3 "Error: "
 
 Once all arguments are set, run this command to create infrastructure in all layers in a single region:
 
