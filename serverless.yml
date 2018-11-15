@@ -32,12 +32,8 @@ functions:
     name: ${self:service}-${self:custom.stage}-generate-cloudcraft
     handler: handler.handler
     description: Generate all from Cloudcraft URL (stage=${self:custom.stage})
-    memorySize: 512
+    memorySize: 1024
     events:
-      - http:
-          method: get
-          path: /
-          cors: true
       - http:
           method: post
           path: /
@@ -71,7 +67,6 @@ package:
   exclude:
     - "input/**"
     - "output/**"
-    - "real-examples/**"
     - "test_fixtures/**"
     - "node_modules/**"
     - ".requirements-cache/**"
