@@ -545,7 +545,7 @@
           5.5
         ],
         "region": "us-east-1",
-        "elbType": "classic"
+        "elbType": "application"
       },
       {
         "id": "efaf6cdc-3f6b-4a03-9f3e-58be4f9bb2ab",
@@ -753,6 +753,32 @@
         "outboundRules": []
       },
       {
+        "id": "fd98feaa-a46d-4fe5-b1dc-3f9b9660bca0",
+        "name": "alb2-sg",
+        "type": "sg",
+        "color": "#9C27B0",
+        "nodes": [
+          "de208ffc-304e-450f-a337-fec5e86a3f47"
+        ],
+        "region": "us-east-1",
+        "padding": 1.5,
+        "inboundRules": [],
+        "outboundRules": []
+      },
+      {
+        "id": "df5528b6-06f9-4390-a6ad-c88f5e753b14",
+        "name": "elb1-sg",
+        "type": "sg",
+        "color": "#2196F3",
+        "nodes": [
+          "4fa727c9-36b9-4773-bf99-258500555073"
+        ],
+        "region": "us-east-1",
+        "padding": 1.5,
+        "inboundRules": [],
+        "outboundRules": []
+      },
+      {
         "id": "2b2afa10-3f61-4806-8628-9d3a83cb9852",
         "name": "new-vpc",
         "type": "vpc",
@@ -782,7 +808,9 @@
           "9c786a2d-cf5c-4b63-b958-a97f28fe6494",
           "f4609552-292e-4499-b5fe-a3ab68983762",
           "4e80ed6a-ea4b-4597-8cf8-52efa7591eaa",
-          "97f8c945-edad-4eb3-b90b-8b4ce0c5ccfd"
+          "97f8c945-edad-4eb3-b90b-8b4ce0c5ccfd",
+          "fd98feaa-a46d-4fe5-b1dc-3f9b9660bca0",
+          "df5528b6-06f9-4390-a6ad-c88f5e753b14"
         ],
         "region": "us-east-1",
         "padding": 1.5,
@@ -935,7 +963,7 @@
   "readAccess": null,
   "writeAccess": null,
   "createdAt": "2018-11-13T19:05:21.910Z",
-  "updatedAt": "2018-11-15T12:13:37.574Z",
+  "updatedAt": "2018-11-15T12:44:20.204Z",
   "CreatorId": "e188a76e-d460-43b2-b57f-a3ed871ffaa0",
   "LastUserId": "e188a76e-d460-43b2-b57f-a3ed871ffaa0"
 }

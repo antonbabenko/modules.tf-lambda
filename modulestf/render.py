@@ -198,9 +198,13 @@ def render_from_modulestf_config(config, source, regions):
         resource.update({"dir_name": dirs.get(resource.get("ref_id"))})
 
         # Render the layer
+        logger.info("Rendering single layer resource id: %s" % resource.get("ref_id"))
         render_single_layer(resource, region)
 
+    logger.info("Rendering common layer")
     render_common_layer(region)
+
+    logger.info("Rendering root dir")
     render_root_dir(source)
 
     files = glob.glob("single_layer/*") + \
@@ -210,7 +214,8 @@ def render_from_modulestf_config(config, source, regions):
         glob.glob("root_dir/*") + \
         glob.glob("root_dir/.*")
 
+    logger.info("Moving files into final dir: %s" % FINAL_DIR)
     for file in files:
         shutil.move(file, FINAL_DIR)
 
-    logger.info("Working directory: %s" % os.getcwd())
+    logger.info("Complete!")
