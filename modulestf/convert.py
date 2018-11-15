@@ -90,7 +90,8 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
         logging.info(pformat(node, indent=2))
 
         vpc_id = node.get("vpc_id")
-        asg_id = ""
+        sg_id = node.get("sg_id")
+        asg_id = node.get("asg_id")
         elb_id = ""
 
         if node.get("type") == "rds":
@@ -112,12 +113,17 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                 r.update_params({
                     "isMultiAZ": is_multi_az,
                     "db_subnet_group_name": "",
+                    "vpc_security_group_ids": [],
                 })
 
                 if vpc_id:
                     r.append_dependency(vpc_id)
                     r.update_dynamic_params("db_subnet_group_name",
                                             "terraform_output." + vpc_id + ".database_subnet_group")
+
+                if sg_id:
+                    r.append_dependency(sg_id)
+                    r.update_dynamic_params("vpc_security_group_ids", "terraform_output." + sg_id + ".this_security_group_id")
 
                 if node.get("engine"):
                     r.update_params({
@@ -134,8 +140,6 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
             parsed_rds_id.add(rds_id)
 
         if node.get("type") == "ec2":
-            asg_id = node.get("asg_id")
-
             if asg_id:
 
                 if asg_id not in parsed_asg_id:
@@ -151,17 +155,22 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
                     r.update_params({
                         "target_group_arns": [],
-                        "vpc_zone_identifier": []
+                        "vpc_zone_identifier": [],
+                        "security_groups": [],
                     })
+
+                    if vpc_id:
+                        r.append_dependency(vpc_id)
+                        r.update_dynamic_params("vpc_zone_identifier", "terraform_output." + vpc_id + ".public_subnets")
+
+                    if sg_id:
+                        r.append_dependency(sg_id)
+                        r.update_dynamic_params("security_groups", "terraform_output." + sg_id + ".this_security_group_id")
 
                     if elb_id:
                         r.append_dependency(elb_id)
                         r.update_dynamic_params("target_group_arns",
                                                 "terraform_output." + elb_id + ".target_group_arns")
-
-                    if vpc_id:
-                        r.append_dependency(vpc_id)
-                        r.update_dynamic_params("vpc_zone_identifier", "terraform_output." + vpc_id + ".public_subnets")
 
                     if node.get("instanceType") and node.get("instanceSize"):
                         r.update_params({
@@ -189,12 +198,25 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
             if node.get("elbType") == "application":
                 r = Resource(key, "alb", node.get("text"))
+
+                if vpc_id:
+                    r.append_dependency(vpc_id)
+                    r.update_dynamic_params("subnets", "terraform_output." + vpc_id + ".public_subnets")
+
+                if sg_id:
+                    r.append_dependency(sg_id)
+                    r.update_dynamic_params("security_groups", "terraform_output." + sg_id + ".this_security_group_id")
+
             else:
                 r = Resource(key, "elb", node.get("text"))
 
                 if vpc_id:
                     r.append_dependency(vpc_id)
                     r.update_dynamic_params("subnets", "terraform_output." + vpc_id + ".public_subnets")
+
+                if sg_id:
+                    r.append_dependency(sg_id)
+                    r.update_dynamic_params("security_groups", "terraform_output." + sg_id + ".this_security_group_id")
 
             resources.append(r.content())
 

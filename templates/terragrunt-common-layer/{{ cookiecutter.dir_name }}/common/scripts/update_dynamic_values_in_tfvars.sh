@@ -8,6 +8,8 @@
 # 3. go through the list of things to replace
 # 4. get actual value
 # 5. replace value in terraform.tfvars
+
+# @todo: add support for lists
 ############################
 
 readonly tfvars_file="$1/terraform.tfvars"
