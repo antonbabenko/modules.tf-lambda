@@ -1,6 +1,12 @@
 import json
 import logging
+import random
+import string
+import uuid
+from hashlib import md5
 from pprint import pformat, pprint
+
+import petname
 
 
 # Class which represents modules.tf definition of resource
@@ -31,6 +37,17 @@ class Resource:
             "dependencies": self.dependencies,
             "dynamic_params": self.dynamic_params
         }
+
+
+# Generate human readable random names
+def random_pet(words=2, separator="-"):
+    return petname.generate(words, separator)
+
+
+def random_password(length=12):
+    chars = string.ascii_uppercase + string.ascii_lowercase + string.digits
+
+    return ''.join(random.choice(chars) for _ in range(length))
 
 
 def get_node(G, node_id):
@@ -113,6 +130,13 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                 r.update_params({
                     "isMultiAZ": is_multi_az,
                     "db_subnet_group_name": "",
+                    "identifier": random_pet(),
+                    "username": random_pet(words=1),
+                    "password": random_password(),
+                    "allocated_storage": "5",
+                    "major_engine_version": "",
+                    "family": "",
+                    "backup_retention_period": "0",  # Disable backups to create DB faster
                     "vpc_security_group_ids": [],
                 })
 
@@ -123,16 +147,20 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
                 if sg_id:
                     r.append_dependency(sg_id)
-                    r.update_dynamic_params("vpc_security_group_ids", "terraform_output." + sg_id + ".this_security_group_id")
+                    r.update_dynamic_params("vpc_security_group_ids", "terraform_output." + sg_id + ".this_security_group_id.to_list")
 
                 if node.get("engine"):
                     r.update_params({
-                        "engine": node.get("engine"),
+                        "engine": node.get("engine"),  # node.get("engine") has too many options (not just supported)
+                        "port": "3306",
+                        "engine_version": "5.7.19",
+                        "major_engine_version": "5.7",
+                        "family": "mysql5.7",
                     })
 
                 if node.get("instanceType") and node.get("instanceSize"):
                     r.update_params({
-                        "instanceType": node.get("instanceType", "") + "." + node.get("instanceSize", ""),
+                        "instanceType": "db." + node.get("instanceType", "") + "." + node.get("instanceSize", ""),
                     })
 
                 resources.append(r.content())
@@ -154,10 +182,12 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                     r = Resource(asg_id, "autoscaling", node.get("text"))
 
                     r.update_params({
+                        "name": random_pet(),
                         "min_size": 0,
                         "max_size": 0,
                         "desired_capacity": 0,
-                        "image_id": "",
+                        "health_check_type": "EC2",
+                        "image_id": "ami-00035f41c82244dab",
                         "target_group_arns": [],
                         "vpc_zone_identifier": [],
                         "security_groups": [],
@@ -169,7 +199,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
                     if sg_id:
                         r.append_dependency(sg_id)
-                        r.update_dynamic_params("security_groups", "terraform_output." + sg_id + ".this_security_group_id")
+                        r.update_dynamic_params("security_groups", "terraform_output." + sg_id + ".this_security_group_id.to_list")
 
                     if elb_id:
                         r.append_dependency(elb_id)
@@ -187,6 +217,10 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
             else:
                 r = Resource(key, "ec2-instance", node.get("text"))
 
+                r.update_params({
+                    "name": random_pet(),
+                })
+
                 if node.get("instanceType") and node.get("instanceSize"):
                     r.update_params({
                         "instanceType": node.get("instanceType", "") + "." + node.get("instanceSize", ""),
@@ -203,16 +237,26 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
             if node.get("elbType") == "application":
                 r = Resource(key, "alb", node.get("text"))
 
+                r.update_params({
+                    "load_balancer_name": random_pet(),
+                    "logging_enabled": "false",
+                })
+
                 if vpc_id:
                     r.append_dependency(vpc_id)
                     r.update_dynamic_params("subnets", "terraform_output." + vpc_id + ".public_subnets")
+                    r.update_dynamic_params("vpc_id", "terraform_output." + vpc_id + ".vpc_id")
 
                 if sg_id:
                     r.append_dependency(sg_id)
-                    r.update_dynamic_params("security_groups", "terraform_output." + sg_id + ".this_security_group_id")
+                    r.update_dynamic_params("security_groups", "terraform_output." + sg_id + ".this_security_group_id.to_list")
 
             else:
                 r = Resource(key, "elb", node.get("text"))
+
+                r.update_params({
+                    "name": random_pet(),
+                })
 
                 # @todo: Use https://github.com/virtuald/pyhcl to convert to valid HCL in tfvars
                 # r.update_params({
@@ -237,7 +281,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
                 if sg_id:
                     r.append_dependency(sg_id)
-                    r.update_dynamic_params("security_groups", "terraform_output." + sg_id + ".this_security_group_id")
+                    r.update_dynamic_params("security_groups", "terraform_output." + sg_id + ".this_security_group_id.to_list")
 
             resources.append(r.content())
 
@@ -268,6 +312,10 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
         if node.get("type") == "sg":
             r = Resource(key, "security-group", node.get("text"))
 
+            r.update_params({
+                "name": random_pet(),
+            })
+
             if vpc_id:
                 r.append_dependency(vpc_id)
                 r.update_dynamic_params("vpc_id", "terraform_output." + vpc_id + ".vpc_id")
@@ -278,11 +326,12 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
             r = Resource(key, "vpc", node.get("text"))
 
             r.update_params({
-                "name": "",
+                "name": random_pet(),
                 "cidr": "",
                 "azs": [],
                 "public_subnets": [],
                 "private_subnets": [],
+                "database_subnets": [],
             })
 
             resources.append(r.content())

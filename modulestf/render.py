@@ -192,7 +192,7 @@ def render_from_modulestf_config(config, source, regions):
                     v = dynamic_params[k].split(".")
 
                     # replace second element with real directory name
-                    dynamic_params.update({k: v[0] + "." + dirs[v[1]] + "." + "".join(v[2:])})
+                    dynamic_params.update({k: v[0] + "." + dirs[v[1]] + "." + ".".join(v[2:])})
                 except KeyError:
                     pass
 

@@ -4,5 +4,6 @@ botocore==1.10.3
 cookiecutter==1.6.0
 matplotlib==2.2.2
 networkx==2.1
+petname==2.2
 python-lambda-local==0.1.5
 requests>=2.19.1
