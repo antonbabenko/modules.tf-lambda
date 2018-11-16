@@ -1,5 +1,6 @@
 # Terraform
 .terraform
+.terragrunt-cache
 *.tfstate*
 crash.log
 
