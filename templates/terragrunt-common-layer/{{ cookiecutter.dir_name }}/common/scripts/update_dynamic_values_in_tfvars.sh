@@ -13,6 +13,7 @@
 
 readonly tfvars_file="$1/terraform.tfvars"
 readonly parent_dir="$1/../"
+readonly terragrunt_working_dir=$(dirname $(find "$1/.terragrunt-cache" -type d -name ".terraform"))
 
 readonly modulestf_disable_values_updates_flag="@modulestf:disable_values_updates"
 readonly modulestf_terraform_output_prefix="@modulestf:terraform_output"
@@ -37,6 +38,12 @@ for key_to_replace in "${keys_to_replace[@]}"; do
   cd "${parent_dir}/${dir_name}"
 
   item=$(terragrunt output -json "$output_name")
+  exit_code=$?
+
+  if [[ "$exit_code" != "0" ]]; then
+    echo "Can't update value of $key_to_replace in $tfvars_file because key "$output_name" does not exist in output"
+    continue
+  fi
 
   item_type=$(echo "$item" | jq -rc ".type")
   item_value=$(echo "$item" | jq -rc ".value")
@@ -49,11 +56,16 @@ for key_to_replace in "${keys_to_replace[@]}"; do
     item_value="[$item_value]"
   fi
 
-  echo "Updating value of $key_to_replace with $item_value" in "$tfvars_file"
+  echo "Updating value of $key_to_replace with $item_value in $tfvars_file"
 
-  set -x # print command: on
+#  set -x # print command: on
 
   sed -i -r "s|^(.+) =.+(\#)+(.*)${key_to_replace}(.*)|\1 = ${item_value} \2\3${key_to_replace}\4|g" "$tfvars_file"
 
-  set +x # print command: off
+#  set +x # print command: off
+
+  echo "Copying updated tfvars file into terragrunt working directory"
+
+  \cp -f "$tfvars_file" "$terragrunt_working_dir"
+
 done
