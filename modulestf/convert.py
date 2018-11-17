@@ -110,6 +110,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
         sg_id = node.get("sg_id")
         asg_id = node.get("asg_id")
         elb_id = ""
+        elb_type = ""
 
         if node.get("type") == "rds":
             is_multi_az = False
@@ -177,6 +178,8 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                     for edge_id in tmp_edges:
                         if get_node_data(G, edge_id, "type") == "elb":
                             elb_id = get_node_data(G, edge_id, "id")
+                            elb_type = get_node_data(G, edge_id, "elbType")
+
                             break
 
                     r = Resource(asg_id, "autoscaling", node.get("text"))
@@ -188,7 +191,6 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                         "desired_capacity": 0,
                         "health_check_type": "EC2",
                         "image_id": "ami-00035f41c82244dab",
-                        "target_group_arns": [],
                         "vpc_zone_identifier": [],
                         "security_groups": [],
                     })
@@ -201,7 +203,10 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                         r.append_dependency(sg_id)
                         r.update_dynamic_params("security_groups", "terraform_output." + sg_id + ".this_security_group_id.to_list")
 
-                    if elb_id:
+                    if elb_id and elb_type == "application":
+                        r.update_params({
+                            "target_group_arns": [],
+                        })
                         r.append_dependency(elb_id)
                         r.update_dynamic_params("target_group_arns",
                                                 "terraform_output." + elb_id + ".target_group_arns")

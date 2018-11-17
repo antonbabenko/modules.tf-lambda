@@ -64,7 +64,7 @@ for key_to_replace in "${keys_to_replace[@]}"; do
 
 #  set +x # print command: off
 
-  echo "Copying updated tfvars file into terragrunt working directory"
+  echo "Copying updated $tfvars_file into $terragrunt_working_dir"
 
   \cp -f "$tfvars_file" "$terragrunt_working_dir"
 
