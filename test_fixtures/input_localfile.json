@@ -1,6 +1,6 @@
 {
   "queryStringParameters":
   {
-    "localfile": "input/blueprint_vpc_sg.json"
+    "localfile": "input/blueprint_my.json"
   }
 }

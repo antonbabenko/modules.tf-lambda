@@ -15,6 +15,9 @@ readonly tfvars_file="$1/terraform.tfvars"
 readonly parent_dir="$1/../"
 readonly terragrunt_working_dir=$(dirname $(find "$1/.terragrunt-cache" -type d -name ".terraform"))
 
+echo "parent_dir=$parent_dir"
+echo "TERRAGRUNT_WORKING_DIR=$terragrunt_working_dir"
+
 readonly modulestf_disable_values_updates_flag="@modulestf:disable_values_updates"
 readonly modulestf_terraform_output_prefix="@modulestf:terraform_output"
 
