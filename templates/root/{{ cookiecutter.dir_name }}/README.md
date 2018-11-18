@@ -29,7 +29,7 @@ By default, access credentials to AWS account should be set using environment va
     $ export AWS_ACCESS_KEY_ID=...
     $ export AWS_SECRET_ACCESS_KEY=...
 
-Alternatively, you can edit `common/scripts/main_providers.tf` and use another authentication mechanism as described in [AWS provider documentation](https://www.terraform.io/docs/providers/aws/index.html#authentication).
+Alternatively, you can edit `common/main_providers.tf` and use another authentication mechanism as described in [AWS provider documentation](https://www.terraform.io/docs/providers/aws/index.html#authentication).
 
 
 ## How to use it?
