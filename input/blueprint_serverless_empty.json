@@ -1,0 +1,528 @@
+{
+  "id": "202ba47b-fc70-49fb-b99c-7a8ce1a12228",
+  "readAccess": null,
+  "writeAccess": null,
+  "data": {
+    "version": 1,
+    "name": "Serverless Application Architecture",
+    "grid": "standard",
+    "shareDocs": false,
+    "surfaces": [],
+    "connectors": [
+      {
+        "id": "af313f80-3c5e-4573-a30f-da129eea106b",
+        "type": "connector",
+        "mapPos": [
+          9.5,
+          4.5
+        ]
+      },
+      {
+        "id": "1d0aa593-c4bc-4a73-94bf-a69a96ec7d65",
+        "type": "connector",
+        "mapPos": [
+          10,
+          5
+        ]
+      },
+      {
+        "id": "8bffc15b-6618-42f9-9248-2a265644721b",
+        "type": "connector",
+        "mapPos": [
+          10,
+          8
+        ]
+      },
+      {
+        "id": "540d1e1d-029e-4889-a462-8205c7c7453a",
+        "type": "connector",
+        "mapPos": [
+          9.5,
+          8.5
+        ]
+      }
+    ],
+    "nodes": [
+      {
+        "type": "lambda",
+        "id": "71cc3795-de14-49b3-909e-30d348807926",
+        "mapPos": [
+          2.75,
+          4
+        ],
+        "region": "us-east-1",
+        "memory": 704,
+        "mRequests": 11,
+        "computeDuration": 0.5
+      },
+      {
+        "type": "dynamodb",
+        "id": "eec1bbd4-88c0-4c14-ad26-47e051fdb090",
+        "mapPos": [
+          6.25,
+          4
+        ],
+        "region": "us-east-1",
+        "datasetGb": 10,
+        "readUnits": 5,
+        "writeUnits": 5,
+        "readConsistency": "strong"
+      },
+      {
+        "type": "lambda",
+        "id": "7cb9ac30-afe2-4aa1-ae0f-1d1776d71a89",
+        "mapPos": [
+          9.5,
+          6.5
+        ],
+        "region": "us-east-1",
+        "memory": 704,
+        "mRequests": 11,
+        "computeDuration": 0.5
+      },
+      {
+        "type": "apigateway",
+        "id": "ab6891d8-743b-424d-ae23-05722105d8bc",
+        "mapPos": [
+          2.75,
+          8
+        ],
+        "region": "us-east-1",
+        "direction": "down",
+        "apiCalls": 5,
+        "cache": 1.6
+      },
+      {
+        "type": "s3",
+        "id": "afe70dfe-e043-49c7-9950-1abba98b8c60",
+        "mapPos": [
+          6.25,
+          8
+        ],
+        "region": "us-east-1",
+        "volumeType": "Standard",
+        "dataGb": 10,
+        "putCopyPostRequests": 0,
+        "getAndOtherRequests": 0,
+        "lifecycleTransitions": 0
+      },
+      {
+        "type": "user",
+        "id": "6c6f6ef3-4ceb-4aa1-b55e-038974c8e354",
+        "direction": "down",
+        "mapPos": [
+          2.75,
+          11.5
+        ]
+      },
+      {
+        "type": "r53",
+        "id": "5746a904-f74a-4dac-b28f-e7b5fb0dba13",
+        "mapPos": [
+          6.25,
+          11.5
+        ]
+      }
+    ],
+    "text": [
+      {
+        "id": "5a4038ad-9ffb-43fe-9ec9-8b53d0bea1ca",
+        "type": "isotext",
+        "mapPos": [
+          0,
+          8.25
+        ],
+        "text": "Amazon",
+        "textSize": 15,
+        "color": "#f5b720",
+        "direction": "down",
+        "isometric": "true",
+        "standing": false
+      },
+      {
+        "id": "d791999d-da0b-4136-97f4-38274797c165",
+        "type": "isotext",
+        "mapPos": [
+          0,
+          8.5
+        ],
+        "text": "API Gateway",
+        "textSize": 25,
+        "color": "#f5b720",
+        "direction": "down",
+        "isometric": "true",
+        "standing": false
+      },
+      {
+        "id": "d67cac59-1f17-4202-8f43-03f639a29970",
+        "type": "isotext",
+        "mapPos": [
+          0.75,
+          4.25
+        ],
+        "text": "AWS",
+        "textSize": 15,
+        "color": "#f5b720",
+        "direction": "down",
+        "isometric": "true",
+        "standing": false
+      },
+      {
+        "id": "ae5a6e5f-9e7c-49fa-a462-ddaf7cd91631",
+        "type": "isotext",
+        "mapPos": [
+          0.75,
+          4.5
+        ],
+        "text": "Lambda",
+        "textSize": 25,
+        "color": "#f5b720",
+        "direction": "down",
+        "isometric": "true",
+        "standing": false
+      },
+      {
+        "id": "2e92ca6a-6141-4734-9281-be3f51190d58",
+        "type": "isotext",
+        "mapPos": [
+          7.2482629050421385,
+          4.1564450286980525
+        ],
+        "text": "Amazon",
+        "textSize": 15,
+        "color": "#f5b720",
+        "direction": "down",
+        "isometric": "true",
+        "standing": false
+      },
+      {
+        "id": "5cb9a962-3aa3-478b-af72-e241c13c6576",
+        "type": "isotext",
+        "mapPos": [
+          7.25,
+          4.5
+        ],
+        "text": "DynamoDB",
+        "textSize": 25,
+        "color": "#f5b720",
+        "direction": "down",
+        "isometric": "true",
+        "standing": false
+      },
+      {
+        "id": "f0bb539f-4acf-4841-ad6a-06ef7533adde",
+        "type": "isotext",
+        "mapPos": [
+          7.25,
+          8.75
+        ],
+        "text": "Amazon",
+        "textSize": 15,
+        "color": "#f5b720",
+        "direction": "down",
+        "isometric": "true",
+        "standing": false
+      },
+      {
+        "id": "8aa6e2bb-9a68-47f4-8c16-443fb4d649b5",
+        "type": "isotext",
+        "mapPos": [
+          7.25,
+          9
+        ],
+        "text": "S3",
+        "textSize": 25,
+        "color": "#f5b720",
+        "direction": "down",
+        "isometric": "true",
+        "standing": false
+      },
+      {
+        "id": "ba4593c8-101a-4f21-9c89-f048a3cbaa96",
+        "type": "isotext",
+        "mapPos": [
+          7.25,
+          12
+        ],
+        "text": "Route 53",
+        "textSize": 25,
+        "color": "#f5b720",
+        "direction": "down",
+        "isometric": "true",
+        "standing": false
+      },
+      {
+        "id": "8302280a-e5e5-4979-8e54-f9f15c84b7c5",
+        "type": "isotext",
+        "mapPos": [
+          7.25,
+          11.75
+        ],
+        "text": "Amazon",
+        "textSize": 15,
+        "color": "#f5b720",
+        "direction": "down",
+        "isometric": "true",
+        "standing": false
+      },
+      {
+        "id": "eb18daaa-d39a-4d1c-917a-cdc306fa38d6",
+        "type": "isotext",
+        "mapPos": [
+          0.75,
+          5
+        ],
+        "text": "Function 1",
+        "textSize": 25,
+        "color": "#f5b720",
+        "direction": "down",
+        "isometric": "true",
+        "standing": false
+      },
+      {
+        "id": "7595de9c-f430-486a-ab99-af7dcc7fa22d",
+        "type": "isotext",
+        "mapPos": [
+          3.25,
+          11.25
+        ],
+        "text": "Vote using app",
+        "textSize": 15,
+        "color": "#000000",
+        "direction": "right",
+        "isometric": "true",
+        "standing": false
+      },
+      {
+        "id": "10c849af-a7fd-473b-9821-64bfc8a4f2f7",
+        "type": "isotext",
+        "mapPos": [
+          3.25,
+          7.75
+        ],
+        "text": "Route request\rto Lambda function",
+        "textSize": 15,
+        "color": "#000000",
+        "direction": "right",
+        "isometric": "true",
+        "standing": false
+      },
+      {
+        "id": "bb06fa29-0b13-4912-a9be-eabcbea991a9",
+        "type": "isotext",
+        "mapPos": [
+          3.961535754504505,
+          3.9431721792356877
+        ],
+        "text": "Extract vote,\rwrite record",
+        "textSize": 15,
+        "color": "#000000",
+        "direction": "down",
+        "isometric": "true",
+        "standing": false
+      },
+      {
+        "id": "d45ba31d-259d-4e3a-8e65-5e1e15c86d03",
+        "type": "isotext",
+        "mapPos": [
+          8.404707933740191,
+          4.154707933740191
+        ],
+        "text": "Triggers",
+        "textSize": 15,
+        "color": "#000000",
+        "direction": "down",
+        "isometric": "true",
+        "standing": false
+      },
+      {
+        "id": "522efff2-130f-46f9-9dbb-7f281992a149",
+        "type": "isotext",
+        "mapPos": [
+          3.75,
+          12
+        ],
+        "text": "Visits the\rresults page",
+        "textSize": 15,
+        "color": "#000000",
+        "direction": "down",
+        "isometric": "true",
+        "standing": false
+      },
+      {
+        "id": "9a61ac66-3ca4-4b32-8b4c-1c4adfe7122c",
+        "type": "isotext",
+        "mapPos": [
+          6.75,
+          11.5
+        ],
+        "text": "Serves content\rfrom bucket",
+        "textSize": 15,
+        "color": "#000000",
+        "direction": "right",
+        "isometric": "true",
+        "standing": false
+      },
+      {
+        "id": "2f66d5a7-941c-4906-b62e-d04388714df7",
+        "type": "isotext",
+        "mapPos": [
+          7.25,
+          7.5
+        ],
+        "text": "Tallies vote,\rgenerates static\rHTML ",
+        "textSize": 15,
+        "color": "#000000",
+        "direction": "down",
+        "isometric": "true",
+        "standing": false
+      },
+      {
+        "id": "a7ce51fb-57ce-4fa2-85ac-d5635fb9e3f9",
+        "type": "isotext",
+        "mapPos": [
+          10.75,
+          8.25
+        ],
+        "text": "Lambda\rFunction 2",
+        "textSize": 25,
+        "color": "#ffc107",
+        "direction": "right",
+        "isometric": "true",
+        "standing": false
+      },
+      {
+        "id": "1d13311f-570d-405f-832d-72ee46704801",
+        "type": "isotext",
+        "mapPos": [
+          10.5,
+          8.25
+        ],
+        "text": "AWS",
+        "textSize": 15,
+        "color": "#ffc107",
+        "direction": "right",
+        "isometric": "true",
+        "standing": false
+      }
+    ],
+    "images": [],
+    "icons": [
+      {
+        "type": "icon",
+        "id": "6a0e4954-ee69-4373-90d3-549c535fa384",
+        "mapPos": [
+          2.75,
+          11
+        ],
+        "name": "mobile",
+        "iconSet": "fa",
+        "iconSize": 7,
+        "color": "#000000",
+        "background": "none",
+        "direction": "down",
+        "isometric": "true",
+        "standing": false
+      }
+    ],
+    "edges": [
+      {
+        "type": "edge",
+        "from": "ab6891d8-743b-424d-ae23-05722105d8bc",
+        "to": "71cc3795-de14-49b3-909e-30d348807926",
+        "width": 2,
+        "color": "#000000",
+        "dashed": false,
+        "endCap": "arrow"
+      },
+      {
+        "type": "edge",
+        "from": "6c6f6ef3-4ceb-4aa1-b55e-038974c8e354",
+        "to": "5746a904-f74a-4dac-b28f-e7b5fb0dba13",
+        "width": 2,
+        "color": "#000000",
+        "dashed": false,
+        "endCap": "arrow"
+      },
+      {
+        "type": "edge",
+        "from": "540d1e1d-029e-4889-a462-8205c7c7453a",
+        "to": "afe70dfe-e043-49c7-9950-1abba98b8c60",
+        "width": 2,
+        "color": "#000000",
+        "dashed": false,
+        "endCap": "arrow"
+      },
+      {
+        "type": "edge",
+        "from": "8bffc15b-6618-42f9-9248-2a265644721b",
+        "to": "540d1e1d-029e-4889-a462-8205c7c7453a",
+        "width": 2,
+        "color": "#000000",
+        "dashed": false
+      },
+      {
+        "type": "edge",
+        "from": "7cb9ac30-afe2-4aa1-ae0f-1d1776d71a89",
+        "to": "8bffc15b-6618-42f9-9248-2a265644721b",
+        "width": 2,
+        "color": "#000000",
+        "dashed": false
+      },
+      {
+        "type": "edge",
+        "from": "6c6f6ef3-4ceb-4aa1-b55e-038974c8e354",
+        "to": "ab6891d8-743b-424d-ae23-05722105d8bc",
+        "width": 2,
+        "color": "#000000",
+        "dashed": false,
+        "endCap": "arrow"
+      },
+      {
+        "type": "edge",
+        "from": "5746a904-f74a-4dac-b28f-e7b5fb0dba13",
+        "to": "afe70dfe-e043-49c7-9950-1abba98b8c60",
+        "width": 2,
+        "color": "#000000",
+        "dashed": false,
+        "endCap": "arrow"
+      },
+      {
+        "type": "edge",
+        "from": "71cc3795-de14-49b3-909e-30d348807926",
+        "to": "eec1bbd4-88c0-4c14-ad26-47e051fdb090",
+        "width": 2,
+        "color": "#000000",
+        "dashed": false,
+        "endCap": "arrow"
+      },
+      {
+        "type": "edge",
+        "from": "1d0aa593-c4bc-4a73-94bf-a69a96ec7d65",
+        "to": "7cb9ac30-afe2-4aa1-ae0f-1d1776d71a89",
+        "width": 2,
+        "color": "#000000",
+        "dashed": false,
+        "endCap": "arrow"
+      },
+      {
+        "type": "edge",
+        "from": "af313f80-3c5e-4573-a30f-da129eea106b",
+        "to": "1d0aa593-c4bc-4a73-94bf-a69a96ec7d65",
+        "width": 2,
+        "color": "#000000",
+        "dashed": false
+      },
+      {
+        "type": "edge",
+        "from": "eec1bbd4-88c0-4c14-ad26-47e051fdb090",
+        "to": "af313f80-3c5e-4573-a30f-da129eea106b",
+        "width": 2,
+        "color": "#000000",
+        "dashed": false
+      }
+    ],
+    "groups": [],
+    "disabledLayers": []
+  }
+}

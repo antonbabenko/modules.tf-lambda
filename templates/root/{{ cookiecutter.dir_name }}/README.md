@@ -43,9 +43,9 @@ Once all arguments are set, run this command to create infrastructure in all lay
     $ cd {{ cookiecutter.region }}
     $ terragrunt apply-all
 
-Alternatively, you can create infrastructure in a single layer (eg, `{{ cookiecutter.dirs.values()|first }}`):
+Alternatively, you can create infrastructure in a single layer (eg, `{{ cookiecutter.dirs.values()|first|default("vpc") }}`):
 
-    $ cd {{ cookiecutter.region }}/{{ cookiecutter.dirs.values()|first }}
+    $ cd {{ cookiecutter.region }}/{{ cookiecutter.dirs.values()|first|default("vpc") }}
     $ terragrunt apply
 
 See [official Terragrunt documentation](https://github.com/gruntwork-io/terragrunt/blob/master/README.md) for all available commands and features.
