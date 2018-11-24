@@ -80,7 +80,9 @@ def populate_graph(data):  # noqa: C901
         for edge in G.edges.data():
             edge = list(edge)
 
-            if edge[0] in connectors or edge[1] in connectors:
+            if edge[0] == edge[1]:
+                edge = []
+            elif edge[0] in connectors or edge[1] in connectors:
                 break
             else:
                 edge = []
