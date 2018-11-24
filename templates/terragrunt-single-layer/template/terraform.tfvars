@@ -1,16 +1,18 @@
+{%- set module_source = cookiecutter.module_sources[this.module_type] -%}
+{%- set module_variables = cookiecutter.module_variables[this.module_type] -%}
 terragrunt = {
   terraform {
-    source = "{{ cookiecutter.module_source }}"
+    source = "{{ module_source }}"
   }
 
   include = {
     path = "${find_in_parent_folders()}"
   }
 
-  {% if cookiecutter.dependencies|default("") -%}
+  {% if this.dependencies|default("") -%}
   dependencies {
     paths = [
-      {%- for value in cookiecutter.dependencies.split(",") -%}
+      {%- for value in this.dependencies.split(",") -%}
       "../{{ value }}"{%- if not loop.last -%}, {% endif -%}
       {%- endfor -%}
     ]
@@ -18,16 +20,16 @@ terragrunt = {
   {%- endif %}
 }
 
-{% for key, value in cookiecutter.module_variables|dictsort -%}
+{% for key, value in module_variables|dictsort -%}
 
 {%- if value.cloudcraft_name is defined -%}
-{%- if value.cloudcraft_name in cookiecutter.params -%}
-{%- set tmp_value = cookiecutter.params[value.cloudcraft_name] -%}
+{%- if value.cloudcraft_name in this.params -%}
+{%- set tmp_value = this.params[value.cloudcraft_name] -%}
 {%- else -%}
 {%- set tmp_value = None -%}
 {%- endif-%}
-{%- elif key in cookiecutter.params -%}
-{%- set tmp_value = cookiecutter.params[key] -%}
+{%- elif key in this.params -%}
+{%- set tmp_value = this.params[key] -%}
 {%- else -%}
 {%- set tmp_value = None -%}
 {%- endif -%}
@@ -57,8 +59,8 @@ terragrunt = {
 {%- endif -%}
 
 {#- Inline comment for dynamic params -#}
-{%- if key in cookiecutter.dynamic_params -%}
-{%- set comment_dynamic_param = " # @modulestf:" ~ cookiecutter.dynamic_params[key] -%}
+{%- if key in this.dynamic_params -%}
+{%- set comment_dynamic_param = " # @modulestf:" ~ this.dynamic_params[key] -%}
 {%- else -%}
 {%- set comment_dynamic_param = "" -%}
 {%- endif %}
