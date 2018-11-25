@@ -1,6 +1,9 @@
 {
-  "dir_name": "template",
-  "module_source": "",
+  "dir_name": "final",
+  "region": "",
+  "source_name": "",
+  "dirs": "",
+  "module_sources": {},
   "module_variables": {},
   "params": {},
   "dependencies": "",

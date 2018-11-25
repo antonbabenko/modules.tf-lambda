@@ -1,8 +1,9 @@
 import glob
 import json
-import os
+import pathlib
 import re
 import shutil
+from os import chdir, getcwd, makedirs, mkdir, path
 from pprint import pformat, pprint
 
 from cookiecutter.exceptions import NonTemplatedInputDirException
@@ -21,73 +22,101 @@ def mkdir_safely(dir):
         pass
 
     try:
-        os.mkdir(dir)
+        mkdir(dir)
     except OSError:
         pass
 
 
 def prepare_render_dirs():
-    output_dir = os.path.join(tmp_dir, OUTPUT_DIR)
+    # return
+    output_dir = path.join(tmp_dir, OUTPUT_DIR)
 
     mkdir_safely(output_dir)
-    os.chdir(output_dir)
+    chdir(output_dir)
 
     mkdir_safely(WORK_DIR)
-    os.chdir(WORK_DIR)
+    chdir(WORK_DIR)
 
-    mkdir_safely(FINAL_DIR)
+    # mkdir_safely(FINAL_DIR)
+
+    mkdir(WORK_DIR_FOR_COOKIECUTTER)
 
 
-def render_single_layer(resource, region):
+def find_templates_files(dir):
+    pprint("DIR = %s" % dir)
+
+    files = glob.glob(dir + "/*") + \
+        glob.glob(dir + "/.*")
+
+    return files
+
+
+def prepare_single_layer(resource, region, templates_dir, templates_files):
 
     dir_name = resource.get("dir_name")
 
-    full_dir_name = ("single_layer/%s/%s" % (region, dir_name)).lower()
+    full_dir_name = ("%s/%s" % (region, dir_name)).lower()
 
     single_layer = {
-        "dir_name": full_dir_name,
-        "region": region,
-        "module_source": MODULES[resource["type"]]["source"],
-        "module_variables": MODULES[resource["type"]]["variables"],
+        "module_type": resource["type"]
     }
 
     extra_context = resource.update(single_layer) or resource
 
-    cookiecutter(os.path.join(COOKIECUTTER_TEMPLATES_DIR, COOKIECUTTER_TEMPLATES_PREFIX + "-single-layer"),
-                 config_file=os.path.join(COOKIECUTTER_TEMPLATES_DIR, "config_aws_lambda.yaml"),
+    data = '{%- set this = ' + str(extra_context) + ' -%}'
+
+    dst_dir = path.join(getcwd(), WORK_DIR_FOR_COOKIECUTTER, full_dir_name)
+
+    for file in templates_files:
+        # pprint("original = %s" % file)
+        part_of_path_to_keep = "".join(file[len(templates_dir):])
+
+        # pprint("just relative file = %s" % part_file)
+        # pprint("getcwd = %s" % getcwd())
+
+        dst_file = dst_dir + part_of_path_to_keep
+        # pprint("new file = %s" % dst_file)
+
+        with open(file, "r") as original:
+            original_data = original.read()
+            original.close()
+
+        makedirs(path.dirname(dst_file), exist_ok=True)
+
+        with open(dst_file, "w") as modified:
+            modified.write(data + "\n" + original_data)
+            modified.close()
+
+    shutil.copy(templates_dir + "/../cookiecutter.json", "cookiecutter.json")
+
+    return resource["type"]
+
+
+# Copy all files and subdirectories into working directory
+def copy_to_working_dir(templates_dir):
+
+    dst_dir = path.realpath(WORK_DIR_FOR_COOKIECUTTER)
+
+    files = find_templates_files(templates_dir)
+
+    for file in files:
+        pprint("FILE == %s" % file)
+        pprint("dst_dir == %s" % dst_dir)
+        if path.isdir(file):
+            dst = path.join(dst_dir, path.basename(file))
+            shutil.copytree(file, dst)
+        else:
+            shutil.copy(file, dst_dir)
+
+
+def render_all(extra_context):
+
+    output_dir = path.join(tmp_dir, OUTPUT_DIR, WORK_DIR)
+
+    cookiecutter(output_dir,
+                 config_file=path.join(COOKIECUTTER_TEMPLATES_DIR, "config_aws_lambda.yaml"),
                  no_input=True,
                  extra_context=extra_context)
-
-
-def render_common_layer(region):
-
-    common_layer = {
-        "dir_name": "common_layer",
-        "region": region,
-    }
-
-    try:
-        cookiecutter(os.path.join(COOKIECUTTER_TEMPLATES_DIR, COOKIECUTTER_TEMPLATES_PREFIX + "-common-layer"),
-                     config_file=os.path.join(COOKIECUTTER_TEMPLATES_DIR, "config_aws_lambda.yaml"),
-                     no_input=True,
-                     extra_context=common_layer)
-    except NonTemplatedInputDirException:
-        pass
-
-
-def render_root_dir(source, region, dirs):
-
-    root_dir = {
-        "dir_name": "root_dir",
-        "source_name": source["name"],
-        "region": region,
-        "dirs": dirs,
-    }
-
-    cookiecutter(os.path.join(COOKIECUTTER_TEMPLATES_DIR, "root"),
-                 config_file=os.path.join(COOKIECUTTER_TEMPLATES_DIR, "config_aws_lambda.yaml"),
-                 no_input=True,
-                 extra_context=root_dir)
 
 
 # Count unique combination of type and text to decide if to append unique resource id
@@ -169,6 +198,13 @@ def render_from_modulestf_config(config, source, regions):
 
         types_text[t] = new_appendix
 
+    # Find all templates for single layer once
+    templates_dir = path.realpath(path.join(COOKIECUTTER_TEMPLATES_DIR, COOKIECUTTER_TEMPLATES_PREFIX + "-single-layer/template"))
+    templates_files = find_templates_files(templates_dir)
+
+    # Set of used module to load data once
+    used_modules = set()
+
     # render single layers in a loop
     for resource in resources:
 
@@ -201,23 +237,33 @@ def render_from_modulestf_config(config, source, regions):
 
         # Render the layer
         logger.info("Rendering single layer resource id: %s" % resource.get("ref_id"))
-        render_single_layer(resource, region)
+        used_module_type = prepare_single_layer(resource, region, templates_dir, templates_files)
 
-    logger.info("Rendering common layer")
-    render_common_layer(region)
+        used_modules.add(used_module_type)
 
-    logger.info("Rendering root dir")
-    render_root_dir(source, region, dirs)
+    extra_context = dict({"module_sources": {}, "module_variables": {}})
+    for module_type in used_modules:
+        extra_context["module_sources"].update({
+            module_type: MODULES[module_type]["source"],
+        })
 
-    files = glob.glob("single_layer/*") + \
-        glob.glob("single_layer/.*") + \
-        glob.glob("common_layer/*") + \
-        glob.glob("common_layer/.*") + \
-        glob.glob("root_dir/*") + \
-        glob.glob("root_dir/.*")
+        extra_context["module_variables"].update({
+            module_type: MODULES[module_type]["variables"],
+        })
 
-    logger.info("Moving files into final dir: %s" % FINAL_DIR)
-    for file in files:
-        shutil.move(file, FINAL_DIR)
+    logger.info("Prepare common layer")
+    templates_dir = path.realpath(path.join(COOKIECUTTER_TEMPLATES_DIR, COOKIECUTTER_TEMPLATES_PREFIX + "-common-layer/template"))
+    copy_to_working_dir(templates_dir)
+
+    logger.info("Prepare root dir")
+    templates_dir = path.realpath(path.join(COOKIECUTTER_TEMPLATES_DIR, "root/template"))
+    copy_to_working_dir(templates_dir)
+
+    extra_context["source_name"] = source["name"]
+    extra_context["dirs"] = dirs
+    extra_context["region"] = region
+
+    logger.info("Rendering all")
+    render_all(extra_context)
 
     logger.info("Complete!")

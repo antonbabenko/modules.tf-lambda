@@ -9,7 +9,9 @@ COOKIECUTTER_TEMPLATES_PREFIX = "terragrunt"  # or "terraform"
 
 OUTPUT_DIR = "output"
 WORK_DIR = "work"
-FINAL_DIR = "../final"
+WORK_DIR_FOR_COOKIECUTTER = "{{ cookiecutter.dir_name }}"
+
+FINAL_DIR = "final"
 
 S3_BUCKET = "dl.modules.tf"
 S3_BUCKET_REGION = "eu-west-1"

@@ -1,0 +1,1418 @@
+{
+  "id": "ec3d8aa3-1137-4f58-adcd-832e57d95e10",
+  "data": {
+    "grid": "infinite",
+    "name": "Bunch of resources",
+    "text": [
+      {
+        "id": "1795d0b6-1f55-43b4-adbd-be2def759bde",
+        "text": "A",
+        "type": "isotext",
+        "color": "#ffffff",
+        "mapPos": [
+          3.25,
+          12
+        ],
+        "standing": false,
+        "textSize": 50,
+        "direction": "down",
+        "isometric": "true"
+      },
+      {
+        "id": "284e5283-c400-4025-ab50-049f66efb11e",
+        "text": "Auto\nScaling",
+        "type": "isotext",
+        "color": "#004b91",
+        "mapPos": [
+          11.5,
+          10.5
+        ],
+        "standing": false,
+        "textSize": 25,
+        "direction": "right",
+        "isometric": "true"
+      },
+      {
+        "id": "7eca4e00-a9b2-4604-b6bf-30e73c1081d1",
+        "text": "Auto\nScaling",
+        "type": "isotext",
+        "color": "#004b91",
+        "mapPos": [
+          11.5,
+          1.5
+        ],
+        "standing": false,
+        "textSize": 25,
+        "direction": "right",
+        "isometric": "true"
+      },
+      {
+        "id": "34e3c7b8-71a7-4231-8aab-5f31312f0f64",
+        "text": "Elastic Load\nBalancing",
+        "type": "isotext",
+        "color": "#f5b720",
+        "mapPos": [
+          7,
+          14.25
+        ],
+        "standing": false,
+        "textSize": 25,
+        "direction": "down",
+        "isometric": "true"
+      },
+      {
+        "id": "b3bb314f-ce0d-4e39-9f68-f39b622c09ce",
+        "text": "Elastic Load\nBalancing",
+        "type": "isotext",
+        "color": "#f5b720",
+        "mapPos": [
+          7,
+          4.75
+        ],
+        "standing": false,
+        "textSize": 25,
+        "direction": "down",
+        "isometric": "true"
+      },
+      {
+        "id": "bad34542-af2b-43d8-9bc7-2feb4f015e80",
+        "text": "RDS",
+        "type": "isotext",
+        "color": "#f5b720",
+        "mapPos": [
+          4.75,
+          -3.75
+        ],
+        "standing": false,
+        "textSize": 25,
+        "direction": "down",
+        "isometric": "true"
+      },
+      {
+        "id": "ee2af773-dad5-4757-9409-da7637ce04e0",
+        "text": "Master",
+        "type": "isotext",
+        "color": "#f5b720",
+        "mapPos": [
+          4.75,
+          -3.25
+        ],
+        "standing": false,
+        "textSize": 15,
+        "direction": "down",
+        "isometric": "true"
+      },
+      {
+        "id": "642b8de8-750e-4ac1-92aa-723e2350e0e7",
+        "text": "RDS",
+        "type": "isotext",
+        "color": "#ffc107",
+        "mapPos": [
+          10,
+          -3.75
+        ],
+        "standing": false,
+        "textSize": 25,
+        "direction": "down",
+        "isometric": "true"
+      },
+      {
+        "id": "beee3637-356b-4061-9a99-a9d726b7d46f",
+        "text": "Slave",
+        "type": "isotext",
+        "color": "#f5b720",
+        "mapPos": [
+          10,
+          -3.25
+        ],
+        "standing": false,
+        "textSize": 15,
+        "direction": "down",
+        "isometric": "true"
+      },
+      {
+        "id": "ba972c10-3782-45e9-90c7-e93914052adb",
+        "text": "Cross-AZ\rReplication",
+        "type": "isotext",
+        "color": "#607d8b",
+        "mapPos": [
+          7.25,
+          0.75
+        ],
+        "standing": false,
+        "textSize": 15,
+        "direction": "down",
+        "isometric": "true"
+      },
+      {
+        "id": "31910fa9-cc37-4ab1-8c23-6a79e72e3cc8",
+        "text": "Availability Zone",
+        "type": "isotext",
+        "color": "#ffffff",
+        "mapPos": [
+          2.75,
+          7
+        ],
+        "standing": false,
+        "textSize": 15,
+        "direction": "right",
+        "isometric": "true"
+      },
+      {
+        "id": "4d88fce8-b149-40cc-80f8-9fbc14dd150c",
+        "text": "Availability Zone",
+        "type": "isotext",
+        "color": "#ffffff",
+        "mapPos": [
+          10,
+          7
+        ],
+        "standing": false,
+        "textSize": 15,
+        "direction": "right",
+        "isometric": "true"
+      },
+      {
+        "id": "751e768f-8fa5-4208-825c-ebd08caa225e",
+        "text": "AZ",
+        "type": "isotext",
+        "color": "#ffffff",
+        "mapPos": [
+          2.75,
+          12
+        ],
+        "standing": false,
+        "textSize": 25,
+        "direction": "down",
+        "isometric": "true"
+      },
+      {
+        "id": "3c67307a-f38c-4062-877c-14ad8cb6d261",
+        "text": "B",
+        "type": "isotext",
+        "color": "#ffffff",
+        "mapPos": [
+          9.34188961670277,
+          12.02456455099975
+        ],
+        "standing": false,
+        "textSize": 50,
+        "direction": "down",
+        "isometric": "true"
+      },
+      {
+        "id": "a8d2e8fb-f21f-4378-8eef-961a99bcf879",
+        "text": "AZ",
+        "type": "isotext",
+        "color": "#ffffff",
+        "mapPos": [
+          8.75,
+          12
+        ],
+        "standing": false,
+        "textSize": 25,
+        "direction": "down",
+        "isometric": "true"
+      },
+      {
+        "id": "bed4d2d6-0d42-4cb2-8708-9cdb2aa2bc50",
+        "text": "Block (EKS)",
+        "type": "isotext",
+        "color": "#4286c5",
+        "mapPos": {
+          "relTo": "e7421ade-0118-4324-b115-5e11bc62f1d7",
+          "offset": [
+            -0.25,
+            1
+          ]
+        },
+        "standing": false,
+        "textSize": 25,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "1273f2d7-682d-4414-928c-c0ac9622a77a",
+        "text": "Image",
+        "type": "isotext",
+        "color": "#4286c5",
+        "mapPos": {
+          "relTo": "a58ba7cf-308f-43a5-969c-91346d363d3e",
+          "offset": [
+            0.75,
+            1.5
+          ]
+        },
+        "standing": false,
+        "textSize": 25,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "3b99d116-6b58-4d1c-8416-fc27c38bef38",
+        "text": "NAT Gateway",
+        "type": "isotext",
+        "color": "#4286c5",
+        "mapPos": {
+          "relTo": "21974a45-0729-48bb-9368-83aa146d9377",
+          "offset": [
+            -0.3200000000000003,
+            0.7699999999999996
+          ]
+        },
+        "standing": false,
+        "textSize": 25,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "a83c12f9-5b58-474a-bf69-d5057e302a9e",
+        "text": "Internet Gateway",
+        "type": "isotext",
+        "color": "#4286c5",
+        "mapPos": {
+          "relTo": "2512ee8b-66d5-47c9-9035-e4d17b4ee655",
+          "offset": [
+            -0.6950000000000003,
+            0.7699999999999996
+          ]
+        },
+        "standing": false,
+        "textSize": 25,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "f8dfd416-df72-4853-a56f-2f285b863a80",
+        "text": "VPC Gateway",
+        "type": "isotext",
+        "color": "#4286c5",
+        "mapPos": {
+          "relTo": "72378899-ce63-4561-8823-33d5172abe12",
+          "offset": [
+            -0.29000000000000004,
+            0.7699999999999996
+          ]
+        },
+        "standing": false,
+        "textSize": 25,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "f3f9839a-8235-4460-823a-2d09a85a7338",
+        "text": "ElastiCache",
+        "type": "isotext",
+        "color": "#4286c5",
+        "mapPos": {
+          "relTo": "498571ad-b94c-4e9f-a40e-f4fdb185e2f5",
+          "offset": [
+            -0.5499999999999998,
+            1
+          ]
+        },
+        "standing": false,
+        "textSize": 25,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "8650a7cc-c746-4315-bcc0-90068ccd2369",
+        "text": "Regional resources (eu-west-1)",
+        "type": "isotext",
+        "color": "#4286c5",
+        "mapPos": [
+          6.5,
+          26.25
+        ],
+        "standing": false,
+        "textSize": 25,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "793128df-900a-437f-ba40-e461de069f13",
+        "text": "CloudFront",
+        "type": "isotext",
+        "color": "#4286c5",
+        "mapPos": {
+          "relTo": "31258cf4-e50a-464a-8a88-745d65591bb0",
+          "offset": [
+            -0.5249999999999999,
+            0.8299999999999983
+          ]
+        },
+        "standing": false,
+        "textSize": 25,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "ccb82ed5-1f29-4012-b2e4-0a73bc00ed74",
+        "text": "Global resources",
+        "type": "isotext",
+        "color": "#4286c5",
+        "mapPos": [
+          -0.5,
+          26.25
+        ],
+        "standing": false,
+        "textSize": 25,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "716a1ac8-1bf2-4588-9907-c89afcef78f9",
+        "text": "Route 53",
+        "type": "isotext",
+        "color": "#4286c5",
+        "mapPos": {
+          "relTo": "eee13f15-a7af-4a6e-932f-2f8c74fe6c99",
+          "offset": [
+            -0.2999999999999998,
+            1
+          ]
+        },
+        "standing": false,
+        "textSize": 25,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "80ee5a0b-facf-4635-b715-dfff0cb78cce",
+        "text": "Redshift",
+        "type": "isotext",
+        "color": "#4286c5",
+        "mapPos": {
+          "relTo": "e2df2193-5f14-44d9-b940-99d9c8702a93",
+          "offset": [
+            -0.27,
+            1
+          ]
+        },
+        "standing": false,
+        "textSize": 25,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "e55d33ae-2887-45e2-8f47-0b40eb8a4f32",
+        "text": "Kinesis Stream",
+        "type": "isotext",
+        "color": "#4286c5",
+        "mapPos": {
+          "relTo": "49a11387-daac-41f3-b5ae-768c543cca1d",
+          "offset": [
+            -0.8600000000000003,
+            2
+          ]
+        },
+        "standing": false,
+        "textSize": 25,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "f4d29afe-78e0-442c-a160-be49b8092cc4",
+        "text": "SES",
+        "type": "isotext",
+        "color": "#4286c5",
+        "mapPos": {
+          "relTo": "1a23d0b4-9b5f-48a8-84d0-49a24162d4da",
+          "offset": [
+            0.19500000000000028,
+            1
+          ]
+        },
+        "standing": false,
+        "textSize": 25,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "8e3d32fd-47c8-406d-a930-1451e926ec20",
+        "text": "SNS",
+        "type": "isotext",
+        "color": "#4286c5",
+        "mapPos": {
+          "relTo": "5fc8f484-b3e1-48da-bae1-90f0d072ab35",
+          "offset": [
+            0.14999999999999858,
+            1
+          ]
+        },
+        "standing": false,
+        "textSize": 25,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "ba835401-e418-4a46-9227-5ed6ba4af6b9",
+        "text": "SQS",
+        "type": "isotext",
+        "color": "#4286c5",
+        "mapPos": {
+          "relTo": "ac0eabda-9459-434f-b819-0d746c667360",
+          "offset": [
+            0.34999999999999964,
+            1.3900000000000006
+          ]
+        },
+        "standing": false,
+        "textSize": 25,
+        "direction": "down",
+        "isometric": true
+      }
+    ],
+    "edges": [
+      {
+        "id": "43ceb4bb-b317-4ba0-a071-a3e67e61e13c-b6f06c62-01e7-4bb3-bcdc-a7d1dec0fe62",
+        "to": "b6f06c62-01e7-4bb3-bcdc-a7d1dec0fe62",
+        "from": "43ceb4bb-b317-4ba0-a071-a3e67e61e13c",
+        "type": "autoedge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false,
+        "endCap": "arrow"
+      },
+      {
+        "id": "b5bad988-e989-4bbc-9bbf-9e8b0e06440d-de208ffc-304e-450f-a337-fec5e86a3f47",
+        "to": "de208ffc-304e-450f-a337-fec5e86a3f47",
+        "from": "b5bad988-e989-4bbc-9bbf-9e8b0e06440d",
+        "type": "autoedge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false,
+        "endCap": "arrow"
+      },
+      {
+        "to": "1cb63412-7d5d-4003-ad4d-316f4d54d140",
+        "from": "2685515d-0fdf-4c31-b26d-7cf5ad8c321d",
+        "type": "edge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false
+      },
+      {
+        "to": "5883edb6-8ac4-4b05-ba8b-c8d68c60d852",
+        "from": "c7231130-fdbf-4b49-a18e-2595212cb881",
+        "type": "edge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false,
+        "endCap": "arrow"
+      },
+      {
+        "id": "4fa727c9-36b9-4773-bf99-258500555073-b5bad988-e989-4bbc-9bbf-9e8b0e06440d",
+        "to": "b5bad988-e989-4bbc-9bbf-9e8b0e06440d",
+        "from": "4fa727c9-36b9-4773-bf99-258500555073",
+        "type": "autoedge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false,
+        "endCap": "arrow"
+      },
+      {
+        "to": "4fa727c9-36b9-4773-bf99-258500555073",
+        "from": "1cb63412-7d5d-4003-ad4d-316f4d54d140",
+        "type": "edge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false,
+        "endCap": "arrow"
+      },
+      {
+        "to": "c3d9c781-c8ac-4866-83ce-993b57c2fdad",
+        "from": "b6f06c62-01e7-4bb3-bcdc-a7d1dec0fe62",
+        "type": "edge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": true,
+        "endCap": "arrow"
+      },
+      {
+        "id": "de208ffc-304e-450f-a337-fec5e86a3f47-43ceb4bb-b317-4ba0-a071-a3e67e61e13c",
+        "to": "43ceb4bb-b317-4ba0-a071-a3e67e61e13c",
+        "from": "de208ffc-304e-450f-a337-fec5e86a3f47",
+        "type": "autoedge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false,
+        "endCap": "arrow"
+      },
+      {
+        "to": "c1eb09f9-c4b4-4380-a525-e5c51f636222",
+        "from": "ec35dec5-0985-4eb6-81bd-bb1af701a44e",
+        "type": "edge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false,
+        "endCap": "arrow"
+      }
+    ],
+    "icons": [
+      {
+        "id": "9fd806e5-adf8-44be-a1f0-370f89655e5e",
+        "name": "lock",
+        "type": "icon",
+        "color": "#ffffff",
+        "mapPos": [
+          6.5,
+          17.25
+        ],
+        "iconSet": "fa",
+        "iconSize": 3,
+        "standing": false,
+        "direction": "down",
+        "isometric": "true",
+        "background": "#000000"
+      },
+      {
+        "id": "ec9b081a-837b-4e24-a77f-28b33f5002e7",
+        "name": "DeveloperTools_AWSCodePipeline",
+        "type": "icon",
+        "color": "#ffffff",
+        "mapPos": [
+          -12.5,
+          7.25
+        ],
+        "iconSet": "aws",
+        "iconSize": 5,
+        "standing": false,
+        "direction": "down",
+        "isometric": false,
+        "background": "none"
+      },
+      {
+        "id": "6d66781e-2a2c-4e63-901e-a403b98c6dbb",
+        "name": "Compute_AWSBatch",
+        "type": "icon",
+        "color": "#ffffff",
+        "mapPos": [
+          -12.25,
+          2.75
+        ],
+        "iconSet": "aws",
+        "iconSize": 5,
+        "standing": false,
+        "direction": "down",
+        "isometric": false,
+        "background": "#f44336"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "b6f06c62-01e7-4bb3-bcdc-a7d1dec0fe62",
+        "role": "master",
+        "type": "rds",
+        "engine": "mysql",
+        "mapPos": [
+          6,
+          -4.25
+        ],
+        "region": "eu-west-1",
+        "instanceSize": "large",
+        "instanceType": "m4"
+      },
+      {
+        "id": "c3d9c781-c8ac-4866-83ce-993b57c2fdad",
+        "role": "slave",
+        "type": "rds",
+        "engine": "mysql",
+        "mapPos": [
+          9,
+          -4.25
+        ],
+        "region": "eu-west-1",
+        "instanceSize": "large",
+        "instanceType": "m4"
+      },
+      {
+        "id": "c1eb09f9-c4b4-4380-a525-e5c51f636222",
+        "role": "data",
+        "type": "es",
+        "mapPos": [
+          -1.75,
+          0.25
+        ],
+        "region": "eu-west-1",
+        "instanceSize": "large",
+        "instanceType": "m4",
+        "instanceCount": 5
+      },
+      {
+        "id": "041a63e4-5818-4dae-8273-27841a02a035",
+        "type": "ec2",
+        "color": "#ececed",
+        "mapPos": [
+          3,
+          0.25
+        ],
+        "region": "eu-west-1",
+        "platform": "linux",
+        "transparent": false,
+        "instanceSize": "large",
+        "instanceType": "m4"
+      },
+      {
+        "id": "d7cfcad7-98de-4f94-967f-388bf24feb07",
+        "type": "ec2",
+        "color": "#ececed",
+        "mapPos": [
+          5,
+          0.25
+        ],
+        "region": "eu-west-1",
+        "platform": "linux",
+        "transparent": false,
+        "instanceSize": "large",
+        "instanceType": "m4"
+      },
+      {
+        "id": "81643b36-ec72-4f72-9e1f-9c22a30a059a",
+        "type": "ec2",
+        "color": "#ececed",
+        "mapPos": [
+          7,
+          0.25
+        ],
+        "region": "eu-west-1",
+        "platform": "linux",
+        "transparent": false,
+        "instanceSize": "large",
+        "instanceType": "m4"
+      },
+      {
+        "id": "0215442f-00fe-44f1-820f-2e2346c4bc39",
+        "type": "ec2",
+        "color": "#ececed",
+        "mapPos": [
+          9,
+          0.25
+        ],
+        "region": "eu-west-1",
+        "platform": "linux",
+        "transparent": false,
+        "instanceSize": "large",
+        "instanceType": "m4"
+      },
+      {
+        "id": "ec35dec5-0985-4eb6-81bd-bb1af701a44e",
+        "role": "master",
+        "type": "es",
+        "mapPos": [
+          -1.75,
+          2.75
+        ],
+        "region": "eu-west-1",
+        "instanceSize": "large",
+        "instanceType": "m4",
+        "instanceCount": 2
+      },
+      {
+        "id": "de208ffc-304e-450f-a337-fec5e86a3f47",
+        "lcu": 1,
+        "type": "elb",
+        "dataGb": 10,
+        "mapPos": [
+          6,
+          4.75
+        ],
+        "region": "eu-west-1",
+        "elbType": "classic"
+      },
+      {
+        "id": "e7421ade-0118-4324-b115-5e11bc62f1d7",
+        "type": "block",
+        "color": "#4286c5",
+        "depth": 2,
+        "width": 2,
+        "height": 2,
+        "mapPos": [
+          -10.5,
+          5.25
+        ]
+      },
+      {
+        "id": "e2df2193-5f14-44d9-b940-99d9c8702a93",
+        "type": "redshift",
+        "color": "gray",
+        "mapPos": [
+          -1.75,
+          7
+        ],
+        "region": "eu-west-1",
+        "nodeCount": 2,
+        "instanceSize": "large",
+        "instanceType": "dc2"
+      },
+      {
+        "id": "c90d5e2c-c692-4f73-8e30-d80e5c6fa403",
+        "type": "ec2",
+        "color": "#ececed",
+        "mapPos": [
+          4,
+          9.25
+        ],
+        "region": "eu-west-1",
+        "platform": "linux",
+        "transparent": false,
+        "instanceSize": "large",
+        "instanceType": "m3"
+      },
+      {
+        "id": "62b6a890-1c4b-4a11-bf7f-25d37e6ee72c",
+        "type": "ec2",
+        "color": "#ececed",
+        "mapPos": [
+          5,
+          9.25
+        ],
+        "region": "eu-west-1",
+        "platform": "linux",
+        "transparent": false,
+        "instanceSize": "large",
+        "instanceType": "m3"
+      },
+      {
+        "id": "e80cc0c3-adbf-49fe-849d-816535638a29",
+        "type": "ec2",
+        "color": "#ececed",
+        "mapPos": [
+          7,
+          9.25
+        ],
+        "region": "eu-west-1",
+        "platform": "linux",
+        "transparent": false,
+        "instanceSize": "large",
+        "instanceType": "m3"
+      },
+      {
+        "id": "9c786a2d-cf5c-4b63-b958-a97f28fe6494",
+        "type": "ec2",
+        "color": "#ececed",
+        "mapPos": [
+          8,
+          9.25
+        ],
+        "region": "eu-west-1",
+        "platform": "linux",
+        "transparent": false,
+        "instanceSize": "large",
+        "instanceType": "m3"
+      },
+      {
+        "id": "72378899-ce63-4561-8823-33d5172abe12",
+        "type": "vpcgateway",
+        "mapPos": [
+          -7,
+          11
+        ],
+        "region": "eu-west-1",
+        "direction": "down"
+      },
+      {
+        "id": "498571ad-b94c-4e9f-a40e-f4fdb185e2f5",
+        "type": "elasticache",
+        "engine": "redis",
+        "mapPos": [
+          -1.75,
+          11.25
+        ],
+        "region": "eu-west-1",
+        "instanceSize": "medium",
+        "instanceType": "m3"
+      },
+      {
+        "id": "2512ee8b-66d5-47c9-9035-e4d17b4ee655",
+        "type": "internetgateway",
+        "mapPos": [
+          -7,
+          13
+        ],
+        "region": "eu-west-1",
+        "direction": "down"
+      },
+      {
+        "id": "4fa727c9-36b9-4773-bf99-258500555073",
+        "lcu": 1,
+        "type": "elb",
+        "dataGb": 10,
+        "mapPos": [
+          6,
+          14.25
+        ],
+        "region": "eu-west-1",
+        "elbType": "classic"
+      },
+      {
+        "id": "21974a45-0729-48bb-9368-83aa146d9377",
+        "type": "natgateway",
+        "dataGb": 10,
+        "mapPos": [
+          -7,
+          14.5
+        ],
+        "region": "eu-west-1",
+        "direction": "down"
+      },
+      {
+        "id": "5883edb6-8ac4-4b05-ba8b-c8d68c60d852",
+        "type": "lambda",
+        "mapPos": [
+          -1.5,
+          15.5
+        ],
+        "memory": 128,
+        "region": "eu-west-1",
+        "mRequests": 10,
+        "computeDuration": 0.5
+      },
+      {
+        "id": "2685515d-0fdf-4c31-b26d-7cf5ad8c321d",
+        "type": "user",
+        "mapPos": [
+          6,
+          19.25
+        ],
+        "direction": "down"
+      },
+      {
+        "id": "31258cf4-e50a-464a-8a88-745d65591bb0",
+        "type": "cloudfront",
+        "mapPos": [
+          2.25,
+          21.75
+        ]
+      },
+      {
+        "id": "d1dbbaae-d26a-42b8-beb7-e5b96a1e8770",
+        "type": "dynamodb",
+        "mapPos": [
+          6.75,
+          22
+        ],
+        "region": "eu-west-1",
+        "datasetGb": "500",
+        "readUnits": "100",
+        "writeUnits": "500",
+        "readConsistency": "eventual"
+      },
+      {
+        "id": "c7231130-fdbf-4b49-a18e-2595212cb881",
+        "type": "apigateway",
+        "cache": 28.4,
+        "mapPos": [
+          9.25,
+          22
+        ],
+        "region": "eu-west-1",
+        "apiCalls": 5,
+        "direction": "down"
+      },
+      {
+        "id": "5fc8f484-b3e1-48da-bae1-90f0d072ab35",
+        "type": "sns",
+        "mapPos": [
+          -4.25,
+          22.25
+        ],
+        "region": "eu-west-1",
+        "requests": 100,
+        "direction": "down",
+        "notifications": 500,
+        "notificationType": "email"
+      },
+      {
+        "id": "1a23d0b4-9b5f-48a8-84d0-49a24162d4da",
+        "type": "ses",
+        "mapPos": [
+          -2.75,
+          22.25
+        ],
+        "region": "eu-west-1",
+        "emailsOut": 10
+      },
+      {
+        "id": "ac0eabda-9459-434f-b819-0d746c667360",
+        "type": "sqs",
+        "mapPos": [
+          -6,
+          22.5
+        ],
+        "region": "eu-west-1",
+        "requests": "50",
+        "direction": "down",
+        "queueType": "fifo"
+      },
+      {
+        "id": "49a11387-daac-41f3-b5ae-768c543cca1d",
+        "type": "kinesisstream",
+        "mapPos": [
+          -0.25,
+          22.5
+        ],
+        "region": "eu-west-1",
+        "shards": "10",
+        "putUnits": "5000",
+        "direction": "down",
+        "extendedRetention": true
+      },
+      {
+        "id": "eee13f15-a7af-4a6e-932f-2f8c74fe6c99",
+        "type": "r53",
+        "mapPos": [
+          2.25,
+          23.5
+        ]
+      },
+      {
+        "id": "8b1d7026-f284-42a9-80a4-ba61e73c6fab",
+        "iops": 10,
+        "type": "ebs",
+        "mapPos": [
+          7,
+          23.5
+        ],
+        "region": "eu-west-1",
+        "volume": "io1",
+        "storage": 100,
+        "snapshots": 33
+      },
+      {
+        "id": "6313d8eb-ee0a-4d06-925e-e44c2b38771f",
+        "type": "s3",
+        "dataGb": 10,
+        "mapPos": [
+          9.75,
+          23.75
+        ],
+        "region": "eu-west-1",
+        "volumeType": "Standard - Infrequent Access",
+        "getAndOtherRequests": 22,
+        "putCopyPostRequests": 21,
+        "lifecycleTransitions": 26
+      }
+    ],
+    "groups": [
+      {
+        "id": "b5bad988-e989-4bbc-9bbf-9e8b0e06440d",
+        "type": "asg",
+        "nodes": [
+          "62b6a890-1c4b-4a11-bf7f-25d37e6ee72c",
+          "e80cc0c3-adbf-49fe-849d-816535638a29",
+          "9c786a2d-cf5c-4b63-b958-a97f28fe6494",
+          "c90d5e2c-c692-4f73-8e30-d80e5c6fa403"
+        ],
+        "layout": "manual",
+        "mapPos": [
+          3,
+          9.25
+        ],
+        "region": "eu-west-1",
+        "mapSize": [
+          7,
+          1
+        ]
+      },
+      {
+        "id": "43ceb4bb-b317-4ba0-a071-a3e67e61e13c",
+        "type": "asg",
+        "nodes": [
+          "041a63e4-5818-4dae-8273-27841a02a035",
+          "d7cfcad7-98de-4f94-967f-388bf24feb07",
+          "81643b36-ec72-4f72-9e1f-9c22a30a059a",
+          "0215442f-00fe-44f1-820f-2e2346c4bc39"
+        ],
+        "layout": "even",
+        "mapPos": [
+          3,
+          0.25
+        ],
+        "region": "eu-west-1",
+        "mapSize": [
+          7,
+          1
+        ]
+      },
+      {
+        "id": "81aef15b-fbc4-4c65-ad51-a3790dca8036",
+        "name": "public-elb-sg",
+        "type": "sg",
+        "color": "#673AB7",
+        "nodes": [
+          "4fa727c9-36b9-4773-bf99-258500555073"
+        ],
+        "region": "eu-west-1",
+        "padding": 1.5,
+        "inboundRules": [],
+        "outboundRules": []
+      },
+      {
+        "id": "b55504e3-8271-4237-94a9-630c537859d1",
+        "name": "asg1-sg",
+        "type": "sg",
+        "color": "#ffc107",
+        "nodes": [
+          "b5bad988-e989-4bbc-9bbf-9e8b0e06440d",
+          "62b6a890-1c4b-4a11-bf7f-25d37e6ee72c",
+          "e80cc0c3-adbf-49fe-849d-816535638a29",
+          "9c786a2d-cf5c-4b63-b958-a97f28fe6494",
+          "c90d5e2c-c692-4f73-8e30-d80e5c6fa403"
+        ],
+        "region": "eu-west-1",
+        "padding": 1.5,
+        "inboundRules": [],
+        "outboundRules": []
+      },
+      {
+        "id": "fe495aa1-d2b0-4386-abe7-4ede59197879",
+        "name": "internal-elb-sg",
+        "type": "sg",
+        "color": "#009688",
+        "nodes": [
+          "de208ffc-304e-450f-a337-fec5e86a3f47"
+        ],
+        "region": "eu-west-1",
+        "padding": 1.5,
+        "inboundRules": [],
+        "outboundRules": []
+      },
+      {
+        "id": "7b0b0317-3c17-47b1-93d7-58e66deab97c",
+        "name": "asg2-sg",
+        "type": "sg",
+        "color": "#ff9800",
+        "nodes": [
+          "43ceb4bb-b317-4ba0-a071-a3e67e61e13c",
+          "041a63e4-5818-4dae-8273-27841a02a035",
+          "d7cfcad7-98de-4f94-967f-388bf24feb07",
+          "81643b36-ec72-4f72-9e1f-9c22a30a059a",
+          "0215442f-00fe-44f1-820f-2e2346c4bc39",
+          "041a63e4-5818-4dae-8273-27841a02a035",
+          "d7cfcad7-98de-4f94-967f-388bf24feb07",
+          "81643b36-ec72-4f72-9e1f-9c22a30a059a",
+          "0215442f-00fe-44f1-820f-2e2346c4bc39"
+        ],
+        "region": "eu-west-1",
+        "padding": 1.5,
+        "inboundRules": [],
+        "outboundRules": []
+      },
+      {
+        "id": "0575f542-32d7-4f86-a68a-9a6e075bee23",
+        "name": "rds-sg",
+        "type": "sg",
+        "color": "#3f51b5",
+        "nodes": [
+          "c3d9c781-c8ac-4866-83ce-993b57c2fdad",
+          "b6f06c62-01e7-4bb3-bcdc-a7d1dec0fe62"
+        ],
+        "region": "eu-west-1",
+        "padding": 1.5,
+        "inboundRules": [],
+        "outboundRules": []
+      },
+      {
+        "id": "1b2474c8-4642-4ad1-a6cb-e78b253c2eb0",
+        "name": "lambda-sg",
+        "type": "sg",
+        "color": "#9C27B0",
+        "nodes": [
+          "5883edb6-8ac4-4b05-ba8b-c8d68c60d852"
+        ],
+        "region": "eu-west-1",
+        "padding": 1.5,
+        "inboundRules": [],
+        "outboundRules": []
+      },
+      {
+        "id": "c1248db0-a17a-4b83-85cf-4671e0ed3078",
+        "name": "elasticache-sg",
+        "type": "sg",
+        "color": "#3F51B5",
+        "nodes": [
+          "498571ad-b94c-4e9f-a40e-f4fdb185e2f5"
+        ],
+        "region": "eu-west-1",
+        "padding": 1.5,
+        "inboundRules": [],
+        "outboundRules": []
+      },
+      {
+        "id": "6c67f075-b4ec-4a10-abb7-f40add12f736",
+        "name": "redshift-sg",
+        "type": "sg",
+        "color": "#9C27B0",
+        "nodes": [
+          "e2df2193-5f14-44d9-b940-99d9c8702a93"
+        ],
+        "region": "eu-west-1",
+        "padding": 1.5,
+        "inboundRules": [],
+        "outboundRules": []
+      },
+      {
+        "id": "f60720d9-cc65-485d-b66e-8a4503299911",
+        "name": "elasticsearch-sg",
+        "type": "sg",
+        "color": "#3F51B5",
+        "nodes": [
+          "ec35dec5-0985-4eb6-81bd-bb1af701a44e",
+          "c1eb09f9-c4b4-4380-a525-e5c51f636222"
+        ],
+        "region": "eu-west-1",
+        "padding": 1.5,
+        "inboundRules": [],
+        "outboundRules": []
+      },
+      {
+        "id": "84600112-bc50-4d5c-bf76-b5473e024c2d",
+        "name": "my-vpc",
+        "type": "vpc",
+        "color": "#00BCD4",
+        "nodes": [
+          "4fa727c9-36b9-4773-bf99-258500555073",
+          "81aef15b-fbc4-4c65-ad51-a3790dca8036",
+          "b5bad988-e989-4bbc-9bbf-9e8b0e06440d",
+          "62b6a890-1c4b-4a11-bf7f-25d37e6ee72c",
+          "e80cc0c3-adbf-49fe-849d-816535638a29",
+          "9c786a2d-cf5c-4b63-b958-a97f28fe6494",
+          "c90d5e2c-c692-4f73-8e30-d80e5c6fa403",
+          "43ceb4bb-b317-4ba0-a071-a3e67e61e13c",
+          "041a63e4-5818-4dae-8273-27841a02a035",
+          "d7cfcad7-98de-4f94-967f-388bf24feb07",
+          "81643b36-ec72-4f72-9e1f-9c22a30a059a",
+          "0215442f-00fe-44f1-820f-2e2346c4bc39",
+          "b6f06c62-01e7-4bb3-bcdc-a7d1dec0fe62",
+          "c3d9c781-c8ac-4866-83ce-993b57c2fdad",
+          "de208ffc-304e-450f-a337-fec5e86a3f47",
+          "62b6a890-1c4b-4a11-bf7f-25d37e6ee72c",
+          "e80cc0c3-adbf-49fe-849d-816535638a29",
+          "9c786a2d-cf5c-4b63-b958-a97f28fe6494",
+          "c90d5e2c-c692-4f73-8e30-d80e5c6fa403",
+          "041a63e4-5818-4dae-8273-27841a02a035",
+          "d7cfcad7-98de-4f94-967f-388bf24feb07",
+          "81643b36-ec72-4f72-9e1f-9c22a30a059a",
+          "0215442f-00fe-44f1-820f-2e2346c4bc39",
+          "b55504e3-8271-4237-94a9-630c537859d1",
+          "fe495aa1-d2b0-4386-abe7-4ede59197879",
+          "7b0b0317-3c17-47b1-93d7-58e66deab97c",
+          "0575f542-32d7-4f86-a68a-9a6e075bee23",
+          "498571ad-b94c-4e9f-a40e-f4fdb185e2f5",
+          "5883edb6-8ac4-4b05-ba8b-c8d68c60d852",
+          "1b2474c8-4642-4ad1-a6cb-e78b253c2eb0",
+          "21974a45-0729-48bb-9368-83aa146d9377",
+          "2512ee8b-66d5-47c9-9035-e4d17b4ee655",
+          "72378899-ce63-4561-8823-33d5172abe12",
+          "c1248db0-a17a-4b83-85cf-4671e0ed3078",
+          "e2df2193-5f14-44d9-b940-99d9c8702a93",
+          "6c67f075-b4ec-4a10-abb7-f40add12f736",
+          "ec35dec5-0985-4eb6-81bd-bb1af701a44e",
+          "f60720d9-cc65-485d-b66e-8a4503299911",
+          "c1eb09f9-c4b4-4380-a525-e5c51f636222"
+        ],
+        "region": "eu-west-1",
+        "padding": 1.2,
+        "peeringConnections": []
+      }
+    ],
+    "images": [
+      {
+        "id": "a58ba7cf-308f-43a5-969c-91346d363d3e",
+        "key": "354474ae-8248-45a8-a1ef-34de7c2a4d47/1217626408_081_pics.jpg",
+        "type": "image",
+        "scale": 0.40000000000000013,
+        "mapPos": [
+          -13.25,
+          10.75
+        ],
+        "direction": "down",
+        "isometric": true
+      }
+    ],
+    "linkKey": "f5c8T-cPbgh0Ewf0jU1NqQ",
+    "version": 1,
+    "surfaces": [
+      {
+        "id": "35155d75-a622-4a82-bd9c-6475b766e114",
+        "type": "zone",
+        "color": "#e8e8e8",
+        "mapPos": [
+          3,
+          -0.5299999999999994
+        ],
+        "region": "eu-west-1",
+        "mapSize": [
+          3,
+          12.2
+        ]
+      },
+      {
+        "id": "d3caf0f6-9837-4e1d-95db-210e74b8cc15",
+        "type": "zone",
+        "color": "#e8e8e8",
+        "mapPos": [
+          7,
+          -0.6799999999999997
+        ],
+        "region": "eu-west-1",
+        "mapSize": [
+          3,
+          12.379999999999999
+        ]
+      },
+      {
+        "id": "a4ff3d85-35cd-40cf-a3cf-1ae5f413c3a9",
+        "type": "area",
+        "color": "#4286c5",
+        "mapPos": [
+          2.75,
+          12
+        ],
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            1.5,
+            0
+          ],
+          [
+            1.5,
+            0.75
+          ],
+          [
+            1.25,
+            1
+          ],
+          [
+            0.25,
+            1
+          ],
+          [
+            0,
+            0.75
+          ]
+        ],
+        "shadow": false,
+        "borderColor": "rgba(0, 0, 0, 0)"
+      },
+      {
+        "id": "e60045ce-b527-4dbc-bdc5-c0f80f3c722c",
+        "type": "area",
+        "color": "#4286c5",
+        "mapPos": [
+          8.75,
+          12
+        ],
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            1.5,
+            0
+          ],
+          [
+            1.5,
+            0.75
+          ],
+          [
+            1.25,
+            1
+          ],
+          [
+            0.25,
+            1
+          ],
+          [
+            0,
+            0.75
+          ]
+        ],
+        "shadow": false,
+        "borderColor": "rgba(0, 0, 0, 0)"
+      },
+      {
+        "id": "975c519f-d774-4846-898e-8859ddb7c1fe",
+        "type": "area",
+        "color": "#e6e7e8",
+        "mapPos": [
+          5.25,
+          21.5
+        ],
+        "points": [
+          [
+            0.5,
+            0
+          ],
+          [
+            7.5,
+            0
+          ],
+          [
+            7.5,
+            4
+          ],
+          [
+            0.5,
+            4
+          ]
+        ],
+        "shadow": true,
+        "borderColor": "#4286c5"
+      },
+      {
+        "id": "bd6c22e6-07c6-4c87-b2c1-86f2f3f94e34",
+        "type": "area",
+        "color": "#e6e7e8",
+        "mapPos": [
+          -3,
+          21.5
+        ],
+        "points": [
+          [
+            -3.5,
+            0
+          ],
+          [
+            7.5,
+            0
+          ],
+          [
+            7.5,
+            4
+          ],
+          [
+            -3.5,
+            4.25
+          ]
+        ],
+        "shadow": true,
+        "borderColor": "#4286c5"
+      }
+    ],
+    "shareDocs": false,
+    "connectors": [
+      {
+        "id": "1cb63412-7d5d-4003-ad4d-316f4d54d140",
+        "type": "connector",
+        "mapPos": [
+          6.5,
+          17.5
+        ]
+      }
+    ],
+    "disabledLayers": []
+  },
+  "readAccess": null,
+  "writeAccess": null,
+  "createdAt": "2018-11-23T11:40:41.044Z",
+  "updatedAt": "2018-11-23T12:14:55.907Z",
+  "CreatorId": "354474ae-8248-45a8-a1ef-34de7c2a4d47",
+  "LastUserId": "354474ae-8248-45a8-a1ef-34de7c2a4d47"
+}
