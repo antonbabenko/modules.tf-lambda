@@ -97,8 +97,6 @@ def copy_to_working_dir(templates_dir):
     files = find_templates_files(templates_dir)
 
     for file in files:
-        pprint("FILE == %s" % file)
-        pprint("dst_dir == %s" % dst_dir)
         if path.isdir(file):
             dst = path.join(dst_dir, path.basename(file))
             shutil.copytree(file, dst)
