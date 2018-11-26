@@ -6,7 +6,6 @@ import shutil
 from os import chdir, getcwd, makedirs, mkdir, path
 from pprint import pformat, pprint
 
-from cookiecutter.exceptions import NonTemplatedInputDirException
 from cookiecutter.main import cookiecutter
 from modulestf.const import *
 from modulestf.logger import setup_logging
@@ -86,8 +85,6 @@ def prepare_single_layer(resource, region, templates_dir, templates_files):
         with open(dst_file, "w") as modified:
             modified.write(data + "\n" + original_data)
             modified.close()
-
-    shutil.copy(templates_dir + "/../cookiecutter.json", "cookiecutter.json")
 
     return resource["type"]
 
@@ -258,6 +255,8 @@ def render_from_modulestf_config(config, source, regions):
     logger.info("Prepare root dir")
     templates_dir = path.realpath(path.join(COOKIECUTTER_TEMPLATES_DIR, "root/template"))
     copy_to_working_dir(templates_dir)
+
+    shutil.copy(templates_dir + "/../cookiecutter.json", "cookiecutter.json")
 
     extra_context["source_name"] = source["name"]
     extra_context["dirs"] = dirs

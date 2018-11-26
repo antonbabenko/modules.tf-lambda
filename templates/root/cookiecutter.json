@@ -1,6 +1,11 @@
 {
-  "dir_name": "template",
+  "dir_name": "final",
   "region": "",
   "source_name": "",
-  "dirs": {}
+  "dirs": "",
+  "module_sources": {},
+  "module_variables": {},
+  "params": {},
+  "dependencies": "",
+  "dynamic_params": {}
 }
