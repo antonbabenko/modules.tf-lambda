@@ -4,7 +4,7 @@ frameworkVersion: ">=1.26.0 <2.0.0"
 
 provider:
   name: aws
-  runtime: python3.6
+  runtime: python3.7
   stage: dev
   region: eu-west-1
   profile: private-anton
@@ -32,7 +32,7 @@ functions:
     name: ${self:service}-${self:custom.stage}-generate-cloudcraft
     handler: handler.handler
     description: Generate all from Cloudcraft URL (stage=${self:custom.stage})
-    memorySize: 1024
+    memorySize: 1536
     events:
       - http:
           method: get

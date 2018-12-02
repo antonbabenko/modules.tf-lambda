@@ -98,7 +98,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
         # logging.info("Node: {}".format(node))
 
         edges = G.adj[key]
-        # logging.info("Edges: {}".format(edges))
+        logging.info("Edges: {}".format(edges))
 
         if node.get("type") not in supported_node_types:
             warnings.add("node type %s is not implemented yet" % node.get("type"))
@@ -173,7 +173,8 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
                 if asg_id not in parsed_asg_id:
                     # Find ELB/ALB in edges from or to ASG
-                    tmp_edges = G.adj[asg_id]
+                    if asg_id in G.adj:
+                        tmp_edges = G.adj[asg_id]
 
                     for edge_id in tmp_edges:
                         if get_node_data(G, edge_id, "type") == "elb":

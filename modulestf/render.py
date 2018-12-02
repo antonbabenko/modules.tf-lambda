@@ -42,8 +42,6 @@ def prepare_render_dirs():
 
 
 def find_templates_files(dir):
-    pprint("DIR = %s" % dir)
-
     files = glob.glob(dir + "/*") + \
         glob.glob(dir + "/.*")
 

@@ -81,14 +81,14 @@ def populate_graph(data):  # noqa: C901
             edge = list(edge)
 
             if edge[0] == edge[1]:
-                edge = []
+                edge = []  # maybe continue
             elif edge[0] in connectors or edge[1] in connectors:
                 break
             else:
                 edge = []
 
-        # No edges with connectors remaining - all done
-        if len(edge) == 0:
+        # Skip edges without connectors and edges which does not have nodes on one any side
+        if len(edge) == 0 or edge[0] not in G or edge[1] not in G:
             break
 
         G = nx.contracted_edge(G, (edge[0], edge[1]), self_loops=False)
