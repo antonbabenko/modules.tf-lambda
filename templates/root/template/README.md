@@ -34,7 +34,7 @@ Alternatively, you can edit `common/main_providers.tf` and use another authentic
 
 ## How to use it?
 
-First, you should carefully review and specify all required arguments for each layer. Run this to see all errors:
+First, you should run `chmod +x common/scripts/update_dynamic_values_in_tfvars.sh`, review and specify all required arguments for each layer. Run this to see all errors:
 
     $ terragrunt validate-all --terragrunt-ignore-dependency-errors |& grep -C 3 "Error: "
 
