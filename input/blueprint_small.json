@@ -1,94 +1,158 @@
 {
-  "id": "5681b99e-94b8-4821-9f58-89041e69a06c",
+  "id": "308a0612-9ee8-425e-a541-d92e2f5fbb7a",
   "data": {
-    "grid": "standard",
-    "name": "Betajob web-site",
+    "grid": "infinite",
+    "name": "hashitalks",
     "text": [],
-    "edges": [],
+    "edges": [
+      {
+        "id": "b26686cb-ab67-4595-ad18-5bcd68a746fb-4f2f3807-2238-4c6f-8be3-17fd9cf71615",
+        "to": "4f2f3807-2238-4c6f-8be3-17fd9cf71615",
+        "from": "b26686cb-ab67-4595-ad18-5bcd68a746fb",
+        "type": "autoedge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false,
+        "endCap": "arrow"
+      }
+    ],
     "icons": [],
     "nodes": [
       {
-        "id": "ff51058d-b77d-4880-b995-d4505d9e0f0e",
-        "type": "ec2",
+        "id": "4f2f3807-2238-4c6f-8be3-17fd9cf71615",
+        "role": "master",
+        "type": "rds",
         "color": "#ececed",
+        "engine": "mysql",
         "mapPos": [
-          4,
-          7.5
+          4.5,
+          5.75
         ],
         "region": "eu-west-1",
-        "platform": "linux",
-        "transparent": false,
-        "instanceSize": "small",
-        "instanceType": "t2"
+        "multiAZ": true,
+        "accentColor": "#4286c5",
+        "instanceSize": "large",
+        "instanceType": "m4"
       },
       {
-        "id": "07748725-280e-4ad1-a837-e6d150cd7ebb",
+        "id": "123e9ea3-cbb1-4d77-8830-d46e817b950d",
         "type": "ec2",
         "color": "#ececed",
         "mapPos": [
-          8.18,
-          7.5
+          4.23,
+          11
         ],
         "region": "eu-west-1",
         "platform": "linux",
+        "accentColor": "#4286c5",
         "transparent": false,
-        "instanceSize": "small",
-        "instanceType": "t2"
+        "instanceSize": "large",
+        "instanceType": "m5",
+        "billingOptions": {
+          "type": "si",
+          "offeringClass": "standard",
+          "purchaseOption": "No Upfront",
+          "leaseContractLength": 12
+        }
+      },
+      {
+        "id": "f86f16ce-e6ec-4fc5-bc40-f9f19de190e1",
+        "type": "ec2",
+        "color": "#ececed",
+        "mapPos": [
+          5.25,
+          11
+        ],
+        "region": "eu-west-1",
+        "platform": "linux",
+        "accentColor": "#4286c5",
+        "transparent": false,
+        "instanceSize": "large",
+        "instanceType": "m5",
+        "billingOptions": {
+          "type": "si",
+          "offeringClass": "standard",
+          "purchaseOption": "No Upfront",
+          "leaseContractLength": 12
+        }
       }
     ],
     "groups": [
       {
-        "id": "9d132232-4d19-47f2-9ab8-4d0c07889364",
+        "id": "b26686cb-ab67-4595-ad18-5bcd68a746fb",
         "type": "asg",
+        "color": "#f5b720",
         "nodes": [
-          "ff51058d-b77d-4880-b995-d4505d9e0f0e",
-          "07748725-280e-4ad1-a837-e6d150cd7ebb"
+          "123e9ea3-cbb1-4d77-8830-d46e817b950d",
+          "f86f16ce-e6ec-4fc5-bc40-f9f19de190e1"
         ],
         "layout": "even",
         "mapPos": [
-          4,
-          7.5
+          4.23,
+          11
         ],
         "region": "eu-west-1",
         "mapSize": [
-          5.180000000000001,
+          2.02,
           1
         ]
       },
       {
-        "id": "33811b5b-6e3b-4078-9067-9c20575a4d6c",
-        "name": "my-sg",
+        "id": "649f0807-89f3-4da2-922f-e45f0ea0505d",
+        "name": "hashitalks",
         "type": "sg",
-        "color": "#3F51B5",
+        "color": "#4CAF50",
         "nodes": [
-          "9d132232-4d19-47f2-9ab8-4d0c07889364",
-          "07748725-280e-4ad1-a837-e6d150cd7ebb",
-          "07748725-280e-4ad1-a837-e6d150cd7ebb",
-          "ff51058d-b77d-4880-b995-d4505d9e0f0e"
+          "f86f16ce-e6ec-4fc5-bc40-f9f19de190e1",
+          "b26686cb-ab67-4595-ad18-5bcd68a746fb",
+          "123e9ea3-cbb1-4d77-8830-d46e817b950d",
+          "f86f16ce-e6ec-4fc5-bc40-f9f19de190e1",
+          "b26686cb-ab67-4595-ad18-5bcd68a746fb",
+          "123e9ea3-cbb1-4d77-8830-d46e817b950d",
+          "123e9ea3-cbb1-4d77-8830-d46e817b950d",
+          "f86f16ce-e6ec-4fc5-bc40-f9f19de190e1"
         ],
+        "shape": "dynamic",
         "region": "eu-west-1",
         "padding": 1.5,
         "inboundRules": [],
         "outboundRules": []
       },
       {
-        "id": "50d5ccda-15d6-46e6-810f-dafc19e289f7",
-        "name": "my-vpc",
-        "type": "vpc",
-        "color": "#00BCD4",
+        "id": "77df8117-d2dc-40e9-a5a1-adb5a62f9c1d",
+        "name": "hashitalks-rds-sg",
+        "type": "sg",
+        "color": "#9C27B0",
         "nodes": [
-          "07748725-280e-4ad1-a837-e6d150cd7ebb",
-          "33811b5b-6e3b-4078-9067-9c20575a4d6c",
-          "9d132232-4d19-47f2-9ab8-4d0c07889364",
-          "ff51058d-b77d-4880-b995-d4505d9e0f0e"
+          "4f2f3807-2238-4c6f-8be3-17fd9cf71615"
         ],
+        "shape": "dynamic",
+        "region": "eu-west-1",
+        "padding": 1.5,
+        "inboundRules": [],
+        "outboundRules": []
+      },
+      {
+        "id": "ee61226d-ddcd-4098-9ed6-024f590004d2",
+        "name": "hashitalks",
+        "type": "vpc",
+        "color": "#20253e",
+        "nodes": [
+          "f86f16ce-e6ec-4fc5-bc40-f9f19de190e1",
+          "b26686cb-ab67-4595-ad18-5bcd68a746fb",
+          "123e9ea3-cbb1-4d77-8830-d46e817b950d",
+          "649f0807-89f3-4da2-922f-e45f0ea0505d",
+          "4f2f3807-2238-4c6f-8be3-17fd9cf71615",
+          "77df8117-d2dc-40e9-a5a1-adb5a62f9c1d"
+        ],
+        "shape": "dynamic",
         "region": "eu-west-1",
         "padding": 1.5,
         "peeringConnections": []
       }
     ],
     "images": [],
-    "linkKey": "xurEYfeVyaecPNO4Nr0W0g",
+    "linkKey": "7tNxYJB20vZj_bHUYj7USA",
     "version": 1,
     "surfaces": [],
     "shareDocs": false,
@@ -97,8 +161,8 @@
   },
   "readAccess": null,
   "writeAccess": null,
-  "createdAt": "2018-11-17T17:09:06.380Z",
-  "updatedAt": "2018-11-17T20:02:45.793Z",
-  "CreatorId": "e188a76e-d460-43b2-b57f-a3ed871ffaa0",
-  "LastUserId": "e188a76e-d460-43b2-b57f-a3ed871ffaa0"
+  "createdAt": "2019-02-18T15:06:41.147Z",
+  "updatedAt": "2019-02-18T16:30:49.950Z",
+  "CreatorId": "354474ae-8248-45a8-a1ef-34de7c2a4d47",
+  "LastUserId": "354474ae-8248-45a8-a1ef-34de7c2a4d47"
 }

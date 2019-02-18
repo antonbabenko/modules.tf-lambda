@@ -79,7 +79,6 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
     resources = []
     parsed_asg_id = set()
-    parsed_rds_id = set()
     warnings = set()
 
     supported_node_types = ["rds", "ec2", "elb", "sns", "sqs", "sg", "vpc"]  # "s3", "cloudfront",
@@ -113,60 +112,46 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
         elb_type = ""
 
         if node.get("type") == "rds":
-            is_multi_az = False
 
-            for edge_id in edges:
-                if get_node_data(G, edge_id, "type") == "rds" and \
-                        get_node_data(G, edge_id, "engine") == node.get("engine") and \
-                        get_node_data(G, edge_id, "role") == ("master" if node.get("role") == "slave" else "slave"):
-                    master_rds_id = (key if node.get("role") == "master" else edge_id)
-                    is_multi_az = True
+            r = Resource(key, "rds", node.get("text"))
 
-            rds_id = master_rds_id if is_multi_az else key
+            r.update_params({
+                "isMultiAZ": node.get("multiAZ"),
+                "db_subnet_group_name": "",
+                "identifier": random_pet(),
+                "username": random_pet(words=1),
+                "password": random_password(),
+                "allocated_storage": "5",
+                "major_engine_version": "",
+                "family": "",
+                "backup_retention_period": "0",  # Disable backups to create DB faster
+                "vpc_security_group_ids": [],
+            })
 
-            if rds_id not in parsed_rds_id:
+            if vpc_id:
+                r.append_dependency(vpc_id)
+                r.update_dynamic_params("db_subnet_group_name",
+                                        "terraform_output." + vpc_id + ".database_subnet_group")
 
-                r = Resource(rds_id, "rds", node.get("text"))
+            if sg_id:
+                r.append_dependency(sg_id)
+                r.update_dynamic_params("vpc_security_group_ids", "terraform_output." + sg_id + ".this_security_group_id.to_list")
 
+            if node.get("engine"):
                 r.update_params({
-                    "isMultiAZ": is_multi_az,
-                    "db_subnet_group_name": "",
-                    "identifier": random_pet(),
-                    "username": random_pet(words=1),
-                    "password": random_password(),
-                    "allocated_storage": "5",
-                    "major_engine_version": "",
-                    "family": "",
-                    "backup_retention_period": "0",  # Disable backups to create DB faster
-                    "vpc_security_group_ids": [],
+                    "engine": node.get("engine"),  # node.get("engine") has too many options (not just supported)
+                    "port": "3306",
+                    "engine_version": "5.7.19",
+                    "major_engine_version": "5.7",
+                    "family": "mysql5.7",
                 })
 
-                if vpc_id:
-                    r.append_dependency(vpc_id)
-                    r.update_dynamic_params("db_subnet_group_name",
-                                            "terraform_output." + vpc_id + ".database_subnet_group")
+            if node.get("instanceType") and node.get("instanceSize"):
+                r.update_params({
+                    "instanceType": "db." + node.get("instanceType", "") + "." + node.get("instanceSize", ""),
+                })
 
-                if sg_id:
-                    r.append_dependency(sg_id)
-                    r.update_dynamic_params("vpc_security_group_ids", "terraform_output." + sg_id + ".this_security_group_id.to_list")
-
-                if node.get("engine"):
-                    r.update_params({
-                        "engine": node.get("engine"),  # node.get("engine") has too many options (not just supported)
-                        "port": "3306",
-                        "engine_version": "5.7.19",
-                        "major_engine_version": "5.7",
-                        "family": "mysql5.7",
-                    })
-
-                if node.get("instanceType") and node.get("instanceSize"):
-                    r.update_params({
-                        "instanceType": "db." + node.get("instanceType", "") + "." + node.get("instanceSize", ""),
-                    })
-
-                resources.append(r.content())
-
-            parsed_rds_id.add(rds_id)
+            resources.append(r.content())
 
         if node.get("type") == "ec2":
             if asg_id:
