@@ -89,4 +89,4 @@ This project is created and maintained by [Anton Babenko](https://github.com/ant
 
 This work is licensed under MIT License. See LICENSE for full details.
 
-Copyright (c) 2018 Anton Babenko
+Copyright (c) 2019 Anton Babenko
