@@ -6,7 +6,7 @@ import shutil
 from pprint import pformat, pprint
 
 import requests
-from modulestf.cloudcraft.graph import *
+from modulestf.cloudformation.graph import *
 from modulestf.const import *
 from modulestf.convert import *
 from modulestf.logger import setup_logging
@@ -74,6 +74,8 @@ def handler(event, context):
     # logger.info(pformat(data, indent=2))
 
     graph = populate_graph(data)
+
+    return
 
     config = convert_graph_to_modulestf_config(graph)
 
