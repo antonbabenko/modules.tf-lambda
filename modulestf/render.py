@@ -48,11 +48,11 @@ def find_templates_files(dir):
     return files
 
 
-def prepare_single_layer(resource, region, templates_dir, templates_files):
+def prepare_single_layer(resource, source_dir_name, region, templates_dir, templates_files):
 
     dir_name = resource.get("dir_name")
 
-    full_dir_name = ("%s/%s" % (region, dir_name)).lower()
+    full_dir_name = ("%s/%s/%s" % (source_dir_name, region, dir_name)).lower()
 
     single_layer = {
         "module_type": resource["type"]
@@ -88,9 +88,16 @@ def prepare_single_layer(resource, region, templates_dir, templates_files):
 
 
 # Copy all files and subdirectories into working directory
-def copy_to_working_dir(templates_dir):
+def copy_to_working_dir(templates_dir, work_dir=""):
 
-    dst_dir = path.realpath(WORK_DIR_FOR_COOKIECUTTER)
+    dst_dir = path.join(WORK_DIR_FOR_COOKIECUTTER, work_dir)
+
+    try:
+        mkdir(dst_dir)
+    except OSError:
+        pass
+
+    # pprint(dst_dir)
 
     files = find_templates_files(templates_dir)
 
@@ -155,8 +162,15 @@ def render_from_modulestf_config(config, source, regions):
     resources = json.loads(config)
 
     # pprint(resources)
+    # pprint(source)
 
     types_text = get_types_text(resources)
+
+    # Prepare dir name from source name
+    source_dir_name = source["name"]
+    source_dir_name = re.sub(' ', '_', source_dir_name.strip())
+    source_dir_name = re.sub('[^a-zA-Z0-9-_]', '', source_dir_name)
+    source_dir_name = re.sub('_+', '_', source_dir_name)
 
     try:
         region = regions[0]
@@ -192,7 +206,7 @@ def render_from_modulestf_config(config, source, regions):
         types_text[t] = new_appendix
 
     # Find all templates for single layer once
-    templates_dir = path.realpath(path.join(COOKIECUTTER_TEMPLATES_DIR, COOKIECUTTER_TEMPLATES_PREFIX + "-single-layer/template"))
+    templates_dir = path.realpath(path.join(COOKIECUTTER_TEMPLATES_DIR, COOKIECUTTER_TEMPLATES_PREFIX + "-single-layer"))
     templates_files = find_templates_files(templates_dir)
 
     # Set of used module to load data once
@@ -230,7 +244,7 @@ def render_from_modulestf_config(config, source, regions):
 
         # Render the layer
         logger.info("Rendering single layer resource id: %s" % resource.get("ref_id"))
-        used_module_type = prepare_single_layer(resource, region, templates_dir, templates_files)
+        used_module_type = prepare_single_layer(resource, source_dir_name, region, templates_dir, templates_files)
 
         used_modules.add(used_module_type)
 
@@ -244,9 +258,13 @@ def render_from_modulestf_config(config, source, regions):
             module_type: MODULES[module_type]["variables"],
         })
 
-    logger.info("Prepare common layer")
-    templates_dir = path.realpath(path.join(COOKIECUTTER_TEMPLATES_DIR, COOKIECUTTER_TEMPLATES_PREFIX + "-common-layer/template"))
-    copy_to_working_dir(templates_dir)
+    logger.info("Prepare common files")
+    templates_dir = path.realpath(path.join(COOKIECUTTER_TEMPLATES_DIR, COOKIECUTTER_TEMPLATES_PREFIX + "-common-layer/common"))
+    copy_to_working_dir(templates_dir, "common")
+
+    logger.info("Prepare common regional files")
+    templates_dir = path.realpath(path.join(COOKIECUTTER_TEMPLATES_DIR, COOKIECUTTER_TEMPLATES_PREFIX + "-common-layer/region"))
+    copy_to_working_dir(templates_dir, path.join(source_dir_name, region))
 
     logger.info("Prepare root dir")
     templates_dir = path.realpath(path.join(COOKIECUTTER_TEMPLATES_DIR, "root/template"))

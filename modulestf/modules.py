@@ -104,4 +104,5 @@ MODULES = {
         "source": "terraform-aws-modules/cloudfront/aws",
         "variables": {},
     },
+    # @todo: add rds-aurora, eks, iam, redshift
 }
