@@ -20,7 +20,7 @@ terragrunt = {
 
     before_hook "update_dynamic_values_in_tfvars" {
       commands = ["apply", "import", "plan", "refresh"]
-      execute  = ["${get_parent_tfvars_dir()}/common/scripts/update_dynamic_values_in_tfvars.sh", "${get_parent_tfvars_dir()}/${path_relative_to_include()}"]
+      execute  = ["${get_parent_tfvars_dir()}/../common/scripts/update_dynamic_values_in_tfvars.sh", "${get_parent_tfvars_dir()}/${path_relative_to_include()}"]
     }
   }
 
