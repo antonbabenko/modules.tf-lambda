@@ -9,6 +9,25 @@ import networkx as nx
 # In Cloudcraft there are nodes, which are usually consist of resources and already match Terraform modules
 # In MTF/convert.py there are nodes and edges
 
+def get_resource_property(data, resource, name):
+    property_value = resource.get("Properties", {}).get(name)
+
+    value = ""
+
+    if type(property_value) is dict:  # Function or Ref
+
+        ref = property_value.get("Ref")
+
+        if ref:  # Ref
+            value = data.get("Parameters", {}).get(ref, {}).get("Default", "")
+
+        pprint(value)
+
+    # if type(value) == "dict":
+
+    return value
+
+
 def populate_graph(data):  # noqa: C901
 
     Graph = namedtuple('Graph', 'G source regions')
@@ -38,13 +57,36 @@ def populate_graph(data):  # noqa: C901
     # NODES
     ########
     for resource_id, resource_data in resources.items():
+
+        pprint(resource_data)
+
+        r_type = resource_data.get("Type")
+
+        if r_type == "AWS::ElasticLoadBalancingV2::LoadBalancer":
+            resource_data["type"] = "elb"
+
+        elif r_type == "AWS::EC2::SecurityGroup":
+            resource_data["type"] = "security-group"
+
+        elif r_type == "AWS::AutoScaling::AutoScalingGroup":
+            resource_data["type"] = "autoscaling"
+
+        elif r_type == "AWS::RDS::DBInstance":
+            resource_data["type"] = "rds"
+            resource_data["engine"] = resource_data.get("Properties").get("Engine")
+            # resource_data["multiAZ"] = resource_data.get("Properties").get("MultiAZ")
+
+            # multi AZ is converted correctly, see terraform.tfvars
+            resource_data["multiAZ"] = get_resource_property(data, resource_data, "MultiAZ")
+
+
         G.add_node(resource_id, data=resource_data)
 
     # Go through references in all Resources to find available values for modules
 
     pprint(G.nodes)
 
-    return
+    # return
 
     ########
     # EDGES

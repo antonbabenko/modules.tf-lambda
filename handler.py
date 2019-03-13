@@ -75,7 +75,7 @@ def handler(event, context):
 
     graph = populate_graph(data)
 
-    return
+    # return
 
     config = convert_graph_to_modulestf_config(graph)
 
