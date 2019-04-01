@@ -18,9 +18,10 @@ logger = setup_logging()
 
 def load_data(event):
     body = event.get("body")
-    # logger.info("body = %s" % body)
+    logger.info("body = %s" % body)
 
     qs = event.get("queryStringParameters")
+    logger.info("queryStringParameters = %s" % qs)
 
     if body is None and qs is None:
         raise ValueError("Some query string parameters should be defined or use HTTP POST method", 400)
@@ -65,7 +66,7 @@ def handler(event, context):
         return {
             "body": error.args[0],
             "headers": {
-                "Access-Control-Allow-Origin" : "*",
+                "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": True
             },
             "statusCode": error.args[1],

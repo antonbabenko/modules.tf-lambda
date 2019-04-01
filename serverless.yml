@@ -7,7 +7,7 @@ provider:
   runtime: python3.7
   stage: dev
   region: eu-west-1
-  profile: private-anton
+#  profile: private-anton
   tracing: true
   timeout: 30
   environment:

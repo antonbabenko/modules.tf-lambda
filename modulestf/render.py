@@ -21,13 +21,12 @@ def mkdir_safely(dir):
         pass
 
     try:
-        mkdir(dir)
+        pathlib.Path(dir).mkdir(exist_ok=True)
     except OSError:
         pass
 
 
 def prepare_render_dirs():
-    # return
     output_dir = path.join(tmp_dir, OUTPUT_DIR)
 
     mkdir_safely(output_dir)
@@ -38,7 +37,7 @@ def prepare_render_dirs():
 
     # mkdir_safely(FINAL_DIR)
 
-    mkdir(WORK_DIR_FOR_COOKIECUTTER)
+    pathlib.Path(WORK_DIR_FOR_COOKIECUTTER).mkdir(exist_ok=True)
 
 
 def find_templates_files(dir):
@@ -93,11 +92,12 @@ def copy_to_working_dir(templates_dir, work_dir=""):
     dst_dir = path.join(WORK_DIR_FOR_COOKIECUTTER, work_dir)
 
     try:
-        mkdir(dst_dir)
+        pathlib.Path(dst_dir).mkdir(exist_ok=True)
     except OSError:
+        logger.info("Failed creating workdir: %s" % dst_dir)
         pass
 
-    # pprint(dst_dir)
+    logger.info("Copying to workdir: %s" % dst_dir)
 
     files = find_templates_files(templates_dir)
 
@@ -171,6 +171,7 @@ def render_from_modulestf_config(config, source, regions):
     source_dir_name = re.sub(' ', '_', source_dir_name.strip())
     source_dir_name = re.sub('[^a-zA-Z0-9-_]', '', source_dir_name)
     source_dir_name = re.sub('_+', '_', source_dir_name)
+    source_dir_name = source_dir_name.lower()
 
     try:
         region = regions[0]
