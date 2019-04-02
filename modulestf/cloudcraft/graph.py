@@ -25,7 +25,7 @@ def populate_graph(data):  # noqa: C901
     data_groups = data.get("groups", [])
     data_connectors = data.get("connectors", [])
     data_text = data.get("text", [])
-    data_name = data.get("name", "")
+    data_name = data.get("name", "unnamed")
 
     ########
     # NODES
