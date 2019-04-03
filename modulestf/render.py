@@ -37,7 +37,7 @@ def prepare_render_dirs():
 
     # mkdir_safely(FINAL_DIR)
 
-    pathlib.Path(WORK_DIR_FOR_COOKIECUTTER).mkdir(exist_ok=True)
+    pathlib.Path(WORK_DIR_FOR_COOKIECUTTER).mkdir(parents=True, exist_ok=True)
 
 
 def find_templates_files(dir):
@@ -92,7 +92,7 @@ def copy_to_working_dir(templates_dir, work_dir=""):
     dst_dir = path.join(WORK_DIR_FOR_COOKIECUTTER, work_dir)
 
     try:
-        pathlib.Path(dst_dir).mkdir(exist_ok=True)
+        pathlib.Path(dst_dir).mkdir(parents=True, exist_ok=True)
     except OSError:
         logger.info("Failed creating workdir: %s" % dst_dir)
         pass
