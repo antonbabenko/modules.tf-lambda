@@ -19,7 +19,7 @@ Code in this repository has been already deployed to [AWS Lambda](https://aws.am
 
 This project was partially sponsored by [Cloudcraft - the best way to draw AWS diagrams](https://cloudcraft.co).<br clear="all">
 
-Monitoring of serverless applications provided by [Dashbird.io](https://dashbird.io/) <a href="https://dashbird.io/" target="_blank"><img src="https://raw.githubusercontent.com/antonbabenko/modules.tf-lambda/master/misc/dashbird-logo.png" alt="Dashbird - Monitor serverless applications" width="200" height="68" align="right" /></a><br clear="all">
+Monitoring of serverless applications provided by [Dashbird.io](https://dashbird.io/). <a href="https://dashbird.io/" target="_blank"><img src="https://raw.githubusercontent.com/antonbabenko/modules.tf-lambda/master/misc/dashbird-logo.png" alt="Dashbird - Monitor serverless applications" width="200" height="68" align="right" /></a><br clear="all">
 
 ## I am developer - show me the code & let's ship it!
 
