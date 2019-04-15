@@ -9,6 +9,26 @@
 # 4. get actual value
 # 5. replace value in terraform.tfvars:
 #   a. When `to_list` is specified the type of the value will be converted to a list - ["sg-1234"]
+
+# @todo:
+# 1. Get values from other sources:
+# - data sources generic
+# - aws_account_id or aws_region data sources
+# 2. terragrunt_outputs from stacks:
+# - in any folder
+# - in current region
+# 3. cache values unless stack is changed/updated
+# 4. functions (limit(2), to_list)
+# 5. rewrite in go (invoke like this => update_dynamic_values_in_tfvars ${get_parent_tfvars_dir()}/${path_relative_to_include()})
+# 6. make it much faster, less verbose
+
+# Syntax:
+# @modulestf:terragrunt_output.security-group_5.this_security_group_id.to_list
+# @modulestf:terragrunt_output.["eu-west-1/security-group_5"].this_security_group_id.to_list
+# @modulestf:terragrunt_output.["global/route53-zones"].zone_id
+# @modulestf:terragrunt_data.aws_region.zone_id
+# @modulestf:terragrunt_data.aws_region[{current=true}].zone_id
+
 ############################
 
 readonly tfvars_file="$1/terraform.tfvars"

@@ -91,7 +91,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
         logging.info("\n========================================\nNode key = %s" % key)
 
         if node is None:
-            logging.error("No node 'data' in node - %s" % pformat(node_complete))
+            logging.warning("No node 'data' in node - %s" % pformat(node_complete))
             continue
 
         # logging.info("Node: {}".format(node))
