@@ -22,11 +22,11 @@ terraform {
     execute  = ["rm", "-f", "${get_parent_terragrunt_dir()}/${path_relative_to_include()}/main_providers.tf"]
   }
 
-//  # Expecting terraform.tfvars which is not required in terragrunt 0.19
-//  before_hook "update_dynamic_values_in_tfvars" {
-//    commands = ["apply", "import", "plan", "refresh"]
-//    execute  = ["tfvars-annotations", "${get_parent_terragrunt_dir()}/${path_relative_to_include()}"]
-//  }
+  # Expecting terraform.tfvars which is not required in terragrunt 0.19
+  before_hook "update_dynamic_values_in_tfvars" {
+    commands = ["apply", "import", "plan", "refresh"]
+    execute  = ["tfvars-annotations", "${get_parent_terragrunt_dir()}/${path_relative_to_include()}"]
+  }
 }
 
 remote_state {
