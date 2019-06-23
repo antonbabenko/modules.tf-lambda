@@ -61,39 +61,39 @@ def update_template_variables(var):
 
 MODULES = {
     "alb": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-alb.git",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-alb.git?ref=v4.0.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/alb.json")),
     },
     "elb": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-elb.git",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-elb.git?ref=v2.0.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/elb.json")),
     },
     "rds": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-rds.git",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-rds.git?ref=v2.0.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/rds.json")),
     },
     "autoscaling": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-autoscaling.git",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-autoscaling.git?ref=v3.0.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/autoscaling.json")),
     },
     "ec2-instance": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-ec2-instance.git",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-ec2-instance.git?ref=v2.3.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/ec2-instance.json")),
     },
     "sns": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-sns.git",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-sns.git?ref=v2.0.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/sns.json")),
     },
     "sqs": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-sqs.git",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-sqs.git?ref=v2.0.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/sqs.json")),
     },
     "security-group": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-security-group.git",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-security-group.git?ref=v3.0.1",
         "variables": update_template_variables(load_local_json("../modules-metadata/security-group.json")),
     },
     "vpc": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-vpc.git",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-vpc.git?ref=v2.6.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/vpc.json")),
     },
     "s3": {

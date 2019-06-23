@@ -15,8 +15,9 @@ Infrastructure consists of multiple layers (
 
 ## Pre-requirements
 
-- [Terraform 0.11 or newer](https://www.terraform.io/)
-- [Terragrunt 0.17 or newer](https://github.com/gruntwork-io/terragrunt)
+- [Terraform 0.12 or newer](https://www.terraform.io/)
+- [Terragrunt 0.19 or newer](https://github.com/gruntwork-io/terragrunt)
+- [tfvars-annotations](https://github.com/antonbabenko/tfvars-annotations) - Update values in terraform.tfvars using annotations (beta)
 - Optional: [pre-commit hooks](http://pre-commit.com) to keep Terraform formatting and documentation up-to-date
 
 If you are using Mac you can install all dependencies using Homebrew:
