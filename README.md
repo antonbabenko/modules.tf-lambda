@@ -1,6 +1,6 @@
 # modules.tf - Infrastructure as code generator - from visual diagrams to Terraform
 
-[![MIT license](https://img.shields.io/github/license/antonbabenko/modules.tf-lambda.svg)]() [![Gitter](https://img.shields.io/gitter/room/modulestf/Lobby.svg)](https://gitter.im/modulestf/Lobby)
+[![Financial Contributors on Open Collective](https://opencollective.com/modulestf/all/badge.svg?label=financial+contributors)](https://opencollective.com/modulestf) [![MIT license](https://img.shields.io/github/license/antonbabenko/modules.tf-lambda.svg)]() [![Gitter](https://img.shields.io/gitter/room/modulestf/Lobby.svg)](https://gitter.im/modulestf/Lobby)
 
 
 <a href="https://github.com/antonbabenko/modules.tf-lambda"><img src="https://raw.githubusercontent.com/antonbabenko/modules.tf-lambda/master/misc/modulestf-logo.png" alt="modules.tf - Infrastructure as code generator - from visual diagrams to Terraform" width="210" height="70" align="right" /></a>
@@ -83,6 +83,36 @@ This project is created and maintained by [Anton Babenko](https://github.com/ant
 
 [![@antonbabenko](https://img.shields.io/twitter/follow/antonbabenko.svg?style=social&label=Follow%20@antonbabenko%20on%20Twitter)](https://twitter.com/antonbabenko)
 
+
+## Contributors
+
+### Code Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="https://github.com/antonbabenko/modules.tf-lambda/graphs/contributors"><img src="https://opencollective.com/modulestf/contributors.svg?width=890&button=false" /></a>
+
+### Financial Contributors
+
+Become a financial contributor and help us sustain our community. [[Contribute](https://opencollective.com/modulestf/contribute)]
+
+#### Individuals
+
+<a href="https://opencollective.com/modulestf"><img src="https://opencollective.com/modulestf/individuals.svg?width=890"></a>
+
+#### Organizations
+
+Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/modulestf/contribute)]
+
+<a href="https://opencollective.com/modulestf/organization/0/website"><img src="https://opencollective.com/modulestf/organization/0/avatar.svg"></a>
+<a href="https://opencollective.com/modulestf/organization/1/website"><img src="https://opencollective.com/modulestf/organization/1/avatar.svg"></a>
+<a href="https://opencollective.com/modulestf/organization/2/website"><img src="https://opencollective.com/modulestf/organization/2/avatar.svg"></a>
+<a href="https://opencollective.com/modulestf/organization/3/website"><img src="https://opencollective.com/modulestf/organization/3/avatar.svg"></a>
+<a href="https://opencollective.com/modulestf/organization/4/website"><img src="https://opencollective.com/modulestf/organization/4/avatar.svg"></a>
+<a href="https://opencollective.com/modulestf/organization/5/website"><img src="https://opencollective.com/modulestf/organization/5/avatar.svg"></a>
+<a href="https://opencollective.com/modulestf/organization/6/website"><img src="https://opencollective.com/modulestf/organization/6/avatar.svg"></a>
+<a href="https://opencollective.com/modulestf/organization/7/website"><img src="https://opencollective.com/modulestf/organization/7/avatar.svg"></a>
+<a href="https://opencollective.com/modulestf/organization/8/website"><img src="https://opencollective.com/modulestf/organization/8/avatar.svg"></a>
+<a href="https://opencollective.com/modulestf/organization/9/website"><img src="https://opencollective.com/modulestf/organization/9/avatar.svg"></a>
 
 ## License
 
