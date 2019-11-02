@@ -1,0 +1,1458 @@
+{
+  "id": "8cd97076-f827-4533-a0f5-09fa1fae3e1e",
+  "data": {
+    "grid": "infinite",
+    "name": "Cloud-craft former",
+    "text": [
+      {
+        "id": "6ad52f61-7ace-45d9-9063-32ab8d9b1827",
+        "text": "VarnishLoadBalanser",
+        "type": "isotext",
+        "color": "#000000",
+        "mapPos": {
+          "relTo": "00cd1dc6-8950-48fa-a8d6-567f28477107",
+          "offset": [
+            -1.02,
+            1
+          ]
+        },
+        "outline": true,
+        "standing": false,
+        "textSize": 16,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "1327f03f-a55d-4879-888b-3f4501910dea",
+        "text": "ProxyToARWebServices",
+        "type": "isotext",
+        "color": "#000000",
+        "mapPos": {
+          "relTo": "7847a505-9842-47bc-9740-d362daeae0bc",
+          "offset": [
+            -1.1,
+            1
+          ]
+        },
+        "outline": true,
+        "standing": false,
+        "textSize": 16,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "9a209a32-5d51-4012-936a-4a5c4395b7a2",
+        "text": "VarnishNode",
+        "type": "isotext",
+        "color": "#000000",
+        "mapPos": {
+          "relTo": "e9c78099-4f65-4acc-bb0b-f7b54fbb2338",
+          "offset": [
+            0.12,
+            1.1400000000000001
+          ]
+        },
+        "outline": true,
+        "standing": false,
+        "textSize": 16,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "dfc4ea6a-9b82-4dfa-85c0-ed0f3db88a3b",
+        "text": "cache-redis",
+        "type": "isotext",
+        "color": "#000000",
+        "mapPos": {
+          "relTo": "2cd2943e-0540-4ef1-b2d4-8e8307feddad",
+          "offset": [
+            -0.38,
+            1
+          ]
+        },
+        "outline": true,
+        "standing": false,
+        "textSize": 16,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "15346969-0ee3-4865-874b-5b6f0432d267",
+        "text": "session-redis",
+        "type": "isotext",
+        "color": "#000000",
+        "mapPos": {
+          "relTo": "b8c86e4c-3c4b-403e-90dc-4b16efaa4851",
+          "offset": [
+            -0.54,
+            1
+          ]
+        },
+        "outline": true,
+        "standing": false,
+        "textSize": 16,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "33ef4c48-ae43-4af3-aaca-a6cf5d10f374",
+        "text": "WebNodeLoadBalancer",
+        "type": "isotext",
+        "color": "#000000",
+        "mapPos": {
+          "relTo": "bc10e90f-7246-42df-a14f-758ac2ba08bf",
+          "offset": [
+            -1,
+            1
+          ]
+        },
+        "outline": true,
+        "standing": false,
+        "textSize": 16,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "d38006c5-9926-4b21-a8dd-4bd72b10fc99",
+        "text": "AdminWebNode",
+        "type": "isotext",
+        "color": "#000000",
+        "mapPos": {
+          "relTo": "7aa515b6-bc52-44b0-ae1d-723908111361",
+          "offset": [
+            0.040000000000000036,
+            1.1400000000000001
+          ]
+        },
+        "outline": true,
+        "standing": false,
+        "textSize": 16,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "78004365-29c9-4485-8d4e-f04bd6b4fd47",
+        "text": "WebNode",
+        "type": "isotext",
+        "color": "#000000",
+        "mapPos": {
+          "relTo": "7990d606-a133-41c1-9097-6eee1fc4e51c",
+          "offset": [
+            0.43999999999999995,
+            1.1400000000000001
+          ]
+        },
+        "outline": true,
+        "standing": false,
+        "textSize": 16,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "cbaf7ffb-8f0d-4def-b626-24dc14b52b3d",
+        "text": "icuracao-master-may-20",
+        "type": "isotext",
+        "color": "#000000",
+        "mapPos": {
+          "relTo": "f7f39ac9-3a9f-4999-92b4-98583bc644da",
+          "offset": [
+            -1.26,
+            1
+          ]
+        },
+        "outline": true,
+        "standing": false,
+        "textSize": 16,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "786139ff-c47a-43f6-864f-c8af95c72787",
+        "text": "icuracao-read-may-20",
+        "type": "isotext",
+        "color": "#000000",
+        "mapPos": {
+          "relTo": "ae86254a-f937-4ede-8938-a5887f780fd8",
+          "offset": [
+            -1.1,
+            1
+          ]
+        },
+        "outline": true,
+        "standing": false,
+        "textSize": 16,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "4980c9f4-4d9a-48e5-a367-27fab2abbe8e",
+        "text": "maintenance",
+        "type": "isotext",
+        "color": "#000000",
+        "mapPos": {
+          "relTo": "bf98dc98-0218-4ae2-b575-c0ad4edcf002",
+          "offset": [
+            -0.38,
+            1
+          ]
+        },
+        "outline": true,
+        "standing": false,
+        "textSize": 16,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "1878833a-6600-4cb5-b802-7c8a2df2427b",
+        "text": "ProxyToARWebServices",
+        "type": "isotext",
+        "color": "#000000",
+        "mapPos": {
+          "relTo": "eb2f75d2-00aa-4848-a6f2-b53e7b9983b1",
+          "offset": [
+            -1.1,
+            1
+          ]
+        },
+        "outline": true,
+        "standing": false,
+        "textSize": 16,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "a0084f9d-b550-4cb1-86e9-e9a8f4e110e7",
+        "text": "vol-04a35b2161d7a4deb",
+        "type": "isotext",
+        "color": "#000000",
+        "mapPos": {
+          "relTo": "a5800c0b-500f-42ba-849e-9fd1f3058743",
+          "offset": [
+            -1.18,
+            1
+          ]
+        },
+        "outline": true,
+        "standing": false,
+        "textSize": 16,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "8fd6d0cc-cd87-41b4-8d15-4badfd5e5e05",
+        "text": "vol-059be8183776a7110",
+        "type": "isotext",
+        "color": "#000000",
+        "mapPos": {
+          "relTo": "5706a688-a519-4ad0-8c47-5d331c8f4c17",
+          "offset": [
+            -1.18,
+            1
+          ]
+        },
+        "outline": true,
+        "standing": false,
+        "textSize": 16,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "c946508d-0153-4bd5-bbb4-85fa46e5d3af",
+        "text": "vol-0425fb0ac34717d0c",
+        "type": "isotext",
+        "color": "#000000",
+        "mapPos": {
+          "relTo": "96c18b88-9004-468e-b2a5-e8a777a85807",
+          "offset": [
+            -1.18,
+            1
+          ]
+        },
+        "outline": true,
+        "standing": false,
+        "textSize": 16,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "b0508eb3-be7a-4677-8871-d4b05720d91d",
+        "text": "vol-08b9c2ac9230d0d5a",
+        "type": "isotext",
+        "color": "#000000",
+        "mapPos": {
+          "relTo": "3387fef1-f83e-41be-847a-6c3f8670c3fc",
+          "offset": [
+            -1.18,
+            1
+          ]
+        },
+        "outline": true,
+        "standing": false,
+        "textSize": 16,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "c165b6b2-cd32-48a6-8a27-61b060855b50",
+        "text": "vol-0bd7a303c119cccbb",
+        "type": "isotext",
+        "color": "#000000",
+        "mapPos": {
+          "relTo": "34fb7992-d569-44da-9204-e070f25743b4",
+          "offset": [
+            -1.18,
+            1
+          ]
+        },
+        "outline": true,
+        "standing": false,
+        "textSize": 16,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "b30d81d4-92b5-4592-a993-3433056f3d32",
+        "text": "efs",
+        "type": "isotext",
+        "color": "#000000",
+        "mapPos": {
+          "relTo": "d90a0167-0eb9-42e2-9eae-1d56a0569fa4",
+          "offset": [
+            0.125,
+            1
+          ]
+        },
+        "outline": true,
+        "standing": false,
+        "textSize": 25,
+        "direction": "down",
+        "isometric": true
+      }
+    ],
+    "edges": [
+      {
+        "id": "bc10e90f-7246-42df-a14f-758ac2ba08bf-7aa515b6-bc52-44b0-ae1d-723908111361",
+        "to": "7aa515b6-bc52-44b0-ae1d-723908111361",
+        "from": "bc10e90f-7246-42df-a14f-758ac2ba08bf",
+        "type": "autoedge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false,
+        "endCap": "arrow"
+      },
+      {
+        "to": "a5800c0b-500f-42ba-849e-9fd1f3058743",
+        "from": "3c2d732c-6083-413e-aead-cfd6e894bf7a",
+        "type": "edge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false,
+        "endCap": "arrow"
+      },
+      {
+        "id": "00cd1dc6-8950-48fa-a8d6-567f28477107-e9c78099-4f65-4acc-bb0b-f7b54fbb2338",
+        "to": "e9c78099-4f65-4acc-bb0b-f7b54fbb2338",
+        "from": "00cd1dc6-8950-48fa-a8d6-567f28477107",
+        "type": "autoedge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false,
+        "endCap": "arrow"
+      },
+      {
+        "to": "34fb7992-d569-44da-9204-e070f25743b4",
+        "from": "bede8aaf-b170-449e-9cb3-4bfb66efca3a",
+        "type": "edge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false,
+        "endCap": "arrow"
+      },
+      {
+        "to": "ae86254a-f937-4ede-8938-a5887f780fd8",
+        "from": "f7f39ac9-3a9f-4999-92b4-98583bc644da",
+        "type": "edge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false,
+        "endCap": "arrow"
+      },
+      {
+        "id": "bc10e90f-7246-42df-a14f-758ac2ba08bf-7990d606-a133-41c1-9097-6eee1fc4e51c",
+        "to": "7990d606-a133-41c1-9097-6eee1fc4e51c",
+        "from": "bc10e90f-7246-42df-a14f-758ac2ba08bf",
+        "type": "autoedge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false,
+        "endCap": "arrow"
+      },
+      {
+        "to": "3387fef1-f83e-41be-847a-6c3f8670c3fc",
+        "from": "74465482-4ff4-4678-a5bc-72e8c4d44620",
+        "type": "edge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false,
+        "endCap": "arrow"
+      },
+      {
+        "to": "5706a688-a519-4ad0-8c47-5d331c8f4c17",
+        "from": "fe4522b1-72fd-4e65-8ff2-9b294898c32d",
+        "type": "edge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false,
+        "endCap": "arrow"
+      },
+      {
+        "to": "96c18b88-9004-468e-b2a5-e8a777a85807",
+        "from": "d0e62849-8fa6-4b47-b726-040c0472505f",
+        "type": "edge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false,
+        "endCap": "arrow"
+      },
+      {
+        "to": "eb2f75d2-00aa-4848-a6f2-b53e7b9983b1",
+        "from": "7847a505-9842-47bc-9740-d362daeae0bc",
+        "type": "edge",
+        "color": "#000000",
+        "width": 2,
+        "dashed": false,
+        "endCap": "arrow"
+      }
+    ],
+    "icons": [],
+    "nodes": [
+      {
+        "id": "3387fef1-f83e-41be-847a-6c3f8670c3fc",
+        "arn": "arn:aws:ec2:us-west-1:600075137595:volume/vol-08b9c2ac9230d0d5a",
+        "iops": 100,
+        "type": "ebs",
+        "color": "#ececed",
+        "mapPos": [
+          13,
+          -12.5
+        ],
+        "region": "us-west-1",
+        "volume": "gp2",
+        "storage": 10,
+        "snapshots": 0,
+        "accentColor": "#4286c5"
+      },
+      {
+        "id": "34fb7992-d569-44da-9204-e070f25743b4",
+        "arn": "arn:aws:ec2:us-west-1:600075137595:volume/vol-0bd7a303c119cccbb",
+        "iops": 100,
+        "type": "ebs",
+        "color": "#ececed",
+        "mapPos": [
+          5.5,
+          -12.25
+        ],
+        "region": "us-west-1",
+        "volume": "gp2",
+        "storage": 10,
+        "snapshots": 0,
+        "accentColor": "#4286c5"
+      },
+      {
+        "id": "96c18b88-9004-468e-b2a5-e8a777a85807",
+        "arn": "arn:aws:ec2:us-west-1:600075137595:volume/vol-0425fb0ac34717d0c",
+        "iops": 100,
+        "type": "ebs",
+        "color": "#ececed",
+        "mapPos": [
+          9.75,
+          -12.25
+        ],
+        "region": "us-west-1",
+        "volume": "gp2",
+        "storage": 10,
+        "snapshots": 0,
+        "accentColor": "#4286c5"
+      },
+      {
+        "id": "5706a688-a519-4ad0-8c47-5d331c8f4c17",
+        "arn": "arn:aws:ec2:us-west-1:600075137595:volume/vol-059be8183776a7110",
+        "iops": 100,
+        "type": "ebs",
+        "color": "#ececed",
+        "mapPos": [
+          11.25,
+          -10.5
+        ],
+        "region": "us-west-1",
+        "volume": "gp2",
+        "storage": 10,
+        "snapshots": 0,
+        "accentColor": "#4286c5"
+      },
+      {
+        "id": "b8c86e4c-3c4b-403e-90dc-4b16efaa4851",
+        "arn": "arn:aws:elasticache:us-west-1:600075137595:cluster:session-redis",
+        "type": "elasticache",
+        "color": "#d82f27",
+        "engine": "redis",
+        "mapPos": [
+          18,
+          -7.75
+        ],
+        "region": "us-west-1",
+        "accentColor": "#ffffff",
+        "instanceSize": "large",
+        "instanceType": "m5"
+      },
+      {
+        "id": "bede8aaf-b170-449e-9cb3-4bfb66efca3a",
+        "arn": "arn:aws:ec2:us-west-1:600075137595:instance/i-0b8223d1634f53a99",
+        "type": "ec2",
+        "color": {
+          "2d": "#d86613",
+          "isometric": "#ececed"
+        },
+        "mapPos": [
+          5.5,
+          -7.25
+        ],
+        "region": "us-west-1",
+        "platform": "linux",
+        "accentColor": {
+          "2d": "#d86613",
+          "isometric": "#f44336"
+        },
+        "transparent": false,
+        "instanceSize": "xlarge",
+        "instanceType": "c5",
+        "billingOptions": {
+          "type": "od",
+          "utilization": 1
+        }
+      },
+      {
+        "id": "d0e62849-8fa6-4b47-b726-040c0472505f",
+        "arn": "arn:aws:ec2:us-west-1:600075137595:instance/i-095c563f4ac34bd8a",
+        "type": "ec2",
+        "color": {
+          "2d": "#d86613",
+          "isometric": "#ececed"
+        },
+        "mapPos": [
+          9.75,
+          -7.25
+        ],
+        "region": "us-west-1",
+        "platform": "linux",
+        "accentColor": {
+          "2d": "#d86613",
+          "isometric": "#f44336"
+        },
+        "transparent": false,
+        "instanceSize": "xlarge",
+        "instanceType": "c5",
+        "billingOptions": {
+          "type": "od",
+          "utilization": 1
+        }
+      },
+      {
+        "id": "fe4522b1-72fd-4e65-8ff2-9b294898c32d",
+        "arn": "arn:aws:ec2:us-west-1:600075137595:instance/i-0d52b1b3efaf83109",
+        "type": "ec2",
+        "color": {
+          "2d": "#d86613",
+          "isometric": "#ececed"
+        },
+        "mapPos": [
+          11.345,
+          -7.25
+        ],
+        "region": "us-west-1",
+        "platform": "linux",
+        "accentColor": {
+          "2d": "#d86613",
+          "isometric": "#f44336"
+        },
+        "transparent": false,
+        "instanceSize": "xlarge",
+        "instanceType": "c5",
+        "billingOptions": {
+          "type": "od",
+          "utilization": 1
+        }
+      },
+      {
+        "id": "74465482-4ff4-4678-a5bc-72e8c4d44620",
+        "arn": "arn:aws:ec2:us-west-1:600075137595:instance/i-0f95abc10057386cf",
+        "type": "ec2",
+        "color": {
+          "2d": "#d86613",
+          "isometric": "#ececed"
+        },
+        "mapPos": [
+          12.940000000000001,
+          -7.25
+        ],
+        "region": "us-west-1",
+        "platform": "linux",
+        "accentColor": {
+          "2d": "#d86613",
+          "isometric": "#f44336"
+        },
+        "transparent": false,
+        "instanceSize": "xlarge",
+        "instanceType": "c5",
+        "billingOptions": {
+          "type": "od",
+          "utilization": 1
+        }
+      },
+      {
+        "id": "d90a0167-0eb9-42e2-9eae-1d56a0569fa4",
+        "type": "efs",
+        "color": "#e05243",
+        "mapPos": [
+          12.25,
+          -3.5
+        ],
+        "region": "us-west-1",
+        "usageGb": 60,
+        "throughput": "",
+        "accentColor": "#ffffff",
+        "readWriteGb": 0,
+        "throughputMode": "bursting",
+        "infrequentAccess": false
+      },
+      {
+        "id": "2cd2943e-0540-4ef1-b2d4-8e8307feddad",
+        "arn": "arn:aws:elasticache:us-west-1:600075137595:cluster:cache-redis",
+        "type": "elasticache",
+        "color": "#d82f27",
+        "engine": "redis",
+        "mapPos": [
+          18,
+          -2
+        ],
+        "region": "us-west-1",
+        "accentColor": "#ffffff",
+        "instanceSize": "large",
+        "instanceType": "m5"
+      },
+      {
+        "id": "bc10e90f-7246-42df-a14f-758ac2ba08bf",
+        "arn": "arn:aws:elasticloadbalancing:us-west-1:600075137595:loadbalancer/app/WebNodeLoadBalancer/71e3d4cb3f2b993e",
+        "lcu": 1,
+        "type": "elb",
+        "color": "#ececed",
+        "dataGb": 10,
+        "mapPos": [
+          9,
+          -1
+        ],
+        "region": "us-west-1",
+        "elbType": "application",
+        "accentColor": "#4286c5"
+      },
+      {
+        "id": "a5800c0b-500f-42ba-849e-9fd1f3058743",
+        "arn": "arn:aws:ec2:us-west-1:600075137595:volume/vol-04a35b2161d7a4deb",
+        "iops": 100,
+        "type": "ebs",
+        "color": "#ececed",
+        "mapPos": [
+          7,
+          3.25
+        ],
+        "region": "us-west-1",
+        "volume": "gp2",
+        "storage": 10,
+        "snapshots": 0,
+        "accentColor": "#4286c5"
+      },
+      {
+        "id": "eb2f75d2-00aa-4848-a6f2-b53e7b9983b1",
+        "arn": "arn:aws:ec2:us-west-1:600075137595:volume/vol-0cf564db8d88df1fc",
+        "iops": 100,
+        "type": "ebs",
+        "color": "#ececed",
+        "mapPos": [
+          11.5,
+          3.25
+        ],
+        "region": "us-west-1",
+        "volume": "gp2",
+        "storage": 8,
+        "snapshots": 0,
+        "accentColor": "#4286c5"
+      },
+      {
+        "id": "3c2d732c-6083-413e-aead-cfd6e894bf7a",
+        "arn": "arn:aws:ec2:us-west-1:600075137595:instance/i-026018f937d5b3885",
+        "type": "ec2",
+        "color": {
+          "2d": "#d86613",
+          "isometric": "#ececed"
+        },
+        "mapPos": [
+          5.5,
+          6.25
+        ],
+        "region": "us-west-1",
+        "platform": "linux",
+        "accentColor": {
+          "2d": "#d86613",
+          "isometric": "#f44336"
+        },
+        "transparent": false,
+        "instanceSize": "large",
+        "instanceType": "r5",
+        "billingOptions": {
+          "type": "od",
+          "utilization": 1
+        }
+      },
+      {
+        "id": "7847a505-9842-47bc-9740-d362daeae0bc",
+        "arn": "arn:aws:ec2:us-west-1:600075137595:instance/i-05d02353369b175ba",
+        "type": "ec2",
+        "color": {
+          "2d": "#d86613",
+          "isometric": "#ececed"
+        },
+        "mapPos": [
+          11.5,
+          6.25
+        ],
+        "region": "us-west-1",
+        "platform": "linux",
+        "accentColor": {
+          "2d": "#d86613",
+          "isometric": "#f44336"
+        },
+        "transparent": false,
+        "instanceSize": "nano",
+        "instanceType": "t2",
+        "billingOptions": {
+          "type": "si",
+          "utilization": 1
+        }
+      },
+      {
+        "id": "ae86254a-f937-4ede-8938-a5887f780fd8",
+        "arn": "arn:aws:rds:us-west-1:600075137595:db:icuracao-read-may-20",
+        "role": "readReplica",
+        "type": "rds",
+        "color": "#ececed",
+        "engine": "mysql",
+        "mapPos": [
+          18,
+          6.75
+        ],
+        "region": "us-west-1",
+        "multiAZ": false,
+        "accentColor": "#4286c5",
+        "instanceSize": "2xlarge",
+        "instanceType": "m5",
+        "maximumCapacityUnit": 2,
+        "minimumCapacityUnit": 2
+      },
+      {
+        "id": "f7f39ac9-3a9f-4999-92b4-98583bc644da",
+        "arn": "arn:aws:rds:us-west-1:600075137595:db:icuracao-master-may-20",
+        "role": "primary",
+        "type": "rds",
+        "color": "#ececed",
+        "engine": "mysql",
+        "mapPos": [
+          18,
+          10.75
+        ],
+        "region": "us-west-1",
+        "multiAZ": false,
+        "accentColor": "#4286c5",
+        "instanceSize": "2xlarge",
+        "instanceType": "m5",
+        "maximumCapacityUnit": 2,
+        "minimumCapacityUnit": 2
+      },
+      {
+        "id": "bf98dc98-0218-4ae2-b575-c0ad4edcf002",
+        "arn": "arn:aws:lambda:us-west-1:600075137595:function:maintenance",
+        "type": "lambda",
+        "color": "#3c3c3c",
+        "mapPos": [
+          13.5,
+          13
+        ],
+        "memory": 128,
+        "region": "us-west-1",
+        "mRequests": 2,
+        "accentColor": "#f4b934",
+        "computeDuration": 1
+      },
+      {
+        "id": "00cd1dc6-8950-48fa-a8d6-567f28477107",
+        "arn": "arn:aws:elasticloadbalancing:us-west-1:600075137595:loadbalancer/app/VarnishLoadBalanser/880176e3b32244e0",
+        "lcu": 1,
+        "type": "elb",
+        "color": "#ececed",
+        "dataGb": 10,
+        "mapPos": [
+          5.5,
+          13.25
+        ],
+        "region": "us-west-1",
+        "elbType": "application",
+        "accentColor": "#4286c5"
+      }
+    ],
+    "groups": [
+      {
+        "id": "e9c78099-4f65-4acc-bb0b-f7b54fbb2338",
+        "arn": "arn:aws:autoscaling:us-west-1:600075137595:autoScalingGroup:a89cd894-e5ee-4d8a-89b0-c771e0aec75c:autoScalingGroupName/VarnishScalingGroup",
+        "type": "asg",
+        "color": "#4286c5",
+        "nodes": [
+          "3c2d732c-6083-413e-aead-cfd6e894bf7a"
+        ],
+        "layout": "even",
+        "mapPos": [
+          5,
+          6.25
+        ],
+        "region": "us-west-1",
+        "mapSize": [
+          2,
+          1
+        ]
+      },
+      {
+        "id": "7aa515b6-bc52-44b0-ae1d-723908111361",
+        "arn": "arn:aws:autoscaling:us-west-1:600075137595:autoScalingGroup:6eebb60e-05a0-4cdf-b70a-73922f34e41b:autoScalingGroupName/WebAdminNodeScalingGroup",
+        "type": "asg",
+        "color": "#4286c5",
+        "nodes": [
+          "bede8aaf-b170-449e-9cb3-4bfb66efca3a"
+        ],
+        "layout": "even",
+        "mapPos": [
+          5,
+          -7.25
+        ],
+        "region": "us-west-1",
+        "mapSize": [
+          2,
+          1
+        ]
+      },
+      {
+        "id": "7990d606-a133-41c1-9097-6eee1fc4e51c",
+        "arn": "arn:aws:autoscaling:us-west-1:600075137595:autoScalingGroup:b61774a0-e006-40f0-b254-da6301e5287a:autoScalingGroupName/WebNodesScallingGroup",
+        "type": "asg",
+        "color": "#4286c5",
+        "nodes": [
+          "d0e62849-8fa6-4b47-b726-040c0472505f",
+          "fe4522b1-72fd-4e65-8ff2-9b294898c32d",
+          "74465482-4ff4-4678-a5bc-72e8c4d44620"
+        ],
+        "layout": "even",
+        "mapPos": [
+          9.75,
+          -7.25
+        ],
+        "region": "us-west-1",
+        "mapSize": [
+          4.190000000000001,
+          1
+        ]
+      },
+      {
+        "id": "sg-06380da17d4b414a9",
+        "arn": "arn:aws:ec2:us-west-1:600075137595:security-group/sg-06380da17d4b414a9",
+        "name": "VPCInternalAccess",
+        "type": "sg",
+        "color": "#3f51b5",
+        "nodes": [
+          "7847a505-9842-47bc-9740-d362daeae0bc"
+        ],
+        "shape": "dynamic",
+        "region": "us-west-1",
+        "padding": 1.5,
+        "inboundRules": [
+          {
+            "hidden": false,
+            "target": "172.31.0.0/16",
+            "protocol": "-1",
+            "portRange": "0",
+            "targetType": "ip"
+          }
+        ],
+        "outboundRules": [
+          {
+            "hidden": false,
+            "target": "0.0.0.0/0",
+            "protocol": "-1",
+            "portRange": "0",
+            "targetType": "ip"
+          }
+        ]
+      },
+      {
+        "id": "sg-08211548f51a92384",
+        "arn": "arn:aws:ec2:us-west-1:600075137595:security-group/sg-08211548f51a92384",
+        "name": "RedisSecurityGroup",
+        "type": "sg",
+        "color": "#9c27b0",
+        "nodes": [
+          "2cd2943e-0540-4ef1-b2d4-8e8307feddad",
+          "b8c86e4c-3c4b-403e-90dc-4b16efaa4851"
+        ],
+        "shape": "dynamic",
+        "region": "us-west-1",
+        "padding": 1.5,
+        "inboundRules": [
+          {
+            "hidden": false,
+            "target": "sg-020c9907ba055eed8",
+            "protocol": "tcp",
+            "portRange": "6379",
+            "targetType": "sg"
+          },
+          {
+            "hidden": false,
+            "target": "sg-0c96ee3e84264d41a",
+            "protocol": "tcp",
+            "portRange": "6379",
+            "targetType": "sg"
+          }
+        ],
+        "outboundRules": [
+          {
+            "hidden": false,
+            "target": "0.0.0.0/0",
+            "protocol": "-1",
+            "portRange": "0",
+            "targetType": "ip"
+          }
+        ]
+      },
+      {
+        "id": "sg-095165c0059784180",
+        "arn": "arn:aws:ec2:us-west-1:600075137595:security-group/sg-095165c0059784180",
+        "name": "LoadBalanserInternal",
+        "type": "sg",
+        "color": "#03a9f4",
+        "nodes": [
+          "bc10e90f-7246-42df-a14f-758ac2ba08bf"
+        ],
+        "shape": "dynamic",
+        "region": "us-west-1",
+        "padding": 1.5,
+        "inboundRules": [
+          {
+            "hidden": false,
+            "target": "206.170.79.99/32",
+            "protocol": "tcp",
+            "portRange": "80",
+            "targetType": "ip"
+          },
+          {
+            "hidden": false,
+            "target": "0.0.0.0/0",
+            "protocol": "tcp",
+            "portRange": "80",
+            "targetType": "ip"
+          },
+          {
+            "hidden": false,
+            "target": "::/0",
+            "protocol": "tcp",
+            "portRange": "80",
+            "targetType": "ipv6"
+          },
+          {
+            "hidden": false,
+            "target": "sg-080afca2daffa4883",
+            "protocol": "tcp",
+            "portRange": "80",
+            "targetType": "sg"
+          }
+        ],
+        "outboundRules": [
+          {
+            "hidden": false,
+            "target": "0.0.0.0/0",
+            "protocol": "-1",
+            "portRange": "0",
+            "targetType": "ip"
+          }
+        ]
+      },
+      {
+        "id": "sg-01e9d1292a1484ae8",
+        "arn": "arn:aws:ec2:us-west-1:600075137595:security-group/sg-01e9d1292a1484ae8",
+        "name": "LoadBalancerInternetGroup",
+        "type": "sg",
+        "color": "#2196f3",
+        "nodes": [
+          "00cd1dc6-8950-48fa-a8d6-567f28477107"
+        ],
+        "shape": "dynamic",
+        "region": "us-west-1",
+        "padding": 1.5,
+        "inboundRules": [
+          {
+            "hidden": false,
+            "target": "0.0.0.0/0",
+            "protocol": "tcp",
+            "portRange": "80",
+            "targetType": "ip"
+          },
+          {
+            "hidden": false,
+            "target": "::/0",
+            "protocol": "tcp",
+            "portRange": "80",
+            "targetType": "ipv6"
+          },
+          {
+            "hidden": false,
+            "target": "0.0.0.0/0",
+            "protocol": "tcp",
+            "portRange": "8888",
+            "targetType": "ip"
+          },
+          {
+            "hidden": false,
+            "target": "::/0",
+            "protocol": "tcp",
+            "portRange": "8888",
+            "targetType": "ipv6"
+          },
+          {
+            "hidden": false,
+            "target": "0.0.0.0/0",
+            "protocol": "tcp",
+            "portRange": "443",
+            "targetType": "ip"
+          },
+          {
+            "hidden": false,
+            "target": "::/0",
+            "protocol": "tcp",
+            "portRange": "443",
+            "targetType": "ipv6"
+          }
+        ],
+        "outboundRules": [
+          {
+            "hidden": false,
+            "target": "0.0.0.0/0",
+            "protocol": "-1",
+            "portRange": "0",
+            "targetType": "ip"
+          }
+        ]
+      },
+      {
+        "id": "sg-0c96ee3e84264d41a",
+        "arn": "arn:aws:ec2:us-west-1:600075137595:security-group/sg-0c96ee3e84264d41a",
+        "name": "WebNodeSecurityGroup",
+        "type": "sg",
+        "color": "#673ab7",
+        "nodes": [
+          "7aa515b6-bc52-44b0-ae1d-723908111361",
+          "bede8aaf-b170-449e-9cb3-4bfb66efca3a",
+          "7990d606-a133-41c1-9097-6eee1fc4e51c",
+          "d0e62849-8fa6-4b47-b726-040c0472505f",
+          "fe4522b1-72fd-4e65-8ff2-9b294898c32d",
+          "74465482-4ff4-4678-a5bc-72e8c4d44620"
+        ],
+        "shape": "dynamic",
+        "region": "us-west-1",
+        "padding": 1.5,
+        "inboundRules": [
+          {
+            "hidden": false,
+            "target": "206.170.79.99/32",
+            "protocol": "tcp",
+            "portRange": "80",
+            "targetType": "ip"
+          },
+          {
+            "hidden": false,
+            "target": "13.52.66.172/32",
+            "protocol": "tcp",
+            "portRange": "80",
+            "targetType": "ip",
+            "description": "NAT GATEWAY"
+          },
+          {
+            "hidden": false,
+            "target": "sg-095165c0059784180",
+            "protocol": "tcp",
+            "portRange": "80",
+            "targetType": "sg"
+          },
+          {
+            "hidden": false,
+            "target": "206.170.79.99/32",
+            "protocol": "tcp",
+            "portRange": "22",
+            "targetType": "ip"
+          },
+          {
+            "hidden": false,
+            "target": "104.172.241.170/32",
+            "protocol": "tcp",
+            "portRange": "22",
+            "targetType": "ip"
+          },
+          {
+            "hidden": false,
+            "target": "68.190.221.84/32",
+            "protocol": "tcp",
+            "portRange": "22",
+            "targetType": "ip",
+            "description": "Hang_home_ip"
+          }
+        ],
+        "outboundRules": [
+          {
+            "hidden": false,
+            "target": "0.0.0.0/0",
+            "protocol": "-1",
+            "portRange": "0",
+            "targetType": "ip"
+          }
+        ]
+      },
+      {
+        "id": "sg-0e9116ba3bd4d6195",
+        "arn": "arn:aws:ec2:us-west-1:600075137595:security-group/sg-0e9116ba3bd4d6195",
+        "name": "iCuracao22",
+        "type": "sg",
+        "color": "#00bcd4",
+        "nodes": [
+          "fe4522b1-72fd-4e65-8ff2-9b294898c32d",
+          "e9c78099-4f65-4acc-bb0b-f7b54fbb2338",
+          "7990d606-a133-41c1-9097-6eee1fc4e51c",
+          "bede8aaf-b170-449e-9cb3-4bfb66efca3a",
+          "3c2d732c-6083-413e-aead-cfd6e894bf7a",
+          "7aa515b6-bc52-44b0-ae1d-723908111361",
+          "74465482-4ff4-4678-a5bc-72e8c4d44620",
+          "7847a505-9842-47bc-9740-d362daeae0bc",
+          "d0e62849-8fa6-4b47-b726-040c0472505f"
+        ],
+        "shape": "dynamic",
+        "region": "us-west-1",
+        "padding": 1.5,
+        "inboundRules": [
+          {
+            "hidden": false,
+            "target": "206.170.79.99/32",
+            "protocol": "tcp",
+            "portRange": "22",
+            "targetType": "ip",
+            "description": "Hang and  Yehor"
+          },
+          {
+            "hidden": false,
+            "target": "206.170.79.5/32",
+            "protocol": "tcp",
+            "portRange": "22",
+            "targetType": "ip",
+            "description": "Pritipal"
+          },
+          {
+            "hidden": false,
+            "target": "104.172.241.170/32",
+            "protocol": "tcp",
+            "portRange": "22",
+            "targetType": "ip",
+            "description": "Yehor Home"
+          },
+          {
+            "hidden": false,
+            "target": "37.55.1.21/32",
+            "protocol": "tcp",
+            "portRange": "22",
+            "targetType": "ip",
+            "description": "Yehor Home  - Noted by Pritpal"
+          },
+          {
+            "hidden": false,
+            "target": "66.214.169.249/32",
+            "protocol": "tcp",
+            "portRange": "22",
+            "targetType": "ip",
+            "description": "Hang Home"
+          },
+          {
+            "hidden": false,
+            "target": "37.55.2.217/32",
+            "protocol": "tcp",
+            "portRange": "22",
+            "targetType": "ip",
+            "description": "Yehor Home 2"
+          }
+        ],
+        "outboundRules": [
+          {
+            "hidden": false,
+            "target": "0.0.0.0/0",
+            "protocol": "-1",
+            "portRange": "0",
+            "targetType": "ip"
+          }
+        ]
+      },
+      {
+        "id": "sg-080afca2daffa4883",
+        "arn": "arn:aws:ec2:us-west-1:600075137595:security-group/sg-080afca2daffa4883",
+        "name": "VarnishNodeSecurityGroup",
+        "type": "sg",
+        "color": "#673ab7",
+        "nodes": [
+          "e9c78099-4f65-4acc-bb0b-f7b54fbb2338",
+          "3c2d732c-6083-413e-aead-cfd6e894bf7a"
+        ],
+        "shape": "dynamic",
+        "region": "us-west-1",
+        "padding": 1.5,
+        "inboundRules": [
+          {
+            "hidden": false,
+            "target": "sg-01e9d1292a1484ae8",
+            "protocol": "tcp",
+            "portRange": "80",
+            "targetType": "sg"
+          },
+          {
+            "hidden": false,
+            "target": "sg-020c9907ba055eed8",
+            "protocol": "tcp",
+            "portRange": "80",
+            "targetType": "sg",
+            "description": "WebAdminNode CachePurge"
+          },
+          {
+            "hidden": false,
+            "target": "sg-01e9d1292a1484ae8",
+            "protocol": "tcp",
+            "portRange": "8080",
+            "targetType": "sg"
+          },
+          {
+            "hidden": false,
+            "target": "206.170.79.99/32",
+            "protocol": "tcp",
+            "portRange": "8888",
+            "targetType": "ip"
+          },
+          {
+            "hidden": false,
+            "target": "sg-01e9d1292a1484ae8",
+            "protocol": "tcp",
+            "portRange": "8888",
+            "targetType": "sg"
+          },
+          {
+            "hidden": false,
+            "target": "206.170.79.99/32",
+            "protocol": "tcp",
+            "portRange": "9999",
+            "targetType": "ip"
+          },
+          {
+            "hidden": false,
+            "target": "206.170.79.99/32",
+            "protocol": "tcp",
+            "portRange": "6666",
+            "targetType": "ip"
+          },
+          {
+            "hidden": false,
+            "target": "206.170.79.99/32",
+            "protocol": "tcp",
+            "portRange": "22",
+            "targetType": "ip"
+          }
+        ],
+        "outboundRules": [
+          {
+            "hidden": false,
+            "target": "0.0.0.0/0",
+            "protocol": "-1",
+            "portRange": "0",
+            "targetType": "ip"
+          }
+        ]
+      },
+      {
+        "id": "sg-9c2aafe4",
+        "arn": "arn:aws:ec2:us-west-1:600075137595:security-group/sg-9c2aafe4",
+        "name": "default",
+        "type": "sg",
+        "color": "#9c27b0",
+        "nodes": [
+          "f7f39ac9-3a9f-4999-92b4-98583bc644da",
+          "ae86254a-f937-4ede-8938-a5887f780fd8"
+        ],
+        "shape": "dynamic",
+        "region": "us-west-1",
+        "padding": 1.5,
+        "inboundRules": [
+          {
+            "hidden": false,
+            "target": "0.0.0.0/0",
+            "protocol": "tcp",
+            "portRange": "6379",
+            "targetType": "ip",
+            "description": "fix"
+          },
+          {
+            "hidden": false,
+            "target": "sg-028a43350b05d15cf",
+            "protocol": "tcp",
+            "portRange": "6379",
+            "targetType": "sg"
+          },
+          {
+            "hidden": false,
+            "target": "sg-0776e7005178b99fa",
+            "protocol": "tcp",
+            "portRange": "6379",
+            "targetType": "sg"
+          },
+          {
+            "hidden": false,
+            "target": "sg-0e501d00a25225152",
+            "protocol": "tcp",
+            "portRange": "6379",
+            "targetType": "sg"
+          },
+          {
+            "hidden": false,
+            "target": "13.52.43.186/32",
+            "protocol": "udp",
+            "portRange": "53",
+            "targetType": "ip",
+            "description": "lb master"
+          },
+          {
+            "hidden": false,
+            "target": "52.53.56.76/32",
+            "protocol": "udp",
+            "portRange": "53",
+            "targetType": "ip",
+            "description": "lb slave"
+          },
+          {
+            "hidden": false,
+            "target": "13.52.43.186/32",
+            "protocol": "tcp",
+            "portRange": "53",
+            "targetType": "ip",
+            "description": "lb master"
+          },
+          {
+            "hidden": false,
+            "target": "52.53.56.76/32",
+            "protocol": "tcp",
+            "portRange": "53",
+            "targetType": "ip",
+            "description": "lb slave"
+          },
+          {
+            "hidden": false,
+            "target": "0.0.0.0/0",
+            "protocol": "tcp",
+            "portRange": "3306",
+            "targetType": "ip"
+          },
+          {
+            "hidden": false,
+            "target": "::/0",
+            "protocol": "tcp",
+            "portRange": "3306",
+            "targetType": "ipv6"
+          }
+        ],
+        "outboundRules": [
+          {
+            "hidden": false,
+            "target": "0.0.0.0/0",
+            "protocol": "-1",
+            "portRange": "0",
+            "targetType": "ip"
+          },
+          {
+            "hidden": false,
+            "target": "::/0",
+            "protocol": "-1",
+            "portRange": "0",
+            "targetType": "ipv6"
+          }
+        ]
+      },
+      {
+        "id": "vpc-bade98dd",
+        "arn": "arn:aws:ec2:us-west-1:600075137595:vpc/vpc-bade98dd",
+        "name": "vpc-bade98dd",
+        "type": "vpc",
+        "color": "#00bcd4",
+        "nodes": [
+          "sg-095165c0059784180",
+          "fe4522b1-72fd-4e65-8ff2-9b294898c32d",
+          "sg-080afca2daffa4883",
+          "sg-01e9d1292a1484ae8",
+          "sg-9c2aafe4",
+          "e9c78099-4f65-4acc-bb0b-f7b54fbb2338",
+          "sg-06380da17d4b414a9",
+          "bc10e90f-7246-42df-a14f-758ac2ba08bf",
+          "7990d606-a133-41c1-9097-6eee1fc4e51c",
+          "sg-08211548f51a92384",
+          "bede8aaf-b170-449e-9cb3-4bfb66efca3a",
+          "sg-0e9116ba3bd4d6195",
+          "3c2d732c-6083-413e-aead-cfd6e894bf7a",
+          "7aa515b6-bc52-44b0-ae1d-723908111361",
+          "74465482-4ff4-4678-a5bc-72e8c4d44620",
+          "ae86254a-f937-4ede-8938-a5887f780fd8",
+          "b8c86e4c-3c4b-403e-90dc-4b16efaa4851",
+          "2cd2943e-0540-4ef1-b2d4-8e8307feddad",
+          "sg-0c96ee3e84264d41a",
+          "7847a505-9842-47bc-9740-d362daeae0bc",
+          "00cd1dc6-8950-48fa-a8d6-567f28477107",
+          "d90a0167-0eb9-42e2-9eae-1d56a0569fa4",
+          "f7f39ac9-3a9f-4999-92b4-98583bc644da",
+          "d0e62849-8fa6-4b47-b726-040c0472505f"
+        ],
+        "shape": "rectangular",
+        "region": "us-west-1",
+        "padding": 1.5,
+        "peeringConnections": []
+      }
+    ],
+    "images": [],
+    "linkKey": "RHrwHiqnO9XyuorxgNrsNA",
+    "version": 1,
+    "surfaces": [],
+    "shareDocs": false,
+    "connectors": [],
+    "projection": "isometric",
+    "liveAccount": {
+      "id": "a0e546e7-f992-4555-97c3-808f3618e567",
+      "type": "aws"
+    },
+    "disabledLayers": []
+  },
+  "readAccess": null,
+  "writeAccess": null,
+  "createdAt": "2019-07-12T01:45:44.489Z",
+  "updatedAt": "2019-10-28T05:30:02.123Z",
+  "CreatorId": "0cfaaa28-bd74-42f7-a6f5-4f78c91ab92e",
+  "LastUserId": "0cfaaa28-bd74-42f7-a6f5-4f78c91ab92e"
+}

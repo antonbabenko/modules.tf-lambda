@@ -1,107 +1,154 @@
 {
   "ami": {
-    "description": "ID of AMI to use for the instance"
+    "description": "ID of AMI to use for the instance",
+    "type": "string"
   },
   "associate_public_ip_address": {
     "default": false,
-    "description": "If true, the EC2 instance will have associated public IP address"
+    "description": "If true, the EC2 instance will have associated public IP address",
+    "type": "bool"
   },
   "cpu_credits": {
     "default": "standard",
-    "description": "The credit option for CPU usage (unlimited or standard)"
+    "description": "The credit option for CPU usage (unlimited or standard)",
+    "type": "string"
   },
   "disable_api_termination": {
     "default": false,
-    "description": "If true, enables EC2 Instance Termination Protection"
+    "description": "If true, enables EC2 Instance Termination Protection",
+    "type": "bool"
   },
   "ebs_block_device": {
     "default": [],
-    "description": "Additional EBS block devices to attach to the instance"
+    "description": "Additional EBS block devices to attach to the instance",
+    "type": "list(map(string))"
   },
   "ebs_optimized": {
     "default": false,
-    "description": "If true, the launched EC2 instance will be EBS-optimized"
+    "description": "If true, the launched EC2 instance will be EBS-optimized",
+    "type": "bool"
   },
   "ephemeral_block_device": {
     "default": [],
-    "description": "Customize Ephemeral (also known as Instance Store) volumes on the instance"
+    "description": "Customize Ephemeral (also known as Instance Store) volumes on the instance",
+    "type": "list(map(string))"
+  },
+  "get_password_data": {
+    "default": false,
+    "description": "If true, wait for password data to become available and retrieve it.",
+    "type": "bool"
   },
   "iam_instance_profile": {
     "default": "",
-    "description": "The IAM Instance Profile to launch the instance with. Specified as the name of the Instance Profile."
+    "description": "The IAM Instance Profile to launch the instance with. Specified as the name of the Instance Profile.",
+    "type": "string"
   },
   "instance_count": {
     "default": 1,
-    "description": "Number of instances to launch"
+    "description": "Number of instances to launch",
+    "type": "number"
   },
   "instance_initiated_shutdown_behavior": {
     "default": "",
-    "description": "Shutdown behavior for the instance"
+    "description": "Shutdown behavior for the instance",
+    "type": "string"
   },
   "instance_type": {
     "description": "The type of instance to start",
+    "type": "string",
     "cloudcraft_name": "instanceType"
   },
   "ipv6_address_count": {
     "default": 0,
-    "description": "A number of IPv6 addresses to associate with the primary network interface. Amazon EC2 chooses the IPv6 addresses from the range of your subnet."
+    "description": "A number of IPv6 addresses to associate with the primary network interface. Amazon EC2 chooses the IPv6 addresses from the range of your subnet.",
+    "type": "number"
   },
   "ipv6_addresses": {
     "default": [],
-    "description": "Specify one or more IPv6 addresses from the range of the subnet to associate with the primary network interface"
+    "description": "Specify one or more IPv6 addresses from the range of the subnet to associate with the primary network interface",
+    "type": "list(string)"
   },
   "key_name": {
     "default": "",
-    "description": "The key name to use for the instance"
+    "description": "The key name to use for the instance",
+    "type": "string"
   },
   "monitoring": {
     "default": false,
-    "description": "If true, the launched EC2 instance will have detailed monitoring enabled"
+    "description": "If true, the launched EC2 instance will have detailed monitoring enabled",
+    "type": "bool"
   },
   "name": {
-    "description": "Name to be used on all resources as prefix"
+    "description": "Name to be used on all resources as prefix",
+    "type": "string"
   },
   "network_interface": {
     "default": [],
-    "description": "Customize network interfaces to be attached at instance boot time"
+    "description": "Customize network interfaces to be attached at instance boot time",
+    "type": "list(map(string))"
   },
   "placement_group": {
     "default": "",
-    "description": "The Placement Group to start the instance in"
+    "description": "The Placement Group to start the instance in",
+    "type": "string"
   },
   "private_ip": {
     "default": "",
-    "description": "Private IP address to associate with the instance in a VPC"
+    "description": "Private IP address to associate with the instance in a VPC",
+    "type": "string"
+  },
+  "private_ips": {
+    "default": [],
+    "description": "A list of private IP address to associate with the instance in a VPC. Should match the number of instances.",
+    "type": "list(string)"
   },
   "root_block_device": {
     "default": [],
-    "description": "Customize details about the root block device of the instance. See Block Devices below for details"
+    "description": "Customize details about the root block device of the instance. See Block Devices below for details",
+    "type": "list(map(string))"
   },
   "source_dest_check": {
     "default": true,
-    "description": "Controls if traffic is routed to the instance when the destination address does not match the instance. Used for NAT or VPNs."
+    "description": "Controls if traffic is routed to the instance when the destination address does not match the instance. Used for NAT or VPNs.",
+    "type": "bool"
   },
   "subnet_id": {
-    "description": "The VPC Subnet ID to launch in"
+    "default": "",
+    "description": "The VPC Subnet ID to launch in",
+    "type": "string"
+  },
+  "subnet_ids": {
+    "default": [],
+    "description": "A list of VPC Subnet IDs to launch in",
+    "type": "list(string)"
   },
   "tags": {
     "default": {},
-    "description": "A mapping of tags to assign to the resource"
+    "description": "A mapping of tags to assign to the resource",
+    "type": "map(string)"
   },
   "tenancy": {
     "default": "default",
-    "description": "The tenancy of the instance (if the instance is running in a VPC). Available values: default, dedicated, host."
+    "description": "The tenancy of the instance (if the instance is running in a VPC). Available values: default, dedicated, host.",
+    "type": "string"
+  },
+  "use_num_suffix": {
+    "default": false,
+    "description": "Always append numerical suffix to instance name, even if instance_count is 1",
+    "type": "bool"
   },
   "user_data": {
     "default": "",
-    "description": "The user data to provide when launching the instance"
+    "description": "The user data to provide when launching the instance",
+    "type": "string"
   },
   "volume_tags": {
     "default": {},
-    "description": "A mapping of tags to assign to the devices created by the instance at launch time"
+    "description": "A mapping of tags to assign to the devices created by the instance at launch time",
+    "type": "map(string)"
   },
   "vpc_security_group_ids": {
     "description": "A list of security group IDs to associate with",
-    "type": "list"
+    "type": "list(string)"
   }
 }

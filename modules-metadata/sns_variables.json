@@ -1,9 +1,102 @@
 {
+  "application_failure_feedback_role_arn": {
+    "default": "null",
+    "description": "IAM role for failure feedback",
+    "type": "string"
+  },
+  "application_success_feedback_role_arn": {
+    "default": "null",
+    "description": "The IAM role permitted to receive success feedback for this topic",
+    "type": "string"
+  },
+  "application_success_feedback_sample_rate": {
+    "default": "null",
+    "description": "Percentage of success to sample",
+    "type": "string"
+  },
   "create_sns_topic": {
     "default": true,
-    "description": "Whether to create the SNS topic"
+    "description": "Whether to create the SNS topic",
+    "type": "bool"
   },
-  "sns_topic_name": {
-    "description": "The name of the SNS topic to create"
+  "delivery_policy": {
+    "default": "null",
+    "description": "The SNS delivery policy",
+    "type": "string"
+  },
+  "display_name": {
+    "default": "null",
+    "description": "The display name for the SNS topic",
+    "type": "string"
+  },
+  "http_failure_feedback_role_arn": {
+    "default": "null",
+    "description": "IAM role for failure feedback",
+    "type": "string"
+  },
+  "http_success_feedback_role_arn": {
+    "default": "null",
+    "description": "The IAM role permitted to receive success feedback for this topic",
+    "type": "string"
+  },
+  "http_success_feedback_sample_rate": {
+    "default": "null",
+    "description": "Percentage of success to sample",
+    "type": "string"
+  },
+  "kms_master_key_id": {
+    "default": "null",
+    "description": "The ID of an AWS-managed customer master key (CMK) for Amazon SNS or a custom CMK",
+    "type": "string"
+  },
+  "lambda_failure_feedback_role_arn": {
+    "default": "null",
+    "description": "IAM role for failure feedback",
+    "type": "string"
+  },
+  "lambda_success_feedback_role_arn": {
+    "default": "null",
+    "description": "The IAM role permitted to receive success feedback for this topic",
+    "type": "string"
+  },
+  "lambda_success_feedback_sample_rate": {
+    "default": "null",
+    "description": "Percentage of success to sample",
+    "type": "string"
+  },
+  "name": {
+    "default": "null",
+    "description": "The name of the SNS topic to create",
+    "type": "string"
+  },
+  "name_prefix": {
+    "default": "null",
+    "description": "The prefix name of the SNS topic to create",
+    "type": "string"
+  },
+  "policy": {
+    "default": "null",
+    "description": "The fully-formed AWS policy as JSON",
+    "type": "string"
+  },
+  "sqs_failure_feedback_role_arn": {
+    "default": "null",
+    "description": "IAM role for failure feedback",
+    "type": "string"
+  },
+  "sqs_success_feedback_role_arn": {
+    "default": "null",
+    "description": "The IAM role permitted to receive success feedback for this topic",
+    "type": "string"
+  },
+  "sqs_success_feedback_sample_rate": {
+    "default": "null",
+    "description": "Percentage of success to sample",
+    "type": "string"
+  },
+  "tags": {
+    "default": {},
+    "description": "A mapping of tags to assign to all resources",
+    "type": "map(string)"
   }
 }
