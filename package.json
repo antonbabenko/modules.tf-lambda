@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "opencollective-postinstall || true"
   },
   "keywords": [
     "Infrastructure as code",
@@ -18,7 +19,12 @@
     "serverless-plugin-tracing": "^2.0.0"
   },
   "dependencies": {
+    "opencollective-postinstall": "^2.0.2",
     "serverless": "^1.40.0",
     "serverless-python-requirements": "^4.2.5"
+  },
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/modulestf"
   }
 }
