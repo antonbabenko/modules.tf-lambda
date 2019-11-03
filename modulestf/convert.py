@@ -75,13 +75,13 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
     G = graph.G
 
-    # logging.info(pprint(G.nodes.items(), indent=2))
+    logging.info(pprint(G.nodes.items(), indent=2))
 
     resources = []
     parsed_asg_id = set()
     warnings = set()
 
-    supported_node_types = ["rds", "ec2", "elb", "sns", "sqs", "sg", "vpc"]  # "s3", "cloudfront",
+    supported_node_types = ["rds", "ec2", "elb", "sns", "sqs", "sg", "vpc", "s3", "redshift"]  # "cloudfront",
     # supported_node_types = ["sg", "vpc"]
 
     for key, node_complete in G.nodes.items():
@@ -110,9 +110,63 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
         asg_id = node.get("asg_id")
         elb_id = ""
         elb_type = ""
+        tmp_edges = []
 
-        if node.get("type") == "rds":
+        if node.get("type") == "rds" and node.get("engine") in ["aurora-mysql", "aurora-postgresql"]:
+            r = Resource(key, "rds-aurora", node.get("text"))
 
+            r.update_params({
+                "isMultiAZ": node.get("multiAZ"),
+                "db_subnet_group_name": "",
+                "identifier": random_pet(),
+                "username": random_pet(words=1),
+                "password": random_password(),
+                "allocated_storage": 5,
+                "replica_count": 0,
+                "vpc_id": "",
+                "vpc_security_group_ids": [],
+                "allowed_cidr_blocks": ["10.20.0.0/16"]
+            })
+
+            if vpc_id:
+                r.append_dependency(vpc_id)
+                r.update_dynamic_params("db_subnet_group_name",
+                                        "dependency." + vpc_id + ".outputs.database_subnet_group")
+                r.update_dynamic_params("vpc_id",
+                                        "dependency." + vpc_id + ".outputs.vpc_id")
+
+            if sg_id:
+                r.append_dependency(sg_id)
+                r.update_dynamic_params("vpc_security_group_ids", "[dependency." + sg_id + ".outputs.this_security_group_id]")
+                r.update_params({"create_security_group": False})
+
+            if node.get("engine") == "aurora-mysql":
+                r.update_params({
+                    "engine": "aurora-postgres",
+                    "port": "3306",
+                    "engine_version": "5.7.12",
+                })
+            elif node.get("engine") == "postgres":
+                r.update_params({
+                    "engine": "aurora-postgres",
+                    "port": "5432",
+                    "engine_version": "9.6.9",
+                })
+
+            if node.get("role") == "serverless":
+                r.update_params({
+                    "engine": "aurora",
+                    "engine_mode": "serverless",
+                })
+
+            if node.get("role") != "serverless" and node.get("instanceType") and node.get("instanceSize"):
+                r.update_params({
+                    "instanceType": "db." + node.get("instanceType", "") + "." + node.get("instanceSize", ""),
+                })
+
+            resources.append(r.content())
+
+        if node.get("type") == "rds" and node.get("engine") not in ["aurora-mysql", "aurora-postgresql"]:
             r = Resource(key, "rds", node.get("text"))
 
             r.update_params({
@@ -121,7 +175,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                 "identifier": random_pet(),
                 "username": random_pet(words=1),
                 "password": random_password(),
-                "allocated_storage": "5",
+                "allocated_storage": 5,
                 "major_engine_version": "",
                 "family": "",
                 "backup_retention_period": "0",  # Disable backups to create DB faster
@@ -131,19 +185,43 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
             if vpc_id:
                 r.append_dependency(vpc_id)
                 r.update_dynamic_params("db_subnet_group_name",
-                                        "terraform_output." + vpc_id + ".database_subnet_group")
+                                        "dependency." + vpc_id + ".outputs.database_subnet_group")
 
             if sg_id:
                 r.append_dependency(sg_id)
-                r.update_dynamic_params("vpc_security_group_ids", "terraform_output." + sg_id + ".this_security_group_id.to_list")
+                r.update_dynamic_params("vpc_security_group_ids", "[dependency." + sg_id + ".outputs.this_security_group_id]")
 
-            if node.get("engine"):
+            if node.get("engine") == "mysql":
                 r.update_params({
-                    "engine": node.get("engine"),  # node.get("engine") has too many options (not just supported)
+                    "engine": "mysql",
                     "port": "3306",
                     "engine_version": "5.7.19",
                     "major_engine_version": "5.7",
                     "family": "mysql5.7",
+                })
+            elif node.get("engine") == "mariadb":
+                r.update_params({
+                    "engine": "mariadb",
+                    "port": "3306",
+                    "engine_version": "10.3.13",
+                    "major_engine_version": "10.3",
+                    "family": "mariadb10.3",
+                })
+            elif node.get("engine") == "postgres":
+                r.update_params({
+                    "engine": "mariadb",
+                    "port": "5432",
+                    "engine_version": "9.6.9",
+                    "major_engine_version": "9.6",
+                    "family": "postgres9.6",
+                })
+            else:
+                r.update_params({
+                    "engine": node.get("engine"),
+                    "port": "...",
+                    "engine_version": "...",
+                    "major_engine_version": "...",
+                    "family": "...",
                 })
 
             if node.get("instanceType") and node.get("instanceSize"):
@@ -183,11 +261,11 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
                     if vpc_id:
                         r.append_dependency(vpc_id)
-                        r.update_dynamic_params("vpc_zone_identifier", "terraform_output." + vpc_id + ".public_subnets")
+                        r.update_dynamic_params("vpc_zone_identifier", "dependency." + vpc_id + ".outputs.public_subnets")
 
                     if sg_id:
                         r.append_dependency(sg_id)
-                        r.update_dynamic_params("security_groups", "terraform_output." + sg_id + ".this_security_group_id.to_list")
+                        r.update_dynamic_params("security_groups", "[dependency." + sg_id + ".outputs.this_security_group_id]")
 
                     if elb_id and elb_type == "application":
                         r.update_params({
@@ -195,7 +273,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                         })
                         r.append_dependency(elb_id)
                         r.update_dynamic_params("target_group_arns",
-                                                "terraform_output." + elb_id + ".target_group_arns")
+                                                "dependency." + elb_id + ".outputs.target_group_arns")
 
                     if node.get("instanceType") and node.get("instanceSize"):
                         r.update_params({
@@ -235,12 +313,12 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
                 if vpc_id:
                     r.append_dependency(vpc_id)
-                    r.update_dynamic_params("subnets", "terraform_output." + vpc_id + ".public_subnets")
-                    r.update_dynamic_params("vpc_id", "terraform_output." + vpc_id + ".vpc_id")
+                    r.update_dynamic_params("subnets", "dependency." + vpc_id + ".outputs.public_subnets")
+                    r.update_dynamic_params("vpc_id", "dependency." + vpc_id + ".outputs.vpc_id")
 
                 if sg_id:
                     r.append_dependency(sg_id)
-                    r.update_dynamic_params("security_groups", "terraform_output." + sg_id + ".this_security_group_id.to_list")
+                    r.update_dynamic_params("security_groups", "[dependency." + sg_id + ".outputs.this_security_group_id]")
 
             else:
                 r = Resource(key, "elb", node.get("text"))
@@ -249,35 +327,50 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                     "name": random_pet(),
                 })
 
-                # @todo: Use https://github.com/virtuald/pyhcl to convert to valid HCL in tfvars
-                # r.update_params({
-                #     "listener": [{
-                #         "instance_port": "80",
-                #         "instance_protocol": "HTTP",
-                #         "lb_port": "80",
-                #         "lb_protocol": "HTTP"
-                #     }],
-                #     "health_check": [{
-                #         "target": "HTTP:80/",
-                #         "interval": 30,
-                #         "healthy_threshold": 2,
-                #         "unhealthy_threshold": 2,
-                #         "timeout": 5
-                #     }],
-                # })
-
                 if vpc_id:
                     r.append_dependency(vpc_id)
-                    r.update_dynamic_params("subnets", "terraform_output." + vpc_id + ".public_subnets")
+                    r.update_dynamic_params("subnets", "dependency." + vpc_id + ".outputs.public_subnets")
 
                 if sg_id:
                     r.append_dependency(sg_id)
-                    r.update_dynamic_params("security_groups", "terraform_output." + sg_id + ".this_security_group_id.to_list")
+                    r.update_dynamic_params("security_groups", "[dependency." + sg_id + ".this_security_group_id]")
+
+            resources.append(r.content())
+
+        if node.get("type") == "redshift":
+            r = Resource(key, "redshift", node.get("text"))
+
+            r.update_params({
+                "cluster_identifier": random_pet(),
+                "cluster_database_name": random_pet(),
+                "cluster_master_username": random_pet(words=1),
+                "cluster_master_password": random_password(),
+                "nodeCount": node.get("nodeCount"),
+                "subnets": [],
+            })
+
+            if node.get("instanceType") and node.get("instanceSize"):
+                r.update_params({
+                    "instanceType": node.get("instanceType") + "." + node.get("instanceSize"),
+                })
+
+            if vpc_id:
+                r.append_dependency(vpc_id)
+                r.update_dynamic_params("subnets", "dependency." + vpc_id + ".outputs.redshift_subnets")
+
+            if sg_id:
+                r.append_dependency(sg_id)
+                r.update_dynamic_params("vpc_security_group_ids", "[dependency." + sg_id + ".outputs.this_security_group_id]")
 
             resources.append(r.content())
 
         if node.get("type") == "s3":
-            r = Resource(key, "s3", node.get("text"))
+            r = Resource(key, "s3-bucket", node.get("text"))
+
+            r.update_params({
+                "bucket": random_pet(),
+                "region": node.get("region", ""),
+            })
 
             resources.append(r.content())
 
@@ -309,7 +402,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
             if vpc_id:
                 r.append_dependency(vpc_id)
-                r.update_dynamic_params("vpc_id", "terraform_output." + vpc_id + ".vpc_id")
+                r.update_dynamic_params("vpc_id", "dependency." + vpc_id + ".outputs.vpc_id")
 
             resources.append(r.content())
 
@@ -323,6 +416,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                 "public_subnets": [],
                 "private_subnets": [],
                 "database_subnets": [],
+                # "redshift_subnets": [],
             })
 
             resources.append(r.content())

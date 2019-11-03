@@ -3,7 +3,7 @@ terraform {
     commands = get_terraform_commands_that_need_vars()
 
     optional_var_files = [
-      "${get_parent_terragrunt_dir()}/terraform.tfvars",
+      "${get_parent_terragrunt_dir()}/${path_relative_to_include()}/${find_in_parent_folders("regional.tfvars")}",
     ]
   }
 
@@ -14,23 +14,19 @@ terraform {
 
   after_hook "copy_common_main_providers" {
     commands = ["init-from-module"]
-    execute  = ["cp", "${get_parent_terragrunt_dir()}/../../common/main_providers.tf", "."]
+    execute  = ["cp", "${get_parent_terragrunt_dir()}/../common/main_providers.tf", "."]
   }
 
-  after_hook "remove_useless_copy_of_main_providers" {
-    commands = ["init"]
-    execute  = ["rm", "-f", "${get_parent_terragrunt_dir()}/${path_relative_to_include()}/main_providers.tf"]
-  }
-
-  # Expecting terraform.tfvars which is not required in terragrunt 0.19
-  before_hook "update_dynamic_values_in_tfvars" {
-    commands = ["apply", "import", "plan", "refresh"]
-    execute  = ["tfvars-annotations", "${get_parent_terragrunt_dir()}/${path_relative_to_include()}"]
-  }
+  //  Do not delete the copied file because of the odd behavior described in this related issue - https://github.com/gruntwork-io/terragrunt/issues/785
+  //  after_hook "remove_useless_copy_of_main_providers" {
+  //    commands = ["init"]
+  //    execute  = ["rm", "-f", "${get_parent_terragrunt_dir()}/${path_relative_to_include()}/main_providers.tf"]
+  //  }
 }
 
 remote_state {
   backend = "s3"
+  disable_init = tobool(get_env("TERRAGRUNT_DISABLE_INIT", "false"))
 
   config = {
     encrypt        = true

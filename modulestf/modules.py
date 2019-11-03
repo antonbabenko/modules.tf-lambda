@@ -11,8 +11,12 @@ def load_local_json(relative_path):
         return json.load(file)
 
 
+# @todo: Verify support for tuple, object and any.
+# Ref: https://www.terraform.io/docs/configuration/variables.html#type-constraints
 def update_template_variables(var):
     for key, value in var.items():
+
+        # Guess type from default value
         if value.get("default", None) is not None:
             if str(value.get("default")).lower() in ["true", "false"]:
                 value_type = value.get("type", "bool")
@@ -21,7 +25,7 @@ def update_template_variables(var):
             elif type(value.get("default")) is str:
                 value_type = value.get("type", "string")
             elif type(value.get("default")) is int:
-                value_type = value.get("type", "string")
+                value_type = value.get("type", "integer")
             else:
                 value_type = value.get("type", "list")
         else:
@@ -32,17 +36,17 @@ def update_template_variables(var):
         if value_type == "string":
             variable_default = ''
             variable_value_format = '"%s"'
-        elif value_type == "int":
+        elif value_type == "number":
             variable_default = ''
             variable_value_format = '%s'
         elif value_type == "bool":
             variable_default = ''
             variable_value_format = '%s'
             variable_value_format_function = "lower"
-        elif value_type in ["list", "set"]:
+        elif value_type.startswith("list") or value_type.startswith("set"):
             variable_default = []
             variable_value_format = '%s'
-        elif value_type == "map":
+        elif value_type.startswith("map"):
             variable_default = {}
             variable_value_format = '"%s"'
         else:
@@ -61,23 +65,27 @@ def update_template_variables(var):
 
 MODULES = {
     "alb": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-alb.git?ref=v4.0.0",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-alb.git?ref=v4.1.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/alb.json")),
     },
     "elb": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-elb.git?ref=v2.0.0",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-elb.git?ref=v2.2.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/elb.json")),
     },
     "rds": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-rds.git?ref=v2.0.0",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-rds.git?ref=v2.5.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/rds.json")),
     },
+    "rds-aurora": {
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-rds-aurora.git?ref=v2.6.0",
+        "variables": update_template_variables(load_local_json("../modules-metadata/rds-aurora.json")),
+    },
     "autoscaling": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-autoscaling.git?ref=v3.0.0",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-autoscaling.git?ref=v3.1.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/autoscaling.json")),
     },
     "ec2-instance": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-ec2-instance.git?ref=v2.3.0",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-ec2-instance.git?ref=v2.8.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/ec2-instance.json")),
     },
     "sns": {
@@ -89,20 +97,25 @@ MODULES = {
         "variables": update_template_variables(load_local_json("../modules-metadata/sqs.json")),
     },
     "security-group": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-security-group.git?ref=v3.0.1",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-security-group.git?ref=v3.1.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/security-group.json")),
     },
     "vpc": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-vpc.git?ref=v2.6.0",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-vpc.git?ref=v2.17.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/vpc.json")),
     },
-    "s3": {
-        "source": "terraform-aws-modules/s3/aws",
-        "variables": {},
+    "s3-bucket": {
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-s3-bucket.git?ref=v1.0.0",
+        "variables": update_template_variables(load_local_json("../modules-metadata/s3-bucket.json")),
+    },
+    "redshift": {
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-redshift.git?ref=v2.2.0",
+        "variables": update_template_variables(load_local_json("../modules-metadata/redshift.json")),
     },
     "cloudfront": {
         "source": "terraform-aws-modules/cloudfront/aws",
         "variables": {},
     },
-    # @todo: add rds-aurora, eks, iam, redshift
 }
+
+# pprint(MODULES["rds-aurora"])

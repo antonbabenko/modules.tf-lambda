@@ -698,11 +698,6 @@
     "description": "Should be true if you want to provision a CloudWatch Events endpoint to the VPC",
     "type": "bool"
   },
-  "enable_flow_log": {
-    "default": false,
-    "description": "Whether or not to enable VPC Flow Logs",
-    "type": "bool"
-  },
   "enable_git_codecommit_endpoint": {
     "default": false,
     "description": "Should be true if you want to provision an Git Codecommit endpoint to the VPC"
@@ -851,36 +846,6 @@
     "description": "List of EIP IDs to be assigned to the NAT Gateways (used in combination with reuse_nat_ips)",
     "type": "list(string)"
   },
-  "flow_log_cloudwatch_iam_role_arn": {
-    "default": "",
-    "description": "The ARN for the IAM role that's used to post flow logs to a CloudWatch Logs log group. When flow_log_destination_arn is set to ARN of Cloudwatch Logs, this argument needs to be provided.",
-    "type": "string"
-  },
-  "flow_log_cloudwatch_log_group_kms_key_id": {
-    "default": "null",
-    "description": "The ARN of the KMS Key to use when encrypting log data for VPC flow logs.",
-    "type": "string"
-  },
-  "flow_log_cloudwatch_log_group_retention_in_days": {
-    "default": "null",
-    "description": "Specifies the number of days you want to retain log events in the specified log group for VPC flow logs.",
-    "type": "number"
-  },
-  "flow_log_destination_arn": {
-    "default": "",
-    "description": "The ARN of the CloudWatch log group or S3 bucket where VPC Flow Logs will be pushed. If this ARN is a S3 bucket the appropriate permissions need to be set on that bucket's policy. When create_flow_log_cloudwatch_log_group is set to false this argument must be provided. When create_flow_log_cloudwatch_log_group is set to true this argument is ignored.",
-    "type": "string"
-  },
-  "flow_log_destination_type": {
-    "default": "cloud-watch-logs",
-    "description": "Type of flow log destination. Can be s3 or cloud-watch-logs.",
-    "type": "string"
-  },
-  "flow_log_traffic_type": {
-    "default": "ALL",
-    "description": "The type of traffic to capture. Valid values: ACCEPT,REJECT, ALL.",
-    "type": "string"
-  },
   "git_codecommit_endpoint_private_dns_enabled": {
     "default": false,
     "description": "Whether or not to associate a private hosted zone with the specified VPC for Git Codecommit endpoint"
@@ -912,19 +877,6 @@
     "default": {},
     "description": "Additional tags for the internet gateway",
     "type": "map(string)"
-  },
-  "ingress_cidr_blocks": {
-    "default": [
-      {
-        "cidr_blocks": "10.0.0.0/32",
-        "description": "SG",
-        "from_port": 22,
-        "protocol": "tcp",
-        "to_port": 22
-      }
-    ],
-    "description": "Bzzzzz",
-    "type": "list"
   },
   "instance_tenancy": {
     "default": "default",
@@ -1563,11 +1515,6 @@
   "vpc_endpoint_tags": {
     "default": {},
     "description": "Additional tags for the VPC Endpoints",
-    "type": "map(string)"
-  },
-  "vpc_flow_log_tags": {
-    "default": {},
-    "description": "Additional tags for the VPC Flow Logs",
     "type": "map(string)"
   },
   "vpc_tags": {

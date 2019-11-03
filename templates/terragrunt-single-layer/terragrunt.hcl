@@ -5,7 +5,7 @@ terraform {
 }
 
 include {
-  path = "${find_in_parent_folders()}"
+  path = find_in_parent_folders()
 }
 
 {% if this.dependencies|default("") -%}
@@ -16,7 +16,14 @@ dependencies {
     {%- endfor -%}
   ]
 }
-{%- endif %}
+
+{% for value in this.dependencies.split(",") -%}
+dependency "{{ value }}" {
+  config_path = "../{{ value }}"
+}
+
+{% endfor %}
+{%- endif -%}
 
 inputs = {
   {% for key, value in module_variables|dictsort -%}
@@ -49,7 +56,7 @@ inputs = {
   {%- set value_formatted = value.variable_value_format|format(this_value)|lower -%}
   {%- else -%}
 
-  {%- if value.default is not string and value.value_type in ["list", "map"] -%}
+  {%- if value.default is not string and value.value_type in ["list(string)", "map"] -%}
   {%- set value_formatted = this_value|tojson -%}
   {%- else -%}
   {%- set value_formatted = value.variable_value_format|format(this_value) -%}
@@ -57,13 +64,11 @@ inputs = {
 
   {%- endif -%}
 
-  {#- Inline comment for dynamic params -#}
+  {#- Override value with the dynamic dependency -#}
   {%- if key in this.dynamic_params -%}
-  {%- set comment_dynamic_param = " # @tfvars:" ~ this.dynamic_params[key] -%}
-  {%- else -%}
-  {%- set comment_dynamic_param = "" -%}
+  {%- set value_formatted = this.dynamic_params[key] -%}
   {%- endif %}
-  {{ key }} = {{ value_formatted }}{{ comment_dynamic_param }}
+  {{ key }} = {{ value_formatted }}
 
   {% endif -%}
 

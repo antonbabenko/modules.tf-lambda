@@ -1,6 +1,5 @@
 [flake8]
-# @todo: Fix code to not ignore these - F405
-ignore = E203, E266, E501, W503, F403, F401, F405
-max-line-length = 79
+ignore = W504, F401
+max-line-length = 150
 max-complexity = 18
 select = B,C,E,F,W,T4,B9

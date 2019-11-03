@@ -1,3 +1,4 @@
+from builtins import isinstance, list
 from collections import namedtuple
 from pprint import pprint
 
@@ -60,11 +61,11 @@ def populate_graph(data):  # noqa: C901
 
             for group_node in group_nodes:
                 if group_type == "asg":
-                    G.node[group_node]["data"]["asg_id"] = group_id
+                    G.nodes[group_node]["data"]["asg_id"] = group_id
                 elif group_type == "sg":
-                    G.node[group_node]["data"]["sg_id"] = group_id
+                    G.nodes[group_node]["data"]["sg_id"] = group_id
                 elif group_type == "vpc":
-                    G.node[group_node]["data"]["vpc_id"] = group_id
+                    G.nodes[group_node]["data"]["vpc_id"] = group_id
 
     #############
     # CONNECTORS
@@ -136,5 +137,7 @@ def populate_graph(data):  # noqa: C901
     # pprint(texts)
     # pprint(edges, indent=2)
     # pprint(edges_rev)
+
+    # nx.drawing.nx_agraph.write_dot(G, "graph.dot")
 
     return Graph(G, source, regions)

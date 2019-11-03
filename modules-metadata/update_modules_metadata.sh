@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 
+# Locate the directory in which this script is located
+readonly script_path="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+cd $script_path
+
 declare -a MODULES=(rds
+rds-aurora
 ec2-instance
 elb
 alb
@@ -9,7 +15,9 @@ security-group
 sns
 sqs
 vpc
+redshift
 s3-bucket)
+#cloudfront
 
 MODULES_DIR=/Users/Bob/Sites/terraform-aws-modules
 

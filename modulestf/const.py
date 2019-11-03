@@ -5,8 +5,6 @@ BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 
 COOKIECUTTER_TEMPLATES_DIR = os.path.join(BASE_PATH, "../templates")
 
-COOKIECUTTER_TEMPLATES_PREFIX = "terragrunt"  # or "terraform"
-
 OUTPUT_DIR = "output"
 WORK_DIR = "work"
 WORK_DIR_FOR_COOKIECUTTER = "{{ cookiecutter.dir_name }}"

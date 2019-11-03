@@ -1,0 +1,8 @@
+{
+  "cluster_node_type": {
+    "cloudcraft_name": "instanceType"
+  },
+  "cluster_number_of_nodes": {
+    "cloudcraft_name": "nodeCount"
+  }
+}
