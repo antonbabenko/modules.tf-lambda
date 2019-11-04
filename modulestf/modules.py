@@ -101,7 +101,7 @@ MODULES = {
         "variables": update_template_variables(load_local_json("../modules-metadata/security-group.json")),
     },
     "vpc": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-vpc.git?ref=v2.17.0",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-vpc.git?ref=v2.18.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/vpc.json")),
     },
     "s3-bucket": {

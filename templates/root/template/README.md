@@ -1,6 +1,6 @@
 # Infrastructure code for "{{ cookiecutter.source_name }}"
 
-This directory contains automatically generated Terraform infrastructure code from blueprint created using [cloudcraft.co](https://cloudcraft.co/app).
+This repository contains Terraform infrastructure as Terraform code which was automatically generated from blueprint created using [cloudcraft.co](https://cloudcraft.co/app).
 
 Infrastructure consists of multiple layers (
 {%- for value in cookiecutter.dirs.values() -%}
@@ -33,6 +33,11 @@ Alternatively, you can edit `common/main_providers.tf` and use another authentic
 
 
 ## How to use it?
+
+1. Configure access to AWS account
+1. Create infrastructure
+1. Update infrastructure
+
 
 First, you should run `chmod +x common/scripts/update_dynamic_values_in_tfvars.sh`, review and specify all required arguments for each layer. Run this to see all errors:
 

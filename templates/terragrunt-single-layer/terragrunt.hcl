@@ -41,7 +41,7 @@ inputs = {
   {%- endif -%}
 
 
-  {# printing only required variables (required = no default value) and those which were set explicitely #}
+  {# printing only required variables (required = no default value) and those which were set explicitly #}
   {%- if value.default is not defined or tmp_value != None -%}
   # {{ value.description|default() }}
   # type: {{ value.value_type }}

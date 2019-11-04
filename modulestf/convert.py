@@ -459,7 +459,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
             resources.append(r.content())
 
-    # Add aws-data if there was a node with dependant type
+    # Add aws-data if there was a node with dependent type
     if list({"vpc", "ec2"} & node_types):
         r = Resource("aws-data", "aws-data", None)
         resources.append(r.content())

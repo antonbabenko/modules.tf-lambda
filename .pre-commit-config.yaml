@@ -6,7 +6,12 @@ repos:
 - repo: git://github.com/pre-commit/pre-commit-hooks
   rev: v2.4.0
   hooks:
+    - id: check-ast
     - id: check-merge-conflict
     - id: requirements-txt-fixer
     - id: end-of-file-fixer
     - id: flake8
+#- repo: git://github.com/codespell-project/codespell
+#  rev: v1.16.0
+#  hooks:
+#    - id: codespell

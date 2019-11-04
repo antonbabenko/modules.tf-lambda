@@ -813,12 +813,12 @@
   },
   "enable_transfer_endpoint": {
     "default": false,
-    "description": "Should be true if you want to provision a Transfer endpoint tothe VPC",
+    "description": "Should be true if you want to provision a Transfer endpoint to the VPC",
     "type": "bool"
   },
   "enable_transferserver_endpoint": {
     "default": false,
-    "description": "Should be true if you want to provision a Transer Server endpoint to the VPC",
+    "description": "Should be true if you want to provision a Transfer Server endpoint to the VPC",
     "type": "bool"
   },
   "enable_vpn_gateway": {
