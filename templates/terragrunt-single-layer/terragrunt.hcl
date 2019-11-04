@@ -52,14 +52,21 @@ inputs = {
   {%- endif -%}
 
 
+  {#- Convert boolean values from Python (False, True) into HCL (false, true) -#}
   {%- if value.variable_value_format_function == "lower" -%}
   {%- set value_formatted = value.variable_value_format|format(this_value)|lower -%}
   {%- else -%}
 
-  {%- if value.default is not string and value.value_type in ["list(string)", "map"] -%}
+  {%- if value.default is not string and (value.value_type.startswith("list") or value.value_type.startswith("map")) -%}
+  {#- tojson is used to convert single quotes (Python) to double quotes (as in HCL) -#}
   {%- set value_formatted = this_value|tojson -%}
   {%- else -%}
   {%- set value_formatted = value.variable_value_format|format(this_value) -%}
+  {%- endif -%}
+
+  {#- Native HCL expression - Remove prefix "HCL:" and unquote after tojson -#}
+  {%- if value_formatted.startswith("\"HCL:") -%}
+  {%- set value_formatted = value_formatted[5:-1]|replace("\\\"", "\"") -%}
   {%- endif -%}
 
   {%- endif -%}

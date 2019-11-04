@@ -87,6 +87,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
     for key, node_complete in G.nodes.items():
 
         node = node_complete.get("data")
+        node_text = node_complete.get("text")
 
         logging.info("\n========================================\nNode key = %s" % key)
 
@@ -94,10 +95,10 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
             logging.warning("No node 'data' in node - %s" % pformat(node_complete))
             continue
 
-        # logging.info("Node: {}".format(node))
+        logging.info("Node: {}".format(node))
 
-        edges = G.adj[key]
-        logging.info("Edges: {}".format(edges))
+        # edges = G.adj[key]
+        # logging.info("Edges: {}".format(edges))
 
         if node.get("type") not in supported_node_types:
             warnings.add("node type %s is not implemented yet" % node.get("type"))
@@ -125,7 +126,6 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                 "replica_count": 0,
                 "vpc_id": "",
                 "vpc_security_group_ids": [],
-                "allowed_cidr_blocks": ["10.20.0.0/16"]
             })
 
             if vpc_id:
@@ -137,7 +137,8 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
             if sg_id:
                 r.append_dependency(sg_id)
-                r.update_dynamic_params("vpc_security_group_ids", "[dependency." + sg_id + ".outputs.this_security_group_id]")
+                r.update_dynamic_params("vpc_security_group_ids",
+                                        "[dependency." + sg_id + ".outputs.this_security_group_id]")
                 r.update_params({"create_security_group": False})
 
             if node.get("engine") == "aurora-mysql":
@@ -189,7 +190,8 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
             if sg_id:
                 r.append_dependency(sg_id)
-                r.update_dynamic_params("vpc_security_group_ids", "[dependency." + sg_id + ".outputs.this_security_group_id]")
+                r.update_dynamic_params("vpc_security_group_ids",
+                                        "[dependency." + sg_id + ".outputs.this_security_group_id]")
 
             if node.get("engine") == "mysql":
                 r.update_params({
@@ -254,10 +256,12 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                         "max_size": 0,
                         "desired_capacity": 0,
                         "health_check_type": "EC2",
-                        "image_id": "ami-00035f41c82244dab",
+                        "image_id": "HCL:dependency.aws-data.outputs.amazon_linux2_aws_ami_id",
                         "vpc_zone_identifier": [],
                         "security_groups": [],
                     })
+
+                    r.append_dependency("aws-data")
 
                     if vpc_id:
                         r.append_dependency(vpc_id)
@@ -325,6 +329,19 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
                 r.update_params({
                     "name": random_pet(),
+                    "listener": [{
+                        "instance_port": "80",
+                        "instance_protocol": "http",
+                        "lb_port": "80",
+                        "lb_protocol": "http"
+                    }],
+                    "health_check": {
+                        "target": "HTTP:80/",
+                        "interval": 30,
+                        "healthy_threshold": 2,
+                        "unhealthy_threshold": 2,
+                        "timeout": 5,
+                    }
                 })
 
                 if vpc_id:
@@ -333,7 +350,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
                 if sg_id:
                     r.append_dependency(sg_id)
-                    r.update_dynamic_params("security_groups", "[dependency." + sg_id + ".this_security_group_id]")
+                    r.update_dynamic_params("security_groups", "[dependency." + sg_id + ".outputs.this_security_group_id]")
 
             resources.append(r.content())
 
@@ -368,7 +385,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
             r = Resource(key, "s3-bucket", node.get("text"))
 
             r.update_params({
-                "bucket": random_pet(),
+                "bucket": node_text if node_text else random_pet(),
                 "region": node.get("region", ""),
             })
 
@@ -397,7 +414,9 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
             r = Resource(key, "security-group", node.get("text"))
 
             r.update_params({
-                "name": random_pet(),
+                "name": node.get("group_name", random_pet()),
+                "ingress_rules": ["all-all"],
+                "ingress_cidr_blocks": ["0.0.0.0/0"],
             })
 
             if vpc_id:
@@ -409,17 +428,32 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
         if node.get("type") == "vpc":
             r = Resource(key, "vpc", node.get("text"))
 
+            selected_vpc_cidr = "10.0.0.0/16"
+
             r.update_params({
-                "name": random_pet(),
-                "cidr": "",
-                "azs": [],
-                "public_subnets": [],
-                "private_subnets": [],
-                "database_subnets": [],
+                "name": node.get("group_name", random_pet()),
+                "cidr": selected_vpc_cidr,
+                "azs":
+                    "HCL:[for v in dependency.aws-data.outputs.available_aws_availability_zones_names: v]",
+                "public_subnets":
+                    "HCL:[for k,v in dependency.aws-data.outputs.available_aws_availability_zones_names: cidrsubnet(\"" +
+                    selected_vpc_cidr + "\", 8, k)]",
+                "private_subnets":
+                    "HCL:[for k,v in dependency.aws-data.outputs.available_aws_availability_zones_names: cidrsubnet(\"" +
+                    selected_vpc_cidr + "\", 8, k+10)]",
+                "database_subnets":
+                    "HCL:[for k,v in dependency.aws-data.outputs.available_aws_availability_zones_names: cidrsubnet(\"" +
+                    selected_vpc_cidr + "\", 8, k+20)]",
                 # "redshift_subnets": [],
             })
 
+            r.append_dependency("aws-data")
+
             resources.append(r.content())
+
+    # Add aws-data if there was a node with certain types (vpc, asg, ec2...)
+    r = Resource("aws-data", "aws-data", None)
+    resources.append(r.content())
 
     logging.info(pformat(resources))
 

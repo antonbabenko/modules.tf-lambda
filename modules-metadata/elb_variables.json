@@ -34,8 +34,9 @@
     "type": "list(string)"
   },
   "internal": {
+    "default": false,
     "description": "If true, ELB will be an internal ELB",
-    "type": "string"
+    "type": "bool"
   },
   "listener": {
     "description": "A list of listener blocks",

@@ -69,7 +69,7 @@ MODULES = {
         "variables": update_template_variables(load_local_json("../modules-metadata/alb.json")),
     },
     "elb": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-elb.git?ref=v2.2.0",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-elb.git?ref=v2.3.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/elb.json")),
     },
     "rds": {
@@ -114,6 +114,12 @@ MODULES = {
     },
     "cloudfront": {
         "source": "terraform-aws-modules/cloudfront/aws",
+        "variables": {},
+    },
+
+    # Data sources for aws_region and aws_availability_zones
+    "aws-data": {
+        "source": "${get_parent_terragrunt_dir()}/../../modules/aws-data",
         "variables": {},
     },
 }

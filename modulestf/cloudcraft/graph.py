@@ -50,13 +50,15 @@ def populate_graph(data):  # noqa: C901
             group_id = group.get("id")
             group_nodes = group.get("nodes")
             group_region = group.get("region")
+            group_name = group.get("name")
 
             regions.append(group_region)
 
             G.add_node(group_id, data={
                 "type": group_type,
                 "group_nodes": group_nodes,
-                "group_region": group_region
+                "group_region": group_region,
+                "group_name": group_name,
             })
 
             for group_node in group_nodes:
@@ -125,8 +127,8 @@ def populate_graph(data):  # noqa: C901
     # plt.savefig("graph.png")
 
     # pprint(G.edges["0820fb86-ee74-49ce-9fe5-03f610ca5e75"])
-    # print("NODES===")
-    # print(G.nodes.data())
+    pprint("NODES===")
+    pprint(G.nodes.data())
     # print("EDGES===")
     # print(G.edges.data())
 

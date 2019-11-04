@@ -7,9 +7,10 @@ from os import chdir, getcwd, makedirs, mkdir, path
 from pprint import pformat, pprint
 
 from cookiecutter.main import cookiecutter
-from modulestf.const import COOKIECUTTER_TEMPLATES_DIR, OUTPUT_DIR, WORK_DIR, WORK_DIR_FOR_COOKIECUTTER, tmp_dir
-from modulestf.logger import setup_logging
-from modulestf.modules import MODULES
+
+from .const import COOKIECUTTER_TEMPLATES_DIR, OUTPUT_DIR, WORK_DIR, WORK_DIR_FOR_COOKIECUTTER, tmp_dir
+from .logger import setup_logging
+from .modules import MODULES
 
 logger = setup_logging()
 
