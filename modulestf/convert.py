@@ -251,7 +251,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
                             break
 
-                    asg_name = G.nodes.get(asg_id).get("text")
+                    asg_name = G.nodes.get(asg_id, {}).get("text")
 
                     r = Resource(asg_id, "autoscaling", node.get("text"))
 
@@ -297,7 +297,10 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
                 r.update_params({
                     "name": node_text if node_text else random_pet(),
+                    "ami": "HCL:dependency.aws-data.outputs.amazon_linux2_aws_ami_id",
                 })
+
+                r.append_dependency("aws-data")
 
                 if node.get("instanceType") and node.get("instanceSize"):
                     r.update_params({
