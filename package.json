@@ -1,8 +1,9 @@
 {
   "name": "modules.tf-lambda",
-  "version": "1.0.0",
-  "description": "",
+  "version": "2.0.0",
+  "description": "From visual diagrams created with Cloudcraft.co to infrastructure as code using Terraform and Terragrunt",
   "main": "index.js",
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "opencollective-postinstall || true"
@@ -10,18 +11,20 @@
   "keywords": [
     "Infrastructure as code",
     "Terraform",
+    "Terragrunt",
+    "terraform-aws-modules",
     "AWS"
   ],
   "author": "Anton Babenko <anton@antonbabenko.com>",
   "license": "MIT",
   "devDependencies": {
-    "serverless-domain-manager": "^2.6.5",
+    "serverless-domain-manager": "^3.3.0",
     "serverless-plugin-tracing": "^2.0.0"
   },
   "dependencies": {
     "opencollective-postinstall": "^2.0.2",
-    "serverless": "^1.40.0",
-    "serverless-python-requirements": "^4.2.5"
+    "serverless": "1.51.0",
+    "serverless-python-requirements": "^5.0.1"
   },
   "collective": {
     "type": "opencollective",

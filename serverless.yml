@@ -1,13 +1,13 @@
 service: modules-tf
 
-frameworkVersion: ">=1.26.0 <2.0.0"
+#frameworkVersion: ">=1.26.0 <2.0.0"
+frameworkVersion: "1.51.0"
 
 provider:
   name: aws
   runtime: python3.7
   stage: dev
   region: eu-west-1
-#  profile: private-anton
   tracing: true
   timeout: 30
   environment:

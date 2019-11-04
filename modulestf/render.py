@@ -7,9 +7,10 @@ from os import chdir, getcwd, makedirs, mkdir, path
 from pprint import pformat, pprint
 
 from cookiecutter.main import cookiecutter
-from modulestf.const import *
-from modulestf.logger import setup_logging
-from modulestf.modules import *
+
+from .const import COOKIECUTTER_TEMPLATES_DIR, OUTPUT_DIR, WORK_DIR, WORK_DIR_FOR_COOKIECUTTER, tmp_dir
+from .logger import setup_logging
+from .modules import MODULES
 
 logger = setup_logging()
 
@@ -207,7 +208,7 @@ def render_from_modulestf_config(config, source, regions):
         types_text[t] = new_appendix
 
     # Find all templates for single layer once
-    templates_dir = path.realpath(path.join(COOKIECUTTER_TEMPLATES_DIR, COOKIECUTTER_TEMPLATES_PREFIX + "-single-layer"))
+    templates_dir = path.realpath(path.join(COOKIECUTTER_TEMPLATES_DIR, "terragrunt-single-layer"))
     templates_files = find_templates_files(templates_dir)
 
     # Set of used module to load data once
@@ -260,11 +261,11 @@ def render_from_modulestf_config(config, source, regions):
         })
 
     logger.info("Prepare common files")
-    templates_dir = path.realpath(path.join(COOKIECUTTER_TEMPLATES_DIR, COOKIECUTTER_TEMPLATES_PREFIX + "-common-layer/common"))
+    templates_dir = path.realpath(path.join(COOKIECUTTER_TEMPLATES_DIR, "terragrunt-common-layer/common"))
     copy_to_working_dir(templates_dir, "common")
 
     logger.info("Prepare common regional files")
-    templates_dir = path.realpath(path.join(COOKIECUTTER_TEMPLATES_DIR, COOKIECUTTER_TEMPLATES_PREFIX + "-common-layer/region"))
+    templates_dir = path.realpath(path.join(COOKIECUTTER_TEMPLATES_DIR, "terragrunt-common-layer/region"))
     copy_to_working_dir(templates_dir, path.join(source_dir_name, region))
 
     logger.info("Prepare root dir")

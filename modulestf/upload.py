@@ -3,8 +3,9 @@ import uuid
 from hashlib import md5
 
 import boto3
-from modulestf.const import *
-from modulestf.logger import setup_logging
+
+from .const import S3_BUCKET, S3_BUCKET_REGION
+from .logger import setup_logging
 
 logger = setup_logging()
 

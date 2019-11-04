@@ -1,3 +1,4 @@
+from builtins import isinstance, list
 from collections import namedtuple
 from pprint import pprint
 
@@ -49,22 +50,24 @@ def populate_graph(data):  # noqa: C901
             group_id = group.get("id")
             group_nodes = group.get("nodes")
             group_region = group.get("region")
+            group_name = group.get("name")
 
             regions.append(group_region)
 
             G.add_node(group_id, data={
                 "type": group_type,
                 "group_nodes": group_nodes,
-                "group_region": group_region
+                "group_region": group_region,
+                "group_name": group_name,
             })
 
             for group_node in group_nodes:
                 if group_type == "asg":
-                    G.node[group_node]["data"]["asg_id"] = group_id
+                    G.nodes[group_node]["data"]["asg_id"] = group_id
                 elif group_type == "sg":
-                    G.node[group_node]["data"]["sg_id"] = group_id
+                    G.nodes[group_node]["data"]["sg_id"] = group_id
                 elif group_type == "vpc":
-                    G.node[group_node]["data"]["vpc_id"] = group_id
+                    G.nodes[group_node]["data"]["vpc_id"] = group_id
 
     #############
     # CONNECTORS
@@ -124,8 +127,8 @@ def populate_graph(data):  # noqa: C901
     # plt.savefig("graph.png")
 
     # pprint(G.edges["0820fb86-ee74-49ce-9fe5-03f610ca5e75"])
-    # print("NODES===")
-    # print(G.nodes.data())
+    pprint("NODES===")
+    pprint(G.nodes.data())
     # print("EDGES===")
     # print(G.edges.data())
 
@@ -136,5 +139,7 @@ def populate_graph(data):  # noqa: C901
     # pprint(texts)
     # pprint(edges, indent=2)
     # pprint(edges_rev)
+
+    # nx.drawing.nx_agraph.write_dot(G, "graph.dot")
 
     return Graph(G, source, regions)

@@ -77,6 +77,10 @@ $ serverless deploy function --function generate-cloudcraft --stage dev
 $ serverless deploy function --function generate-cloudcraft --stage prod
 ```
 
+## Known issues
+
+* Serverless framework version shouldn't be newer than 1.51.0 unless [this](https://github.com/serverless/serverless/issues/6752) and [this](https://github.com/UnitedIncome/serverless-python-requirements/issues/414) bugs are fixed
+
 ## Authors
 
 This project is created and maintained by [Anton Babenko](https://github.com/antonbabenko) with the help from [different contributors](https://github.com/antonbabenko/modules.tf-lambda/graphs/contributors).

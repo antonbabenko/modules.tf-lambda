@@ -6,12 +6,12 @@ import shutil
 from pprint import pformat, pprint
 
 import requests
-from modulestf.cloudcraft.graph import *
-from modulestf.const import *
-from modulestf.convert import *
+from modulestf.cloudcraft.graph import populate_graph
+from modulestf.const import FINAL_DIR
+from modulestf.convert import convert_graph_to_modulestf_config
 from modulestf.logger import setup_logging
-from modulestf.render import *
-from modulestf.upload import *
+from modulestf.render import prepare_render_dirs, render_from_modulestf_config
+from modulestf.upload import upload_file_to_s3
 
 logger = setup_logging()
 
@@ -41,9 +41,14 @@ def load_data(event):
         logger.info("Blueprint url: %s, response code: %s" % (blueprint_url, r.status_code))
 
         if 403 == r.status_code:
-            raise ValueError("Sharing has been disabled for this blueprint. You have to enable it by clicking 'Export' -> 'Get shareable link' on https://cloudcraft.co/app/", 403)
+            raise ValueError("Sharing has been disabled for this blueprint." +
+                             " You have to enable it by clicking 'Export' -> 'Get shareable link'" +
+                             " on https://cloudcraft.co/app/", 403)
+
         elif r.status_code >= 500:
-            raise ValueError("Something went wrong on cloudcraft side. Can't fetch specified blueprint. Check URL and try again later.", 404)
+            raise ValueError("Something went wrong on cloudcraft side. Can't fetch specified blueprint." +
+                             " Check URL and try again later.", 404)
+
     elif localfile:
         file = open(localfile, 'r')
         data = json.load(file)
@@ -92,7 +97,7 @@ def handler(event, context):
         "body": "",
         "headers": {
             "Location": link,
-            "Access-Control-Allow-Origin" : "*",
+            "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Credentials": True
         },
         "statusCode": 302,
