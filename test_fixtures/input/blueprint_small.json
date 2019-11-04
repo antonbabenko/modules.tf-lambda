@@ -1,19 +1,55 @@
 {
-  "id": "5bc27ab3-55b5-4095-820a-0b2fbfd335a7",
+  "id": "a84ffac3-4d03-48a4-b261-bb3ac38285d5",
   "data": {
     "grid": "infinite",
-    "name": "Cloud-craft former",
+    "name": "hashitalk",
     "text": [
       {
-        "id": "2a465f56-6e9d-4a92-b388-f870ea1ed321",
-        "text": "Auto Scaling",
+        "id": "baed8f37-64d8-461f-8a07-9d29ec970775",
+        "text": "RDS-name",
         "type": "isotext",
         "color": "#4286c5",
         "mapPos": {
-          "relTo": "4177d575-3c53-4538-8481-f8d97d4422c7",
+          "relTo": "37bccc85-a83f-4f1f-aafc-3eb78293aefb",
           "offset": [
-            -0.1299999999999999,
-            1.1400000000000001
+            0.125,
+            1
+          ]
+        },
+        "outline": true,
+        "standing": false,
+        "textSize": 25,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "52a08696-d9a8-49c7-bbf0-5d62e45da5e3",
+        "text": "asg-name",
+        "type": "isotext",
+        "color": "#4286c5",
+        "mapPos": {
+          "relTo": "e8a7caf4-3075-49d4-b085-ff407dbfd7e9",
+          "offset": [
+            -0.5049999999999999,
+            1.1400000000000006
+          ]
+        },
+        "outline": true,
+        "standing": false,
+        "textSize": 25,
+        "direction": "down",
+        "isometric": true
+      },
+      {
+        "id": "8e76ebea-0ab2-49d5-b8a0-191d18634df7",
+        "text": "one-ec2",
+        "type": "isotext",
+        "color": "#4286c5",
+        "mapPos": {
+          "relTo": "75614915-5ccc-44b8-9b7f-9b049a413635",
+          "offset": [
+            0.125,
+            1
           ]
         },
         "outline": true,
@@ -25,26 +61,11 @@
     ],
     "edges": [
       {
-        "id": "20617df0-c3ae-4a86-a031-c9f5b4e716e4-4177d575-3c53-4538-8481-f8d97d4422c7",
-        "to": "4177d575-3c53-4538-8481-f8d97d4422c7",
-        "from": "20617df0-c3ae-4a86-a031-c9f5b4e716e4",
+        "id": "e8a7caf4-3075-49d4-b085-ff407dbfd7e9-37bccc85-a83f-4f1f-aafc-3eb78293aefb",
+        "to": "37bccc85-a83f-4f1f-aafc-3eb78293aefb",
+        "from": "e8a7caf4-3075-49d4-b085-ff407dbfd7e9",
         "type": "autoedge",
-        "color": {
-          "2d": "#000000",
-          "isometric": "#000000"
-        },
-        "width": 2,
-        "dashed": false,
-        "endCap": "arrow"
-      },
-      {
-        "to": "20617df0-c3ae-4a86-a031-c9f5b4e716e4",
-        "from": "1aef5cd0-e950-4ad5-abaa-03c30491c169",
-        "type": "edge",
-        "color": {
-          "2d": "#000000",
-          "isometric": "#000000"
-        },
+        "color": "#000000",
         "width": 2,
         "dashed": false,
         "endCap": "arrow"
@@ -53,111 +74,160 @@
     "icons": [],
     "nodes": [
       {
-        "id": "3ebaed5b-52c0-4bde-b309-69af0027bc5e",
-        "type": "ec2",
-        "color": {
-          "2d": "#d86613",
-          "isometric": "#ececed"
-        },
+        "id": "37bccc85-a83f-4f1f-aafc-3eb78293aefb",
+        "role": "primary",
+        "type": "rds",
+        "color": "#ececed",
+        "engine": "mysql",
         "mapPos": [
-          -11,
-          -4.5
+          4.5,
+          3.75
         ],
         "region": "eu-west-1",
-        "platform": "linux",
-        "accentColor": {
-          "2d": "#d86613",
-          "isometric": "#4286c5"
-        },
-        "transparent": false,
+        "multiAZ": true,
+        "accentColor": "#4286c5",
         "instanceSize": "large",
-        "instanceType": "t3",
-        "billingOptions": {
-          "type": "ri",
-          "utilization": 1,
-          "offeringClass": "standard",
-          "purchaseOption": "No Upfront",
-          "leaseContractLength": 12
-        }
+        "instanceType": "m4",
+        "maximumCapacityUnit": 2,
+        "minimumCapacityUnit": 2
       },
       {
-        "id": "b162f78f-dfb3-4846-844f-2e2e28f0031c",
-        "type": "ec2",
+        "id": "eb3470fe-23ba-4c07-9dcb-0b1cadcf9c85",
+        "type": "s3",
         "color": {
-          "2d": "#d86613",
-          "isometric": "#ececed"
-        },
-        "mapPos": [
-          -10,
-          -4.5
-        ],
-        "region": "eu-west-1",
-        "platform": "linux",
-        "accentColor": {
-          "2d": "#d86613",
+          "2d": "#3f8624",
           "isometric": "#4286c5"
-        },
-        "transparent": false,
-        "instanceSize": "large",
-        "instanceType": "t3",
-        "billingOptions": {
-          "type": "ri",
-          "utilization": 1,
-          "offeringClass": "standard",
-          "purchaseOption": "No Upfront",
-          "leaseContractLength": 12
-        }
-      },
-      {
-        "id": "20617df0-c3ae-4a86-a031-c9f5b4e716e4",
-        "lcu": 1,
-        "type": "elb",
-        "color": {
-          "2d": "#693cc5",
-          "isometric": "#ececed"
         },
         "dataGb": 10,
         "mapPos": [
-          -10.5,
-          0.75
+          -0.25,
+          4.25
         ],
         "region": "eu-west-1",
-        "elbType": "classic",
+        "volumeType": "Standard",
         "accentColor": {
           "2d": "#ffffff",
           "isometric": "#4286c5"
+        },
+        "getAndOtherRequests": 0,
+        "putCopyPostRequests": 0,
+        "lifecycleTransitions": 0
+      },
+      {
+        "id": "974a93a8-e564-48a6-9434-6e5946a75558",
+        "type": "redshift",
+        "color": "#80b1dc",
+        "mapPos": [
+          -2,
+          7
+        ],
+        "region": "eu-west-1",
+        "nodeCount": 1,
+        "accentColor": {
+          "2d": "#ffffff",
+          "isometric": "#ffffff"
+        },
+        "instanceSize": "large",
+        "instanceType": "dc2"
+      },
+      {
+        "id": "75614915-5ccc-44b8-9b7f-9b049a413635",
+        "type": "ec2",
+        "color": {
+          "2d": "#d86613",
+          "isometric": "#ececed"
+        },
+        "mapPos": [
+          11,
+          8.75
+        ],
+        "region": "eu-west-1",
+        "platform": "linux",
+        "accentColor": {
+          "2d": "#d86613",
+          "isometric": "#4286c5"
+        },
+        "transparent": false,
+        "instanceSize": "large",
+        "instanceType": "t3",
+        "billingOptions": {
+          "type": "ri",
+          "utilization": 1,
+          "offeringClass": "standard",
+          "purchaseOption": "No Upfront",
+          "leaseContractLength": 12
         }
       },
       {
-        "id": "1aef5cd0-e950-4ad5-abaa-03c30491c169",
-        "type": "user",
+        "id": "3695999f-958f-43bc-9f2d-1f6ed132a9b9",
+        "type": "ec2",
         "color": {
-          "2d": "#232f3e",
-          "isometric": "#000000"
+          "2d": "#d86613",
+          "isometric": "#ececed"
         },
         "mapPos": [
-          -10.5,
-          5
+          4,
+          9
         ],
-        "direction": "down"
+        "region": "eu-west-1",
+        "platform": "linux",
+        "accentColor": {
+          "2d": "#d86613",
+          "isometric": "#4286c5"
+        },
+        "transparent": false,
+        "instanceSize": "large",
+        "instanceType": "t2",
+        "billingOptions": {
+          "type": "si",
+          "utilization": 1,
+          "offeringClass": "standard",
+          "purchaseOption": "No Upfront",
+          "leaseContractLength": 12
+        }
+      },
+      {
+        "id": "e370b986-c558-452f-a988-3f92b6c72670",
+        "type": "ec2",
+        "color": {
+          "2d": "#d86613",
+          "isometric": "#ececed"
+        },
+        "mapPos": [
+          5,
+          9
+        ],
+        "region": "eu-west-1",
+        "platform": "linux",
+        "accentColor": {
+          "2d": "#d86613",
+          "isometric": "#4286c5"
+        },
+        "transparent": false,
+        "instanceSize": "large",
+        "instanceType": "t2",
+        "billingOptions": {
+          "type": "si",
+          "utilization": 1,
+          "offeringClass": "standard",
+          "purchaseOption": "No Upfront",
+          "leaseContractLength": 12
+        }
       }
     ],
     "groups": [
       {
-        "id": "4177d575-3c53-4538-8481-f8d97d4422c7",
+        "id": "e8a7caf4-3075-49d4-b085-ff407dbfd7e9",
         "type": "asg",
-        "color": {
-          "2d": "#f5b720",
-          "isometric": "#f5b720"
-        },
+        "color": "#f5b720",
         "nodes": [
-          "3ebaed5b-52c0-4bde-b309-69af0027bc5e",
-          "b162f78f-dfb3-4846-844f-2e2e28f0031c"
+          "3695999f-958f-43bc-9f2d-1f6ed132a9b9",
+          "e370b986-c558-452f-a988-3f92b6c72670"
         ],
         "layout": "even",
         "mapPos": [
-          -11,
-          -4.5
+          4,
+          9
         ],
         "region": "eu-west-1",
         "mapSize": [
@@ -166,17 +236,12 @@
         ]
       },
       {
-        "id": "269c6a9a-1f39-4cae-9fb6-8ab959276ee8",
-        "name": "asg-sg",
+        "id": "3fa236bd-66f0-4034-b761-49f7e24e56c9",
+        "name": "hashitalk-rds-sg",
         "type": "sg",
-        "color": {
-          "2d": "#9c27b0",
-          "isometric": "#9c27b0"
-        },
+        "color": "#673ab7",
         "nodes": [
-          "4177d575-3c53-4538-8481-f8d97d4422c7",
-          "3ebaed5b-52c0-4bde-b309-69af0027bc5e",
-          "b162f78f-dfb3-4846-844f-2e2e28f0031c"
+          "37bccc85-a83f-4f1f-aafc-3eb78293aefb"
         ],
         "shape": "dynamic",
         "region": "eu-west-1",
@@ -185,15 +250,14 @@
         "outboundRules": []
       },
       {
-        "id": "be5a571a-6108-4d72-81b2-57634bd9fbba",
-        "name": "elb-sg",
+        "id": "e76c023e-611f-4479-8aae-eaf138786467",
+        "name": "hashitalk-asg-sg",
         "type": "sg",
-        "color": {
-          "2d": "#3f51b5",
-          "isometric": "#3f51b5"
-        },
+        "color": "#2196f3",
         "nodes": [
-          "20617df0-c3ae-4a86-a031-c9f5b4e716e4"
+          "e8a7caf4-3075-49d4-b085-ff407dbfd7e9",
+          "3695999f-958f-43bc-9f2d-1f6ed132a9b9",
+          "e370b986-c558-452f-a988-3f92b6c72670"
         ],
         "shape": "dynamic",
         "region": "eu-west-1",
@@ -202,20 +266,18 @@
         "outboundRules": []
       },
       {
-        "id": "657db48c-68ff-4589-a659-c051d830a288",
-        "name": "my-vpc",
+        "id": "f3e4dffa-dd6e-4ce7-ae37-544663f6a439",
+        "name": "hashitalk-vpc",
         "type": "vpc",
-        "color": {
-          "2d": "#00bcd4",
-          "isometric": "#00bcd4"
-        },
+        "color": "#00bcd4",
         "nodes": [
-          "4177d575-3c53-4538-8481-f8d97d4422c7",
-          "3ebaed5b-52c0-4bde-b309-69af0027bc5e",
-          "b162f78f-dfb3-4846-844f-2e2e28f0031c",
-          "269c6a9a-1f39-4cae-9fb6-8ab959276ee8",
-          "20617df0-c3ae-4a86-a031-c9f5b4e716e4",
-          "be5a571a-6108-4d72-81b2-57634bd9fbba"
+          "e8a7caf4-3075-49d4-b085-ff407dbfd7e9",
+          "3695999f-958f-43bc-9f2d-1f6ed132a9b9",
+          "e370b986-c558-452f-a988-3f92b6c72670",
+          "37bccc85-a83f-4f1f-aafc-3eb78293aefb",
+          "3fa236bd-66f0-4034-b761-49f7e24e56c9",
+          "e76c023e-611f-4479-8aae-eaf138786467",
+          "75614915-5ccc-44b8-9b7f-9b049a413635"
         ],
         "shape": "dynamic",
         "region": "eu-west-1",
@@ -224,26 +286,17 @@
       }
     ],
     "images": [],
-    "linkKey": "RHrwHiqnO9XyuorxgNrsNA",
     "version": 1,
     "surfaces": [],
     "shareDocs": false,
     "connectors": [],
-    "projection": "2d",
-    "liveAccount": {
-      "id": "a0e546e7-f992-4555-97c3-808f3618e567",
-      "type": "aws"
-    },
+    "projection": "isometric",
     "disabledLayers": []
   },
-  "readAccess": [
-    "team/5bd89db3-a9bf-4606-91c4-72d1c659e325"
-  ],
-  "writeAccess": [
-    "team/5bd89db3-a9bf-4606-91c4-72d1c659e325"
-  ],
-  "createdAt": "2019-05-09T18:23:13.768Z",
-  "updatedAt": "2019-11-03T18:11:35.204Z",
+  "readAccess": null,
+  "writeAccess": null,
+  "createdAt": "2019-02-19T10:16:30.193Z",
+  "updatedAt": "2019-11-04T14:09:15.791Z",
   "CreatorId": "354474ae-8248-45a8-a1ef-34de7c2a4d47",
   "LastUserId": "354474ae-8248-45a8-a1ef-34de7c2a4d47"
 }

@@ -78,10 +78,11 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
     logging.info(pprint(G.nodes.items(), indent=2))
 
     resources = []
+    node_types = set()
     parsed_asg_id = set()
     warnings = set()
 
-    supported_node_types = ["rds", "ec2", "elb", "sns", "sqs", "sg", "vpc", "s3", "redshift"]  # "cloudfront",
+    supported_node_types = ["rds", "ec2", "elb", "sns", "sqs", "sg", "vpc", "s3", "redshift"]
     # supported_node_types = ["sg", "vpc"]
 
     for key, node_complete in G.nodes.items():
@@ -109,6 +110,8 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
         vpc_id = node.get("vpc_id")
         sg_id = node.get("sg_id")
         asg_id = node.get("asg_id")
+        node_types.add(node.get("type"))
+
         elb_id = ""
         elb_type = ""
         tmp_edges = []
@@ -173,7 +176,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
             r.update_params({
                 "isMultiAZ": node.get("multiAZ"),
                 "db_subnet_group_name": "",
-                "identifier": random_pet(),
+                "identifier": node_text if node_text else random_pet(),
                 "username": random_pet(words=1),
                 "password": random_password(),
                 "allocated_storage": 5,
@@ -248,10 +251,12 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
                             break
 
+                    asg_name = G.nodes.get(asg_id).get("text")
+
                     r = Resource(asg_id, "autoscaling", node.get("text"))
 
                     r.update_params({
-                        "name": random_pet(),
+                        "name": asg_name if asg_name else random_pet(),
                         "min_size": 0,
                         "max_size": 0,
                         "desired_capacity": 0,
@@ -291,7 +296,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                 r = Resource(key, "ec2-instance", node.get("text"))
 
                 r.update_params({
-                    "name": random_pet(),
+                    "name": node_text if node_text else random_pet(),
                 })
 
                 if node.get("instanceType") and node.get("instanceSize"):
@@ -451,9 +456,10 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
             resources.append(r.content())
 
-    # Add aws-data if there was a node with certain types (vpc, asg, ec2...)
-    r = Resource("aws-data", "aws-data", None)
-    resources.append(r.content())
+    # Add aws-data if there was a node with dependant type
+    if list({"vpc", "ec2"} & node_types):
+        r = Resource("aws-data", "aws-data", None)
+        resources.append(r.content())
 
     logging.info(pformat(resources))
 
