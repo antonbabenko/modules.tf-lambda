@@ -1,7 +1,7 @@
 service: modules-tf
 
 #frameworkVersion: ">=1.26.0 <2.0.0"
-frameworkVersion: "1.51.0"
+frameworkVersion: "1.51.0" # see KNOWN_ISSUES.md
 
 provider:
   name: aws
