@@ -19,6 +19,12 @@ Code in this repository is used for generating infrastructure as Terraform confi
 1. Follow step-by-step instructions in `README.md` which you can find inside of it.
 
 
+### How do the generated Terraform configurations look like?
+
+In [modules.tf-demo](https://github.com/antonbabenko/modules.tf-demo) repository you can see the exact configuration code generated from sample "Web App Reference Architecture":
+
+![Web App Reference Architecture](https://raw.githubusercontent.com/antonbabenko/modules.tf-demo/master/Web%20App%20Reference%20Architecture%20(complete).png)
+
 ## Supporters
 
 <a href="https://cloudcraft.co/" target="_blank"><img src="https://raw.githubusercontent.com/antonbabenko/modules.tf-lambda/master/misc/cloudcraft-logo.png" alt="Cloudcraft - the best way to draw AWS diagrams" width="211" height="56" align="right" /></a>
