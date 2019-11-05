@@ -21,9 +21,15 @@ Code in this repository is used for generating infrastructure as Terraform confi
 
 ## How do the generated Terraform configurations look like?
 
-In [modules.tf-demo](https://github.com/antonbabenko/modules.tf-demo) repository you can see the exact configuration code generated from sample "Web App Reference Architecture":
+In [modules.tf-demo](https://github.com/antonbabenko/modules.tf-demo) repository you can see the exact configuration code generated from sample "Web App Reference Architecture".
 
-[![Web App Reference Architecture](https://raw.githubusercontent.com/antonbabenko/modules.tf-demo/master/Web%20App%20Reference%20Architecture%20(complete).png)](https://github.com/antonbabenko/modules.tf-demo)
+<details><summary>See original infrastructure</summary>
+<p><img src="https://raw.githubusercontent.com/antonbabenko/modules.tf-demo/master/Web%20App%20Reference%20Architecture%20(complete).png" alt="Web App Reference Architecture" width="600" /></p>
+</details>
+
+<details><summary>See the movie of complete execution</summary>
+<p><a href="https://asciinema.org/a/32rkyxIBJ2K4taqZLSlKYNDDI" target="_blank"><img src="https://asciinema.org/a/32rkyxIBJ2K4taqZLSlKYNDDI.svg" alt="modules.tf demo - November 2019"/></a></p>
+</details>
 
 
 ## Supporters
