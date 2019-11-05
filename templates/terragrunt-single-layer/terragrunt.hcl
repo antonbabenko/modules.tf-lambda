@@ -1,5 +1,6 @@
 {%- set module_source = cookiecutter.module_sources[this.module_type] -%}
 {%- set module_variables = cookiecutter.module_variables[this.module_type] -%}
+{%- set module_registry_url = cookiecutter.module_registry_urls[this.module_type] -%}
 terraform {
   source = "{{ module_source }}"
 }
@@ -25,6 +26,12 @@ dependency "{{ value }}" {
 {% endfor %}
 {%- endif -%}
 
+{%- if module_registry_url -%}
+###########################################################
+# View all available inputs for this module:
+# {{ module_registry_url }}?tab=inputs
+###########################################################
+{%- endif %}
 inputs = {
   {% for key, value in module_variables|dictsort -%}
 

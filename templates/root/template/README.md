@@ -40,7 +40,7 @@ Alternatively, you can edit `common/main_providers.tf` and use another authentic
 Infrastructure consists of multiple layers (
 {%- for value in cookiecutter.dirs.values() -%}
 {%- if loop.index < 4 -%}
-{{ value }}{%- if loop.index < 4 -%}, {% endif -%}
+{{ value }}{%- if loop.index < 4 and not loop.last -%}, {% endif -%}
 {%- elif loop.index == 4 -%}...{%- endif -%}
 {%- endfor -%}
 ) where each layer is described using one [Terraform module](https://www.terraform.io/docs/configuration/modules.html) with `inputs` arguments specified in `terragrunt.hcl` in respective layer's directory.

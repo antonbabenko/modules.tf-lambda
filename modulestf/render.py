@@ -250,10 +250,14 @@ def render_from_modulestf_config(config, source, regions):
 
         used_modules.add(used_module_type)
 
-    extra_context = dict({"module_sources": {}, "module_variables": {}})
+    extra_context = dict({"module_sources": {}, "module_registry_urls": {}, "module_variables": {}})
     for module_type in used_modules:
         extra_context["module_sources"].update({
             module_type: MODULES[module_type]["source"],
+        })
+
+        extra_context["module_registry_urls"].update({
+            module_type: MODULES[module_type]["registry_url"],
         })
 
         extra_context["module_variables"].update({

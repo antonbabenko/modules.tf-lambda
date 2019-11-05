@@ -66,60 +66,74 @@ def update_template_variables(var):
 MODULES = {
     "alb": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-alb.git?ref=v4.1.0",
+        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/alb/aws/4.1.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/alb.json")),
     },
     "elb": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-elb.git?ref=v2.3.0",
+        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/elb/aws/2.3.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/elb.json")),
     },
     "rds": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-rds.git?ref=v2.5.0",
+        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/rds/aws/2.5.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/rds.json")),
     },
     "rds-aurora": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-rds-aurora.git?ref=v2.6.0",
+        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/rds-aurora/aws/2.6.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/rds-aurora.json")),
     },
     "autoscaling": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-autoscaling.git?ref=v3.1.0",
+        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/autoscaling/aws/3.1.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/autoscaling.json")),
     },
     "ec2-instance": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-ec2-instance.git?ref=v2.8.0",
+        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/ec2-instance/aws/2.8.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/ec2-instance.json")),
     },
     "sns": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-sns.git?ref=v2.0.0",
+        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/sns/aws/2.0.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/sns.json")),
     },
     "sqs": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-sqs.git?ref=v2.0.0",
+        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/sqs/aws/2.0.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/sqs.json")),
     },
     "security-group": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-security-group.git?ref=v3.1.0",
+        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/security-group/aws/3.1.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/security-group.json")),
     },
     "vpc": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-vpc.git?ref=v2.18.0",
+        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/vpc/aws/2.18.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/vpc.json")),
     },
     "s3-bucket": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-s3-bucket.git?ref=v1.0.0",
+        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/s3-bucket/aws/1.0.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/s3-bucket.json")),
     },
     "redshift": {
         "source": "git::git@github.com:terraform-aws-modules/terraform-aws-redshift.git?ref=v2.2.0",
+        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/redshift/aws/2.2.0",
         "variables": update_template_variables(load_local_json("../modules-metadata/redshift.json")),
     },
     "cloudfront": {
         "source": "terraform-aws-modules/cloudfront/aws",
+        "registry_url": "",
         "variables": {},
     },
 
     # Data sources for aws_region and aws_availability_zones
     "aws-data": {
         "source": "${get_parent_terragrunt_dir()}/../../modules/aws-data",
+        "registry_url": "",
         "variables": {},
     },
 }
