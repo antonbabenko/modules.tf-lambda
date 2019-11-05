@@ -19,11 +19,12 @@ Code in this repository is used for generating infrastructure as Terraform confi
 1. Follow step-by-step instructions in `README.md` which you can find inside of it.
 
 
-### How do the generated Terraform configurations look like?
+## How do the generated Terraform configurations look like?
 
 In [modules.tf-demo](https://github.com/antonbabenko/modules.tf-demo) repository you can see the exact configuration code generated from sample "Web App Reference Architecture":
 
-![Web App Reference Architecture](https://raw.githubusercontent.com/antonbabenko/modules.tf-demo/master/Web%20App%20Reference%20Architecture%20(complete).png)
+[![Web App Reference Architecture](https://raw.githubusercontent.com/antonbabenko/modules.tf-demo/master/Web%20App%20Reference%20Architecture%20(complete).png)](https://github.com/antonbabenko/modules.tf-demo)
+
 
 ## Supporters
 
@@ -33,7 +34,7 @@ This project was partially sponsored by [Cloudcraft - the best way to draw AWS d
 
 Monitoring of serverless applications provided by [Dashbird.io](https://dashbird.io/). <a href="https://dashbird.io/" target="_blank"><img src="https://raw.githubusercontent.com/antonbabenko/modules.tf-lambda/master/misc/dashbird-logo.png" alt="Dashbird - Monitor serverless applications" width="200" height="68" align="right" /></a><br clear="all">
 
-[Become a sponsor to @antonbabenko on GitHub Sponsors](https://github.com/sponsors/antonbabenko/).
+[Become a sponsor to @antonbabenko on GitHub](https://github.com/sponsors/antonbabenko/).
 
 [![@antonbabenko](https://img.shields.io/twitter/follow/antonbabenko.svg?style=flat&label=Follow%20@antonbabenko%20on%20Twitter)](https://twitter.com/antonbabenko) 
 [![@antonbabenko](https://img.shields.io/github/followers/antonbabenko?style=flat&label=Follow%20@antonbabenko%20on%20Github)](https://github.com/antonbabenko) 
