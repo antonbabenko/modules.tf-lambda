@@ -23,14 +23,13 @@ Code in this repository is used for generating infrastructure as Terraform confi
 
 In [modules.tf-demo](https://github.com/antonbabenko/modules.tf-demo) repository you can see the exact configuration code generated from sample "Web App Reference Architecture".
 
-<details><summary>Original infrastructure</summary>
-<p><img src="https://raw.githubusercontent.com/antonbabenko/modules.tf-demo/master/Web%20App%20Reference%20Architecture%20(complete).png" alt="Web App Reference Architecture" width="500" /></p>
-</details>
+### Original infrastructure
 
-<details><summary>Movie of complete code execution</summary>
-<p><a href="https://asciinema.org/a/32rkyxIBJ2K4taqZLSlKYNDDI" target="_blank"><img src="https://asciinema.org/a/32rkyxIBJ2K4taqZLSlKYNDDI.svg" alt="modules.tf demo - November 2019" width="500" /></a></p>
-</details>
+<img src="https://raw.githubusercontent.com/antonbabenko/modules.tf-demo/master/Web%20App%20Reference%20Architecture%20(complete).png" alt="Web App Reference Architecture" width="500" />
 
+### Recording of complete code execution
+
+<a href="https://asciinema.org/a/32rkyxIBJ2K4taqZLSlKYNDDI" target="_blank"><img src="https://asciinema.org/a/32rkyxIBJ2K4taqZLSlKYNDDI.svg" alt="modules.tf demo - November 2019" width="500" /></a>
 
 ## Supporters
 
