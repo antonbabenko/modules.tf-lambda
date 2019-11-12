@@ -62,6 +62,10 @@ def populate_graph(data):  # noqa: C901
             })
 
             for group_node in group_nodes:
+                # some items (like "text") may belong to groups, but are not in "nodes"
+                if group_node not in G.nodes:
+                    continue
+
                 if group_type == "asg":
                     G.nodes[group_node]["data"]["asg_id"] = group_id
                 elif group_type == "sg":
