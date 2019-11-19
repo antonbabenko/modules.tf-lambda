@@ -258,8 +258,8 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                     r.update_params({
                         "name": asg_name if asg_name else random_pet(),
                         "min_size": 0,
-                        "max_size": 0,
-                        "desired_capacity": 0,
+                        "max_size": 1,
+                        "desired_capacity": 1,
                         "health_check_type": "EC2",
                         "image_id": "HCL:dependency.aws-data.outputs.amazon_linux2_aws_ami_id",
                         "vpc_zone_identifier": [],
