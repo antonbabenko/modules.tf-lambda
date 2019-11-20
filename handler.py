@@ -63,19 +63,45 @@ def load_data(event):
 def handler(event, context):
     link = ""
 
+    # ALB response are different:
+    # https://docs.aws.amazon.com/elasticloadbalancing/latest/application/lambda-functions.html#respond-to-load-balancer
+    request_from_lb = bool(event.get("requestContext", {}).get("elb"))
+
+    if request_from_lb and event.get("path") == "/healthz":
+        return {
+            "isBase64Encoded": False,
+            "statusCode": 200,
+            "statusDescription": "200 OK",
+            "headers": {
+                "Content-Type": "text/html"
+            },
+            "body": "Health OK"
+        }
+
     try:
         data = load_data(event)
     except ValueError as error:
         logger.error(error)
 
-        return {
-            "body": error.args[0],
-            "headers": {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Credentials": True
-            },
-            "statusCode": error.args[1],
-        }
+        if request_from_lb:
+            return {
+                "isBase64Encoded": False,
+                "statusCode": error.args[1],
+                "statusDescription": str(error.args[1]) + " Server Error",
+                "headers": {
+                    "Content-Type": "text/html",
+                },
+                "body": error.args[0],
+            }
+        else:
+            return {
+                "body": error.args[0],
+                "headers": {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Credentials": True
+                },
+                "statusCode": error.args[1],
+            }
 
     # logger.info(pformat(data, indent=2))
 
@@ -93,12 +119,22 @@ def handler(event, context):
 
         link = upload_file_to_s3(filename="archive.zip")
 
-    return {
-        "body": "",
-        "headers": {
-            "Location": link,
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Credentials": True
-        },
-        "statusCode": 302,
-    }
+    if request_from_lb:
+        return {
+            "isBase64Encoded": False,
+            "headers": {
+                "Location": link,
+            },
+            "statusCode": 302,
+            "statusDescription": "302 Found",
+        }
+    else:
+        return {
+            "body": "",
+            "headers": {
+                "Location": link,
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Credentials": True
+            },
+            "statusCode": 302,
+        }
