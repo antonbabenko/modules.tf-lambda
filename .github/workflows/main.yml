@@ -55,7 +55,7 @@ jobs:
 
 
       - name: serverless deploy
-        uses: serverless/github-action@v1.53.0
+        uses: serverless/github-action@v1.51.0
         with:
           args: deploy
         env:
