@@ -44,12 +44,12 @@
     "type": "string"
   },
   "db_cluster_parameter_group_name": {
-    "default": "default.aurora5.6",
+    "default": "null",
     "description": "The name of a DB Cluster parameter group to use",
     "type": "string"
   },
   "db_parameter_group_name": {
-    "default": "default.aurora5.6",
+    "default": "null",
     "description": "The name of a DB parameter group to use",
     "type": "string"
   },
@@ -97,6 +97,11 @@
     "default": false,
     "description": "Specifies whether IAM Database authentication should be enabled or not. Not all versions and instances are supported. Refer to the AWS documentation to see which versions are supported.",
     "type": "bool"
+  },
+  "iam_roles": {
+    "default": [],
+    "description": "A List of ARNs for the IAM roles to associate to the RDS Cluster.",
+    "type": "list(string)"
   },
   "instance_type": {
     "description": "Instance type to use",
@@ -202,6 +207,11 @@
     "default": {},
     "description": "Map of nested attributes with scaling properties. Only valid when engine_mode is set to `serverless`",
     "type": "map(string)"
+  },
+  "security_group_description": {
+    "default": "Managed by Terraform",
+    "description": "The description of the security group. If value is set to empty string it will contain cluster name in the description.",
+    "type": "string"
   },
   "skip_final_snapshot": {
     "default": false,

@@ -37,4 +37,14 @@ for module in "${MODULES[@]}"; do
     jq -s '.[0] * .[1]' ${module}_variables.json ${module}_cloudcraft.json > ${module}.json
 
     rm -f "$tmp_file_tf"
+
+    # Write module version
+    pushd ${MODULES_DIR}/terraform-aws-${module} > /dev/null
+    latest_tag=$(git describe --tags --abbrev=0)
+    echo "$module => $latest_tag"
+    popd > /dev/null
+
+    echo -n $latest_tag > ${module}_version.txt
+
+    echo "*********"
 done
