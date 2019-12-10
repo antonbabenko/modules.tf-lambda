@@ -12,4 +12,6 @@ LABEL "com.github.actions.icon"="zap"
 LABEL "com.github.actions.color"="red"
 
 RUN npm i -g serverless@1.51.0
+RUN npm install
+
 ENTRYPOINT ["serverless"]
