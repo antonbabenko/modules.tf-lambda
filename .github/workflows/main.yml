@@ -1,0 +1,63 @@
+# https://github.com/yildizozan/tenserflow-lambda/blob/2c29535b9af0a396ca13e53aada10e46b0579791/.github/workflows/deploy.yml
+# https://github.com/destination-unknown/destination-unknown-backend-serverless/blob/master/.github/workflows/main.yml
+# https://github.com/search?utf8=%E2%9C%93&q=extension%3Ayml+path%3A.github%2Fworkflows%2F+serverless+python&type=Code&ref=advsearch&l=&l=
+
+name: Verify and autodeploy to staging environment
+
+on:
+  push:
+    branches:
+      - deploy-alb-external
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install --user pipenv
+#          PATH="$PATH:/home/runner/.local/bin"
+#          pipenv install
+#      - name: Update backend
+#        run: |
+#          PATH="$PATH:/home/runner/.local/bin"
+#          pipenv run python import_data/main.py
+#        env:
+#          GOOGLE_SHEETS_API_KEY: ${{ secrets.GOOGLE_SHEETS_API_KEY }}
+#      - uses: stefanzweifel/git-auto-commit-action@v2.3.0
+#        with:
+#          commit_message: Update backend
+#          branch: master
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      - name: Setup Node.js for use with actions
+#        uses: actions/setup-node@v1.1.0
+#        with:
+#          version: 10.x
+#      - name: Install Serverless and run deploy
+#        run: |
+#          npm install -g serverless
+#          yarn install
+#          PATH="$PATH:/home/runner/.local/bin"
+#          serverless deploy
+#        env:
+#          SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
+
+
+      - name: serverless deploy
+        uses: serverless/github-action@v1.53.0
+        with:
+          args: deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
