@@ -53,10 +53,12 @@ jobs:
       #        env:
       #          SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
 
-      - name: npm install
-        uses: actions/npm@master
+      - uses: actions/setup-node@v1
         with:
-          args: install
+          node-version: 12
+
+      - name: Install NPM dependencies
+        run: npm install
 
       - name: serverless deploy
         uses: ./.github/actions/serverless
