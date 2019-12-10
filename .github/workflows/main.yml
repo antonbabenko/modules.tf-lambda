@@ -57,8 +57,10 @@ jobs:
         with:
           node-version: 13
 
-      - name: Install NPM dependencies
-        run: npm install
+      - name: Install Serverless Framework
+        run: |
+          npm install -g serverless@1.51.0
+          npm install
 
       - name: Deploy Lambda function to dev
         run: |
