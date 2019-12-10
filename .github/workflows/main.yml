@@ -55,15 +55,21 @@ jobs:
 
       - uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: 13
 
       - name: Install NPM dependencies
         run: npm install
 
-      - name: serverless deploy
-        uses: ./.github/actions/serverless
-        with:
-          args: deploy
+      - name: Deploy Lambda function to dev
+        run: serverless deploy function --function generate-cloudcraft --stage dev
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#
+#      - name: serverless deploy
+#        uses: ./.github/actions/serverless
+#        with:
+#          args: deploy
+#        env:
+#          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
