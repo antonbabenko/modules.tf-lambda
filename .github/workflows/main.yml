@@ -61,7 +61,9 @@ jobs:
         run: npm install
 
       - name: Deploy Lambda function to dev
-        run: serverless deploy function --function generate-cloudcraft --stage dev
+        run: |
+          PATH="$PATH:/home/runner/.local/bin"
+          serverless deploy function --function generate-cloudcraft --stage dev
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
