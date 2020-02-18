@@ -60,12 +60,17 @@ def load_data(event):
     return data
 
 
+def validation_result(config):
+    return True
+
+
 def handler(event, context):
     link = ""
 
-    # ALB response are different:
+    # ALB response is different:
     # https://docs.aws.amazon.com/elasticloadbalancing/latest/application/lambda-functions.html#respond-to-load-balancer
     request_from_lb = bool(event.get("requestContext", {}).get("elb"))
+    is_validate_action = event.get("path") == "/validate"
 
     if request_from_lb and event.get("path") == "/healthz":
         return {
@@ -108,6 +113,17 @@ def handler(event, context):
     graph = populate_graph(data)
 
     config = convert_graph_to_modulestf_config(graph)
+
+    if is_validate_action:
+        return {
+            "isBase64Encoded": False,
+            "statusCode": 200,
+            "statusDescription": "200 OK",
+            "headers": {
+                "Content-Type": "application/json",
+            },
+            "body": json.dumps(validation_result(config))
+        }
 
     prepare_render_dirs()
 

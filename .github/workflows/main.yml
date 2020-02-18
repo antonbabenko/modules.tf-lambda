@@ -39,7 +39,7 @@ jobs:
       - name: Deploy Lambda function to dev
         run: |
           PATH="$PATH:/home/runner/.local/bin"
-          serverless deploy function --function generate-cloudcraft --stage dev
+          serverless deploy function --function generate-cloudcraft-alb --stage dev
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
