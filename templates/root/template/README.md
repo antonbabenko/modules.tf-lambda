@@ -2,7 +2,7 @@
 
 This repository contains infrastructure as Terraform configurations which were automatically generated from blueprint created using [cloudcraft.co](https://cloudcraft.co/app).
 
-[Terragrunt](https://github.com/gruntwork-io/terragrunt) is used to work with Terraform configurations which allows to orchestrate dependent layers, update arguments dynamically and keep configurations [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
+[Terragrunt](https://terragrunt.gruntwork.io/) is used to work with Terraform configurations which allows to orchestrate dependent layers, update arguments dynamically and keep configurations [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
 
 ## Table of Contents
 
@@ -16,7 +16,7 @@ This repository contains infrastructure as Terraform configurations which were a
 ## Quick start
 
 1. [Install Terraform 0.12 or newer](https://www.terraform.io/intro/getting-started/install.html)
-1. [Install Terragrunt 0.19 or newer](https://github.com/gruntwork-io/terragrunt#install-terragrunt)
+1. [Install Terragrunt 0.22 or newer](https://terragrunt.gruntwork.io/docs/getting-started/install/)
 1. Optionally, [install pre-commit hooks](https://pre-commit.com/#install) to keep Terraform formatting and documentation up-to-date.
 
 If you are using macOS you can install all dependencies using [Homebrew](https://brew.sh/):
@@ -33,7 +33,7 @@ $ export AWS_ACCESS_KEY_ID=...
 $ export AWS_SECRET_ACCESS_KEY=...
 ```
 
-Alternatively, you can edit `common/main_providers.tf` and use another authentication mechanism as described in [AWS provider documentation](https://www.terraform.io/docs/providers/aws/index.html#authentication).
+Alternatively, you can edit `terragrunt.hcl` and use another authentication mechanism as described in [AWS provider documentation](https://www.terraform.io/docs/providers/aws/index.html#authentication).
 
 ## Create and manage your infrastructure
 
@@ -67,7 +67,7 @@ After the confirmation your infrastructure should be created.
 
 ## References
 
-* [Terraform documentation](https://terraform.io/) and [Terragrunt documentation](https://github.com/gruntwork-io/terragrunt/blob/master/README.md) for all available commands and features.
+* [Terraform documentation](https://www.terraform.io/docs/) and [Terragrunt documentation](https://terragrunt.gruntwork.io/docs/) for all available commands and features.
 * [Terraform AWS modules](https://github.com/terraform-aws-modules/).
 * [Terraform modules registry](https://registry.terraform.io/).
 

@@ -4,12 +4,6 @@
 *.tfstate*
 crash.log
 
-# Copies of main_providers.tf
-main_providers.tf
-
-# Except original (see related issue - https://github.com/gruntwork-io/terragrunt/issues/785)
-!common/main_providers.tf
-
 # Secrets are not allowed in general
 *.key
 *.pem

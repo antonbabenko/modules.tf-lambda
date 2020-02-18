@@ -204,6 +204,11 @@
     "description": "A list of security group IDs to assign to the launch configuration",
     "type": "list(string)"
   },
+  "service_linked_role_arn": {
+    "default": "",
+    "description": "The ARN of the service-linked role that the ASG will use to call other AWS services.",
+    "type": "string"
+  },
   "spot_price": {
     "default": "",
     "description": "The price to use for reserving spot instances",

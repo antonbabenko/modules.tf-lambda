@@ -78,6 +78,21 @@
     "description": "The CIDR block for the VPC. Default value is a valid CIDR, but not acceptable by AWS and should be overridden",
     "type": "string"
   },
+  "cloud_directory_endpoint_private_dns_enabled": {
+    "default": false,
+    "description": "Whether or not to associate a private hosted zone with the specified VPC for Cloud Directory endpoint",
+    "type": "bool"
+  },
+  "cloud_directory_endpoint_security_group_ids": {
+    "default": [],
+    "description": "The ID of one or more security groups to associate with the network interface for Cloud Directory endpoint",
+    "type": "list(string)"
+  },
+  "cloud_directory_endpoint_subnet_ids": {
+    "default": [],
+    "description": "The ID of one or more subnets in which to create a network interface for Cloud Directory endpoint. Only a single subnet within an AZ is supported. Ifomitted, private subnets will be used.",
+    "type": "list(string)"
+  },
   "cloudformation_endpoint_private_dns_enabled": {
     "default": false,
     "description": "Whether or not to associate a private hosted zone with the specified VPC for Cloudformation endpoint",
@@ -203,6 +218,16 @@
     "default": true,
     "description": "Controls if VPC should be created (it affects almost all resources)",
     "type": "bool"
+  },
+  "customer_gateway_tags": {
+    "default": {},
+    "description": "Additional tags for the Customer Gateway",
+    "type": "map(string)"
+  },
+  "customer_gateways": {
+    "default": {},
+    "description": "Maps of Customer Gateway's attributes (BGP ASN and Gateway's Internet-routable external IP address)",
+    "type": "map(map(any))"
   },
   "database_acl_tags": {
     "default": {},
@@ -493,6 +518,21 @@
     "description": "The ID of one or more subnets in which to create a network interface for ECS Telemetry endpoint. Only a single subnet within an AZ is supported. If omitted, private subnets will be used.",
     "type": "list(string)"
   },
+  "efs_endpoint_private_dns_enabled": {
+    "default": false,
+    "description": "Whether or not to associate a private hosted zone with the specified VPC for EFS endpoint",
+    "type": "bool"
+  },
+  "efs_endpoint_security_group_ids": {
+    "default": [],
+    "description": "The ID of one or more security groups to associate with the network interface for EFS endpoint",
+    "type": "list(string)"
+  },
+  "efs_endpoint_subnet_ids": {
+    "default": [],
+    "description": "The ID of one or more subnets in which to create a network interface for EFS endpoint. Only a single subnet within an AZ is supported. Ifomitted, private subnets will be used.",
+    "type": "list(string)"
+  },
   "elasticache_acl_tags": {
     "default": {},
     "description": "Additional tags for the elasticache subnets network ACL",
@@ -606,6 +646,11 @@
     "description": "Should be true to enable ClassicLink DNS Support for the VPC. Only valid in regions and accounts that support EC2 Classic.",
     "type": "bool"
   },
+  "enable_cloud_directory_endpoint": {
+    "default": false,
+    "description": "Should be true if you want to provision an Cloud Directory endpoint to the VPC",
+    "type": "bool"
+  },
   "enable_cloudformation_endpoint": {
     "default": false,
     "description": "Should be true if you want to provision a Cloudformation endpoint to the VPC",
@@ -686,6 +731,11 @@
   "enable_ecs_telemetry_endpoint": {
     "default": false,
     "description": "Should be true if you want to provision a ECS Telemetry endpoint to the VPC",
+    "type": "bool"
+  },
+  "enable_efs_endpoint": {
+    "default": false,
+    "description": "Should be true if you want to provision an EFS endpoint to the VPC",
     "type": "bool"
   },
   "enable_elasticloadbalancing_endpoint": {
