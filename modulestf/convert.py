@@ -146,13 +146,13 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
             if node.get("engine") == "aurora-mysql":
                 r.update_params({
-                    "engine": "aurora-postgres",
+                    "engine": "aurora-mysql",
                     "port": "3306",
                     "engine_version": "5.7.12",
                 })
             elif node.get("engine") == "postgres":
                 r.update_params({
-                    "engine": "aurora-postgres",
+                    "engine": "aurora-postgresql",
                     "port": "5432",
                     "engine_version": "9.6.9",
                 })
