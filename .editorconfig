@@ -23,7 +23,7 @@ max_line_length = 0
 trim_trailing_whitespace = false
 
 [*.py]
-max_line_length = 120
+max_line_length = 200
 indent_style = space
 indent_size = 4
 ignore_frosted_errors = E103

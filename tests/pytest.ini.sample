@@ -1,0 +1,4 @@
+[pytest]
+addopts = --disable-pytest-warnings
+env =
+  AA=something

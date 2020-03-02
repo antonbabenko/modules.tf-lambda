@@ -43,6 +43,40 @@ functions:
           path: /
           cors: true
 
+  generate-cloudcraft-alb:
+    name: ${self:service}-${self:custom.stage}-generate-cloudcraft
+    handler: handler.handler
+    description: Generate all from Cloudcraft URL (stage=${self:custom.stage})
+    memorySize: 1536
+    events:
+      - alb:
+          # ${ssm:/modulestf/${self:custom.stage}/alb_listener_arn}
+          listenerArn: arn:aws:elasticloadbalancing:eu-west-1:307990089504:listener/app/modulestf/40114c366ec482df/e781b15a76f7bff5
+          priority: 9
+          conditions:
+            path: /.*
+            method:
+              - GET
+              - POST
+              - OPTIONS
+
+  validate-cloudcraft-alb:
+    name: ${self:service}-${self:custom.stage}-validate-cloudcraft
+    handler: handler.handler
+    description: Validate inputs from Cloudcraft (stage=${self:custom.stage})
+    memorySize: 1536
+    events:
+      - alb:
+          # ${ssm:/modulestf/${self:custom.stage}/alb_listener_arn}
+          listenerArn: arn:aws:elasticloadbalancing:eu-west-1:307990089504:listener/app/modulestf/40114c366ec482df/e781b15a76f7bff5
+          priority: 1
+          conditions:
+            path: /validate
+            method:
+              - GET
+              - POST
+              - OPTIONS
+
 plugins:
   - serverless-domain-manager
   - serverless-python-requirements
