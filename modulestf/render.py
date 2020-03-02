@@ -264,9 +264,9 @@ def render_from_modulestf_config(config, source, regions):
             module_type: MODULES[module_type]["variables"],
         })
 
-    logger.info("Prepare common files")
-    templates_dir = path.realpath(path.join(COOKIECUTTER_TEMPLATES_DIR, "terragrunt-common-layer/common"))
-    copy_to_working_dir(templates_dir, "common")
+    # logger.info("Prepare common files")
+    # templates_dir = path.realpath(path.join(COOKIECUTTER_TEMPLATES_DIR, "terragrunt-common-layer/common"))
+    # copy_to_working_dir(templates_dir, "common")
 
     logger.info("Prepare common regional files")
     templates_dir = path.realpath(path.join(COOKIECUTTER_TEMPLATES_DIR, "terragrunt-common-layer/region"))
