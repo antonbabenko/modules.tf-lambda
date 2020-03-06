@@ -66,6 +66,10 @@ def populate_graph(data):  # noqa: C901
                 if group_node not in G.nodes:
                     continue
 
+                # nodes type "icon" does not have "data", so we skip them
+                if "data" not in G.nodes[group_node]:
+                    continue
+
                 if group_type == "asg":
                     G.nodes[group_node]["data"]["asg_id"] = group_id
                 elif group_type == "sg":
@@ -109,7 +113,7 @@ def populate_graph(data):  # noqa: C901
             relTo = mapPos.get("relTo")
 
             if relTo in G.nodes:
-                G.nodes[relTo]["text"] = text["text"]
+                G.nodes[relTo]["text"] = text["text"].strip()
 
     ###########
     # REGION

@@ -4,7 +4,7 @@
     "type": "string"
   },
   "associate_public_ip_address": {
-    "default": false,
+    "default": "null",
     "description": "If true, the EC2 instance will have associated public IP address",
     "type": "bool"
   },
@@ -58,12 +58,12 @@
     "type": "string"
   },
   "ipv6_address_count": {
-    "default": 0,
+    "default": "null",
     "description": "A number of IPv6 addresses to associate with the primary network interface. Amazon EC2 chooses the IPv6 addresses from the range of your subnet.",
     "type": "number"
   },
   "ipv6_addresses": {
-    "default": [],
+    "default": "null",
     "description": "Specify one or more IPv6 addresses from the range of the subnet to associate with the primary network interface",
     "type": "list(string)"
   },
@@ -92,7 +92,7 @@
     "type": "string"
   },
   "private_ip": {
-    "default": "",
+    "default": "null",
     "description": "Private IP address to associate with the instance in a VPC",
     "type": "string"
   },
@@ -137,8 +137,13 @@
     "type": "bool"
   },
   "user_data": {
-    "default": "",
-    "description": "The user data to provide when launching the instance",
+    "default": "null",
+    "description": "The user data to provide when launching the instance. Do not pass gzip-compressed data via this argument; see user_data_base64 instead.",
+    "type": "string"
+  },
+  "user_data_base64": {
+    "default": "null",
+    "description": "Can be used instead of user_data to pass base64-encoded binary data directly. Use this instead of user_data whenever the value is not a valid UTF-8 string. For example, gzip-encoded user data must be base64-encoded and passed via this argument to avoid corruption.",
     "type": "string"
   },
   "volume_tags": {
@@ -147,6 +152,7 @@
     "type": "map(string)"
   },
   "vpc_security_group_ids": {
+    "default": "null",
     "description": "A list of security group IDs to associate with",
     "type": "list(string)"
   }

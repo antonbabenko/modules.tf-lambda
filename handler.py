@@ -60,28 +60,85 @@ def load_data(event):
     return data
 
 
+def validation_result(config):
+    return True
+
+
 def handler(event, context):
     link = ""
+
+    # ALB response is different:
+    # https://docs.aws.amazon.com/elasticloadbalancing/latest/application/lambda-functions.html#respond-to-load-balancer
+    request_from_lb = bool(event.get("requestContext", {}).get("elb"))
+    http_method = event.get("httpMethod")
+    is_validate_action = event.get("path") == "/validate"
+
+    if http_method == "OPTIONS":
+        return {
+            "isBase64Encoded": False,
+            "statusCode": 200,
+            "statusDescription": "200 OK",
+            "headers": {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,x-requested-with",
+                "Access-Control-Allow-Methods": "POST,GET,OPTIONS",
+                # "Access-Control-Allow-Credentials": True  # this header is not allowed by ALB
+            },
+        }
+
+    if request_from_lb and event.get("path") == "/healthz":
+        return {
+            "isBase64Encoded": False,
+            "statusCode": 200,
+            "statusDescription": "200 OK",
+            "headers": {
+                "Content-Type": "text/html"
+            },
+            "body": "Health OK"
+        }
 
     try:
         data = load_data(event)
     except ValueError as error:
         logger.error(error)
 
-        return {
-            "body": error.args[0],
-            "headers": {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Credentials": True
-            },
-            "statusCode": error.args[1],
-        }
+        if request_from_lb:
+            return {
+                "isBase64Encoded": False,
+                "statusCode": error.args[1],
+                "statusDescription": str(error.args[1]) + " Server Error",
+                "headers": {
+                    "Content-Type": "text/html",
+                },
+                "body": error.args[0],
+            }
+        else:
+            return {
+                "body": error.args[0],
+                "headers": {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Credentials": True
+                },
+                "statusCode": error.args[1],
+            }
 
     # logger.info(pformat(data, indent=2))
 
     graph = populate_graph(data)
 
     config = convert_graph_to_modulestf_config(graph)
+
+    if is_validate_action:
+        return {
+            "isBase64Encoded": False,
+            "statusCode": 200,
+            "statusDescription": "200 OK",
+            "headers": {
+                "Content-Type": "application/json",
+            },
+            "body": json.dumps(validation_result(config))
+        }
 
     prepare_render_dirs()
 
@@ -93,12 +150,23 @@ def handler(event, context):
 
         link = upload_file_to_s3(filename="archive.zip")
 
-    return {
-        "body": "",
-        "headers": {
-            "Location": link,
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Credentials": True
-        },
-        "statusCode": 302,
-    }
+    if request_from_lb:
+        return {
+            "isBase64Encoded": False,
+            "headers": {
+                "Location": link,
+                "Access-Control-Allow-Origin": "*",
+            },
+            "statusCode": 302,
+            "statusDescription": "302 Found",
+        }
+    else:
+        return {
+            "body": "",
+            "headers": {
+                "Location": link,
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Credentials": True
+            },
+            "statusCode": 302,
+        }

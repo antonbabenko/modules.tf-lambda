@@ -6,7 +6,8 @@
   },
   "allowed_security_groups": {
     "default": [],
-    "description": "A list of Security Group ID's to allow access to."
+    "description": "A list of Security Group ID's to allow access to.",
+    "type": "list(string)"
   },
   "apply_immediately": {
     "default": false,
@@ -28,6 +29,11 @@
     "description": "How long to keep backups for (in days)",
     "type": "number"
   },
+  "ca_cert_identifier": {
+    "default": "rds-ca-2019",
+    "description": "The identifier of the CA certificate for the DB instance",
+    "type": "string"
+  },
   "copy_tags_to_snapshot": {
     "default": false,
     "description": "Copy all Cluster tags to snapshots.",
@@ -44,12 +50,12 @@
     "type": "string"
   },
   "db_cluster_parameter_group_name": {
-    "default": "default.aurora5.6",
+    "default": "null",
     "description": "The name of a DB Cluster parameter group to use",
     "type": "string"
   },
   "db_parameter_group_name": {
-    "default": "default.aurora5.6",
+    "default": "null",
     "description": "The name of a DB parameter group to use",
     "type": "string"
   },
@@ -97,6 +103,11 @@
     "default": false,
     "description": "Specifies whether IAM Database authentication should be enabled or not. Not all versions and instances are supported. Refer to the AWS documentation to see which versions are supported.",
     "type": "bool"
+  },
+  "iam_roles": {
+    "default": [],
+    "description": "A List of ARNs for the IAM roles to associate to the RDS Cluster.",
+    "type": "list(string)"
   },
   "instance_type": {
     "description": "Instance type to use",
@@ -202,6 +213,11 @@
     "default": {},
     "description": "Map of nested attributes with scaling properties. Only valid when engine_mode is set to `serverless`",
     "type": "map(string)"
+  },
+  "security_group_description": {
+    "default": "Managed by Terraform",
+    "description": "The description of the security group. If value is set to empty string it will contain cluster name in the description.",
+    "type": "string"
   },
   "skip_final_snapshot": {
     "default": false,

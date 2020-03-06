@@ -11,7 +11,6 @@ logger = setup_logging()
 
 
 def upload_file_to_s3(filename):
-
     s3_bucket = os.environ.get("S3_BUCKET", S3_BUCKET)
     s3_dir = os.environ.get("S3_DIR", "local")
 
@@ -26,7 +25,11 @@ def upload_file_to_s3(filename):
         StorageClass="ONEZONE_IA"
     ))
 
-    link = "https://" + s3_bucket + "/" + s3_key
+    # Perfect: With Cloudfront https is available
+    # link = "https://" + s3_bucket + "/" + s3_key
+
+    # Long URL because there is no Cloudfront distribution (yet)
+    link = "https://s3-" + S3_BUCKET_REGION + ".amazonaws.com/" + s3_bucket + "/" + s3_key
 
     logger.info("LINK=" + link)
 

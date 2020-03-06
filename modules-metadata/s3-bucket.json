@@ -9,6 +9,16 @@
     "description": "(Optional) The canned ACL to apply. Defaults to 'private'.",
     "type": "string"
   },
+  "attach_elb_log_delivery_policy": {
+    "default": false,
+    "description": "Controls if S3 bucket should have ELB log delivery policy attached",
+    "type": "bool"
+  },
+  "attach_policy": {
+    "default": false,
+    "description": "Controls if S3 bucket should have bucket policy attached (set to `true` to use value of `policy` as bucket policy)",
+    "type": "bool"
+  },
   "bucket": {
     "default": "null",
     "description": "(Optional, Forces new resource) The name of the bucket. If omitted, Terraform will assign a random, unique name.",

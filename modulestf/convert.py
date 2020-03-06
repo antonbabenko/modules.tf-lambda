@@ -146,13 +146,13 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
             if node.get("engine") == "aurora-mysql":
                 r.update_params({
-                    "engine": "aurora-postgres",
+                    "engine": "aurora-mysql",
                     "port": "3306",
                     "engine_version": "5.7.12",
                 })
             elif node.get("engine") == "postgres":
                 r.update_params({
-                    "engine": "aurora-postgres",
+                    "engine": "aurora-postgresql",
                     "port": "5432",
                     "engine_version": "9.6.9",
                 })
@@ -319,8 +319,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                 r = Resource(key, "alb", node.get("text"))
 
                 r.update_params({
-                    "load_balancer_name": random_pet(),
-                    "logging_enabled": "false",
+                    "name": random_pet(),
                 })
 
                 if vpc_id:
@@ -331,6 +330,18 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                 if sg_id:
                     r.append_dependency(sg_id)
                     r.update_dynamic_params("security_groups", "[dependency." + sg_id + ".outputs.this_security_group_id]")
+
+            elif node.get("elbType") == "network":
+                r = Resource(key, "nlb", node.get("text"))
+
+                r.update_params({
+                    "name": random_pet(),
+                })
+
+                if vpc_id:
+                    r.append_dependency(vpc_id)
+                    r.update_dynamic_params("subnets", "dependency." + vpc_id + ".outputs.public_subnets")
+                    r.update_dynamic_params("vpc_id", "dependency." + vpc_id + ".outputs.vpc_id")
 
             else:
                 r = Resource(key, "elb", node.get("text"))

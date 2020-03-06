@@ -32,6 +32,11 @@
     "description": "The daily time range (in UTC) during which automated backups are created if they are enabled. Example: '09:46-10:16'. Must not overlap with maintenance_window",
     "type": "string"
   },
+  "ca_cert_identifier": {
+    "default": "rds-ca-2019",
+    "description": "Specifies the identifier of the CA certificate for the DB instance",
+    "type": "string"
+  },
   "character_set_name": {
     "default": "",
     "description": "(Optional) The character set name to use for DB encoding in Oracle instances. This can't be changed. See Oracle Character Sets Supported in Amazon RDS for more information",
@@ -49,7 +54,7 @@
   },
   "create_db_option_group": {
     "default": true,
-    "description": "Whether to create a database option group",
+    "description": "(Optional) Create a database option group",
     "type": "bool"
   },
   "create_db_parameter_group": {
@@ -177,8 +182,15 @@
   },
   "option_group_name": {
     "default": "",
-    "description": "Name of the DB option group to associate. Setting this automatically disables option_group creation",
+    "description": "Name of the DB option group to associate",
     "type": "string"
+  },
+  "option_group_timeouts": {
+    "default": {
+      "delete": "15m"
+    },
+    "description": "Define maximum timeout for deletion of `aws_db_option_group` resource",
+    "type": "map(string)"
   },
   "options": {
     "default": [],

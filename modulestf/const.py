@@ -14,6 +14,8 @@ FINAL_DIR = "final"
 S3_BUCKET = "dl.modules.tf"
 S3_BUCKET_REGION = "eu-west-1"
 
+THUNDRA_API_KEY = os.environ.get('THUNDRA_API_KEY')
+
 if os.environ.get("IS_LOCAL"):
     tmp_dir = os.getcwd()
 else:

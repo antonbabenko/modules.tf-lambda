@@ -5,6 +5,15 @@ from pprint import pprint
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 
 
+def get_version(relative_path, remove_v=False):
+    path = os.path.join(BASE_PATH, relative_path)
+    with open(path) as file:
+        if remove_v:
+            return file.read().replace("v", "")
+        else:
+            return file.read()
+
+
 def load_local_json(relative_path):
     path = os.path.join(BASE_PATH, relative_path)
     with open(path) as file:
@@ -65,63 +74,68 @@ def update_template_variables(var):
 
 MODULES = {
     "alb": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-alb.git?ref=v4.1.0",
-        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/alb/aws/4.1.0",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-alb.git?ref=" + get_version("../modules-metadata/alb_version.txt"),
+        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/alb/aws/" + get_version("../modules-metadata/alb_version.txt", True),
+        "variables": update_template_variables(load_local_json("../modules-metadata/alb.json")),
+    },
+    "nlb": {
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-alb.git?ref=" + get_version("../modules-metadata/alb_version.txt"),
+        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/alb/aws/" + get_version("../modules-metadata/alb_version.txt", True),
         "variables": update_template_variables(load_local_json("../modules-metadata/alb.json")),
     },
     "elb": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-elb.git?ref=v2.3.0",
-        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/elb/aws/2.3.0",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-elb.git?ref=" + get_version("../modules-metadata/elb_version.txt"),
+        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/elb/aws/" + get_version("../modules-metadata/elb_version.txt", True),
         "variables": update_template_variables(load_local_json("../modules-metadata/elb.json")),
     },
     "rds": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-rds.git?ref=v2.5.0",
-        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/rds/aws/2.5.0",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-rds.git?ref=" + get_version("../modules-metadata/rds_version.txt"),
+        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/rds/aws/" + get_version("../modules-metadata/rds_version.txt", True),
         "variables": update_template_variables(load_local_json("../modules-metadata/rds.json")),
     },
     "rds-aurora": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-rds-aurora.git?ref=v2.6.0",
-        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/rds-aurora/aws/2.6.0",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-rds-aurora.git?ref=" + get_version("../modules-metadata/rds-aurora_version.txt"),
+        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/rds-aurora/aws/" + get_version("../modules-metadata/rds-aurora_version.txt", True),
         "variables": update_template_variables(load_local_json("../modules-metadata/rds-aurora.json")),
     },
     "autoscaling": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-autoscaling.git?ref=v3.1.0",
-        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/autoscaling/aws/3.1.0",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-autoscaling.git?ref=" + get_version("../modules-metadata/autoscaling_version.txt"),
+        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/autoscaling/aws/" + get_version("../modules-metadata/autoscaling_version.txt", True),
         "variables": update_template_variables(load_local_json("../modules-metadata/autoscaling.json")),
     },
     "ec2-instance": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-ec2-instance.git?ref=v2.8.0",
-        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/ec2-instance/aws/2.8.0",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-ec2-instance.git?ref=" + get_version("../modules-metadata/ec2-instance_version.txt"),
+        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/ec2-instance/aws/" + get_version("../modules-metadata/ec2-instance_version.txt", True),
         "variables": update_template_variables(load_local_json("../modules-metadata/ec2-instance.json")),
     },
     "sns": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-sns.git?ref=v2.0.0",
-        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/sns/aws/2.0.0",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-sns.git?ref=" + get_version("../modules-metadata/sns_version.txt"),
+        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/sns/aws/" + get_version("../modules-metadata/sns_version.txt", True),
         "variables": update_template_variables(load_local_json("../modules-metadata/sns.json")),
     },
     "sqs": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-sqs.git?ref=v2.0.0",
-        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/sqs/aws/2.0.0",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-sqs.git?ref=" + get_version("../modules-metadata/sqs_version.txt"),
+        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/sqs/aws/" + get_version("../modules-metadata/sqs_version.txt", True),
         "variables": update_template_variables(load_local_json("../modules-metadata/sqs.json")),
     },
     "security-group": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-security-group.git?ref=v3.1.0",
-        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/security-group/aws/3.1.0",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-security-group.git?ref=" + get_version("../modules-metadata/security-group_version.txt"),
+        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/security-group/aws/" + get_version("../modules-metadata/security-group_version.txt", True),
         "variables": update_template_variables(load_local_json("../modules-metadata/security-group.json")),
     },
     "vpc": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-vpc.git?ref=v2.18.0",
-        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/vpc/aws/2.18.0",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-vpc.git?ref=" + get_version("../modules-metadata/vpc_version.txt"),
+        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/vpc/aws/" + get_version("../modules-metadata/vpc_version.txt", True),
         "variables": update_template_variables(load_local_json("../modules-metadata/vpc.json")),
     },
     "s3-bucket": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-s3-bucket.git?ref=v1.0.0",
-        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/s3-bucket/aws/1.0.0",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-s3-bucket.git?ref=" + get_version("../modules-metadata/s3-bucket_version.txt"),
+        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/s3-bucket/aws/" + get_version("../modules-metadata/s3-bucket_version.txt", True),
         "variables": update_template_variables(load_local_json("../modules-metadata/s3-bucket.json")),
     },
     "redshift": {
-        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-redshift.git?ref=v2.2.0",
-        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/redshift/aws/2.2.0",
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-redshift.git?ref=" + get_version("../modules-metadata/redshift_version.txt"),
+        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/redshift/aws/" + get_version("../modules-metadata/redshift_version.txt", True),
         "variables": update_template_variables(load_local_json("../modules-metadata/redshift.json")),
     },
     "cloudfront": {
