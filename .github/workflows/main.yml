@@ -34,6 +34,7 @@ jobs:
       - name: Install Serverless Framework and other
         run: |
           npm install -g serverless
+          pip install -r requirements.txt
 
       - name: Deploy Lambda function to dev
         run: |
