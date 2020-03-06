@@ -41,7 +41,7 @@ jobs:
           which serverless
           which sls
           echo $PATH
-          serverless deploy --stage dev --force --verbose
+          # serverless deploy --stage dev --force --verbose
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
