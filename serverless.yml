@@ -72,7 +72,6 @@ plugins:
   - serverless-python-requirements
   - serverless-plugin-tracing
   - serverless-plugin-thundra
-
 custom:
   stage: ${opt:stage, self:provider.stage}
 
