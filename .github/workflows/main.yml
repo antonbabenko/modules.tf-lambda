@@ -34,6 +34,7 @@ jobs:
       - name: Install Serverless Framework and other
         run: |
           npm install -g serverless
+          npm install -g
           pip install -r requirements.txt
           npm list | grep serverless-python-requirements
 
