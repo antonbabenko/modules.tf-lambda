@@ -35,6 +35,7 @@ jobs:
         run: |
           npm install -g serverless
           pip install -r requirements.txt
+          npm list | grep serverless-python-requirements
 
       - name: Deploy Lambda function to dev
         run: |
