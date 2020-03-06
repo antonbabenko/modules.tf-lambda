@@ -93,6 +93,11 @@
     "description": "(Optional) The prefix applied to the log file names.",
     "type": "string"
   },
+  "owner_account": {
+    "default": "null",
+    "description": "(Optional) The AWS customer account used to create or copy the snapshot. Required if you are restoring a snapshot you do not own, optional if you own the snapshot.",
+    "type": "string"
+  },
   "parameter_group_name": {
     "default": "",
     "description": "The name of the parameter group to be associated with this cluster. If not specified new parameter group will be created.",
@@ -126,6 +131,11 @@
   "snapshot_cluster_identifier": {
     "default": "null",
     "description": "(Optional) The name of the cluster the source snapshot was created from.",
+    "type": "string"
+  },
+  "snapshot_copy_destination_region": {
+    "default": "null",
+    "description": "(Optional) The name of the region where the snapshot will be copied.",
     "type": "string"
   },
   "snapshot_identifier": {

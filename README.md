@@ -37,7 +37,7 @@ In [modules.tf-demo](https://github.com/antonbabenko/modules.tf-demo) repository
 
 This project was partially sponsored by [Cloudcraft - the best way to draw AWS diagrams](https://cloudcraft.co).<br clear="all">
 
-Monitoring of serverless applications provided by [Dashbird.io](https://dashbird.io/). <a href="https://dashbird.io/" target="_blank"><img src="https://raw.githubusercontent.com/antonbabenko/modules.tf-lambda/master/misc/dashbird-logo.png" alt="Dashbird - Monitor serverless applications" width="200" height="68" align="right" /></a><br clear="all">
+Monitoring of serverless applications provided by [Thundra](https://www.thundra.io/).
 
 [Become a sponsor to @antonbabenko on GitHub](https://github.com/sponsors/antonbabenko/).
 

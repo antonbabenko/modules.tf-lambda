@@ -1,7 +1,6 @@
 service: modules-tf
 
-#frameworkVersion: ">=1.26.0 <2.0.0"
-frameworkVersion: "1.51.0" # see KNOWN_ISSUES.md
+frameworkVersion: ">=1.65.0 <2.0.0"
 
 provider:
   name: aws
@@ -10,9 +9,13 @@ provider:
   region: eu-west-1
   tracing: true
   timeout: 30
+#  profile: modules-deploy
   environment:
-    S3_BUCKET: "dl.modules.tf"
+    S3_BUCKET: ${ssm:/modulestf/${self:custom.stage}/dl_bucket_id}
     S3_DIR: ${self:custom.stage}
+    thundra_apiKey: ${ssm:/modulestf/${self:custom.stage}/thundra_api_key~true}
+  alb:
+    targetGroupPrefix: modulestf-
   iamRoleStatements:
     -  Effect: "Allow"
        Action:
@@ -33,67 +36,56 @@ functions:
     handler: handler.handler
     description: Generate all from Cloudcraft URL (stage=${self:custom.stage})
     memorySize: 1536
-    events:
-      - http:
-          method: get
-          path: /
-          cors: true
-      - http:
-          method: post
-          path: /
-          cors: true
-
-  generate-cloudcraft-alb:
-    name: ${self:service}-${self:custom.stage}-generate-cloudcraft
-    handler: handler.handler
-    description: Generate all from Cloudcraft URL (stage=${self:custom.stage})
-    memorySize: 1536
+    package: {}
     events:
       - alb:
-          # ${ssm:/modulestf/${self:custom.stage}/alb_listener_arn}
-          listenerArn: arn:aws:elasticloadbalancing:eu-west-1:307990089504:listener/app/modulestf/40114c366ec482df/e781b15a76f7bff5
-          priority: 9
+          listenerArn: ${ssm:/modulestf/${self:custom.stage}/alb_listener_arn}
+          priority: ${self:custom.alb_priority.${self:custom.stage}}
+          cors: true
           conditions:
-            path: /.*
+            host: ${self:custom.domains.${self:custom.stage}}
+            path: "*"
             method:
               - GET
               - POST
               - OPTIONS
 
-  validate-cloudcraft-alb:
-    name: ${self:service}-${self:custom.stage}-validate-cloudcraft
-    handler: handler.handler
-    description: Validate inputs from Cloudcraft (stage=${self:custom.stage})
-    memorySize: 1536
-    events:
-      - alb:
-          # ${ssm:/modulestf/${self:custom.stage}/alb_listener_arn}
-          listenerArn: arn:aws:elasticloadbalancing:eu-west-1:307990089504:listener/app/modulestf/40114c366ec482df/e781b15a76f7bff5
-          priority: 1
-          conditions:
-            path: /validate
-            method:
-              - GET
-              - POST
-              - OPTIONS
+#  validate-cloudcraft:
+#    name: ${self:service}-${self:custom.stage}-validate-cloudcraft
+#    handler: handler.handler
+#    description: Validate inputs from Cloudcraft (stage=${self:custom.stage})
+#    memorySize: 1536
+#    package: {}
+#    events:
+#      - alb:
+#          # ${ssm:/modulestf/${self:custom.stage}/alb_listener_arn}
+#          listenerArn: ${ssm:/modulestf/${self:custom.stage}/alb_listener_arn}
+#          priority: 1
+#          conditions:
+#            path: /validate
+#            method:
+#              - GET
+#              - POST
+#              - OPTIONS
 
 plugins:
-  - serverless-domain-manager
   - serverless-python-requirements
   - serverless-plugin-tracing
+  - serverless-plugin-thundra
 
 custom:
   stage: ${opt:stage, self:provider.stage}
-  domains:
-    prod: lambda.modules.tf
-    dev: dev-lambda.modules.tf
 
-  customDomain:
-    domainName: "${self:custom.domains.${self:custom.stage}}"
-    basePath: ""
-    stage: "${self:custom.stage}"
-    certificateName: "*.modules.tf"
-    createRoute53Record: true
+  thundra:
+    apiKey: ${ssm:/modulestf/${self:custom.stage}/thundra_api_key~true}
+
+  domains:
+    prod: ${ssm:/modulestf/prod/prod_route53_record_fqdn} # lambda.modules.tf
+    dev: ${ssm:/modulestf/dev/dev_route53_record_fqdn}    # dev-lambda.modules.tf
+
+  alb_priority:
+    prod: 20
+    dev: 10
 
   pythonRequirements:
     fileName: requirements-lambda.txt # requirements-lambda.txt does not have heavy libraries like matplotlib, python-lambda-local which are required for debug locally

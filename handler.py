@@ -70,7 +70,22 @@ def handler(event, context):
     # ALB response is different:
     # https://docs.aws.amazon.com/elasticloadbalancing/latest/application/lambda-functions.html#respond-to-load-balancer
     request_from_lb = bool(event.get("requestContext", {}).get("elb"))
+    http_method = event.get("httpMethod")
     is_validate_action = event.get("path") == "/validate"
+
+    if http_method == "OPTIONS":
+        return {
+            "isBase64Encoded": False,
+            "statusCode": 200,
+            "statusDescription": "200 OK",
+            "headers": {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,x-requested-with",
+                "Access-Control-Allow-Methods": "POST,GET,OPTIONS",
+                # "Access-Control-Allow-Credentials": True  # this header is not allowed by ALB
+            },
+        }
 
     if request_from_lb and event.get("path") == "/healthz":
         return {
@@ -140,6 +155,7 @@ def handler(event, context):
             "isBase64Encoded": False,
             "headers": {
                 "Location": link,
+                "Access-Control-Allow-Origin": "*",
             },
             "statusCode": 302,
             "statusDescription": "302 Found",

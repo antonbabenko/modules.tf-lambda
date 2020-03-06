@@ -6,7 +6,8 @@
   },
   "allowed_security_groups": {
     "default": [],
-    "description": "A list of Security Group ID's to allow access to."
+    "description": "A list of Security Group ID's to allow access to.",
+    "type": "list(string)"
   },
   "apply_immediately": {
     "default": false,
@@ -27,6 +28,11 @@
     "default": 7,
     "description": "How long to keep backups for (in days)",
     "type": "number"
+  },
+  "ca_cert_identifier": {
+    "default": "rds-ca-2019",
+    "description": "The identifier of the CA certificate for the DB instance",
+    "type": "string"
   },
   "copy_tags_to_snapshot": {
     "default": false,
