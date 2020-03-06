@@ -34,6 +34,9 @@ jobs:
       - name: Install Serverless Framework and other
         run: |
           npm install -g
+          which serverless
+          which sls
+          echo $PATH
 
       - name: Deploy Lambda function to dev
         run: |
