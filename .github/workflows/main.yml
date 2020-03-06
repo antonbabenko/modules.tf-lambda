@@ -15,10 +15,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
       - name: Set up Python 3.7
-        uses: actions/setup-python@v1
+        uses: actions/setup-python@v1.1.1
         with:
           python-version: 3.7
 
@@ -27,19 +27,18 @@ jobs:
           python -m pip install --upgrade pip
           pip install --user pipenv
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v1.4.0
         with:
           node-version: 13
 
-      - name: Install Serverless Framework
+      - name: Install Serverless Framework and other
         run: |
-          npm install -g serverless@1.51.0
           npm install
 
       - name: Deploy Lambda function to dev
         run: |
           PATH="$PATH:/home/runner/.local/bin"
-          serverless deploy function --function generate-cloudcraft-alb --stage dev
+          serverless deploy --stage dev --force --verbose
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
