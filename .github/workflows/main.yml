@@ -38,6 +38,9 @@ jobs:
       - name: Deploy Lambda function to dev
         run: |
           PATH="$PATH:/home/runner/.local/bin"
+          which serverless
+          which sls
+          echo $PATH
           serverless deploy --stage dev --force --verbose
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
