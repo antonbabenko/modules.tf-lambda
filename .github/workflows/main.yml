@@ -36,7 +36,6 @@ jobs:
           npm install -g serverless
           npm install
           pip install -r requirements.txt
-          npm list | grep serverless-python-requirements
 
       - name: Deploy Lambda function to dev
         run: |
@@ -45,11 +44,3 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-#      - name: Serverless deploy to dev
-#        uses: serverless/github-action@master
-#        with:
-#          args: deploy --stage dev --force --verbose
-#        env:
-#          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
