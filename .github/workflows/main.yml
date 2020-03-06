@@ -34,11 +34,16 @@ jobs:
       - name: Install Serverless Framework and other
         run: |
           npm install -g
-
-      - name: Serverless deploy to dev
-        uses: serverless/github-action@master
-        with:
-          args: deploy --stage dev --force --verbose
+          PATH="$PATH:/home/runner/.local/bin"
+          serverless deploy --stage dev --force --verbose
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+#      - name: Serverless deploy to dev
+#        uses: serverless/github-action@master
+#        with:
+#          args: deploy --stage dev --force --verbose
+#        env:
+#          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
