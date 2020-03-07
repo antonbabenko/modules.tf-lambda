@@ -110,6 +110,9 @@ def handler(event, context):
                 "statusDescription": str(error.args[1]) + " Server Error",
                 "headers": {
                     "Content-Type": "text/html",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,x-requested-with",
+                    "Access-Control-Allow-Methods": "POST,GET,OPTIONS",
                 },
                 "body": error.args[0],
             }
@@ -136,6 +139,9 @@ def handler(event, context):
             "statusDescription": "200 OK",
             "headers": {
                 "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,x-requested-with",
+                "Access-Control-Allow-Methods": "POST,GET,OPTIONS",
             },
             "body": json.dumps(validation_result(config))
         }
@@ -156,6 +162,8 @@ def handler(event, context):
             "headers": {
                 "Location": link,
                 "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "Content-Type,X-Amz-Date,Authorization,X-Api-Key,x-requested-with",
+                "Access-Control-Allow-Methods": "POST,GET,OPTIONS",
             },
             "statusCode": 302,
             "statusDescription": "302 Found",
