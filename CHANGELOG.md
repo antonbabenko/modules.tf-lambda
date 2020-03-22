@@ -4,8 +4,16 @@ All notable changes to this project will be documented in this file.
 
 <a name="unreleased"></a>
 ## [Unreleased]
+
+
+
+<a name="v1.5.0"></a>
+## [v1.5.0] - 2020-03-22
+CHORES:
+- Added CHANGELOG ([#24](https://github.com/antonbabenko/modules.tf-lambda/issues/24))
+
 FEATURES:
-- Added DynamoDB Table
+- Added DynamoDB Table ([#23](https://github.com/antonbabenko/modules.tf-lambda/issues/23))
 
 
 <a name="v1.4.0"></a>
@@ -33,7 +41,8 @@ FEATURES:
 
 
 
-[Unreleased]: https://github.com/antonbabenko/modules.tf-lambda/compare/v1.4.0...HEAD
+[Unreleased]: https://github.com/antonbabenko/modules.tf-lambda/compare/v1.5.0...HEAD
+[v1.5.0]: https://github.com/antonbabenko/modules.tf-lambda/compare/v1.4.0...v1.5.0
 [v1.4.0]: https://github.com/antonbabenko/modules.tf-lambda/compare/v1.3.0...v1.4.0
 [v1.3.0]: https://github.com/antonbabenko/modules.tf-lambda/compare/v1.2.0...v1.3.0
 [v1.2.0]: https://github.com/antonbabenko/modules.tf-lambda/compare/v1.1.0...v1.2.0
