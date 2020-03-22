@@ -82,7 +82,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
     parsed_asg_id = set()
     warnings = set()
 
-    supported_node_types = ["rds", "ec2", "elb", "sns", "sqs", "sg", "vpc", "s3", "redshift"]
+    supported_node_types = ["rds", "ec2", "elb", "sns", "sqs", "sg", "vpc", "s3", "redshift", "dynamodb"]
     # supported_node_types = ["sg", "vpc"]
 
     for key, node_complete in G.nodes.items():
@@ -397,6 +397,18 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
             if sg_id:
                 r.append_dependency(sg_id)
                 r.update_dynamic_params("vpc_security_group_ids", "[dependency." + sg_id + ".outputs.this_security_group_id]")
+
+            resources.append(r.content())
+
+        if node.get("type") == "dynamodb":
+            r = Resource(key, "dynamodb-table", node.get("text"))
+
+            r.update_params({
+                "name": random_pet(),
+                "read_capacity": node.get("readUnits"),
+                "write_capacity": node.get("writeUnits"),
+                "billing_mode": "PROVISIONED" if node.get("capacityMode") == "provisioned" else "PAY_PER_REQUEST",
+            })
 
             resources.append(r.content())
 
