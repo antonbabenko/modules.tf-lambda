@@ -33,8 +33,8 @@ FEATURES:
 
 
 
-[Unreleased]: https://github.com/terraform-aws-modules/terraform-aws-eks/compare/v1.4.0...HEAD
-[v1.4.0]: https://github.com/terraform-aws-modules/terraform-aws-eks/compare/v1.3.0...v1.4.0
-[v1.3.0]: https://github.com/terraform-aws-modules/terraform-aws-eks/compare/v1.2.0...v1.3.0
-[v1.2.0]: https://github.com/terraform-aws-modules/terraform-aws-eks/compare/v1.1.0...v1.2.0
-[v1.1.0]: https://github.com/terraform-aws-modules/terraform-aws-eks/compare/v1.0.0...v1.1.0
+[Unreleased]: https://github.com/antonbabenko/modules.tf-lambda/compare/v1.4.0...HEAD
+[v1.4.0]: https://github.com/antonbabenko/modules.tf-lambda/compare/v1.3.0...v1.4.0
+[v1.3.0]: https://github.com/antonbabenko/modules.tf-lambda/compare/v1.2.0...v1.3.0
+[v1.2.0]: https://github.com/antonbabenko/modules.tf-lambda/compare/v1.1.0...v1.2.0
+[v1.1.0]: https://github.com/antonbabenko/modules.tf-lambda/compare/v1.0.0...v1.1.0
