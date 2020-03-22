@@ -19,6 +19,16 @@
     "description": "Controls if S3 bucket should have bucket policy attached (set to `true` to use value of `policy` as bucket policy)",
     "type": "bool"
   },
+  "block_public_acls": {
+    "default": false,
+    "description": "Whether Amazon S3 should block public ACLs for this bucket.",
+    "type": "bool"
+  },
+  "block_public_policy": {
+    "default": false,
+    "description": "Whether Amazon S3 should block public bucket policies for this bucket.",
+    "type": "bool"
+  },
   "bucket": {
     "default": "null",
     "description": "(Optional, Forces new resource) The name of the bucket. If omitted, Terraform will assign a random, unique name.",
@@ -42,6 +52,11 @@
   "force_destroy": {
     "default": false,
     "description": "(Optional, Default:false ) A boolean that indicates all objects should be deleted from the bucket so that the bucket can be destroyed without error. These objects are not recoverable.",
+    "type": "bool"
+  },
+  "ignore_public_acls": {
+    "default": false,
+    "description": "Whether Amazon S3 should ignore public ACLs for this bucket.",
     "type": "bool"
   },
   "lifecycle_rule": {
@@ -78,6 +93,11 @@
     "default": "null",
     "description": "(Optional) Specifies who should bear the cost of Amazon S3 data transfer. Can be either BucketOwner or Requester. By default, the owner of the S3 bucket would incur the costs of any data transfer. See Requester Pays Buckets developer guide for more information.",
     "type": "string"
+  },
+  "restrict_public_buckets": {
+    "default": false,
+    "description": "Whether Amazon S3 should restrict public bucket policies for this bucket.",
+    "type": "bool"
   },
   "server_side_encryption_configuration": {
     "default": {},

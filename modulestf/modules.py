@@ -138,6 +138,11 @@ MODULES = {
         "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/redshift/aws/" + get_version("../modules-metadata/redshift_version.txt", True),
         "variables": update_template_variables(load_local_json("../modules-metadata/redshift.json")),
     },
+    "dynamodb-table": {
+        "source": "git::git@github.com:terraform-aws-modules/terraform-aws-dynamodb-table.git?ref=" + get_version("../modules-metadata/dynamodb-table_version.txt"),
+        "registry_url": "https://registry.terraform.io/modules/terraform-aws-modules/dynamodb-table/aws/" + get_version("../modules-metadata/dynamodb-table_version.txt", True),
+        "variables": update_template_variables(load_local_json("../modules-metadata/dynamodb-table.json")),
+    },
     "cloudfront": {
         "source": "terraform-aws-modules/cloudfront/aws",
         "registry_url": "",

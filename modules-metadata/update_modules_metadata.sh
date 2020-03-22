@@ -16,10 +16,11 @@ sns
 sqs
 vpc
 redshift
-s3-bucket)
+s3-bucket
+dynamodb-table)
 #cloudfront
 
-MODULES_DIR=/Users/Bob/Sites/terraform-aws-modules
+MODULES_DIR=~/Sites/terraform-aws-modules
 
 for module in "${MODULES[@]}"; do
 
@@ -34,6 +35,7 @@ for module in "${MODULES[@]}"; do
     # hcltool comes from https://github.com/virtuald/pyhcl/blob/master/scripts/hcltool
     hcltool "$tmp_file_tf" | jq -r '.variable' > ${module}_variables.json
 
+    test -f ${module}_cloudcraft.json || echo "{}" > ${module}_cloudcraft.json
     jq -s '.[0] * .[1]' ${module}_variables.json ${module}_cloudcraft.json > ${module}.json
 
     rm -f "$tmp_file_tf"

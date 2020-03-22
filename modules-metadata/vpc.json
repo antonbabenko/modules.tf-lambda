@@ -204,6 +204,16 @@
     "description": "Controls if separate route table for elasticache should be created",
     "type": "bool"
   },
+  "create_flow_log_cloudwatch_iam_role": {
+    "default": false,
+    "description": "Whether to create IAM role for VPC Flow Logs",
+    "type": "bool"
+  },
+  "create_flow_log_cloudwatch_log_group": {
+    "default": false,
+    "description": "Whether to create CloudWatch log group for VPC Flow Logs",
+    "type": "bool"
+  },
   "create_redshift_subnet_group": {
     "default": true,
     "description": "Controls if redshift subnet group should be created",
@@ -748,6 +758,11 @@
     "description": "Should be true if you want to provision a CloudWatch Events endpoint to the VPC",
     "type": "bool"
   },
+  "enable_flow_log": {
+    "default": false,
+    "description": "Whether or not to enable VPC Flow Logs",
+    "type": "bool"
+  },
   "enable_git_codecommit_endpoint": {
     "default": false,
     "description": "Should be true if you want to provision an Git Codecommit endpoint to the VPC"
@@ -895,6 +910,46 @@
     "default": [],
     "description": "List of EIP IDs to be assigned to the NAT Gateways (used in combination with reuse_nat_ips)",
     "type": "list(string)"
+  },
+  "flow_log_cloudwatch_iam_role_arn": {
+    "default": "",
+    "description": "The ARN for the IAM role that's used to post flow logs to a CloudWatch Logs log group. When flow_log_destination_arn is set to ARN of Cloudwatch Logs, this argument needs to be provided.",
+    "type": "string"
+  },
+  "flow_log_cloudwatch_log_group_kms_key_id": {
+    "default": "null",
+    "description": "The ARN of the KMS Key to use when encrypting log data for VPC flow logs.",
+    "type": "string"
+  },
+  "flow_log_cloudwatch_log_group_name_prefix": {
+    "default": "/aws/vpc-flow-log/",
+    "description": "Specifies the name prefix of CloudWatch Log Group for VPC flow logs.",
+    "type": "string"
+  },
+  "flow_log_cloudwatch_log_group_retention_in_days": {
+    "default": "null",
+    "description": "Specifies the number of days you want to retain log events in the specified log group for VPC flow logs.",
+    "type": "number"
+  },
+  "flow_log_destination_arn": {
+    "default": "",
+    "description": "The ARN of the CloudWatch log group or S3 bucket where VPC Flow Logs will be pushed. If this ARN is a S3 bucket the appropriate permissions need to be set on that bucket's policy. When create_flow_log_cloudwatch_log_group is set to false this argument must be provided.",
+    "type": "string"
+  },
+  "flow_log_destination_type": {
+    "default": "cloud-watch-logs",
+    "description": "Type of flow log destination. Can be s3 or cloud-watch-logs.",
+    "type": "string"
+  },
+  "flow_log_log_format": {
+    "default": "null",
+    "description": "The fields to include in the flow log record, in the order in which they should appear.",
+    "type": "string"
+  },
+  "flow_log_traffic_type": {
+    "default": "ALL",
+    "description": "The type of traffic to capture. Valid values: ACCEPT, REJECT, ALL.",
+    "type": "string"
   },
   "git_codecommit_endpoint_private_dns_enabled": {
     "default": false,
@@ -1567,10 +1622,20 @@
     "description": "Additional tags for the VPC Endpoints",
     "type": "map(string)"
   },
+  "vpc_flow_log_tags": {
+    "default": {},
+    "description": "Additional tags for the VPC Flow Logs",
+    "type": "map(string)"
+  },
   "vpc_tags": {
     "default": {},
     "description": "Additional tags for the VPC",
     "type": "map(string)"
+  },
+  "vpn_gateway_az": {
+    "default": "null",
+    "description": "The Availability Zone for the VPN Gateway",
+    "type": "string"
   },
   "vpn_gateway_id": {
     "default": "",
