@@ -7,6 +7,12 @@ All notable changes to this project will be documented in this file.
 
 
 
+<a name="v1.6.0"></a>
+## [v1.6.0] - 2020-03-22
+FEATURES:
+- Set folder names correctly (fixes [#22](https://github.com/antonbabenko/modules.tf-lambda/issues/22)) ([#25](https://github.com/antonbabenko/modules.tf-lambda/issues/25))
+
+
 <a name="v1.5.0"></a>
 ## [v1.5.0] - 2020-03-22
 CHORES:
@@ -41,7 +47,8 @@ FEATURES:
 
 
 
-[Unreleased]: https://github.com/antonbabenko/modules.tf-lambda/compare/v1.5.0...HEAD
+[Unreleased]: https://github.com/antonbabenko/modules.tf-lambda/compare/v1.6.0...HEAD
+[v1.6.0]: https://github.com/antonbabenko/modules.tf-lambda/compare/v1.5.0...v1.6.0
 [v1.5.0]: https://github.com/antonbabenko/modules.tf-lambda/compare/v1.4.0...v1.5.0
 [v1.4.0]: https://github.com/antonbabenko/modules.tf-lambda/compare/v1.3.0...v1.4.0
 [v1.3.0]: https://github.com/antonbabenko/modules.tf-lambda/compare/v1.2.0...v1.3.0
