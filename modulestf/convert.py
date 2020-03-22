@@ -117,7 +117,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
         tmp_edges = []
 
         if node.get("type") == "rds" and node.get("engine") in ["aurora-mysql", "aurora-postgresql"]:
-            r = Resource(key, "rds-aurora", node.get("text"))
+            r = Resource(key, "rds-aurora", node_text)
 
             r.update_params({
                 "isMultiAZ": node.get("multiAZ"),
@@ -171,7 +171,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
             resources.append(r.content())
 
         if node.get("type") == "rds" and node.get("engine") not in ["aurora-mysql", "aurora-postgresql"]:
-            r = Resource(key, "rds", node.get("text"))
+            r = Resource(key, "rds", node_text)
 
             r.update_params({
                 "isMultiAZ": node.get("multiAZ"),
@@ -253,7 +253,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
                     asg_name = G.nodes.get(asg_id, {}).get("text")
 
-                    r = Resource(asg_id, "autoscaling", node.get("text"))
+                    r = Resource(asg_id, "autoscaling", asg_name)
 
                     r.update_params({
                         "name": asg_name if asg_name else random_pet(),
@@ -293,7 +293,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
                 parsed_asg_id.add(asg_id)
             else:
-                r = Resource(key, "ec2-instance", node.get("text"))
+                r = Resource(key, "ec2-instance", node_text)
 
                 r.update_params({
                     "name": node_text if node_text else random_pet(),
@@ -316,7 +316,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
             #         break
 
             if node.get("elbType") == "application":
-                r = Resource(key, "alb", node.get("text"))
+                r = Resource(key, "alb", node_text)
 
                 r.update_params({
                     "name": random_pet(),
@@ -332,7 +332,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                     r.update_dynamic_params("security_groups", "[dependency." + sg_id + ".outputs.this_security_group_id]")
 
             elif node.get("elbType") == "network":
-                r = Resource(key, "nlb", node.get("text"))
+                r = Resource(key, "nlb", node_text)
 
                 r.update_params({
                     "name": random_pet(),
@@ -344,7 +344,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                     r.update_dynamic_params("vpc_id", "dependency." + vpc_id + ".outputs.vpc_id")
 
             else:
-                r = Resource(key, "elb", node.get("text"))
+                r = Resource(key, "elb", node_text)
 
                 r.update_params({
                     "name": random_pet(),
@@ -374,7 +374,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
             resources.append(r.content())
 
         if node.get("type") == "redshift":
-            r = Resource(key, "redshift", node.get("text"))
+            r = Resource(key, "redshift", node_text)
 
             r.update_params({
                 "cluster_identifier": random_pet(),
@@ -401,7 +401,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
             resources.append(r.content())
 
         if node.get("type") == "dynamodb":
-            r = Resource(key, "dynamodb-table", node.get("text"))
+            r = Resource(key, "dynamodb-table", node_text)
 
             r.update_params({
                 "name": random_pet(),
@@ -413,7 +413,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
             resources.append(r.content())
 
         if node.get("type") == "s3":
-            r = Resource(key, "s3-bucket", node.get("text"))
+            r = Resource(key, "s3-bucket", node_text)
 
             r.update_params({
                 "bucket": node_text if node_text else random_pet(),
@@ -423,17 +423,17 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
             resources.append(r.content())
 
         if node.get("type") == "cloudfront":
-            r = Resource(key, "cloudfront", node.get("text"))
+            r = Resource(key, "cloudfront", node_text)
 
             resources.append(r.content())
 
         if node.get("type") == "sns":
-            r = Resource(key, "sns", node.get("text"))
+            r = Resource(key, "sns", node_text)
 
             resources.append(r.content())
 
         if node.get("type") == "sqs":
-            r = Resource(key, "sqs", node.get("text"))
+            r = Resource(key, "sqs", node_text)
 
             r.update_params({
                 "fifoQueue": node.get("queueType") == "fifo",
@@ -442,7 +442,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
             resources.append(r.content())
 
         if node.get("type") == "sg":
-            r = Resource(key, "security-group", node.get("text"))
+            r = Resource(key, "security-group", node.get("group_name"))
 
             r.update_params({
                 "name": node.get("group_name", random_pet()),
@@ -457,7 +457,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
             resources.append(r.content())
 
         if node.get("type") == "vpc":
-            r = Resource(key, "vpc", node.get("text"))
+            r = Resource(key, "vpc", node.get("group_name"))
 
             selected_vpc_cidr = "10.0.0.0/16"
 
