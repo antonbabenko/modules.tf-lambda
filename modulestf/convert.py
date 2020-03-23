@@ -457,6 +457,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
             # Security group rules are disabled here because there is no functionality in renderer
             # which allows to convert from Python dict or JSON into valid HCL2 syntax
+            # Issue: https://github.com/antonbabenko/modules.tf-lambda/issues/26
             enable_sg_rules = False
 
             # START disabled sg rules
