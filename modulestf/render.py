@@ -42,14 +42,12 @@ def prepare_render_dirs():
 
 
 def find_templates_files(dir):
-    files = glob.glob(dir + "/*") + \
-        glob.glob(dir + "/.*")
+    files = glob.glob(dir + "/*") + glob.glob(dir + "/.*")
 
     return files
 
 
 def prepare_single_layer(resource, source_dir_name, region, templates_dir, templates_files):
-
     dir_name = resource.get("dir_name")
 
     full_dir_name = ("%s/%s/%s" % (source_dir_name, region, dir_name)).lower()
@@ -89,7 +87,6 @@ def prepare_single_layer(resource, source_dir_name, region, templates_dir, templ
 
 # Copy all files and subdirectories into working directory
 def copy_to_working_dir(templates_dir, work_dir=""):
-
     dst_dir = path.join(WORK_DIR_FOR_COOKIECUTTER, work_dir)
 
     try:
@@ -111,7 +108,6 @@ def copy_to_working_dir(templates_dir, work_dir=""):
 
 
 def render_all(extra_context):
-
     output_dir = path.join(tmp_dir, OUTPUT_DIR, WORK_DIR)
 
     cookiecutter(output_dir,
@@ -138,7 +134,6 @@ def get_types_text(resources):
 
 
 def make_dir_name(type, text, appendix=""):
-
     path_parts = []
 
     if text is not None and len(text):
@@ -158,8 +153,34 @@ def make_dir_name(type, text, appendix=""):
     return dir_name
 
 
-def render_from_modulestf_config(config, source, regions):
+# Update dynamic parameters with correct dir name
+# Value to scan and replace can be inside of any structure (dict, list, string)
+# Should start with "dependency."
+#
+# Examples:
+# dependency.a3bfbba6-ff09-4efc-a56b-39b647f203f6.outputs.this_security_group_id => dependency.sg_2.outputs.this_security_group_id
+# Source: https://stackoverflow.com/a/38970181/550451
+def recursive_replace_dependency(input, dirs):
+    if isinstance(input, dict):
+        items = input.items()
+    elif isinstance(input, (list, tuple)):
+        items = enumerate(input)
+    else:
 
+        # just a value, replace and return
+        found = re.findall(r"dependency\.([^.]+)", str(input))
+        for f in found:
+            input = re.sub(f, dirs.get(f, f), input)
+
+        return input
+
+    # now call itself for every value and replace in the input
+    for key, value in items:
+        input[key] = recursive_replace_dependency(value, dirs)
+    return input
+
+
+def render_from_modulestf_config(config, source, regions):
     resources = json.loads(config)
 
     # pprint(resources)
@@ -230,16 +251,8 @@ def render_from_modulestf_config(config, source, regions):
 
         # Update dynamic parameters with correct dir name
         dynamic_params = resource.get("dynamic_params")
-        if dynamic_params:
-            for k in dynamic_params:
-
-                try:
-                    v = dynamic_params[k].split(".")
-
-                    # replace second element with real directory name
-                    dynamic_params.update({k: v[0] + "." + dirs[v[1]] + "." + ".".join(v[2:])})
-                except KeyError:
-                    pass
+        for k, v in dynamic_params.items():
+            dynamic_params[k] = recursive_replace_dependency(v, dirs)
 
         # Set correct dir name
         resource.update({"dir_name": dirs.get(resource.get("ref_id"))})

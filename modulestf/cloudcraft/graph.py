@@ -61,6 +61,12 @@ def populate_graph(data):  # noqa: C901
                 "group_name": group_name,
             })
 
+            if group_type == "sg":
+                G.nodes[group_id]["data"]["inbound_rules"] = group.get("inboundRules")
+                G.nodes[group_id]["data"]["outbound_rules"] = group.get("outboundRules")
+            elif group_type == "vpc":
+                G.nodes[group_id]["data"]["peering_connections"] = group.get("peeringConnections")
+
             for group_node in group_nodes:
                 # some items (like "text") may belong to groups, but are not in "nodes"
                 if group_node not in G.nodes:
