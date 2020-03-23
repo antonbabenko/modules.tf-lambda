@@ -1,0 +1,186 @@
+{
+  "id": "3ccc65b3-54ec-43d9-903e-f7b3450f4921",
+  "data": {
+    "grid": "standard",
+    "name": "empty",
+    "text": [
+      {
+        "id": "baa3ffb0-484a-4032-b04b-e4c7678416ad",
+        "text": "  \n\n\n\n\n",
+        "type": "isotext",
+        "color": {
+          "2d": "#f5b720",
+          "isometric": "#f5b720"
+        },
+        "mapPos": {
+          "relTo": "88afbf86-0731-4c50-a463-f38b1b28926e",
+          "offset": [
+            0.25,
+            1
+          ]
+        },
+        "outline": true,
+        "standing": false,
+        "textSize": 25,
+        "direction": "down",
+        "isometric": true
+      }
+    ],
+    "edges": [],
+    "icons": [],
+    "nodes": [
+      {
+        "id": "88afbf86-0731-4c50-a463-f38b1b28926e",
+        "type": "ec2",
+        "color": {
+          "2d": "#d86613",
+          "isometric": "#ececed"
+        },
+        "mapPos": [
+          3.75,
+          3.5
+        ],
+        "region": "eu-west-1",
+        "platform": "linux",
+        "accentColor": {
+          "2d": "#d86613",
+          "isometric": "#4286c5"
+        },
+        "transparent": false,
+        "instanceSize": "small",
+        "instanceType": "t2"
+      },
+      {
+        "id": "31941807-3112-4cdc-b49f-9048d867551e",
+        "type": "ec2",
+        "color": {
+          "2d": "#d86613",
+          "isometric": "#ececed"
+        },
+        "mapPos": [
+          3.75,
+          11.25
+        ],
+        "region": "eu-west-1",
+        "platform": "linux",
+        "accentColor": {
+          "2d": "#d86613",
+          "isometric": "#4286c5"
+        },
+        "transparent": false,
+        "instanceSize": "small",
+        "instanceType": "t2"
+      }
+    ],
+    "groups": [
+      {
+        "id": "a3bfbba6-ff09-4efc-a56b-39b647f203f6",
+        "name": "sg2",
+        "type": "sg",
+        "color": {
+          "2d": "#673ab7",
+          "isometric": "#673ab7"
+        },
+        "nodes": [
+          "31941807-3112-4cdc-b49f-9048d867551e"
+        ],
+        "shape": "dynamic",
+        "region": "eu-west-1",
+        "padding": 1.5,
+        "inboundRules": [],
+        "outboundRules": []
+      },
+      {
+        "id": "13bcc0a0-9b0d-4b81-906b-79169cfdfb89",
+        "name": "sg1",
+        "type": "sg",
+        "color": {
+          "2d": "#00bcd4",
+          "isometric": "#00bcd4"
+        },
+        "nodes": [
+          "88afbf86-0731-4c50-a463-f38b1b28926e"
+        ],
+        "shape": "dynamic",
+        "region": "eu-west-1",
+        "padding": 1.5,
+        "inboundRules": [
+          {
+            "hidden": false,
+            "target": "0.0.0.0/0",
+            "protocol": "tcp",
+            "portRange": "3389",
+            "targetType": "ip",
+            "description": "RDP for all"
+          },
+          {
+            "hidden": false,
+            "target": "a3bfbba6-ff09-4efc-a56b-39b647f203f6",
+            "protocol": "tcp",
+            "portRange": "0-65535",
+            "targetType": "sg",
+            "description": "All TCP from sg2"
+          },
+          {
+            "hidden": false,
+            "target": "10.10.0.0/20,20.20.0.0/20",
+            "protocol": "tcp",
+            "portRange": "389",
+            "targetType": "ip",
+            "description": "LDAP for some"
+          },
+          {
+            "hidden": false,
+            "target": "0.0.0.0/0",
+            "protocol": "icmpv6",
+            "portRange": "0",
+            "targetType": "ip",
+            "description": "ICMPv6 for all"
+          }
+        ],
+        "outboundRules": [
+          {
+            "hidden": false,
+            "target": "0.0.0.0/0",
+            "protocol": "-1",
+            "portRange": "1-100",
+            "targetType": "ip",
+            "description": "Custom outbound rule"
+          }
+        ]
+      },
+      {
+        "id": "db9212bd-708e-4f8b-b152-df3be824b08f",
+        "name": "my-vpc",
+        "type": "vpc",
+        "color": {
+          "2d": "#00bcd4",
+          "isometric": "#00bcd4"
+        },
+        "nodes": [
+          "13bcc0a0-9b0d-4b81-906b-79169cfdfb89",
+          "88afbf86-0731-4c50-a463-f38b1b28926e",
+          "a3bfbba6-ff09-4efc-a56b-39b647f203f6",
+          "31941807-3112-4cdc-b49f-9048d867551e"
+        ],
+        "shape": "dynamic",
+        "region": "eu-west-1",
+        "padding": 1.5,
+        "peeringConnections": []
+      }
+    ],
+    "images": [],
+    "version": 1,
+    "surfaces": [],
+    "shareDocs": false,
+    "connectors": [],
+    "projection": "isometric",
+    "disabledLayers": []
+  },
+  "readAccess": null,
+  "writeAccess": null,
+  "createdAt": "2018-11-26T16:54:25.323Z",
+  "updatedAt": "2020-03-22T20:31:41.147Z",
+  "CreatorId": "e188a76e-d460-43b2-b57f-a3ed871ffaa0",
+  "LastUserId": "e188a76e-d460-43b2-b57f-a3ed871ffaa0"
+}

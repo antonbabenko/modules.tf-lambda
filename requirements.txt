@@ -1,8 +1,8 @@
 aws-xray-sdk>=2.0
 boto3==1.7.3
 botocore<1.11.0,>=1.10.3
-cookiecutter==1.6.0
+cookiecutter==1.7.0
 networkx==2.4
 petname==2.6
-python-lambda-local==0.1.9
+python-lambda-local==0.1.12
 requests>=2.22.0

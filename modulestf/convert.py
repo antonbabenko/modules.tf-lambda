@@ -50,6 +50,17 @@ def random_password(length=12):
     return ''.join(random.choice(chars) for _ in range(length))
 
 
+# Security group helper - port range
+def convert_port_range(port_range):
+    group = port_range.split("-")
+    return group[0], group[1 if len(group) > 1 else 0]
+
+
+# Security group helper - protocol
+def convert_protocol(protocol):
+    return {"tcp": 6, "udp": 16, "icmp": 1, "icmpv6": 58}.get(protocol, "-1")
+
+
 def get_node(G, node_id):
     try:
         return G.nodes.get(node_id)
@@ -443,6 +454,52 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
         if node.get("type") == "sg":
             r = Resource(key, "security-group", node.get("group_name"))
+
+            # Security group rules are disabled here because there is no functionality in renderer
+            # which allows to convert from Python dict or JSON into valid HCL2 syntax
+            # Issue: https://github.com/antonbabenko/modules.tf-lambda/issues/26
+            enable_sg_rules = False
+
+            # START disabled sg rules
+            if enable_sg_rules:
+
+                all_rules = {
+                    "ingress": node.get("inbound_rules"),
+                    "egress": node.get("outbound_rules")
+                }
+
+                for rule_type, rules in all_rules.items():
+                    rules_with_cidr_blocks = []
+                    rules_with_source_security_group_id = []
+
+                    for rule in rules:
+                        port_range = convert_port_range(rule.get("portRange"))
+
+                        tmp_rule = {
+                            "from_port": port_range[0],
+                            "to_port": port_range[1],
+                            "protocol": convert_protocol(rule.get("protocol")),
+                            "description": rule.get("description"),
+                        }
+
+                        if rule.get("targetType") == "ip":
+                            tmp_rule.update({"cidr_blocks": rule.get("target")})
+                            rules_with_cidr_blocks.append(tmp_rule)
+                        else:
+                            dependency_sg_id = rule.get("target")
+                            tmp_rule.update({"source_security_group_id": "HCL:dependency." + dependency_sg_id + ".outputs.this_security_group_id"})
+                            rules_with_source_security_group_id.append(tmp_rule)
+
+                            r.append_dependency(dependency_sg_id)
+
+                    r.update_params({rule_type + "_with_cidr_blocks": rules_with_cidr_blocks})
+                    r.update_dynamic_params(rule_type + "_with_source_security_group_id", rules_with_source_security_group_id)
+
+                r.update_params({
+                    "ingress_with_source_security_group_id": [],
+                    "egress_with_source_security_group_id": [],
+                })
+            # END disabled sg rules
 
             r.update_params({
                 "name": node.get("group_name", random_pet()),
