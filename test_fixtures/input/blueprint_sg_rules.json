@@ -75,7 +75,7 @@
     "groups": [
       {
         "id": "a3bfbba6-ff09-4efc-a56b-39b647f203f6",
-        "name": "sg2",
+        "name": "SG...привет...2",
         "type": "sg",
         "color": {
           "2d": "#673ab7",
@@ -151,7 +151,7 @@
       },
       {
         "id": "db9212bd-708e-4f8b-b152-df3be824b08f",
-        "name": "my-vpc",
+        "name": "MY-vpc",
         "type": "vpc",
         "color": {
           "2d": "#00bcd4",

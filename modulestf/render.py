@@ -149,6 +149,7 @@ def make_dir_name(type, text, appendix=""):
     dir_name = re.sub(' ', '_', dir_name.strip())
     dir_name = re.sub('[^a-zA-Z0-9-_]', '', dir_name)
     dir_name = re.sub('_+', '_', dir_name)
+    dir_name = dir_name.lower()
 
     return dir_name
 
