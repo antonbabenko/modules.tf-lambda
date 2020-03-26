@@ -38,7 +38,8 @@ def populate_graph(data):  # noqa: C901
     # EDGES
     ########
     for edge in data_edges:
-        G.add_edge(edge["from"], edge["to"])
+        if "from" in edge and "to" in edge:
+            G.add_edge(edge["from"], edge["to"])
 
     #####################
     # AUTOSCALING GROUPS, SECURITY GROUPS AND VPCS
