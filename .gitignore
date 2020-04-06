@@ -27,3 +27,6 @@ output/*
 
 # Graph image
 graph.png
+
+/.venv
+/.idea
