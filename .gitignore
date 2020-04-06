@@ -1,4 +1,5 @@
 # Distribution / packaging
+__pycache__
 .Python
 env/
 build/
