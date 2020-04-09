@@ -1,4 +1,5 @@
 # Distribution / packaging
+__pycache__
 .Python
 env/
 build/
@@ -26,3 +27,6 @@ output/*
 
 # Graph image
 graph.png
+
+/.venv
+/.idea
