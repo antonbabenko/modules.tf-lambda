@@ -23,7 +23,8 @@
     "serverless": "1.65.0",
     "serverless-plugin-thundra": "^2.4.2",
     "serverless-plugin-tracing": "^2.0.0",
-    "serverless-python-requirements": "^5.1.0"
+    "serverless-python-requirements": "^5.1.0",
+    "minimist": ">=1.2.3"
   },
   "collective": {
     "type": "opencollective",
