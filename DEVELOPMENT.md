@@ -40,7 +40,7 @@ $ serverless deploy function --function generate-cloudcraft --stage prod
 
 modules.tf can be self-hosted on your own infrastructure (if you want to expand it for some reason).
 
-See [modules.tf-infra](https://github.com/antonbabenko/modules.tf-infra) repository for complete setup.
+See [modules.tf-lambda-infra](https://github.com/antonbabenko/modules.tf-lambda-infra) repository for complete setup.
 
 ## Spellchecker
 
