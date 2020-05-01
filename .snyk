@@ -1,0 +1,32 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.14.1
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-567746:
+    - serverless > lodash:
+        patched: '2020-05-01T07:28:39.062Z'
+    - serverless > @serverless/enterprise-plugin > lodash:
+        patched: '2020-05-01T07:28:39.062Z'
+    - serverless > archiver > lodash:
+        patched: '2020-05-01T07:28:39.062Z'
+    - serverless > inquirer > lodash:
+        patched: '2020-05-01T07:28:39.062Z'
+    - serverless > json-refs > graphlib > lodash:
+        patched: '2020-05-01T07:28:39.062Z'
+    - serverless > @serverless/components > prettyoutput > lodash:
+        patched: '2020-05-01T07:28:39.062Z'
+    - serverless > @serverless/enterprise-plugin > @serverless/event-mocks > lodash:
+        patched: '2020-05-01T07:28:39.062Z'
+    - serverless > archiver > archiver-utils > lodash:
+        patched: '2020-05-01T07:28:39.062Z'
+    - serverless > archiver > async > lodash:
+        patched: '2020-05-01T07:28:39.062Z'
+    - serverless > archiver > zip-stream > lodash:
+        patched: '2020-05-01T07:28:39.062Z'
+    - serverless > tabtab > inquirer > lodash:
+        patched: '2020-05-01T07:28:39.062Z'
+    - serverless > @serverless/cli > @serverless/template > graphlib > lodash:
+        patched: '2020-05-01T07:28:39.062Z'
+    - serverless > archiver > zip-stream > archiver-utils > lodash:
+        patched: '2020-05-01T07:28:39.062Z'
