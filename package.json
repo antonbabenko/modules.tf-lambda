@@ -6,7 +6,9 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "opencollective-postinstall || true"
+    "postinstall": "opencollective-postinstall || true",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "keywords": [
     "Infrastructure as code",
@@ -24,10 +26,12 @@
     "serverless-plugin-thundra": "^2.4.2",
     "serverless-plugin-tracing": "^2.0.0",
     "serverless-python-requirements": "^5.1.0",
-    "minimist": ">=1.2.3"
+    "minimist": ">=1.2.3",
+    "snyk": "^1.316.1"
   },
   "collective": {
     "type": "opencollective",
     "url": "https://opencollective.com/modulestf"
-  }
+  },
+  "snyk": true
 }
