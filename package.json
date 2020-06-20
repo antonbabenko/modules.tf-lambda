@@ -21,7 +21,7 @@
   "license": "MIT",
   "devDependencies": {},
   "dependencies": {
-    "opencollective-postinstall": "^2.0.2",
+    "opencollective-postinstall": "^2.0.3",
     "serverless": "1.65.0",
     "serverless-plugin-thundra": "^2.4.2",
     "serverless-plugin-tracing": "^2.0.0",
