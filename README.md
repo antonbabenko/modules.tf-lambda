@@ -5,14 +5,14 @@
 
 <a href="https://github.com/antonbabenko/modules.tf-lambda"><img src="https://raw.githubusercontent.com/antonbabenko/modules.tf-lambda/master/misc/modulestf-logo.png" alt="modules.tf - Infrastructure as code generator - from visual diagrams to Terraform" width="210" height="70" align="right" /></a>
 
-Code in this repository is used for generating infrastructure as Terraform configurations from visual diagrams created using [Cloudcraft](https://cloudcraft.co).
+Code in this repository is used for generating infrastructure as Terraform configurations from visual diagrams created using [Cloudcraft](https://www.cloudcraft.co).
 
 [modules.tf](https://github.com/antonbabenko/modules.tf-lambda) is an open-source project by [Anton Babenko](https://github.com/antonbabenko).
 
 
 ## How can I try this?
 
-1. Sign up for free account to [Cloudcraft.co](https://cloudcraft.co/app).
+1. Sign up for free account to [Cloudcraft.co](https://www.cloudcraft.co/app).
 1. Draw AWS architecture in web-browser (you can import live AWS resources, too).
 1. Click "Export" and "Terraform code export" at the top right side.
 1. Download archive and extract it locally.
@@ -33,9 +33,9 @@ In [modules.tf-demo](https://github.com/antonbabenko/modules.tf-demo) repository
 
 ## Supporters
 
-<a href="https://cloudcraft.co/" target="_blank"><img src="https://raw.githubusercontent.com/antonbabenko/modules.tf-lambda/master/misc/cloudcraft-logo.png" alt="Cloudcraft - the best way to draw AWS diagrams" width="211" height="56" align="right" /></a>
+<a href="https://www.cloudcraft.co/" target="_blank"><img src="https://raw.githubusercontent.com/antonbabenko/modules.tf-lambda/master/misc/cloudcraft-logo.png" alt="Cloudcraft - the best way to draw AWS diagrams" width="211" height="56" align="right" /></a>
 
-This project was partially sponsored by [Cloudcraft - the best way to draw AWS diagrams](https://cloudcraft.co).<br clear="all">
+This project was partially sponsored by [Cloudcraft - the best way to draw AWS diagrams](https://www.cloudcraft.co).<br clear="all">
 
 Monitoring of serverless applications provided by [Thundra](https://www.thundra.io/).
 
