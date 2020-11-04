@@ -1,7 +1,7 @@
 {
   "name": "modules.tf-lambda",
   "version": "2.0.0",
-  "description": "From visual diagrams created with Cloudcraft.co to infrastructure as code using Terraform and Terragrunt",
+  "description": "From visual diagrams created with Cloudcraft to infrastructure as code using Terraform and Terragrunt",
   "main": "index.js",
   "private": true,
   "scripts": {

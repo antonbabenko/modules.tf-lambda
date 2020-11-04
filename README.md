@@ -12,7 +12,7 @@ Code in this repository is used for generating infrastructure as Terraform confi
 
 ## How can I try this?
 
-1. Sign up for free account to [Cloudcraft.co](https://www.cloudcraft.co/app).
+1. Sign up for a free account with [Cloudcraft](https://app.cloudcraft.co/signup).
 1. Draw AWS architecture in web-browser (you can import live AWS resources, too).
 1. Click "Export" and "Terraform code export" at the top right side.
 1. Download archive and extract it locally.
