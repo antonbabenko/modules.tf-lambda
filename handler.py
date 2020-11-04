@@ -43,7 +43,7 @@ def load_data(event):
         if 403 == r.status_code:
             raise ValueError("Sharing has been disabled for this blueprint." +
                              " You have to enable it by clicking 'Export' -> 'Get shareable link'" +
-                             " on https://www.cloudcraft.co/app/", 403)
+                             " on https://app.cloudcraft.co", 403)
 
         elif r.status_code >= 500:
             raise ValueError("Something went wrong on cloudcraft side. Can't fetch specified blueprint." +

@@ -1,6 +1,6 @@
 # Infrastructure code for "{{ cookiecutter.source_name }}"
 
-This repository contains infrastructure as Terraform configurations which were automatically generated from blueprint created using [cloudcraft.co](https://cloudcraft.co/app).
+This repository contains infrastructure as Terraform configurations which were automatically generated from blueprint created using [Cloudcraft](https://www.cloudcraft.co).
 
 [Terragrunt](https://terragrunt.gruntwork.io/) is used to work with Terraform configurations which allows to orchestrate dependent layers, update arguments dynamically and keep configurations [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
 
