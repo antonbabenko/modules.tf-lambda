@@ -27,7 +27,7 @@
     "serverless-plugin-tracing": "^2.0.0",
     "serverless-python-requirements": "^5.1.0",
     "minimist": ">=1.2.3",
-    "snyk": "^1.319.0"
+    "snyk": "^1.518.0"
   },
   "collective": {
     "type": "opencollective",
