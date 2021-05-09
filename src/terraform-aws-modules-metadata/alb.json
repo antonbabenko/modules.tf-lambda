@@ -1,0 +1,142 @@
+{
+  "access_logs": {
+    "default": {},
+    "description": "Map containing access logging configuration for load balancer.",
+    "type": "map(string)"
+  },
+  "create_lb": {
+    "default": true,
+    "description": "Controls if the Load Balancer should be created",
+    "type": "bool"
+  },
+  "drop_invalid_header_fields": {
+    "default": false,
+    "description": "Indicates whether invalid header fields are dropped in application load balancers. Defaults to false.",
+    "type": "bool"
+  },
+  "enable_cross_zone_load_balancing": {
+    "default": false,
+    "description": "Indicates whether cross zone load balancing should be enabled in application load balancers.",
+    "type": "bool"
+  },
+  "enable_deletion_protection": {
+    "default": false,
+    "description": "If true, deletion of the load balancer will be disabled via the AWS API. This will prevent Terraform from deleting the load balancer. Defaults to false.",
+    "type": "bool"
+  },
+  "enable_http2": {
+    "default": true,
+    "description": "Indicates whether HTTP/2 is enabled in application load balancers.",
+    "type": "bool"
+  },
+  "extra_ssl_certs": {
+    "default": [],
+    "description": "A list of maps describing any extra SSL certificates to apply to the HTTPS listeners. Required key/values: certificate_arn, https_listener_index (the index of the listener within https_listeners which the cert applies toward).",
+    "type": "list(map(string))"
+  },
+  "http_tcp_listeners": {
+    "default": [],
+    "description": "A list of maps describing the HTTP listeners or TCP ports for this ALB. Required key/values: port, protocol. Optional key/values: target_group_index (defaults to http_tcp_listeners[count.index])",
+    "type": "any"
+  },
+  "https_listener_rules": {
+    "default": [],
+    "description": "A list of maps describing the Listener Rules for this ALB. Required key/values: actions, conditions. Optional key/values: priority, https_listener_index (default to https_listeners[count.index])",
+    "type": "any"
+  },
+  "https_listeners": {
+    "default": [],
+    "description": "A list of maps describing the HTTPS listeners for this ALB. Required key/values: port, certificate_arn. Optional key/values: ssl_policy (defaults to ELBSecurityPolicy-2016-08), target_group_index (defaults to https_listeners[count.index])",
+    "type": "any"
+  },
+  "idle_timeout": {
+    "default": 60,
+    "description": "The time in seconds that the connection is allowed to be idle.",
+    "type": "number"
+  },
+  "internal": {
+    "default": false,
+    "description": "Boolean determining if the load balancer is internal or externally facing.",
+    "type": "bool"
+  },
+  "ip_address_type": {
+    "default": "ipv4",
+    "description": "The type of IP addresses used by the subnets for your load balancer. The possible values are ipv4 and dualstack.",
+    "type": "string"
+  },
+  "lb_tags": {
+    "default": {},
+    "description": "A map of tags to add to load balancer",
+    "type": "map(string)"
+  },
+  "listener_ssl_policy_default": {
+    "default": "ELBSecurityPolicy-2016-08",
+    "description": "The security policy if using HTTPS externally on the load balancer. [See](https://docs.aws.amazon.com/elasticloadbalancing/latest/classic/elb-security-policy-table.html).",
+    "type": "string"
+  },
+  "load_balancer_create_timeout": {
+    "default": "10m",
+    "description": "Timeout value when creating the ALB.",
+    "type": "string"
+  },
+  "load_balancer_delete_timeout": {
+    "default": "10m",
+    "description": "Timeout value when deleting the ALB.",
+    "type": "string"
+  },
+  "load_balancer_type": {
+    "default": "application",
+    "description": "The type of load balancer to create. Possible values are application or network.",
+    "type": "string"
+  },
+  "load_balancer_update_timeout": {
+    "default": "10m",
+    "description": "Timeout value when updating the ALB.",
+    "type": "string"
+  },
+  "name": {
+    "default": "null",
+    "description": "The resource name and Name tag of the load balancer.",
+    "type": "string"
+  },
+  "name_prefix": {
+    "default": "null",
+    "description": "The resource name prefix and Name tag of the load balancer. Cannot be longer than 6 characters",
+    "type": "string"
+  },
+  "security_groups": {
+    "default": [],
+    "description": "The security groups to attach to the load balancer. e.g. [\"sg-edcd9784\",\"sg-edcd9785\"]",
+    "type": "list(string)"
+  },
+  "subnet_mapping": {
+    "default": [],
+    "description": "A list of subnet mapping blocks describing subnets to attach to network load balancer",
+    "type": "list(map(string))"
+  },
+  "subnets": {
+    "default": "null",
+    "description": "A list of subnets to associate with the load balancer. e.g. ['subnet-1a2b3c4d','subnet-1a2b3c4e','subnet-1a2b3c4f']",
+    "type": "list(string)"
+  },
+  "tags": {
+    "default": {},
+    "description": "A map of tags to add to all resources",
+    "type": "map(string)"
+  },
+  "target_group_tags": {
+    "default": {},
+    "description": "A map of tags to add to all target groups",
+    "type": "map(string)"
+  },
+  "target_groups": {
+    "default": [],
+    "description": "A list of maps containing key/value pairs that define the target groups to be created. Order of these maps is important and the index of these are to be referenced in listener definitions. Required key/values: name, backend_protocol, backend_port",
+    "type": "any"
+  },
+  "vpc_id": {
+    "default": "null",
+    "description": "VPC id where the load balancer and other resources will be deployed.",
+    "type": "string"
+  }
+}

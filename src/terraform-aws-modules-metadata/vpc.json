@@ -1,0 +1,959 @@
+{
+  "amazon_side_asn": {
+    "default": "64512",
+    "description": "The Autonomous System Number (ASN) for the Amazon side of the gateway. By default the virtual private gateway is created with the current default Amazon ASN.",
+    "type": "string"
+  },
+  "assign_ipv6_address_on_creation": {
+    "default": false,
+    "description": "Assign IPv6 address on subnet, must be disabled to change IPv6 CIDRs. This is the IPv6 equivalent of map_public_ip_on_launch",
+    "type": "bool"
+  },
+  "azs": {
+    "default": [],
+    "description": "A list of availability zones names or ids in the region",
+    "type": "list(string)"
+  },
+  "cidr": {
+    "default": "0.0.0.0/0",
+    "description": "The CIDR block for the VPC. Default value is a valid CIDR, but not acceptable by AWS and should be overridden",
+    "type": "string"
+  },
+  "create_database_internet_gateway_route": {
+    "default": false,
+    "description": "Controls if an internet gateway route for public database access should be created",
+    "type": "bool"
+  },
+  "create_database_nat_gateway_route": {
+    "default": false,
+    "description": "Controls if a nat gateway route should be created to give internet access to the database subnets",
+    "type": "bool"
+  },
+  "create_database_subnet_group": {
+    "default": true,
+    "description": "Controls if database subnet group should be created (n.b. database_subnets must also be set)",
+    "type": "bool"
+  },
+  "create_database_subnet_route_table": {
+    "default": false,
+    "description": "Controls if separate route table for database should be created",
+    "type": "bool"
+  },
+  "create_egress_only_igw": {
+    "default": true,
+    "description": "Controls if an Egress Only Internet Gateway is created and its related routes.",
+    "type": "bool"
+  },
+  "create_elasticache_subnet_group": {
+    "default": true,
+    "description": "Controls if elasticache subnet group should be created",
+    "type": "bool"
+  },
+  "create_elasticache_subnet_route_table": {
+    "default": false,
+    "description": "Controls if separate route table for elasticache should be created",
+    "type": "bool"
+  },
+  "create_flow_log_cloudwatch_iam_role": {
+    "default": false,
+    "description": "Whether to create IAM role for VPC Flow Logs",
+    "type": "bool"
+  },
+  "create_flow_log_cloudwatch_log_group": {
+    "default": false,
+    "description": "Whether to create CloudWatch log group for VPC Flow Logs",
+    "type": "bool"
+  },
+  "create_igw": {
+    "default": true,
+    "description": "Controls if an Internet Gateway is created for public subnets and the related routes that connect them.",
+    "type": "bool"
+  },
+  "create_redshift_subnet_group": {
+    "default": true,
+    "description": "Controls if redshift subnet group should be created",
+    "type": "bool"
+  },
+  "create_redshift_subnet_route_table": {
+    "default": false,
+    "description": "Controls if separate route table for redshift should be created",
+    "type": "bool"
+  },
+  "create_vpc": {
+    "default": true,
+    "description": "Controls if VPC should be created (it affects almost all resources)",
+    "type": "bool"
+  },
+  "customer_gateway_tags": {
+    "default": {},
+    "description": "Additional tags for the Customer Gateway",
+    "type": "map(string)"
+  },
+  "customer_gateways": {
+    "default": {},
+    "description": "Maps of Customer Gateway's attributes (BGP ASN and Gateway's Internet-routable external IP address)",
+    "type": "map(map(any))"
+  },
+  "database_acl_tags": {
+    "default": {},
+    "description": "Additional tags for the database subnets network ACL",
+    "type": "map(string)"
+  },
+  "database_dedicated_network_acl": {
+    "default": false,
+    "description": "Whether to use dedicated network ACL (not default) and custom rules for database subnets",
+    "type": "bool"
+  },
+  "database_inbound_acl_rules": {
+    "default": [
+      {
+        "cidr_block": "0.0.0.0/0",
+        "from_port": 0,
+        "protocol": "-1",
+        "rule_action": "allow",
+        "rule_number": 100,
+        "to_port": 0
+      }
+    ],
+    "description": "Database subnets inbound network ACL rules",
+    "type": "list(map(string))"
+  },
+  "database_outbound_acl_rules": {
+    "default": [
+      {
+        "cidr_block": "0.0.0.0/0",
+        "from_port": 0,
+        "protocol": "-1",
+        "rule_action": "allow",
+        "rule_number": 100,
+        "to_port": 0
+      }
+    ],
+    "description": "Database subnets outbound network ACL rules",
+    "type": "list(map(string))"
+  },
+  "database_route_table_tags": {
+    "default": {},
+    "description": "Additional tags for the database route tables",
+    "type": "map(string)"
+  },
+  "database_subnet_assign_ipv6_address_on_creation": {
+    "default": "null",
+    "description": "Assign IPv6 address on database subnet, must be disabled to change IPv6 CIDRs. This is the IPv6 equivalent of map_public_ip_on_launch",
+    "type": "bool"
+  },
+  "database_subnet_group_tags": {
+    "default": {},
+    "description": "Additional tags for the database subnet group",
+    "type": "map(string)"
+  },
+  "database_subnet_ipv6_prefixes": {
+    "default": [],
+    "description": "Assigns IPv6 database subnet id based on the Amazon provided /56 prefix base 10 integer (0-256). Must be of equal length to the corresponding IPv4 subnet list",
+    "type": "list(string)"
+  },
+  "database_subnet_suffix": {
+    "default": "db",
+    "description": "Suffix to append to database subnets name",
+    "type": "string"
+  },
+  "database_subnet_tags": {
+    "default": {},
+    "description": "Additional tags for the database subnets",
+    "type": "map(string)"
+  },
+  "database_subnets": {
+    "default": [],
+    "description": "A list of database subnets",
+    "type": "list(string)"
+  },
+  "default_network_acl_egress": {
+    "default": [
+      {
+        "action": "allow",
+        "cidr_block": "0.0.0.0/0",
+        "from_port": 0,
+        "protocol": "-1",
+        "rule_no": 100,
+        "to_port": 0
+      },
+      {
+        "action": "allow",
+        "from_port": 0,
+        "ipv6_cidr_block": "::/0",
+        "protocol": "-1",
+        "rule_no": 101,
+        "to_port": 0
+      }
+    ],
+    "description": "List of maps of egress rules to set on the Default Network ACL",
+    "type": "list(map(string))"
+  },
+  "default_network_acl_ingress": {
+    "default": [
+      {
+        "action": "allow",
+        "cidr_block": "0.0.0.0/0",
+        "from_port": 0,
+        "protocol": "-1",
+        "rule_no": 100,
+        "to_port": 0
+      },
+      {
+        "action": "allow",
+        "from_port": 0,
+        "ipv6_cidr_block": "::/0",
+        "protocol": "-1",
+        "rule_no": 101,
+        "to_port": 0
+      }
+    ],
+    "description": "List of maps of ingress rules to set on the Default Network ACL",
+    "type": "list(map(string))"
+  },
+  "default_network_acl_name": {
+    "default": "",
+    "description": "Name to be used on the Default Network ACL",
+    "type": "string"
+  },
+  "default_network_acl_tags": {
+    "default": {},
+    "description": "Additional tags for the Default Network ACL",
+    "type": "map(string)"
+  },
+  "default_route_table_propagating_vgws": {
+    "default": [],
+    "description": "List of virtual gateways for propagation",
+    "type": "list(string)"
+  },
+  "default_route_table_routes": {
+    "default": [],
+    "description": "Configuration block of routes. See https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/default_route_table#route",
+    "type": "list(map(string))"
+  },
+  "default_route_table_tags": {
+    "default": {},
+    "description": "Additional tags for the default route table",
+    "type": "map(string)"
+  },
+  "default_security_group_egress": {
+    "default": "null",
+    "description": "List of maps of egress rules to set on the default security group",
+    "type": "list(map(string))"
+  },
+  "default_security_group_ingress": {
+    "default": "null",
+    "description": "List of maps of ingress rules to set on the default security group",
+    "type": "list(map(string))"
+  },
+  "default_security_group_name": {
+    "default": "default",
+    "description": "Name to be used on the default security group",
+    "type": "string"
+  },
+  "default_security_group_tags": {
+    "default": {},
+    "description": "Additional tags for the default security group",
+    "type": "map(string)"
+  },
+  "default_vpc_enable_classiclink": {
+    "default": false,
+    "description": "Should be true to enable ClassicLink in the Default VPC",
+    "type": "bool"
+  },
+  "default_vpc_enable_dns_hostnames": {
+    "default": false,
+    "description": "Should be true to enable DNS hostnames in the Default VPC",
+    "type": "bool"
+  },
+  "default_vpc_enable_dns_support": {
+    "default": true,
+    "description": "Should be true to enable DNS support in the Default VPC",
+    "type": "bool"
+  },
+  "default_vpc_name": {
+    "default": "",
+    "description": "Name to be used on the Default VPC",
+    "type": "string"
+  },
+  "default_vpc_tags": {
+    "default": {},
+    "description": "Additional tags for the Default VPC",
+    "type": "map(string)"
+  },
+  "dhcp_options_domain_name": {
+    "default": "",
+    "description": "Specifies DNS name for DHCP options set (requires enable_dhcp_options set to true)",
+    "type": "string"
+  },
+  "dhcp_options_domain_name_servers": {
+    "default": [
+      "AmazonProvidedDNS"
+    ],
+    "description": "Specify a list of DNS server addresses for DHCP options set, default to AWS provided (requires enable_dhcp_options set to true)",
+    "type": "list(string)"
+  },
+  "dhcp_options_netbios_name_servers": {
+    "default": [],
+    "description": "Specify a list of netbios servers for DHCP options set (requires enable_dhcp_options set to true)",
+    "type": "list(string)"
+  },
+  "dhcp_options_netbios_node_type": {
+    "default": "",
+    "description": "Specify netbios node_type for DHCP options set (requires enable_dhcp_options set to true)",
+    "type": "string"
+  },
+  "dhcp_options_ntp_servers": {
+    "default": [],
+    "description": "Specify a list of NTP servers for DHCP options set (requires enable_dhcp_options set to true)",
+    "type": "list(string)"
+  },
+  "dhcp_options_tags": {
+    "default": {},
+    "description": "Additional tags for the DHCP option set (requires enable_dhcp_options set to true)",
+    "type": "map(string)"
+  },
+  "elasticache_acl_tags": {
+    "default": {},
+    "description": "Additional tags for the elasticache subnets network ACL",
+    "type": "map(string)"
+  },
+  "elasticache_dedicated_network_acl": {
+    "default": false,
+    "description": "Whether to use dedicated network ACL (not default) and custom rules for elasticache subnets",
+    "type": "bool"
+  },
+  "elasticache_inbound_acl_rules": {
+    "default": [
+      {
+        "cidr_block": "0.0.0.0/0",
+        "from_port": 0,
+        "protocol": "-1",
+        "rule_action": "allow",
+        "rule_number": 100,
+        "to_port": 0
+      }
+    ],
+    "description": "Elasticache subnets inbound network ACL rules",
+    "type": "list(map(string))"
+  },
+  "elasticache_outbound_acl_rules": {
+    "default": [
+      {
+        "cidr_block": "0.0.0.0/0",
+        "from_port": 0,
+        "protocol": "-1",
+        "rule_action": "allow",
+        "rule_number": 100,
+        "to_port": 0
+      }
+    ],
+    "description": "Elasticache subnets outbound network ACL rules",
+    "type": "list(map(string))"
+  },
+  "elasticache_route_table_tags": {
+    "default": {},
+    "description": "Additional tags for the elasticache route tables",
+    "type": "map(string)"
+  },
+  "elasticache_subnet_assign_ipv6_address_on_creation": {
+    "default": "null",
+    "description": "Assign IPv6 address on elasticache subnet, must be disabled to change IPv6 CIDRs. This is the IPv6 equivalent of map_public_ip_on_launch",
+    "type": "bool"
+  },
+  "elasticache_subnet_ipv6_prefixes": {
+    "default": [],
+    "description": "Assigns IPv6 elasticache subnet id based on the Amazon provided /56 prefix base 10 integer (0-256). Must be of equal length to the corresponding IPv4 subnet list",
+    "type": "list(string)"
+  },
+  "elasticache_subnet_suffix": {
+    "default": "elasticache",
+    "description": "Suffix to append to elasticache subnets name",
+    "type": "string"
+  },
+  "elasticache_subnet_tags": {
+    "default": {},
+    "description": "Additional tags for the elasticache subnets",
+    "type": "map(string)"
+  },
+  "elasticache_subnets": {
+    "default": [],
+    "description": "A list of elasticache subnets",
+    "type": "list(string)"
+  },
+  "enable_classiclink": {
+    "default": "null",
+    "description": "Should be true to enable ClassicLink for the VPC. Only valid in regions and accounts that support EC2 Classic.",
+    "type": "bool"
+  },
+  "enable_classiclink_dns_support": {
+    "default": "null",
+    "description": "Should be true to enable ClassicLink DNS Support for the VPC. Only valid in regions and accounts that support EC2 Classic.",
+    "type": "bool"
+  },
+  "enable_dhcp_options": {
+    "default": false,
+    "description": "Should be true if you want to specify a DHCP options set with a custom domain name, DNS servers, NTP servers, netbios servers, and/or netbios server type",
+    "type": "bool"
+  },
+  "enable_dns_hostnames": {
+    "default": false,
+    "description": "Should be true to enable DNS hostnames in the VPC",
+    "type": "bool"
+  },
+  "enable_dns_support": {
+    "default": true,
+    "description": "Should be true to enable DNS support in the VPC",
+    "type": "bool"
+  },
+  "enable_flow_log": {
+    "default": false,
+    "description": "Whether or not to enable VPC Flow Logs",
+    "type": "bool"
+  },
+  "enable_ipv6": {
+    "default": false,
+    "description": "Requests an Amazon-provided IPv6 CIDR block with a /56 prefix length for the VPC. You cannot specify the range of IP addresses, or the size of the CIDR block.",
+    "type": "bool"
+  },
+  "enable_nat_gateway": {
+    "default": false,
+    "description": "Should be true if you want to provision NAT Gateways for each of your private networks",
+    "type": "bool"
+  },
+  "enable_public_redshift": {
+    "default": false,
+    "description": "Controls if redshift should have public routing table",
+    "type": "bool"
+  },
+  "enable_vpn_gateway": {
+    "default": false,
+    "description": "Should be true if you want to create a new VPN Gateway resource and attach it to the VPC",
+    "type": "bool"
+  },
+  "external_nat_ip_ids": {
+    "default": [],
+    "description": "List of EIP IDs to be assigned to the NAT Gateways (used in combination with reuse_nat_ips)",
+    "type": "list(string)"
+  },
+  "external_nat_ips": {
+    "default": [],
+    "description": "List of EIPs to be used for `nat_public_ips` output (used in combination with reuse_nat_ips and external_nat_ip_ids)",
+    "type": "list(string)"
+  },
+  "flow_log_cloudwatch_iam_role_arn": {
+    "default": "",
+    "description": "The ARN for the IAM role that's used to post flow logs to a CloudWatch Logs log group. When flow_log_destination_arn is set to ARN of Cloudwatch Logs, this argument needs to be provided.",
+    "type": "string"
+  },
+  "flow_log_cloudwatch_log_group_kms_key_id": {
+    "default": "null",
+    "description": "The ARN of the KMS Key to use when encrypting log data for VPC flow logs.",
+    "type": "string"
+  },
+  "flow_log_cloudwatch_log_group_name_prefix": {
+    "default": "/aws/vpc-flow-log/",
+    "description": "Specifies the name prefix of CloudWatch Log Group for VPC flow logs.",
+    "type": "string"
+  },
+  "flow_log_cloudwatch_log_group_retention_in_days": {
+    "default": "null",
+    "description": "Specifies the number of days you want to retain log events in the specified log group for VPC flow logs.",
+    "type": "number"
+  },
+  "flow_log_destination_arn": {
+    "default": "",
+    "description": "The ARN of the CloudWatch log group or S3 bucket where VPC Flow Logs will be pushed. If this ARN is a S3 bucket the appropriate permissions need to be set on that bucket's policy. When create_flow_log_cloudwatch_log_group is set to false this argument must be provided.",
+    "type": "string"
+  },
+  "flow_log_destination_type": {
+    "default": "cloud-watch-logs",
+    "description": "Type of flow log destination. Can be s3 or cloud-watch-logs.",
+    "type": "string"
+  },
+  "flow_log_log_format": {
+    "default": "null",
+    "description": "The fields to include in the flow log record, in the order in which they should appear.",
+    "type": "string"
+  },
+  "flow_log_max_aggregation_interval": {
+    "default": 600,
+    "description": "The maximum interval of time during which a flow of packets is captured and aggregated into a flow log record. Valid Values: `60` seconds or `600` seconds.",
+    "type": "number"
+  },
+  "flow_log_traffic_type": {
+    "default": "ALL",
+    "description": "The type of traffic to capture. Valid values: ACCEPT, REJECT, ALL.",
+    "type": "string"
+  },
+  "igw_tags": {
+    "default": {},
+    "description": "Additional tags for the internet gateway",
+    "type": "map(string)"
+  },
+  "instance_tenancy": {
+    "default": "default",
+    "description": "A tenancy option for instances launched into the VPC",
+    "type": "string"
+  },
+  "intra_acl_tags": {
+    "default": {},
+    "description": "Additional tags for the intra subnets network ACL",
+    "type": "map(string)"
+  },
+  "intra_dedicated_network_acl": {
+    "default": false,
+    "description": "Whether to use dedicated network ACL (not default) and custom rules for intra subnets",
+    "type": "bool"
+  },
+  "intra_inbound_acl_rules": {
+    "default": [
+      {
+        "cidr_block": "0.0.0.0/0",
+        "from_port": 0,
+        "protocol": "-1",
+        "rule_action": "allow",
+        "rule_number": 100,
+        "to_port": 0
+      }
+    ],
+    "description": "Intra subnets inbound network ACLs",
+    "type": "list(map(string))"
+  },
+  "intra_outbound_acl_rules": {
+    "default": [
+      {
+        "cidr_block": "0.0.0.0/0",
+        "from_port": 0,
+        "protocol": "-1",
+        "rule_action": "allow",
+        "rule_number": 100,
+        "to_port": 0
+      }
+    ],
+    "description": "Intra subnets outbound network ACLs",
+    "type": "list(map(string))"
+  },
+  "intra_route_table_tags": {
+    "default": {},
+    "description": "Additional tags for the intra route tables",
+    "type": "map(string)"
+  },
+  "intra_subnet_assign_ipv6_address_on_creation": {
+    "default": "null",
+    "description": "Assign IPv6 address on intra subnet, must be disabled to change IPv6 CIDRs. This is the IPv6 equivalent of map_public_ip_on_launch",
+    "type": "bool"
+  },
+  "intra_subnet_ipv6_prefixes": {
+    "default": [],
+    "description": "Assigns IPv6 intra subnet id based on the Amazon provided /56 prefix base 10 integer (0-256). Must be of equal length to the corresponding IPv4 subnet list",
+    "type": "list(string)"
+  },
+  "intra_subnet_suffix": {
+    "default": "intra",
+    "description": "Suffix to append to intra subnets name",
+    "type": "string"
+  },
+  "intra_subnet_tags": {
+    "default": {},
+    "description": "Additional tags for the intra subnets",
+    "type": "map(string)"
+  },
+  "intra_subnets": {
+    "default": [],
+    "description": "A list of intra subnets",
+    "type": "list(string)"
+  },
+  "manage_default_network_acl": {
+    "default": false,
+    "description": "Should be true to adopt and manage Default Network ACL",
+    "type": "bool"
+  },
+  "manage_default_route_table": {
+    "default": false,
+    "description": "Should be true to manage default route table",
+    "type": "bool"
+  },
+  "manage_default_security_group": {
+    "default": false,
+    "description": "Should be true to adopt and manage default security group",
+    "type": "bool"
+  },
+  "manage_default_vpc": {
+    "default": false,
+    "description": "Should be true to adopt and manage Default VPC",
+    "type": "bool"
+  },
+  "map_public_ip_on_launch": {
+    "default": true,
+    "description": "Should be false if you do not want to auto-assign public IP on launch",
+    "type": "bool"
+  },
+  "name": {
+    "default": "",
+    "description": "Name to be used on all the resources as identifier",
+    "type": "string"
+  },
+  "nat_eip_tags": {
+    "default": {},
+    "description": "Additional tags for the NAT EIP",
+    "type": "map(string)"
+  },
+  "nat_gateway_tags": {
+    "default": {},
+    "description": "Additional tags for the NAT gateways",
+    "type": "map(string)"
+  },
+  "one_nat_gateway_per_az": {
+    "default": false,
+    "description": "Should be true if you want only one NAT Gateway per availability zone. Requires `var.azs` to be set, and the number of `public_subnets` created to be greater than or equal to the number of availability zones specified in `var.azs`.",
+    "type": "bool"
+  },
+  "outpost_acl_tags": {
+    "default": {},
+    "description": "Additional tags for the outpost subnets network ACL",
+    "type": "map(string)"
+  },
+  "outpost_arn": {
+    "default": "null",
+    "description": "ARN of Outpost you want to create a subnet in.",
+    "type": "string"
+  },
+  "outpost_az": {
+    "default": "null",
+    "description": "AZ where Outpost is anchored.",
+    "type": "string"
+  },
+  "outpost_dedicated_network_acl": {
+    "default": false,
+    "description": "Whether to use dedicated network ACL (not default) and custom rules for outpost subnets",
+    "type": "bool"
+  },
+  "outpost_inbound_acl_rules": {
+    "default": [
+      {
+        "cidr_block": "0.0.0.0/0",
+        "from_port": 0,
+        "protocol": "-1",
+        "rule_action": "allow",
+        "rule_number": 100,
+        "to_port": 0
+      }
+    ],
+    "description": "Outpost subnets inbound network ACLs",
+    "type": "list(map(string))"
+  },
+  "outpost_outbound_acl_rules": {
+    "default": [
+      {
+        "cidr_block": "0.0.0.0/0",
+        "from_port": 0,
+        "protocol": "-1",
+        "rule_action": "allow",
+        "rule_number": 100,
+        "to_port": 0
+      }
+    ],
+    "description": "Outpost subnets outbound network ACLs",
+    "type": "list(map(string))"
+  },
+  "outpost_subnet_assign_ipv6_address_on_creation": {
+    "default": "null",
+    "description": "Assign IPv6 address on outpost subnet, must be disabled to change IPv6 CIDRs. This is the IPv6 equivalent of map_public_ip_on_launch",
+    "type": "bool"
+  },
+  "outpost_subnet_ipv6_prefixes": {
+    "default": [],
+    "description": "Assigns IPv6 outpost subnet id based on the Amazon provided /56 prefix base 10 integer (0-256). Must be of equal length to the corresponding IPv4 subnet list",
+    "type": "list(string)"
+  },
+  "outpost_subnet_suffix": {
+    "default": "outpost",
+    "description": "Suffix to append to outpost subnets name",
+    "type": "string"
+  },
+  "outpost_subnet_tags": {
+    "default": {},
+    "description": "Additional tags for the outpost subnets",
+    "type": "map(string)"
+  },
+  "outpost_subnets": {
+    "default": [],
+    "description": "A list of outpost subnets inside the VPC",
+    "type": "list(string)"
+  },
+  "private_acl_tags": {
+    "default": {},
+    "description": "Additional tags for the private subnets network ACL",
+    "type": "map(string)"
+  },
+  "private_dedicated_network_acl": {
+    "default": false,
+    "description": "Whether to use dedicated network ACL (not default) and custom rules for private subnets",
+    "type": "bool"
+  },
+  "private_inbound_acl_rules": {
+    "default": [
+      {
+        "cidr_block": "0.0.0.0/0",
+        "from_port": 0,
+        "protocol": "-1",
+        "rule_action": "allow",
+        "rule_number": 100,
+        "to_port": 0
+      }
+    ],
+    "description": "Private subnets inbound network ACLs",
+    "type": "list(map(string))"
+  },
+  "private_outbound_acl_rules": {
+    "default": [
+      {
+        "cidr_block": "0.0.0.0/0",
+        "from_port": 0,
+        "protocol": "-1",
+        "rule_action": "allow",
+        "rule_number": 100,
+        "to_port": 0
+      }
+    ],
+    "description": "Private subnets outbound network ACLs",
+    "type": "list(map(string))"
+  },
+  "private_route_table_tags": {
+    "default": {},
+    "description": "Additional tags for the private route tables",
+    "type": "map(string)"
+  },
+  "private_subnet_assign_ipv6_address_on_creation": {
+    "default": "null",
+    "description": "Assign IPv6 address on private subnet, must be disabled to change IPv6 CIDRs. This is the IPv6 equivalent of map_public_ip_on_launch",
+    "type": "bool"
+  },
+  "private_subnet_ipv6_prefixes": {
+    "default": [],
+    "description": "Assigns IPv6 private subnet id based on the Amazon provided /56 prefix base 10 integer (0-256). Must be of equal length to the corresponding IPv4 subnet list",
+    "type": "list(string)"
+  },
+  "private_subnet_suffix": {
+    "default": "private",
+    "description": "Suffix to append to private subnets name",
+    "type": "string"
+  },
+  "private_subnet_tags": {
+    "default": {},
+    "description": "Additional tags for the private subnets",
+    "type": "map(string)"
+  },
+  "private_subnets": {
+    "default": [],
+    "description": "A list of private subnets inside the VPC",
+    "type": "list(string)"
+  },
+  "propagate_intra_route_tables_vgw": {
+    "default": false,
+    "description": "Should be true if you want route table propagation",
+    "type": "bool"
+  },
+  "propagate_private_route_tables_vgw": {
+    "default": false,
+    "description": "Should be true if you want route table propagation",
+    "type": "bool"
+  },
+  "propagate_public_route_tables_vgw": {
+    "default": false,
+    "description": "Should be true if you want route table propagation",
+    "type": "bool"
+  },
+  "public_acl_tags": {
+    "default": {},
+    "description": "Additional tags for the public subnets network ACL",
+    "type": "map(string)"
+  },
+  "public_dedicated_network_acl": {
+    "default": false,
+    "description": "Whether to use dedicated network ACL (not default) and custom rules for public subnets",
+    "type": "bool"
+  },
+  "public_inbound_acl_rules": {
+    "default": [
+      {
+        "cidr_block": "0.0.0.0/0",
+        "from_port": 0,
+        "protocol": "-1",
+        "rule_action": "allow",
+        "rule_number": 100,
+        "to_port": 0
+      }
+    ],
+    "description": "Public subnets inbound network ACLs",
+    "type": "list(map(string))"
+  },
+  "public_outbound_acl_rules": {
+    "default": [
+      {
+        "cidr_block": "0.0.0.0/0",
+        "from_port": 0,
+        "protocol": "-1",
+        "rule_action": "allow",
+        "rule_number": 100,
+        "to_port": 0
+      }
+    ],
+    "description": "Public subnets outbound network ACLs",
+    "type": "list(map(string))"
+  },
+  "public_route_table_tags": {
+    "default": {},
+    "description": "Additional tags for the public route tables",
+    "type": "map(string)"
+  },
+  "public_subnet_assign_ipv6_address_on_creation": {
+    "default": "null",
+    "description": "Assign IPv6 address on public subnet, must be disabled to change IPv6 CIDRs. This is the IPv6 equivalent of map_public_ip_on_launch",
+    "type": "bool"
+  },
+  "public_subnet_ipv6_prefixes": {
+    "default": [],
+    "description": "Assigns IPv6 public subnet id based on the Amazon provided /56 prefix base 10 integer (0-256). Must be of equal length to the corresponding IPv4 subnet list",
+    "type": "list(string)"
+  },
+  "public_subnet_suffix": {
+    "default": "public",
+    "description": "Suffix to append to public subnets name",
+    "type": "string"
+  },
+  "public_subnet_tags": {
+    "default": {},
+    "description": "Additional tags for the public subnets",
+    "type": "map(string)"
+  },
+  "public_subnets": {
+    "default": [],
+    "description": "A list of public subnets inside the VPC",
+    "type": "list(string)"
+  },
+  "redshift_acl_tags": {
+    "default": {},
+    "description": "Additional tags for the redshift subnets network ACL",
+    "type": "map(string)"
+  },
+  "redshift_dedicated_network_acl": {
+    "default": false,
+    "description": "Whether to use dedicated network ACL (not default) and custom rules for redshift subnets",
+    "type": "bool"
+  },
+  "redshift_inbound_acl_rules": {
+    "default": [
+      {
+        "cidr_block": "0.0.0.0/0",
+        "from_port": 0,
+        "protocol": "-1",
+        "rule_action": "allow",
+        "rule_number": 100,
+        "to_port": 0
+      }
+    ],
+    "description": "Redshift subnets inbound network ACL rules",
+    "type": "list(map(string))"
+  },
+  "redshift_outbound_acl_rules": {
+    "default": [
+      {
+        "cidr_block": "0.0.0.0/0",
+        "from_port": 0,
+        "protocol": "-1",
+        "rule_action": "allow",
+        "rule_number": 100,
+        "to_port": 0
+      }
+    ],
+    "description": "Redshift subnets outbound network ACL rules",
+    "type": "list(map(string))"
+  },
+  "redshift_route_table_tags": {
+    "default": {},
+    "description": "Additional tags for the redshift route tables",
+    "type": "map(string)"
+  },
+  "redshift_subnet_assign_ipv6_address_on_creation": {
+    "default": "null",
+    "description": "Assign IPv6 address on redshift subnet, must be disabled to change IPv6 CIDRs. This is the IPv6 equivalent of map_public_ip_on_launch",
+    "type": "bool"
+  },
+  "redshift_subnet_group_tags": {
+    "default": {},
+    "description": "Additional tags for the redshift subnet group",
+    "type": "map(string)"
+  },
+  "redshift_subnet_ipv6_prefixes": {
+    "default": [],
+    "description": "Assigns IPv6 redshift subnet id based on the Amazon provided /56 prefix base 10 integer (0-256). Must be of equal length to the corresponding IPv4 subnet list",
+    "type": "list(string)"
+  },
+  "redshift_subnet_suffix": {
+    "default": "redshift",
+    "description": "Suffix to append to redshift subnets name",
+    "type": "string"
+  },
+  "redshift_subnet_tags": {
+    "default": {},
+    "description": "Additional tags for the redshift subnets",
+    "type": "map(string)"
+  },
+  "redshift_subnets": {
+    "default": [],
+    "description": "A list of redshift subnets",
+    "type": "list(string)"
+  },
+  "reuse_nat_ips": {
+    "default": false,
+    "description": "Should be true if you don't want EIPs to be created for your NAT Gateways and will instead pass them in via the 'external_nat_ip_ids' variable",
+    "type": "bool"
+  },
+  "secondary_cidr_blocks": {
+    "default": [],
+    "description": "List of secondary CIDR blocks to associate with the VPC to extend the IP Address pool",
+    "type": "list(string)"
+  },
+  "single_nat_gateway": {
+    "default": false,
+    "description": "Should be true if you want to provision a single shared NAT Gateway across all of your private networks",
+    "type": "bool"
+  },
+  "tags": {
+    "default": {},
+    "description": "A map of tags to add to all resources",
+    "type": "map(string)"
+  },
+  "vpc_flow_log_permissions_boundary": {
+    "default": "null",
+    "description": "The ARN of the Permissions Boundary for the VPC Flow Log IAM Role",
+    "type": "string"
+  },
+  "vpc_flow_log_tags": {
+    "default": {},
+    "description": "Additional tags for the VPC Flow Logs",
+    "type": "map(string)"
+  },
+  "vpc_tags": {
+    "default": {},
+    "description": "Additional tags for the VPC",
+    "type": "map(string)"
+  },
+  "vpn_gateway_az": {
+    "default": "null",
+    "description": "The Availability Zone for the VPN Gateway",
+    "type": "string"
+  },
+  "vpn_gateway_id": {
+    "default": "",
+    "description": "ID of VPN Gateway to attach to the VPC",
+    "type": "string"
+  },
+  "vpn_gateway_tags": {
+    "default": {},
+    "description": "Additional tags for the VPN gateway",
+    "type": "map(string)"
+  }
+}

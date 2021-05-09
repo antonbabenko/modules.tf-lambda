@@ -1,0 +1,181 @@
+{
+  "allow_version_upgrade": {
+    "default": true,
+    "description": "(Optional) If true, major version upgrades can be applied during the maintenance window to the Amazon Redshift engine that is running on the cluster.",
+    "type": "bool"
+  },
+  "automated_snapshot_retention_period": {
+    "default": 0,
+    "description": "How long will we retain backups",
+    "type": "number"
+  },
+  "cluster_database_name": {
+    "description": "The name of the database to create",
+    "type": "string"
+  },
+  "cluster_iam_roles": {
+    "default": [],
+    "description": "A list of IAM Role ARNs to associate with the cluster. A Maximum of 10 can be associated to the cluster at any time.",
+    "type": "list(string)"
+  },
+  "cluster_identifier": {
+    "description": "Custom name of the cluster",
+    "type": "string"
+  },
+  "cluster_master_password": {
+    "description": "Password for master user",
+    "type": "string"
+  },
+  "cluster_master_username": {
+    "description": "Master username",
+    "type": "string"
+  },
+  "cluster_node_type": {
+    "description": "Node Type of Redshift cluster",
+    "type": "string"
+  },
+  "cluster_number_of_nodes": {
+    "default": 3,
+    "description": "Number of nodes in the cluster (values greater than 1 will trigger 'cluster_type' of 'multi-node')",
+    "type": "number"
+  },
+  "cluster_parameter_group": {
+    "default": "redshift-1.0",
+    "description": "Parameter group, depends on DB engine used",
+    "type": "string"
+  },
+  "cluster_port": {
+    "default": 5439,
+    "description": "Cluster port",
+    "type": "number"
+  },
+  "cluster_version": {
+    "default": "1.0",
+    "description": "Version of Redshift engine cluster",
+    "type": "string"
+  },
+  "enable_case_sensitive_identifier": {
+    "default": false,
+    "description": "(Optional) A configuration value that determines whether name identifiers of databases, tables, and columns are case sensitive.",
+    "type": "bool"
+  },
+  "enable_logging": {
+    "default": false,
+    "description": "Enables logging information such as queries and connection attempts, for the specified Amazon Redshift cluster.",
+    "type": "bool"
+  },
+  "enable_user_activity_logging": {
+    "default": "false",
+    "description": "Enable logging of user activity. See https://docs.aws.amazon.com/redshift/latest/mgmt/db-auditing.html",
+    "type": "string"
+  },
+  "encrypted": {
+    "default": false,
+    "description": "(Optional) If true , the data in the cluster is encrypted at rest.",
+    "type": "bool"
+  },
+  "enhanced_vpc_routing": {
+    "default": false,
+    "description": "(Optional) If true, enhanced VPC routing is enabled.",
+    "type": "bool"
+  },
+  "final_snapshot_identifier": {
+    "default": "",
+    "description": "(Optional) The identifier of the final snapshot that is to be created immediately before deleting the cluster. If this parameter is provided, 'skip_final_snapshot' must be false.",
+    "type": "string"
+  },
+  "kms_key_id": {
+    "default": "",
+    "description": "(Optional) The ARN for the KMS encryption key. When specifying kms_key_id, encrypted needs to be set to true.",
+    "type": "string"
+  },
+  "logging_bucket_name": {
+    "default": "null",
+    "description": "(Optional, required when enable_logging is true) The name of an existing S3 bucket where the log files are to be stored. Must be in the same region as the cluster and the cluster must have read bucket and put object permissions.",
+    "type": "string"
+  },
+  "logging_s3_key_prefix": {
+    "default": "null",
+    "description": "(Optional) The prefix applied to the log file names.",
+    "type": "string"
+  },
+  "max_concurrency_scaling_clusters": {
+    "default": "1",
+    "description": "(Optional) Max concurrency scaling clusters parameter (0 to 10)",
+    "type": "string"
+  },
+  "owner_account": {
+    "default": "null",
+    "description": "(Optional) The AWS customer account used to create or copy the snapshot. Required if you are restoring a snapshot you do not own, optional if you own the snapshot.",
+    "type": "string"
+  },
+  "parameter_group_name": {
+    "default": "",
+    "description": "The name of the parameter group to be associated with this cluster. If not specified new parameter group will be created.",
+    "type": "string"
+  },
+  "preferred_maintenance_window": {
+    "default": "sat:10:00-sat:10:30",
+    "description": "When AWS can run snapshot, can't overlap with maintenance window",
+    "type": "string"
+  },
+  "publicly_accessible": {
+    "default": false,
+    "description": "Determines if Cluster can be publicly available (NOT recommended)",
+    "type": "bool"
+  },
+  "redshift_subnet_group_name": {
+    "default": "",
+    "description": "The name of a cluster subnet group to be associated with this cluster. If not specified, new subnet will be created.",
+    "type": "string"
+  },
+  "require_ssl": {
+    "default": "false",
+    "description": "Require SSL to connect to this cluster",
+    "type": "string"
+  },
+  "skip_final_snapshot": {
+    "default": true,
+    "description": "If true (default), no snapshot will be made before deleting DB",
+    "type": "bool"
+  },
+  "snapshot_cluster_identifier": {
+    "default": "null",
+    "description": "(Optional) The name of the cluster the source snapshot was created from.",
+    "type": "string"
+  },
+  "snapshot_copy_destination_region": {
+    "default": "null",
+    "description": "(Optional) The name of the region where the snapshot will be copied.",
+    "type": "string"
+  },
+  "snapshot_identifier": {
+    "default": "null",
+    "description": "(Optional) The name of the snapshot from which to create the new cluster.",
+    "type": "string"
+  },
+  "subnets": {
+    "default": [],
+    "description": "List of subnets DB should be available at. It might be one subnet.",
+    "type": "list(string)"
+  },
+  "tags": {
+    "default": {},
+    "description": "A mapping of tags to assign to all resources",
+    "type": "map(string)"
+  },
+  "use_fips_ssl": {
+    "default": "false",
+    "description": "Enable FIPS-compliant SSL mode only if your system is required to be FIPS compliant.",
+    "type": "string"
+  },
+  "vpc_security_group_ids": {
+    "description": "A list of Virtual Private Cloud (VPC) security groups to be associated with the cluster.",
+    "type": "list(string)"
+  },
+  "wlm_json_configuration": {
+    "default": "[{\"query_concurrency\": 5}]",
+    "description": "Configuration bits for WLM json. see https://docs.aws.amazon.com/redshift/latest/mgmt/workload-mgmt-config.html",
+    "type": "string"
+  }
+}

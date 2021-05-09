@@ -1,0 +1,78 @@
+{
+  "access_logs": {
+    "default": {},
+    "description": "An access logs block",
+    "type": "map(string)"
+  },
+  "connection_draining": {
+    "default": false,
+    "description": "Boolean to enable connection draining",
+    "type": "bool"
+  },
+  "connection_draining_timeout": {
+    "default": 300,
+    "description": "The time in seconds to allow for connections to drain",
+    "type": "number"
+  },
+  "create_elb": {
+    "default": true,
+    "description": "Create the elb or not",
+    "type": "bool"
+  },
+  "cross_zone_load_balancing": {
+    "default": true,
+    "description": "Enable cross-zone load balancing",
+    "type": "bool"
+  },
+  "health_check": {
+    "description": "A health check block",
+    "type": "map(string)"
+  },
+  "idle_timeout": {
+    "default": 60,
+    "description": "The time in seconds that the connection is allowed to be idle",
+    "type": "number"
+  },
+  "instances": {
+    "default": [],
+    "description": "List of instances ID to place in the ELB pool",
+    "type": "list(string)"
+  },
+  "internal": {
+    "default": false,
+    "description": "If true, ELB will be an internal ELB",
+    "type": "bool"
+  },
+  "listener": {
+    "description": "A list of listener blocks",
+    "type": "list(map(string))"
+  },
+  "name": {
+    "default": "null",
+    "description": "The name of the ELB",
+    "type": "string"
+  },
+  "name_prefix": {
+    "default": "null",
+    "description": "The prefix name of the ELB",
+    "type": "string"
+  },
+  "number_of_instances": {
+    "default": 0,
+    "description": "Number of instances to attach to ELB",
+    "type": "number"
+  },
+  "security_groups": {
+    "description": "A list of security group IDs to assign to the ELB",
+    "type": "list(string)"
+  },
+  "subnets": {
+    "description": "A list of subnet IDs to attach to the ELB",
+    "type": "list(string)"
+  },
+  "tags": {
+    "default": {},
+    "description": "A mapping of tags to assign to the resource",
+    "type": "map(string)"
+  }
+}
