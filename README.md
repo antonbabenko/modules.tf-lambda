@@ -54,7 +54,6 @@ Source code is located in `src/handler.py`.
 Go to directory `terraform`, verify/update file `terraform.tfvars` and run:
 
 ```
-$ tfswtich           # Install Terraform of the correct version as specified in `.terraform-version`
 $ terraform init     # Download required Terraform providers and modules
 $ terraform apply    # Create or update infrastructure resources or do a new deployment of Lambda function (if source code has changed)
 ```

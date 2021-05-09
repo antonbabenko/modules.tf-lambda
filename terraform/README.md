@@ -1,28 +1,21 @@
-# modules.tf-lambda-infra
+# Terraform configurations required to provision AWS infrastructure for d2c.modules.tf
 
-This repository contains Terraform configurations required to provision AWS infrastructure for modules.tf:
-
-- ALB
+- HTTP API Gateway
 - ACM
+- Lambda Function
 - S3 bucket for downloads
 - Route53 records
 
-## Usage
-
-1. Copy file `terraform.tfvars.sample` into `terraform.tfvars` and put correct values there. This file may contain secrets, so be careful.
-2. Use Terraform as usual: `terraform init && terraform apply`
-3. Once AWS infrastructure is created, serverless framework application (modules.tf-lambda) can be deployed. Go to `modules.tf-lambda` project for more information.
-
 ## Deployments
 
-### cloudcraft
+### cloudcraft - prod
 
 ```
 $ awsp modules-deploy  # Assume IAM role in correct account
 $ make cloudcraft
 ```
 
-### betajob - development setup
+### betajob - dev
 
 ```
 $ awsp private-anton  # Assume IAM role in correct account

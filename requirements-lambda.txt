@@ -1,4 +1,0 @@
-cookiecutter==1.7.0
-networkx==2.4
-petname==2.6
-requests>=2.22.0

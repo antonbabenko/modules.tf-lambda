@@ -10,7 +10,7 @@ This repository contains Terraform configuration files which were automatically 
 1. [Configure access to AWS account](#configure-access-to-aws-account)
 1. [Create and manage your infrastructure](#create-and-manage-your-infrastructure)
 1. [References](#references)
-1. [About d2c.modules.tf](#about-d2c-modulestf)
+1. [About d2c.modules.tf](#about-d2cmodulestf)
 
 
 ## Quick start
@@ -73,7 +73,7 @@ After the confirmation your infrastructure should be created.
 * [Terraform best practices](https://www.terraform-best-practices.com/)
 
 
-## About modules.tf
+## About d2c.modules.tf
 
 [modules.tf](https://github.com/antonbabenko/modules.tf-lambda) is an open-source project created by [Anton Babenko](https://github.com/antonbabenko):
 1. Questions, bugs and feature-requests - [open an issue](https://github.com/antonbabenko/modules.tf-lambda).
