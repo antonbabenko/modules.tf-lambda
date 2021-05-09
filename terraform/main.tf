@@ -5,7 +5,7 @@ terraform {
     aws = "~> 3.0"
   }
 
-  # backend "remote" {}
+  backend "remote" {}
 }
 
 provider "aws" {
@@ -14,7 +14,9 @@ provider "aws" {
 }
 
 locals {
-  zone_name      = trimsuffix(data.aws_route53_zone.this.name, ".")
+  zone_name   = trimsuffix(data.aws_route53_zone.this.name, ".")
+  domain_name = join(".", compact([var.subdomain, local.zone_name]))
+
   dl_bucket_name = var.create_dl_bucket ? module.dl_bucket.s3_bucket_id : var.dl_bucket_name
   dl_dir         = trimsuffix(var.dl_dir, "/")
 
@@ -42,7 +44,7 @@ module "api_gateway" {
     allow_origins = ["*"]
   }
 
-  domain_name                  = "${var.subdomain}.${local.zone_name}"
+  domain_name                  = local.domain_name
   domain_name_certificate_arn  = module.acm.acm_certificate_arn
   disable_execute_api_endpoint = true
 
@@ -82,6 +84,7 @@ module "lambda" {
   }
 
   attach_tracing_policy = true
+  tracing_mode          = "Active"
 
   attach_policy_statements = true
   policy_statements = {
@@ -98,7 +101,7 @@ module "lambda" {
   allowed_triggers = {
     AllowExecutionFromAPIGateway = {
       service    = "apigateway"
-      source_arn = "${module.api_gateway.apigatewayv2_api_execution_arn}/*/*"
+      source_arn = "${module.api_gateway.apigatewayv2_api_execution_arn}/*/*/"
     }
   }
 
@@ -109,9 +112,9 @@ module "acm" {
   source  = "terraform-aws-modules/acm/aws"
   version = "~> 3.0"
 
-  domain_name               = local.zone_name
-  subject_alternative_names = ["${var.subdomain}.${local.zone_name}"]
-  zone_id                   = data.aws_route53_zone.this.id
+  domain_name = local.zone_name
+  # subject_alternative_names = ["${var.subdomain}.${local.zone_name}"]
+  zone_id = data.aws_route53_zone.this.id
 
   tags = local.tags
 }
@@ -127,12 +130,12 @@ module "dl_bucket" {
   force_destroy       = true
   block_public_policy = true
 
-  cors_rule = {
+  cors_rule = [{
     allowed_methods = ["GET"]
     allowed_origins = ["*"]
     allowed_headers = ["*"]
     max_age_seconds = 3000
-  }
+  }]
 
   lifecycle_rule = [
     {
