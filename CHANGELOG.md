@@ -7,6 +7,24 @@ All notable changes to this project will be documented in this file.
 
 
 
+<a name="v1.7.0"></a>
+## [v1.7.0] - 2021-05-09
+BUG FIXES:
+- Fixed version of minimist package ([#35](https://github.com/antonbabenko/modules.tf-lambda/issues/35))
+- resolved conflict for dependent botocore library ([#34](https://github.com/antonbabenko/modules.tf-lambda/issues/34))
+- Skip edges without from/to values (eg, VPN)
+- Fixed case of dependencies to be always lowercase
+
+DOCS:
+- Fix a few more links ([#52](https://github.com/antonbabenko/modules.tf-lambda/issues/52))
+- Updated links in README
+- Updated link to modules.tf-lambda-infra repo
+
+FEATURES:
+- Added Lambda, API Gateway, CloudFront modules, and some refactoring ([#60](https://github.com/antonbabenko/modules.tf-lambda/issues/60))
+- Adding security group rules ([#27](https://github.com/antonbabenko/modules.tf-lambda/issues/27))
+
+
 <a name="v1.6.0"></a>
 ## [v1.6.0] - 2020-03-22
 FEATURES:
@@ -47,7 +65,8 @@ FEATURES:
 
 
 
-[Unreleased]: https://github.com/antonbabenko/modules.tf-lambda/compare/v1.6.0...HEAD
+[Unreleased]: https://github.com/antonbabenko/modules.tf-lambda/compare/v1.7.0...HEAD
+[v1.7.0]: https://github.com/antonbabenko/modules.tf-lambda/compare/v1.6.0...v1.7.0
 [v1.6.0]: https://github.com/antonbabenko/modules.tf-lambda/compare/v1.5.0...v1.6.0
 [v1.5.0]: https://github.com/antonbabenko/modules.tf-lambda/compare/v1.4.0...v1.5.0
 [v1.4.0]: https://github.com/antonbabenko/modules.tf-lambda/compare/v1.3.0...v1.4.0
