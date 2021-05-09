@@ -6,3 +6,5 @@ subdomain = "dev-d2c"
 create_dl_bucket = false
 dl_bucket_name   = "dl.modules.tf"
 dl_dir           = "dev"
+
+email = "alerts@domain.com"

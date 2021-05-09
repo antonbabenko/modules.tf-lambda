@@ -41,15 +41,20 @@ $ make betajob
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_acm"></a> [acm](#module\_acm) | terraform-aws-modules/acm/aws | ~> 3.0 |
+| <a name="module_alarm_lambda_is_popular"></a> [alarm\_lambda\_is\_popular](#module\_alarm\_lambda\_is\_popular) | terraform-aws-modules/cloudwatch/aws//modules/metric-alarm |  |
+| <a name="module_alarm_lambda_is_slow"></a> [alarm\_lambda\_is\_slow](#module\_alarm\_lambda\_is\_slow) | terraform-aws-modules/cloudwatch/aws//modules/metric-alarm |  |
+| <a name="module_alarm_lambda_with_errors"></a> [alarm\_lambda\_with\_errors](#module\_alarm\_lambda\_with\_errors) | terraform-aws-modules/cloudwatch/aws//modules/metric-alarm | ~> 2.0 |
 | <a name="module_api_gateway"></a> [api\_gateway](#module\_api\_gateway) | terraform-aws-modules/apigateway-v2/aws | ~> 1.0 |
 | <a name="module_dl_bucket"></a> [dl\_bucket](#module\_dl\_bucket) | terraform-aws-modules/s3-bucket/aws | ~> 2.0 |
 | <a name="module_lambda"></a> [lambda](#module\_lambda) | terraform-aws-modules/lambda/aws | ~> 2.0 |
 | <a name="module_records"></a> [records](#module\_records) | terraform-aws-modules/route53/aws//modules/records | ~> 2.0 |
+| <a name="module_sns_topic"></a> [sns\_topic](#module\_sns\_topic) | terraform-aws-modules/sns/aws | ~> 3.0 |
 
 ## Resources
 
 | Name | Type |
 |------|------|
+| [aws_sns_topic_subscription.sns_to_email](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/sns_topic_subscription) | resource |
 | [aws_route53_zone.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone) | data source |
 
 ## Inputs
@@ -61,8 +66,8 @@ $ make betajob
 | <a name="input_create_dl_bucket"></a> [create\_dl\_bucket](#input\_create\_dl\_bucket) | Whether to create S3 bucket for downloads | `bool` | `false` | no |
 | <a name="input_dl_bucket_name"></a> [dl\_bucket\_name](#input\_dl\_bucket\_name) | Name of S3 bucket for downloads (should not include route53\_zone\_name) | `string` | `null` | no |
 | <a name="input_dl_dir"></a> [dl\_dir](#input\_dl\_dir) | Name of directory in S3 bucket | `string` | `""` | no |
+| <a name="input_email"></a> [email](#input\_email) | Email address to receive CloudWatch alerts | `string` | n/a | yes |
 | <a name="input_name"></a> [name](#input\_name) | Name or prefix for many related resources | `string` | `"modulestf-d2c"` | no |
-| <a name="input_ssm_prefix"></a> [ssm\_prefix](#input\_ssm\_prefix) | Prefix to use in SSM key | `string` | `"modulestf-d2c"` | no |
 | <a name="input_subdomain"></a> [subdomain](#input\_subdomain) | Route53 subdomain | `string` | `""` | no |
 | <a name="input_zone_name"></a> [zone\_name](#input\_zone\_name) | Zone name for ALB and ACM | `string` | n/a | yes |
 

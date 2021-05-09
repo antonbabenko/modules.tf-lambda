@@ -26,7 +26,7 @@ os.environ["POWERTOOLS_TRACE_DISABLED"] = "1"
 
 logger = Logger(service="modulestf-d2c")
 tracer = Tracer(service="modulestf-d2c")
-# metrics = Metrics(namespace=f"modulestf-d2c", service="modulestf-d2c")
+metrics = Metrics(namespace="modulestf-d2c", service="modulestf-d2c")
 
 
 def load_data(event):
@@ -71,7 +71,7 @@ def load_data(event):
     return data
 
 
-# @metrics.log_metrics
+@metrics.log_metrics
 @logger.inject_lambda_context
 @tracer.capture_lambda_handler
 def handler(event: Dict[str, Any], context: LambdaContext) -> Dict[str, Any]:  # noqa: WPS110
@@ -112,6 +112,8 @@ def handler(event: Dict[str, Any], context: LambdaContext) -> Dict[str, Any]:  #
         shutil.make_archive("archive", "zip", FINAL_DIR)
 
         link = upload_file_to_s3(filename="archive.zip")
+
+    metrics.add_metric(name="Request", unit=MetricUnit.Count, value=1)
 
     return {
         "body": "",

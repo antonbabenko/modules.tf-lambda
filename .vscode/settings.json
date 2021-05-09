@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/Users/Bob/.virtualenvs/modules.tf-diagrams/bin/python",
+    "python.pythonPath": "/Users/Bob/.local/share/virtualenvs/modules.tf-diagrams/bin/python",
     "python.linting.enabled": true,
     "python.linting.flake8Enabled": true,
     "python.formatting.provider": "autopep8"

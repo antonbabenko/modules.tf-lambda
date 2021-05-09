@@ -83,6 +83,8 @@ module "lambda" {
     UPLOAD_TO_S3 = true
   }
 
+  cloudwatch_logs_retention_in_days = 30
+
   attach_tracing_policy = true
   tracing_mode          = "Active"
 
@@ -112,9 +114,9 @@ module "acm" {
   source  = "terraform-aws-modules/acm/aws"
   version = "~> 3.0"
 
-  domain_name = local.zone_name
-  # subject_alternative_names = ["${var.subdomain}.${local.zone_name}"]
-  zone_id = data.aws_route53_zone.this.id
+  domain_name               = local.zone_name
+  subject_alternative_names = setsubtract([local.domain_name], [local.zone_name])
+  zone_id                   = data.aws_route53_zone.this.id
 
   tags = local.tags
 }
@@ -139,11 +141,11 @@ module "dl_bucket" {
 
   lifecycle_rule = [
     {
-      id      = "delete-all-ancient"
+      id      = "delete-pretty-quick"
       enabled = true
 
       expiration = {
-        days = 365
+        days = 1
       }
     }
   ]
@@ -167,4 +169,94 @@ module "records" {
       }
     },
   ]
+}
+
+module "sns_topic" {
+  source  = "terraform-aws-modules/sns/aws"
+  version = "~> 3.0"
+
+  name_prefix = var.name
+}
+
+resource "aws_sns_topic_subscription" "sns_to_email" {
+  topic_arn = module.sns_topic.sns_topic_arn
+  protocol  = "email"
+  endpoint  = var.email
+}
+
+# Alarm when there is at least one error in a minute in AWS Lambda functions
+module "alarm_lambda_with_errors" {
+  source  = "terraform-aws-modules/cloudwatch/aws//modules/metric-alarm"
+  version = "~> 2.0"
+
+  alarm_name          = "lambda-errors-${module.lambda.lambda_function_name}"
+  alarm_description   = "Lambda with errors"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = 1
+  threshold           = 1
+  period              = 60
+  unit                = "Count"
+  treat_missing_data  = "notBreaching"
+
+  namespace   = "AWS/Lambda"
+  metric_name = "Errors"
+  statistic   = "Maximum"
+
+  dimensions = {
+    FunctionName = module.lambda.lambda_function_name
+  }
+
+  alarm_actions = [module.sns_topic.sns_topic_arn]
+
+  depends_on = [module.sns_topic]
+}
+
+module "alarm_lambda_is_slow" {
+  source = "terraform-aws-modules/cloudwatch/aws//modules/metric-alarm"
+
+  alarm_name          = "lambda-slow-${module.lambda.lambda_function_name}"
+  alarm_description   = "Lambda is too high"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = 1
+  threshold           = 20000
+  period              = 60
+  unit                = "Milliseconds"
+  treat_missing_data  = "notBreaching"
+
+  namespace   = "AWS/Lambda"
+  metric_name = "Duration"
+  statistic   = "Maximum"
+
+  dimensions = {
+    FunctionName = module.lambda.lambda_function_name
+  }
+
+  alarm_actions = [module.sns_topic.sns_topic_arn]
+
+  depends_on = [module.sns_topic]
+}
+
+module "alarm_lambda_is_popular" {
+  source = "terraform-aws-modules/cloudwatch/aws//modules/metric-alarm"
+
+  alarm_name          = "lambda-popular-${module.lambda.lambda_function_name}"
+  alarm_description   = "Lambda is too popular"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = 1
+  threshold           = 100
+  period              = 60
+  unit                = "Count"
+  treat_missing_data  = "notBreaching"
+
+  namespace   = "AWS/Lambda"
+  metric_name = "Invocations"
+  statistic   = "Maximum"
+
+  dimensions = {
+    FunctionName = module.lambda.lambda_function_name
+  }
+
+  alarm_actions = [module.sns_topic.sns_topic_arn]
+
+  depends_on = [module.sns_topic]
 }

@@ -44,8 +44,7 @@ variable "dl_dir" {
   default     = ""
 }
 
-variable "ssm_prefix" {
-  description = "Prefix to use in SSM key"
+variable "email" {
+  description = "Email address to receive CloudWatch alerts"
   type        = string
-  default     = "modulestf-d2c"
 }
