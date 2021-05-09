@@ -1,0 +1,377 @@
+{
+  "allocated_storage": {
+    "description": "The allocated storage in gigabytes",
+    "type": "string"
+  },
+  "allow_major_version_upgrade": {
+    "default": false,
+    "description": "Indicates that major version upgrades are allowed. Changing this parameter does not result in an outage and the change is asynchronously applied as soon as possible",
+    "type": "bool"
+  },
+  "apply_immediately": {
+    "default": false,
+    "description": "Specifies whether any database modifications are applied immediately, or during the next maintenance window",
+    "type": "bool"
+  },
+  "auto_minor_version_upgrade": {
+    "default": true,
+    "description": "Indicates that minor engine upgrades will be applied automatically to the DB instance during the maintenance window",
+    "type": "bool"
+  },
+  "availability_zone": {
+    "default": "null",
+    "description": "The Availability Zone of the RDS instance",
+    "type": "string"
+  },
+  "backup_retention_period": {
+    "default": "null",
+    "description": "The days to retain backups for",
+    "type": "number"
+  },
+  "backup_window": {
+    "description": "The daily time range (in UTC) during which automated backups are created if they are enabled. Example: '09:46-10:16'. Must not overlap with maintenance_window",
+    "type": "string"
+  },
+  "ca_cert_identifier": {
+    "default": "null",
+    "description": "Specifies the identifier of the CA certificate for the DB instance",
+    "type": "string"
+  },
+  "character_set_name": {
+    "default": "null",
+    "description": "(Optional) The character set name to use for DB encoding in Oracle instances. This can't be changed. See Oracle Character Sets Supported in Amazon RDS and Collations and Character Sets for Microsoft SQL Server for more information. This can only be set on creation.",
+    "type": "string"
+  },
+  "copy_tags_to_snapshot": {
+    "default": false,
+    "description": "On delete, copy all Instance tags to the final snapshot (if final_snapshot_identifier is specified)",
+    "type": "bool"
+  },
+  "create_db_instance": {
+    "default": true,
+    "description": "Whether to create a database instance",
+    "type": "bool"
+  },
+  "create_db_option_group": {
+    "default": true,
+    "description": "(Optional) Create a database option group",
+    "type": "bool"
+  },
+  "create_db_parameter_group": {
+    "default": true,
+    "description": "Whether to create a database parameter group",
+    "type": "bool"
+  },
+  "create_db_subnet_group": {
+    "default": true,
+    "description": "Whether to create a database subnet group",
+    "type": "bool"
+  },
+  "create_monitoring_role": {
+    "default": false,
+    "description": "Create IAM role with a defined name that permits RDS to send enhanced monitoring metrics to CloudWatch Logs.",
+    "type": "bool"
+  },
+  "create_random_password": {
+    "default": false,
+    "description": "Whether to create random password for RDS primary cluster",
+    "type": "bool"
+  },
+  "db_instance_tags": {
+    "default": {},
+    "description": "Additional tags for the DB instance",
+    "type": "map(string)"
+  },
+  "db_option_group_tags": {
+    "default": {},
+    "description": "Additional tags for the DB option group",
+    "type": "map(string)"
+  },
+  "db_parameter_group_tags": {
+    "default": {},
+    "description": "Additional tags for the  DB parameter group",
+    "type": "map(string)"
+  },
+  "db_subnet_group_description": {
+    "default": "",
+    "description": "Description of the DB subnet group to create",
+    "type": "string"
+  },
+  "db_subnet_group_name": {
+    "default": "null",
+    "description": "Name of DB subnet group. DB instance will be created in the VPC associated with the DB subnet group. If unspecified, will be created in the default VPC",
+    "type": "string"
+  },
+  "db_subnet_group_tags": {
+    "default": {},
+    "description": "Additional tags for the DB subnet group",
+    "type": "map(string)"
+  },
+  "db_subnet_group_use_name_prefix": {
+    "default": true,
+    "description": "Determines whether to use `subnet_group_name` as is or create a unique name beginning with the `subnet_group_name` as the prefix",
+    "type": "bool"
+  },
+  "delete_automated_backups": {
+    "default": true,
+    "description": "Specifies whether to remove automated backups immediately after the DB instance is deleted",
+    "type": "bool"
+  },
+  "deletion_protection": {
+    "default": false,
+    "description": "The database can't be deleted when this value is set to true.",
+    "type": "bool"
+  },
+  "domain": {
+    "default": "null",
+    "description": "The ID of the Directory Service Active Directory domain to create the instance in",
+    "type": "string"
+  },
+  "domain_iam_role_name": {
+    "default": "null",
+    "description": "(Required if domain is provided) The name of the IAM role to be used when making API calls to the Directory Service",
+    "type": "string"
+  },
+  "enabled_cloudwatch_logs_exports": {
+    "default": [],
+    "description": "List of log types to enable for exporting to CloudWatch logs. If omitted, no logs will be exported. Valid values (depending on engine): alert, audit, error, general, listener, slowquery, trace, postgresql (PostgreSQL), upgrade (PostgreSQL).",
+    "type": "list(string)"
+  },
+  "engine": {
+    "description": "The database engine to use",
+    "type": "string",
+    "cloudcraft_name": "engine"
+  },
+  "engine_version": {
+    "description": "The engine version to use",
+    "type": "string"
+  },
+  "family": {
+    "default": "",
+    "description": "The family of the DB parameter group",
+    "type": "string"
+  },
+  "final_snapshot_identifier": {
+    "default": "null",
+    "description": "The name of your final DB snapshot when this DB instance is deleted.",
+    "type": "string"
+  },
+  "final_snapshot_identifier_prefix": {
+    "default": "final",
+    "description": "The name which is prefixed to the final snapshot on cluster destroy",
+    "type": "string"
+  },
+  "iam_database_authentication_enabled": {
+    "default": false,
+    "description": "Specifies whether or not the mappings of AWS Identity and Access Management (IAM) accounts to database accounts are enabled",
+    "type": "bool"
+  },
+  "identifier": {
+    "description": "The name of the RDS instance, if omitted, Terraform will assign a random, unique identifier",
+    "type": "string"
+  },
+  "instance_class": {
+    "description": "The instance type of the RDS instance",
+    "type": "string",
+    "cloudcraft_name": "instanceType"
+  },
+  "iops": {
+    "default": 0,
+    "description": "The amount of provisioned IOPS. Setting this implies a storage_type of 'io1'",
+    "type": "number"
+  },
+  "kms_key_id": {
+    "default": "null",
+    "description": "The ARN for the KMS encryption key. If creating an encrypted replica, set this to the destination KMS ARN. If storage_encrypted is set to true and kms_key_id is not specified the default KMS key created in your account will be used",
+    "type": "string"
+  },
+  "license_model": {
+    "default": "null",
+    "description": "License model information for this DB instance. Optional, but required for some DB engines, i.e. Oracle SE1",
+    "type": "string"
+  },
+  "maintenance_window": {
+    "description": "The window to perform maintenance in. Syntax: 'ddd:hh24:mi-ddd:hh24:mi'. Eg: 'Mon:00:00-Mon:03:00'",
+    "type": "string"
+  },
+  "major_engine_version": {
+    "default": "",
+    "description": "Specifies the major version of the engine that this option group should be associated with",
+    "type": "string"
+  },
+  "max_allocated_storage": {
+    "default": 0,
+    "description": "Specifies the value for Storage Autoscaling",
+    "type": "number"
+  },
+  "monitoring_interval": {
+    "default": 0,
+    "description": "The interval, in seconds, between points when Enhanced Monitoring metrics are collected for the DB instance. To disable collecting Enhanced Monitoring metrics, specify 0. The default is 0. Valid Values: 0, 1, 5, 10, 15, 30, 60.",
+    "type": "number"
+  },
+  "monitoring_role_arn": {
+    "default": "null",
+    "description": "The ARN for the IAM role that permits RDS to send enhanced monitoring metrics to CloudWatch Logs. Must be specified if monitoring_interval is non-zero.",
+    "type": "string"
+  },
+  "monitoring_role_name": {
+    "default": "rds-monitoring-role",
+    "description": "Name of the IAM role which will be created when create_monitoring_role is enabled.",
+    "type": "string"
+  },
+  "multi_az": {
+    "default": false,
+    "description": "Specifies if the RDS instance is multi-AZ",
+    "type": "bool",
+    "cloudcraft_name": "isMultiAZ"
+  },
+  "name": {
+    "default": "null",
+    "description": "The DB name to create. If omitted, no database is created initially",
+    "type": "string"
+  },
+  "option_group_description": {
+    "default": "",
+    "description": "The description of the option group",
+    "type": "string"
+  },
+  "option_group_name": {
+    "default": "null",
+    "description": "Name of the option group",
+    "type": "string"
+  },
+  "option_group_timeouts": {
+    "default": {
+      "delete": "15m"
+    },
+    "description": "Define maximum timeout for deletion of `aws_db_option_group` resource",
+    "type": "map(string)"
+  },
+  "option_group_use_name_prefix": {
+    "default": true,
+    "description": "Determines whether to use `option_group_name` as is or create a unique name beginning with the `option_group_name` as the prefix",
+    "type": "bool"
+  },
+  "options": {
+    "default": [],
+    "description": "A list of Options to apply.",
+    "type": "any"
+  },
+  "parameter_group_description": {
+    "default": "",
+    "description": "Description of the DB parameter group to create",
+    "type": "string"
+  },
+  "parameter_group_name": {
+    "default": "null",
+    "description": "Name of the DB parameter group to associate or create",
+    "type": "string"
+  },
+  "parameter_group_use_name_prefix": {
+    "default": true,
+    "description": "Determines whether to use `parameter_group_name` as is or create a unique name beginning with the `parameter_group_name` as the prefix",
+    "type": "bool"
+  },
+  "parameters": {
+    "default": [],
+    "description": "A list of DB parameters (map) to apply",
+    "type": "list(map(string))"
+  },
+  "password": {
+    "default": "",
+    "description": "Password for the master DB user. Note that this may show up in logs, and it will be stored in the state file",
+    "type": "string"
+  },
+  "performance_insights_enabled": {
+    "default": false,
+    "description": "Specifies whether Performance Insights are enabled",
+    "type": "bool"
+  },
+  "performance_insights_kms_key_id": {
+    "default": "null",
+    "description": "The ARN for the KMS key to encrypt Performance Insights data.",
+    "type": "string"
+  },
+  "performance_insights_retention_period": {
+    "default": 7,
+    "description": "The amount of time in days to retain Performance Insights data. Either 7 (7 days) or 731 (2 years).",
+    "type": "number"
+  },
+  "port": {
+    "description": "The port on which the DB accepts connections",
+    "type": "string"
+  },
+  "publicly_accessible": {
+    "default": false,
+    "description": "Bool to control if instance is publicly accessible",
+    "type": "bool"
+  },
+  "random_password_length": {
+    "default": 10,
+    "description": "(Optional) Length of random password to create. (default: 10)",
+    "type": "number"
+  },
+  "replicate_source_db": {
+    "default": "null",
+    "description": "Specifies that this resource is a Replicate database, and to use this value as the source database. This correlates to the identifier of another Amazon RDS Database to replicate.",
+    "type": "string"
+  },
+  "s3_import": {
+    "default": "null",
+    "description": "Restore from a Percona Xtrabackup in S3 (only MySQL is supported)",
+    "type": "map(string)"
+  },
+  "skip_final_snapshot": {
+    "default": false,
+    "description": "Determines whether a final DB snapshot is created before the DB instance is deleted. If true is specified, no DBSnapshot is created. If false is specified, a DB snapshot is created before the DB instance is deleted, using the value from final_snapshot_identifier",
+    "type": "bool"
+  },
+  "snapshot_identifier": {
+    "default": "null",
+    "description": "Specifies whether or not to create this database from a snapshot. This correlates to the snapshot ID you'd find in the RDS console, e.g: rds:production-2015-06-26-06-05.",
+    "type": "string"
+  },
+  "storage_encrypted": {
+    "default": false,
+    "description": "Specifies whether the DB instance is encrypted",
+    "type": "bool"
+  },
+  "storage_type": {
+    "default": "null",
+    "description": "One of 'standard' (magnetic), 'gp2' (general purpose SSD), or 'io1' (provisioned IOPS SSD). The default is 'io1' if iops is specified, 'gp2' if not.",
+    "type": "string"
+  },
+  "subnet_ids": {
+    "default": [],
+    "description": "A list of VPC subnet IDs",
+    "type": "list(string)"
+  },
+  "tags": {
+    "default": {},
+    "description": "A mapping of tags to assign to all resources",
+    "type": "map(string)"
+  },
+  "timeouts": {
+    "default": {
+      "create": "40m",
+      "delete": "40m",
+      "update": "80m"
+    },
+    "description": "(Optional) Updated Terraform resource management timeouts. Applies to `aws_db_instance` in particular to permit resource management times",
+    "type": "map(string)"
+  },
+  "timezone": {
+    "default": "null",
+    "description": "(Optional) Time zone of the DB instance. timezone is currently only supported by Microsoft SQL Server. The timezone can only be set on creation. See MSSQL User Guide for more information.",
+    "type": "string"
+  },
+  "username": {
+    "description": "Username for the master DB user",
+    "type": "string"
+  },
+  "vpc_security_group_ids": {
+    "default": [],
+    "description": "List of VPC security groups to associate",
+    "type": "list(string)"
+  }
+}

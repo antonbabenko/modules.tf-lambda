@@ -1,0 +1,190 @@
+{
+  "id": "5b27afb9-1cce-4bbc-a0aa-6bc5febc7ba0",
+  "data": {
+    "grid": "standard",
+    "name": "sdfhdsfh",
+    "text": [{
+      "id": "616cb32d-8c11-4697-a6fb-486407ef8a9b",
+      "text": "S3-files",
+      "type": "isotext",
+      "color": "#4286c5",
+      "mapPos": {
+        "relTo": "ae00b6e2-ed7c-47c8-8b1c-c9d9a03ed2f9",
+        "offset": [0.245, 0.6999999999999993]
+      },
+      "outline": true,
+      "standing": false,
+      "textSize": 25,
+      "direction": "down",
+      "isometric": true
+    }, {
+      "id": "aac87f03-d7aa-4aea-9227-cb04db679ad2",
+      "text": "Infra-service-1",
+      "type": "isotext",
+      "color": "#4286c5",
+      "mapPos": {
+        "relTo": "dc672366-eced-42b9-bb73-6177e0a7d7a0",
+        "offset": [-0.25, 0.75]
+      },
+      "outline": true,
+      "standing": false,
+      "textSize": 25,
+      "direction": "down",
+      "isometric": true
+    }],
+    "edges": [{
+      "to": "d9dda8de-0d35-4231-962e-79a95b33759d",
+      "from": "1dc43817-99b6-4ebb-aa91-76737a9792d0",
+      "type": "edge",
+      "color": {
+        "2d": "#000000",
+        "isometric": "#000000"
+      },
+      "width": 2,
+      "dashed": false,
+      "endCap": "arrow"
+    }, {
+      "to": "ae00b6e2-ed7c-47c8-8b1c-c9d9a03ed2f9",
+      "from": "d9dda8de-0d35-4231-962e-79a95b33759d",
+      "type": "edge",
+      "color": {
+        "2d": "#000000",
+        "isometric": "#000000"
+      },
+      "width": 2,
+      "dashed": false,
+      "endCap": "arrow"
+    }],
+    "icons": [{
+      "id": "dc672366-eced-42b9-bb73-6177e0a7d7a0",
+      "name": "AR & VR/AR-VR",
+      "type": "icon",
+      "color": {},
+      "mapPos": [3, 12.25],
+      "iconSet": "aws2",
+      "iconSize": 3,
+      "standing": false,
+      "direction": "down",
+      "isometric": true,
+      "background": {
+        "2d": "rgba(0, 0, 0, 0)",
+        "isometric": "rgba(0, 0, 0, 0)"
+      }
+    }],
+    "nodes": [{
+      "id": "b0fe9c7e-df37-4f75-aca4-d59e7b1bd6b6",
+      "type": "vpngateway",
+      "color": {
+        "2d": "#693cc5",
+        "isometric": "#ececed"
+      },
+      "mapPos": [9.25, 6],
+      "region": "eu-west-1",
+      "direction": "down",
+      "accentColor": {
+        "2d": "#693cc5",
+        "isometric": "#4286c5"
+      }
+    }, {
+      "id": "ae00b6e2-ed7c-47c8-8b1c-c9d9a03ed2f9",
+      "type": "s3",
+      "color": {
+        "2d": "#3f8624",
+        "isometric": "#4286c5"
+      },
+      "dataGb": 10,
+      "mapPos": [6.75, 10.5],
+      "region": "eu-west-1",
+      "volumeType": "Standard",
+      "accentColor": {
+        "2d": "#ffffff",
+        "isometric": "#4286c5"
+      },
+      "getAndOtherRequests": 0,
+      "putCopyPostRequests": 0,
+      "lifecycleTransitions": 0
+    }, {
+      "id": "1dc43817-99b6-4ebb-aa91-76737a9792d0",
+      "type": "lambda",
+      "color": {
+        "2d": "#d86613",
+        "isometric": "#3c3c3c"
+      },
+      "mapPos": [11, 10.5],
+      "memory": 384,
+      "region": "eu-west-1",
+      "mRequests": 10,
+      "accentColor": {
+        "2d": "#ffffff",
+        "isometric": "#f4b934"
+      },
+      "computeDuration": 0.5
+    }, {
+      "id": "a4867d70-fbe4-49f4-ab68-9f4b3caf7d4f",
+      "type": "apigateway",
+      "cache": 1.6,
+      "color": {
+        "2d": "#693cc5",
+        "isometric": "#3c3c3c"
+      },
+      "mapPos": [8.75, 10.75],
+      "region": "eu-west-1",
+      "apiType": "http",
+      "apiCalls": 5,
+      "direction": "down",
+      "accentColor": {
+        "2d": "#ffffff",
+        "isometric": "#f4b934"
+      },
+      "connectionMinutes": 0
+    }, {
+      "id": "d9dda8de-0d35-4231-962e-79a95b33759d",
+      "type": "cloudfront",
+      "color": {
+        "2d": "#693cc5",
+        "isometric": "#ececed"
+      },
+      "mapPos": [8.75, 13.5],
+      "accentColor": {
+        "2d": "#ffffff",
+        "isometric": "#4286c5"
+      }
+    }],
+    "groups": [{
+      "id": "532fbc90-fe0d-457d-9e45-2f36c0d5a85d",
+      "name": "my-awesome-vpc",
+      "type": "vpc",
+      "color": {
+        "2d": "#2196f3",
+        "isometric": "#2196f3"
+      },
+      "nodes": ["b0fe9c7e-df37-4f75-aca4-d59e7b1bd6b6"],
+      "shape": "rectangular",
+      "region": "eu-west-1",
+      "padding": 1.5,
+      "peeringConnections": []
+    }],
+    "images": [],
+    "linkKey": "lUUXCSmDFPggJ8ws7y3iD_LQ",
+    "version": 1,
+    "surfaces": [],
+    "shareDocs": false,
+    "connectors": [],
+    "projection": "isometric",
+    "liveOptions": {
+      "autoLabel": true,
+      "autoConnect": true,
+      "updatesEnabled": true,
+      "updateAllOnScan": true,
+      "updateGroupsOnScan": true,
+      "updateNodeOnSelect": true
+    },
+    "disabledLayers": []
+  },
+  "readAccess": null,
+  "writeAccess": null,
+  "createdAt": "2021-04-15T17:22:56.027Z",
+  "updatedAt": "2021-05-09T12:22:37.875Z",
+  "CreatorId": "354474ae-8248-45a8-a1ef-34de7c2a4d47",
+  "LastUserId": "354474ae-8248-45a8-a1ef-34de7c2a4d47"
+}

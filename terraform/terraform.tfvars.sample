@@ -1,0 +1,10 @@
+allowed_account_ids = ["111111111111"]
+
+zone_name = "modules.tf"
+subdomain = "dev-d2c"
+
+create_dl_bucket = false
+dl_bucket_name   = "dl.modules.tf"
+dl_dir           = "dev"
+
+email = "alerts@domain.com"

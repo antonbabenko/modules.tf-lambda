@@ -1,0 +1,408 @@
+{
+  "associate_public_ip_address": {
+    "default": "null",
+    "description": "(LC) Associate a public ip address with an instance in a VPC",
+    "type": "bool"
+  },
+  "availability_zone": {
+    "default": "null",
+    "description": "A list of one or more availability zones for the group. Used for EC2-Classic and default subnets when not specified with `vpc_zone_identifier` argument. Conflicts with `vpc_zone_identifier`",
+    "type": "list(string)"
+  },
+  "block_device_mappings": {
+    "default": [],
+    "description": "(LT) Specify volumes to attach to the instance besides the volumes specified by the AMI",
+    "type": "list(any)"
+  },
+  "capacity_rebalance": {
+    "default": "null",
+    "description": "Indicates whether capacity rebalance is enabled",
+    "type": "bool"
+  },
+  "capacity_reservation_specification": {
+    "default": "null",
+    "description": "(LT) Targeting for EC2 capacity reservations",
+    "type": "any"
+  },
+  "cpu_options": {
+    "default": "null",
+    "description": "(LT) The CPU options for the instance",
+    "type": "map(string)"
+  },
+  "create_asg": {
+    "default": true,
+    "description": "Determines whether to create autoscaling group or not",
+    "type": "bool"
+  },
+  "create_lc": {
+    "default": false,
+    "description": "Determines whether to create launch configuration or not",
+    "type": "bool"
+  },
+  "create_lt": {
+    "default": false,
+    "description": "Determines whether to create launch template or not",
+    "type": "bool"
+  },
+  "credit_specification": {
+    "default": "null",
+    "description": "(LT) Customize the credit specification of the instance",
+    "type": "map(string)"
+  },
+  "default_cooldown": {
+    "default": "null",
+    "description": "The amount of time, in seconds, after a scaling activity completes before another scaling activity can start",
+    "type": "number"
+  },
+  "default_version": {
+    "default": "null",
+    "description": "(LT) Default Version of the launch template",
+    "type": "string"
+  },
+  "delete_timeout": {
+    "default": "null",
+    "description": "Delete timeout to wait for destroying autoscaling group",
+    "type": "string"
+  },
+  "description": {
+    "default": "null",
+    "description": "(LT) Description of the launch template",
+    "type": "string"
+  },
+  "desired_capacity": {
+    "default": "null",
+    "description": "The number of Amazon EC2 instances that should be running in the autoscaling group",
+    "type": "number"
+  },
+  "disable_api_termination": {
+    "default": "null",
+    "description": "(LT) If true, enables EC2 instance termination protection",
+    "type": "bool"
+  },
+  "ebs_block_device": {
+    "default": [],
+    "description": "(LC) Additional EBS block devices to attach to the instance",
+    "type": "list(map(string))"
+  },
+  "ebs_optimized": {
+    "default": "null",
+    "description": "If true, the launched EC2 instance will be EBS-optimized",
+    "type": "bool"
+  },
+  "elastic_gpu_specifications": {
+    "default": "null",
+    "description": "(LT) The elastic GPU to attach to the instance",
+    "type": "map(string)"
+  },
+  "elastic_inference_accelerator": {
+    "default": "null",
+    "description": "(LT) Configuration block containing an Elastic Inference Accelerator to attach to the instance",
+    "type": "map(string)"
+  },
+  "enable_monitoring": {
+    "default": "null",
+    "description": "Enables/disables detailed monitoring",
+    "type": "bool"
+  },
+  "enabled_metrics": {
+    "default": "null",
+    "description": "A list of metrics to collect. The allowed values are `GroupDesiredCapacity`, `GroupInServiceCapacity`, `GroupPendingCapacity`, `GroupMinSize`, `GroupMaxSize`, `GroupInServiceInstances`, `GroupPendingInstances`, `GroupStandbyInstances`, `GroupStandbyCapacity`, `GroupTerminatingCapacity`, `GroupTerminatingInstances`, `GroupTotalCapacity`, `GroupTotalInstances`",
+    "type": "list(string)"
+  },
+  "enclave_options": {
+    "default": "null",
+    "description": "(LT) Enable Nitro Enclaves on launched instances",
+    "type": "map(string)"
+  },
+  "ephemeral_block_device": {
+    "default": [],
+    "description": "(LC) Customize Ephemeral (also known as 'Instance Store') volumes on the instance",
+    "type": "list(map(string))"
+  },
+  "force_delete": {
+    "default": "null",
+    "description": "Allows deleting the Auto Scaling Group without waiting for all instances in the pool to terminate. You can force an Auto Scaling Group to delete even if it's in the process of scaling a resource. Normally, Terraform drains all the instances before deleting the group. This bypasses that behavior and potentially leaves resources dangling",
+    "type": "bool"
+  },
+  "health_check_grace_period": {
+    "default": "null",
+    "description": "Time (in seconds) after instance comes into service before checking health",
+    "type": "number"
+  },
+  "health_check_type": {
+    "default": "null",
+    "description": "`EC2` or `ELB`. Controls how health checking is done",
+    "type": "string"
+  },
+  "hibernation_options": {
+    "default": "null",
+    "description": "(LT) The hibernation options for the instance",
+    "type": "map(string)"
+  },
+  "iam_instance_profile_arn": {
+    "default": "null",
+    "description": "(LT) The IAM Instance Profile ARN to launch the instance with",
+    "type": "string"
+  },
+  "iam_instance_profile_name": {
+    "default": "null",
+    "description": "The name attribute of the IAM instance profile to associate with launched instances",
+    "type": "string"
+  },
+  "image_id": {
+    "default": "",
+    "description": "The AMI from which to launch the instance",
+    "type": "string"
+  },
+  "initial_lifecycle_hooks": {
+    "default": [],
+    "description": "One or more Lifecycle Hooks to attach to the Auto Scaling Group before instances are launched. The syntax is exactly the same as the separate `aws_autoscaling_lifecycle_hook` resource, without the `autoscaling_group_name` attribute. Please note that this will only work when creating a new Auto Scaling Group. For all other use-cases, please use `aws_autoscaling_lifecycle_hook` resource",
+    "type": "list(map(string))"
+  },
+  "instance_initiated_shutdown_behavior": {
+    "default": "null",
+    "description": "(LT) Shutdown behavior for the instance. Can be `stop` or `terminate`. (Default: `stop`)",
+    "type": "string"
+  },
+  "instance_market_options": {
+    "default": "null",
+    "description": "(LT) The market (purchasing) option for the instance",
+    "type": "any"
+  },
+  "instance_refresh": {
+    "default": "null",
+    "description": "If this block is configured, start an Instance Refresh when this Auto Scaling Group is updated",
+    "type": "any"
+  },
+  "instance_type": {
+    "default": "",
+    "description": "The type of the instance to launch",
+    "type": "string",
+    "cloudcraft_name": "instanceType"
+  },
+  "kernel_id": {
+    "default": "null",
+    "description": "(LT) The kernel ID",
+    "type": "string"
+  },
+  "key_name": {
+    "default": "null",
+    "description": "The key name that should be used for the instance",
+    "type": "string"
+  },
+  "launch_configuration": {
+    "default": "null",
+    "description": "Name of an existing launch configuration to be used (created outside of this module)",
+    "type": "string"
+  },
+  "launch_template": {
+    "default": "null",
+    "description": "Name of an existing launch template to be used (created outside of this module)",
+    "type": "string"
+  },
+  "lc_name": {
+    "default": "",
+    "description": "Name of launch configuration to be created",
+    "type": "string"
+  },
+  "lc_use_name_prefix": {
+    "default": true,
+    "description": "Determines whether to use `lc_name` as is or create a unique name beginning with the `lc_name` as the prefix",
+    "type": "bool"
+  },
+  "license_specifications": {
+    "default": "null",
+    "description": "(LT) A list of license specifications to associate with",
+    "type": "map(string)"
+  },
+  "load_balancers": {
+    "default": [],
+    "description": "A list of elastic load balancer names to add to the autoscaling group names. Only valid for classic load balancers. For ALBs, use `target_group_arns` instead",
+    "type": "list(string)"
+  },
+  "lt_name": {
+    "default": "",
+    "description": "Name of launch template to be created",
+    "type": "string"
+  },
+  "lt_use_name_prefix": {
+    "default": true,
+    "description": "Determines whether to use `lt_name` as is or create a unique name beginning with the `lt_name` as the prefix",
+    "type": "bool"
+  },
+  "lt_version": {
+    "default": "null",
+    "description": "Launch template version. Can be version number, `$Latest`, or `$Default`",
+    "type": "string"
+  },
+  "max_instance_lifetime": {
+    "default": "null",
+    "description": "The maximum amount of time, in seconds, that an instance can be in service, values must be either equal to 0 or between 604800 and 31536000 seconds",
+    "type": "number"
+  },
+  "max_size": {
+    "default": "null",
+    "description": "The maximum size of the autoscaling group",
+    "type": "number"
+  },
+  "metadata_options": {
+    "default": "null",
+    "description": "Customize the metadata options for the instance",
+    "type": "map(string)"
+  },
+  "metrics_granularity": {
+    "default": "null",
+    "description": "The granularity to associate with the metrics to collect. The only valid value is `1Minute`",
+    "type": "string"
+  },
+  "min_elb_capacity": {
+    "default": "null",
+    "description": "Setting this causes Terraform to wait for this number of instances to show up healthy in the ELB only on creation. Updates will not wait on ELB instance number changes",
+    "type": "number"
+  },
+  "min_size": {
+    "default": "null",
+    "description": "The minimum size of the autoscaling group",
+    "type": "number"
+  },
+  "mixed_instances_policy": {
+    "default": "null",
+    "description": "Configuration block containing settings to define launch targets for Auto Scaling groups",
+    "type": "any"
+  },
+  "name": {
+    "description": "Name used across the resources created",
+    "type": "string"
+  },
+  "network_interfaces": {
+    "default": [],
+    "description": "(LT) Customize network interfaces to be attached at instance boot time",
+    "type": "list(any)"
+  },
+  "placement": {
+    "default": "null",
+    "description": "(LT) The placement of the instance",
+    "type": "map(string)"
+  },
+  "placement_group": {
+    "default": "null",
+    "description": "The name of the placement group into which you'll launch your instances, if any",
+    "type": "string"
+  },
+  "placement_tenancy": {
+    "default": "null",
+    "description": "(LC) The tenancy of the instance. Valid values are `default` or `dedicated`",
+    "type": "string"
+  },
+  "protect_from_scale_in": {
+    "default": false,
+    "description": "Allows setting instance protection. The autoscaling group will not select instances with this setting for termination during scale in events.",
+    "type": "bool"
+  },
+  "ram_disk_id": {
+    "default": "null",
+    "description": "(LT) The ID of the ram disk",
+    "type": "string"
+  },
+  "root_block_device": {
+    "default": [],
+    "description": "(LC) Customize details about the root block device of the instance",
+    "type": "list(map(string))"
+  },
+  "security_groups": {
+    "default": "null",
+    "description": "A list of security group IDs to associate",
+    "type": "list(string)"
+  },
+  "service_linked_role_arn": {
+    "default": "null",
+    "description": "The ARN of the service-linked role that the ASG will use to call other AWS services",
+    "type": "string"
+  },
+  "spot_price": {
+    "default": "null",
+    "description": "(LC) The maximum price to use for reserving spot instances (defaults to on-demand price)",
+    "type": "string"
+  },
+  "suspended_processes": {
+    "default": "null",
+    "description": "A list of processes to suspend for the Auto Scaling Group. The allowed values are `Launch`, `Terminate`, `HealthCheck`, `ReplaceUnhealthy`, `AZRebalance`, `AlarmNotification`, `ScheduledActions`, `AddToLoadBalancer`. Note that if you suspend either the `Launch` or `Terminate` process types, it can prevent your Auto Scaling Group from functioning properly",
+    "type": "list(string)"
+  },
+  "tag_specifications": {
+    "default": [],
+    "description": "(LT) The tags to apply to the resources during launch",
+    "type": "list(any)"
+  },
+  "tags": {
+    "default": [],
+    "description": "A list of tag blocks. Each element should have keys named key, value, and propagate_at_launch",
+    "type": "list(map(string))"
+  },
+  "tags_as_map": {
+    "default": {},
+    "description": "A map of tags and values in the same format as other resources accept. This will be converted into the non-standard format that the aws_autoscaling_group requires.",
+    "type": "map(string)"
+  },
+  "target_group_arns": {
+    "default": [],
+    "description": "A set of `aws_alb_target_group` ARNs, for use with Application or Network Load Balancing",
+    "type": "list(string)",
+    "cloudcraft_name": "target_group_arns"
+  },
+  "termination_policies": {
+    "default": "null",
+    "description": "A list of policies to decide how the instances in the Auto Scaling Group should be terminated. The allowed values are `OldestInstance`, `NewestInstance`, `OldestLaunchConfiguration`, `ClosestToNextInstanceHour`, `OldestLaunchTemplate`, `AllocationStrategy`, `Default`",
+    "type": "list(string)"
+  },
+  "update_default_version": {
+    "default": "null",
+    "description": "(LT) Whether to update Default Version each update. Conflicts with `default_version`",
+    "type": "string"
+  },
+  "use_lc": {
+    "default": false,
+    "description": "Determines whether to use a launch configuration in the autoscaling group or not",
+    "type": "bool"
+  },
+  "use_lt": {
+    "default": false,
+    "description": "Determines whether to use a launch template in the autoscaling group or not",
+    "type": "bool"
+  },
+  "use_mixed_instances_policy": {
+    "default": false,
+    "description": "Determines whether to use a mixed instances policy in the autoscaling group or not",
+    "type": "bool"
+  },
+  "use_name_prefix": {
+    "default": true,
+    "description": "Determines whether to use `name` as is or create a unique name beginning with the `name` as the prefix",
+    "type": "bool"
+  },
+  "user_data": {
+    "default": "null",
+    "description": "(LC) The user data to provide when launching the instance. Do not pass gzip-compressed data via this argument; see `user_data_base64` instead",
+    "type": "string"
+  },
+  "user_data_base64": {
+    "default": "null",
+    "description": "The Base64-encoded user data to provide when launching the instance",
+    "type": "string"
+  },
+  "vpc_zone_identifier": {
+    "default": "null",
+    "description": "A list of subnet IDs to launch resources in. Subnets automatically determine which availability zones the group will reside. Conflicts with `availability_zones`",
+    "type": "list(string)"
+  },
+  "wait_for_capacity_timeout": {
+    "default": "null",
+    "description": "A maximum duration that Terraform should wait for ASG instances to be healthy before timing out. (See also Waiting for Capacity below.) Setting this to '0' causes Terraform to skip all Capacity Waiting behavior.",
+    "type": "string"
+  },
+  "wait_for_elb_capacity": {
+    "default": "null",
+    "description": "Setting this will cause Terraform to wait for exactly this number of healthy instances in all attached load balancers on both create and update operations. Takes precedence over `min_elb_capacity` behavior.",
+    "type": "number"
+  }
+}

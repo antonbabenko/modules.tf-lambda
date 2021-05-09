@@ -1,0 +1,6 @@
+aws-lambda-powertools>=1.15.0
+aws-xray-sdk>=2.8
+cookiecutter==1.7.0
+networkx==2.4
+petname==2.6
+requests>=2.24.0

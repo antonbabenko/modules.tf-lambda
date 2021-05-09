@@ -1,13 +1,10 @@
-# modules.tf - Infrastructure as code generator - from visual diagrams to Terraform
+# Diagrams to code (d2c) - Infrastructure as code generator - from visual diagrams to Terraform
 
 [![Financial Contributors on Open Collective](https://opencollective.com/modulestf/all/badge.svg?label=financial+contributors)](https://opencollective.com/modulestf) [![MIT license](https://img.shields.io/github/license/antonbabenko/modules.tf-lambda.svg)]() [![@antonbabenko](https://img.shields.io/twitter/follow/antonbabenko.svg?style=flat&label=Follow%20@antonbabenko%20on%20Twitter)](https://twitter.com/antonbabenko) 
-
 
 <a href="https://github.com/antonbabenko/modules.tf-lambda"><img src="https://raw.githubusercontent.com/antonbabenko/modules.tf-lambda/master/misc/modulestf-logo.png" alt="modules.tf - Infrastructure as code generator - from visual diagrams to Terraform" width="210" height="70" align="right" /></a>
 
 Code in this repository is used for generating infrastructure as Terraform configurations from visual diagrams created using [Cloudcraft](https://www.cloudcraft.co).
-
-[modules.tf](https://github.com/antonbabenko/modules.tf-lambda) is an open-source project by [Anton Babenko](https://github.com/antonbabenko).
 
 
 ## How can I try this?
@@ -37,8 +34,6 @@ In [modules.tf-demo](https://github.com/antonbabenko/modules.tf-demo) repository
 
 This project was partially sponsored by [Cloudcraft - the best way to draw AWS diagrams](https://www.cloudcraft.co).<br clear="all">
 
-Monitoring of serverless applications provided by [Thundra](https://www.thundra.io/).
-
 [Become a sponsor to @antonbabenko on GitHub](https://github.com/sponsors/antonbabenko/).
 
 [![@antonbabenko](https://img.shields.io/twitter/follow/antonbabenko.svg?style=flat&label=Follow%20@antonbabenko%20on%20Twitter)](https://twitter.com/antonbabenko) 
@@ -48,11 +43,26 @@ Monitoring of serverless applications provided by [Thundra](https://www.thundra.
 
 ## Developer's guide
 
-This project is Python 3.7 application written using [Serverless framework](https://serverless.com) which runs on [AWS Lambda](https://aws.amazon.com/lambda/).
+This project is Python 3.8 serverless application written using [serverless.tf](https://serverless.tf) framework and open-source components ([Terraform AWS modules](https://github.com/terraform-aws-modules)).
 
-Read [official quick start guide](https://serverless.com/framework/docs/providers/aws/guide/quick-start/) and [installation instructions](https://serverless.com/framework/docs/providers/aws/guide/installation/) to familiarise yourself with it.
+### Notes for developers
 
-Read [DEVELOPMENT.md](https://github.com/antonbabenko/modules.tf-lambda/blob/master/DEVELOPMENT.md) for more insights if you want to contribute to this project.
+Terraform is used to provision infrastructure resources as well as packaging artifacts and to do the deployments (check out [serverless.tf](https://serverless.tf) for more details).
+
+Source code is located in `src/handler.py`.
+
+Go to directory `terraform`, verify/update file `terraform.tfvars` and run:
+
+```
+$ terraform init     # Download required Terraform providers and modules
+$ terraform apply    # Create or update infrastructure resources or do a new deployment of Lambda function (if source code has changed)
+```
+
+When infrastructure is created, you should be able to `POST` using [httpie](https://github.com/jakubroztocil/httpie/) or `curl` like this:
+
+```
+$ http --print Hhb --all --follow https://dev-d2c.modules.tf @test_fixtures/input/blueprint_my.json
+```
 
 
 ## Contributors
@@ -89,4 +99,4 @@ Support this project with your organization. Your logo will show up here with a 
 
 This work is licensed under MIT License. See LICENSE for full details.
 
-Copyright (c) 2019 Anton Babenko
+Copyright (c) 2018-2021 Anton Babenko

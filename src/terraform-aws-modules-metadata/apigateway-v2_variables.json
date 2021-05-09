@@ -1,0 +1,157 @@
+{
+  "api_key_selection_expression": {
+    "default": "$request.header.x-api-key",
+    "description": "An API key selection expression. Valid values: $context.authorizer.usageIdentifierKey, $request.header.x-api-key.",
+    "type": "string"
+  },
+  "api_version": {
+    "default": "null",
+    "description": "A version identifier for the API",
+    "type": "string"
+  },
+  "body": {
+    "default": "null",
+    "description": "An OpenAPI specification that defines the set of routes and integrations to create as part of the HTTP APIs. Supported only for HTTP APIs.",
+    "type": "string"
+  },
+  "cors_configuration": {
+    "default": {},
+    "description": "The cross-origin resource sharing (CORS) configuration. Applicable for HTTP APIs.",
+    "type": "any"
+  },
+  "create": {
+    "default": true,
+    "description": "Controls if API Gateway resources should be created",
+    "type": "bool"
+  },
+  "create_api_domain_name": {
+    "default": true,
+    "description": "Whether to create API domain name resource",
+    "type": "bool"
+  },
+  "create_api_gateway": {
+    "default": true,
+    "description": "Whether to create API Gateway",
+    "type": "bool"
+  },
+  "create_default_stage": {
+    "default": true,
+    "description": "Whether to create default stage",
+    "type": "bool"
+  },
+  "create_default_stage_api_mapping": {
+    "default": true,
+    "description": "Whether to create default stage API mapping",
+    "type": "bool"
+  },
+  "create_routes_and_integrations": {
+    "default": true,
+    "description": "Whether to create routes and integrations resources",
+    "type": "bool"
+  },
+  "create_vpc_link": {
+    "default": true,
+    "description": "Whether to create VPC links",
+    "type": "bool"
+  },
+  "credentials_arn": {
+    "default": "null",
+    "description": "Part of quick create. Specifies any credentials required for the integration. Applicable for HTTP APIs.",
+    "type": "string"
+  },
+  "default_route_settings": {
+    "default": {},
+    "description": "Settings for default route",
+    "type": "map(string)"
+  },
+  "default_stage_access_log_destination_arn": {
+    "default": "null",
+    "description": "Default stage's ARN of the CloudWatch Logs log group to receive access logs. Any trailing :* is trimmed from the ARN.",
+    "type": "string"
+  },
+  "default_stage_access_log_format": {
+    "default": "null",
+    "description": "Default stage's single line format of the access logs of data, as specified by selected $context variables.",
+    "type": "string"
+  },
+  "default_stage_tags": {
+    "default": {},
+    "description": "A mapping of tags to assign to the default stage resource.",
+    "type": "map(string)"
+  },
+  "description": {
+    "default": "null",
+    "description": "The description of the API.",
+    "type": "string"
+  },
+  "disable_execute_api_endpoint": {
+    "default": false,
+    "description": "Whether clients can invoke the API by using the default execute-api endpoint. To require that clients use a custom domain name to invoke the API, disable the default endpoint",
+    "type": "string"
+  },
+  "domain_name": {
+    "default": "null",
+    "description": "The domain name to use for API gateway",
+    "type": "string"
+  },
+  "domain_name_certificate_arn": {
+    "default": "null",
+    "description": "The ARN of an AWS-managed certificate that will be used by the endpoint for the domain name",
+    "type": "string"
+  },
+  "domain_name_tags": {
+    "default": {},
+    "description": "A mapping of tags to assign to API domain name resource.",
+    "type": "map(string)"
+  },
+  "integrations": {
+    "default": {},
+    "description": "Map of API gateway routes with integrations",
+    "type": "map(any)"
+  },
+  "mutual_tls_authentication": {
+    "default": {},
+    "description": "An Amazon S3 URL that specifies the truststore for mutual TLS authentication as well as version, keyed at uri and version",
+    "type": "map(string)"
+  },
+  "name": {
+    "default": "",
+    "description": "The name of the API",
+    "type": "string"
+  },
+  "protocol_type": {
+    "default": "HTTP",
+    "description": "The API protocol. Valid values: HTTP, WEBSOCKET",
+    "type": "string"
+  },
+  "route_key": {
+    "default": "null",
+    "description": "Part of quick create. Specifies any route key. Applicable for HTTP APIs.",
+    "type": "string"
+  },
+  "route_selection_expression": {
+    "default": "$request.method $request.path",
+    "description": "The route selection expression for the API.",
+    "type": "string"
+  },
+  "tags": {
+    "default": {},
+    "description": "A mapping of tags to assign to API gateway resources.",
+    "type": "map(string)"
+  },
+  "target": {
+    "default": "null",
+    "description": "Part of quick create. Quick create produces an API with an integration, a default catch-all route, and a default stage which is configured to automatically deploy changes. For HTTP integrations, specify a fully qualified URL. For Lambda integrations, specify a function ARN. The type of the integration will be HTTP_PROXY or AWS_PROXY, respectively. Applicable for HTTP APIs.",
+    "type": "string"
+  },
+  "vpc_link_tags": {
+    "default": {},
+    "description": "A map of tags to add to the VPC Link",
+    "type": "map(string)"
+  },
+  "vpc_links": {
+    "default": {},
+    "description": "Map of VPC Links details to create",
+    "type": "map(any)"
+  }
+}

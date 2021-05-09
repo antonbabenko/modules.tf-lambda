@@ -20,7 +20,6 @@ var/
 # Serverless directories
 .serverless
 
-
 .requirements-cache
 node_modules
 output/*
@@ -30,3 +29,30 @@ graph.png
 
 /.venv
 /.idea
+
+# Terraform
+.terraform
+.terragrunt-cache
+*.tfstate*
+.terraform.lock.hcl
+crash.log
+
+# OS X
+.history
+.DS_Store
+
+# IntelliJ
+.idea_modules
+*.iml
+*.iws
+*.ipr
+.idea/
+build/
+*/build/
+out/
+
+# Lambda builds by Terraform AWS Lambda module
+builds/
+
+# Vim
+*.sw[op]

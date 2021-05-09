@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "name": "Python: src/handler.py",
+            "type": "python",
+            "request": "launch",
+            "program": "src/handler.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        }
+    ]
+}
