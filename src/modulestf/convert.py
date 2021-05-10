@@ -196,6 +196,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                 "backup_retention_period": "0",  # Disable backups to create DB faster
                 "vpc_security_group_ids": [],
                 "create_db_subnet_group": False,
+                "skip_final_snapshot": True,
             })
 
             if vpc_id:
