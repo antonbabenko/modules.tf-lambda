@@ -166,7 +166,7 @@ MODULES = {
 
     # Data sources for aws_region and aws_availability_zones
     "aws-data": {
-        "source": "${get_parent_terragrunt_dir()}/../../../modules/aws-data",
+        "source": "${get_parent_terragrunt_dir()}/../../modules/aws-data",
         "registry_url": "",
         "variables": {},
     },

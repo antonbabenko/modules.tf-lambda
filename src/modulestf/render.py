@@ -159,7 +159,7 @@ def make_dir_name(type, text, appendix=""):
 # Should start with "dependency."
 #
 # Examples:
-# dependency.a3bfbba6-ff09-4efc-a56b-39b647f203f6.outputs.this_security_group_id => dependency.sg_2.outputs.this_security_group_id
+# dependency.a3bfbba6-ff09-4efc-a56b-39b647f203f6.outputs.security_group_id => dependency.sg_2.outputs.security_group_id
 # Source: https://stackoverflow.com/a/38970181/550451
 def recursive_replace_dependency(input, dirs):
     if isinstance(input, dict):

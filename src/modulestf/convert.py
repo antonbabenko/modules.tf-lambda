@@ -152,7 +152,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
             if sg_id:
                 r.append_dependency(sg_id)
                 r.update_dynamic_params("vpc_security_group_ids",
-                                        "[dependency." + sg_id + ".outputs.this_security_group_id]")
+                                        "[dependency." + sg_id + ".outputs.security_group_id]")
                 r.update_params({"create_security_group": False})
 
             if node.get("engine") == "aurora-mysql":
@@ -195,6 +195,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                 "family": "",
                 "backup_retention_period": "0",  # Disable backups to create DB faster
                 "vpc_security_group_ids": [],
+                "create_db_subnet_group": False,
             })
 
             if vpc_id:
@@ -205,15 +206,15 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
             if sg_id:
                 r.append_dependency(sg_id)
                 r.update_dynamic_params("vpc_security_group_ids",
-                                        "[dependency." + sg_id + ".outputs.this_security_group_id]")
+                                        "[dependency." + sg_id + ".outputs.security_group_id]")
 
             if node.get("engine") == "mysql":
                 r.update_params({
                     "engine": "mysql",
                     "port": "3306",
-                    "engine_version": "5.7.19",
-                    "major_engine_version": "5.7",
-                    "family": "mysql5.7",
+                    "engine_version": "8.0.20",
+                    "major_engine_version": "8.0",
+                    "family": "mysql8.0",
                 })
             elif node.get("engine") == "mariadb":
                 r.update_params({
@@ -225,11 +226,11 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                 })
             elif node.get("engine") == "postgres":
                 r.update_params({
-                    "engine": "mariadb",
+                    "engine": "postgres",
                     "port": "5432",
-                    "engine_version": "9.6.9",
-                    "major_engine_version": "9.6",
-                    "family": "postgres9.6",
+                    "engine_version": "11.10",
+                    "major_engine_version": "11",
+                    "family": "postgres11",
                 })
             else:
                 r.update_params({
@@ -272,6 +273,8 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                         "max_size": 1,
                         "desired_capacity": 1,
                         "health_check_type": "EC2",
+                        "use_lt": True,
+                        "create_lt": True,
                         "image_id": "HCL:dependency.aws-data.outputs.amazon_linux2_aws_ami_id",
                         "vpc_zone_identifier": [],
                         "security_groups": [],
@@ -285,7 +288,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
                     if sg_id:
                         r.append_dependency(sg_id)
-                        r.update_dynamic_params("security_groups", "[dependency." + sg_id + ".outputs.this_security_group_id]")
+                        r.update_dynamic_params("security_groups", "[dependency." + sg_id + ".outputs.security_group_id]")
 
                     if elb_id and elb_type == "application":
                         r.update_params({
@@ -340,7 +343,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
                 if sg_id:
                     r.append_dependency(sg_id)
-                    r.update_dynamic_params("security_groups", "[dependency." + sg_id + ".outputs.this_security_group_id]")
+                    r.update_dynamic_params("security_groups", "[dependency." + sg_id + ".outputs.security_group_id]")
 
             elif node.get("elbType") == "network":
                 r = Resource(key, "nlb", node_text)
@@ -380,7 +383,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
                 if sg_id:
                     r.append_dependency(sg_id)
-                    r.update_dynamic_params("security_groups", "[dependency." + sg_id + ".outputs.this_security_group_id]")
+                    r.update_dynamic_params("security_groups", "[dependency." + sg_id + ".outputs.security_group_id]")
 
             resources.append(r.content())
 
@@ -407,7 +410,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
 
             if sg_id:
                 r.append_dependency(sg_id)
-                r.update_dynamic_params("vpc_security_group_ids", "[dependency." + sg_id + ".outputs.this_security_group_id]")
+                r.update_dynamic_params("vpc_security_group_ids", "[dependency." + sg_id + ".outputs.security_group_id]")
 
             resources.append(r.content())
 
@@ -525,7 +528,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                             rules_with_cidr_blocks.append(tmp_rule)
                         else:
                             dependency_sg_id = rule.get("target")
-                            tmp_rule.update({"source_security_group_id": "HCL:dependency." + dependency_sg_id + ".outputs.this_security_group_id"})
+                            tmp_rule.update({"source_security_group_id": "HCL:dependency." + dependency_sg_id + ".outputs.security_group_id"})
                             rules_with_source_security_group_id.append(tmp_rule)
 
                             r.append_dependency(dependency_sg_id)
@@ -570,7 +573,6 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                 "database_subnets":
                     "HCL:[for k,v in dependency.aws-data.outputs.available_aws_availability_zones_names: cidrsubnet(\"" +
                     selected_vpc_cidr + "\", 8, k+20)]",
-                # "redshift_subnets": [],
             })
 
             r.append_dependency("aws-data")

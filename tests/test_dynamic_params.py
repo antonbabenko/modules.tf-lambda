@@ -2,21 +2,21 @@ import re
 from pprint import pprint
 
 dynamic_params = {
-    'key': 'dependency.a3bfbbf.outputs.this_security_group_id',
+    'key': 'dependency.a3bfbbf.outputs.security_group_id',
     'egress_with_source_security_group_id': [],
     'ingress_with_source_security_group_id': [
         {
             'description': 'All TCP from sg2',
             'from_port': '0',
             'protocol': 6,
-            'source_security_group_id': 'dependency.a3bfbb.outputs.this_security_group_id',
+            'source_security_group_id': 'dependency.a3bfbb.outputs.security_group_id',
             'to_port': '65535'
         },
         {
             'description': 'All TCP from sg3',
             'from_port': '0',
             'protocol': 6,
-            'source_security_group_id': '[dependency.a3bfbb.outputs.this_security_group_id] + dependency.abcdef.outputs.this_security_group_id',
+            'source_security_group_id': '[dependency.a3bfbb.outputs.security_group_id] + dependency.abcdef.outputs.security_group_id',
             'to_port': '65535'
         }
     ]
