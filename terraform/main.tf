@@ -243,7 +243,7 @@ module "alarm_lambda_is_popular" {
   alarm_description   = "Lambda is too popular"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = 1
-  threshold           = 100
+  threshold           = 20
   period              = 60
   unit                = "Count"
   treat_missing_data  = "notBreaching"
