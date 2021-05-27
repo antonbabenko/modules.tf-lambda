@@ -193,7 +193,7 @@ module "alarm_lambda_with_errors" {
   alarm_description   = "Lambda with errors"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = 1
-  threshold           = 1
+  threshold           = 5
   period              = 60
   unit                = "Count"
   treat_missing_data  = "notBreaching"
@@ -217,8 +217,8 @@ module "alarm_lambda_is_slow" {
   alarm_name          = "lambda-slow-${module.lambda.lambda_function_name}"
   alarm_description   = "Lambda is too high"
   comparison_operator = "GreaterThanOrEqualToThreshold"
-  evaluation_periods  = 1
-  threshold           = 20000
+  evaluation_periods  = 2
+  threshold           = 29000
   period              = 60
   unit                = "Milliseconds"
   treat_missing_data  = "notBreaching"
@@ -243,7 +243,7 @@ module "alarm_lambda_is_popular" {
   alarm_description   = "Lambda is too popular"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = 1
-  threshold           = 20
+  threshold           = 50
   period              = 60
   unit                = "Count"
   treat_missing_data  = "notBreaching"

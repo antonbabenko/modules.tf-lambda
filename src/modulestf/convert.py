@@ -423,6 +423,11 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                 "read_capacity": node.get("readUnits"),
                 "write_capacity": node.get("writeUnits"),
                 "billing_mode": "PROVISIONED" if node.get("capacityMode") == "provisioned" else "PAY_PER_REQUEST",
+                "hash_key": "id",
+                "attributes": [{
+                    "name": "id",
+                    "type": "N"
+                }]
             })
 
             resources.append(r.content())
@@ -431,7 +436,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
             r = Resource(key, "s3-bucket", node_text)
 
             r.update_params({
-                "bucket": node_text if node_text else random_pet(),
+                "bucket": node_text.lower() if node_text else random_pet(),
                 "region": node.get("region", ""),
             })
 
@@ -441,7 +446,22 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
             r = Resource(key, "cloudfront", node_text)
 
             r.update_params({
-                "wait_for_deployment": False
+                "wait_for_deployment": False,
+                "origin": "{ \
+                    \"default\": { \
+                        \"domain_name\": \"website.example.com\", \
+                        \"custom_origin_config\": { \
+                            \"http_port\": 80, \
+                            \"https_port\": 443, \
+                            \"origin_protocol_policy\": \"match-viewer\", \
+                            \"origin_ssl_protocols\": [\"TLSv1\"], \
+                        } \
+                    } \
+                }",
+                "default_cache_behavior": "{ \
+                    \"target_origin_id\": \"default\", \
+                    \"viewer_protocol_policy\": \"allow-all\", \
+                }"
             })
 
             resources.append(r.content())
@@ -454,7 +474,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
                 "function_name": node_text if node_text else random_pet(),
                 "handler": "handler.lambda_handler",
                 "runtime": "python3.8",
-                "source_path": "\"handler.py\""  # @todo: create this file also
+                "source_path": "jsonencode(\"handler.py\")"
             })
 
             resources.append(r.content())
@@ -465,6 +485,7 @@ def convert_graph_to_modulestf_config(graph):  # noqa: C901
             r.update_params({
                 "name": node_text if node_text else random_pet(),
                 "protocol_type": "WEBSOCKET" if node.get("apiType") == "websocket" else "HTTP",
+                "create_api_domain_name": False
             })
 
             resources.append(r.content())
